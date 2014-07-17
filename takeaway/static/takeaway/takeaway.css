@@ -1,0 +1,6 @@
+.accordion-expand-holder {
+    margin:10px 0;
+}
+.accordion-expand-holder .open, .accordion-expand-holder .collapse1 {
+    margin:0 10px 0 0;
+}

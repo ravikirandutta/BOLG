@@ -1,0 +1,57 @@
+[
+  {
+    "model": "takeaway.Course",
+    "pk": 1,
+    "fields": {
+      "course_name" : "STARTEGY",
+      "course_desc" : "One of the keys to success for today's organizations is their ability to develop, implement, and accurately evaluate effective business strategies. In this course, you will integrate the knowledge you have gained from your prior MBA courses to develop and sharpen your skills for formulating, deploying, and assessing an organization's strategy for achieving competitive advantage in the marketplace. This course will enable you to merge your knowledge of all of these individual disciplines into a comprehensive and meaningful whole.",
+      "created_by" : "rdutta"
+    }
+  },
+  {
+    "model": "takeaway.Course",
+    "pk": 2,
+    "fields": {
+      "course_name" : "MARKETING",
+      "course_desc" : "Marketing affects every consumer purchasing decision, and a marketing background provides skills necessary to spend dollars and target audiences wisely. Goizueta’s marketing faculty places a strong emphasis on marketing strategy with faculty research revolving around making rigorous conceptual and theoretical advances and empirically testing theories in the strategy area.",
+      "created_by" : "rdutta"
+    }
+  },
+  {
+    "model": "takeaway.Course",
+    "pk": 3,
+    "fields": {
+      "course_name" : "FINANCE",
+      "course_desc" : "Goizueta students concentrating in financial economics are well-grounded in a range of topics including: micro-investment theory, economics of uncertainty, the role of financial markets and institutions, the regulation of financial products, firms and markets and the theory of form corporate governance.",
+      "created_by" : "rdutta"
+    }
+  },
+  {
+    "model": "takeaway.Course",
+    "pk": 4,
+    "fields": {
+      "course_name" : "ORGANIZATION & MANAGEMENT",
+      "course_desc" : "We live in a society where organizations are the engines of technology and social innovation, the foundations of careers and the basis of social diversity. The study of organizations is at the cutting edge of the social sciences – a multi-disciplinary endeavor that draws on the disciplines of psychology, social psychology, sociology and economics. Goizueta students learn how to utilize a wide array of research techniques, ranging from experiments to longitudinal event history analysis, to computer simulations and ethnographics methods.",
+      "created_by" : "rdutta"
+    }
+  },
+  {
+    "model": "takeaway.Course",
+    "pk": 5,
+    "fields": {
+      "course_name" : "INFORMATION SYSTEMS",
+      "course_desc" : "Today's corporate leaders must be able to account for and leverage digital technology and novel operating practices. By studying systems and processes that define the operating and information practices in firms, markets and society, Goizueta students will have the tools to manage as globalization and emerging digital technologies continue to transform the structure, form and governance of these systems and processes.",
+      "created_by" : "rdutta"
+    }
+  },
+  {
+    "model": "takeaway.Session",
+    "pk": 1,
+    "fields": {
+      "session_name" : "WEEK 1 Introduction to Startegy",
+      "session_dt" : "12-JUN-2014",
+      "created_by" : "rdutta"
+    }
+  },
+  
+]
