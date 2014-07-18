@@ -323,6 +323,7 @@ class CourseViewSet(viewsets.ModelViewSet):
 		"""
 		queryset = Course.objects.all()
 		serializer_class = CourseSerializer
+		permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 		filter_backends = (filters.DjangoFilterBackend,)
 		filter_fields = ('course_name','students')
 	
@@ -334,7 +335,7 @@ class SessionViewSet(viewsets.ModelViewSet):
 		serializer_class = SessionSerializer
 		filter_backends = (filters.DjangoFilterBackend,)
 		filter_fields = ('course','session_name')	
-	
+		permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
 		
 		
@@ -344,7 +345,7 @@ class TakeAwayList(generics.ListCreateAPIView):
 		serializer_class = TakeAwaySerializer
 		filter_backends = (filters.DjangoFilterBackend,)
 		filter_fields = ('user', 'is_public')
-		#permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+		permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 		
 		#def get_queryset(self):
 			
