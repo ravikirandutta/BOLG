@@ -233,6 +233,9 @@ def mark_as_read(request):
     user.notifications.mark_all_as_read()
     return HttpResponse(str("success"))
 
+def test(request):
+    return render_to_response("test.html")
+
 def initload(request):
     User.objects.create_user(username="atluri",password="abc123").save()
     User.objects.create_user(username="ravi",password="abc123").save()
@@ -299,7 +302,7 @@ def initload(request):
     #Enrollment(student=user2,course=course2).save()
     #Enrollment(student=user2,course=course3).save()
     return HttpResponse( "Successfully Loaded init data")
-	
+
 
 ################################  APIS are defined here #####################################
 
@@ -308,14 +311,14 @@ class UserViewSet(viewsets.ModelViewSet):
     API endpoint that allows users to be viewed or edited.
     """
     queryset = User.objects.all()
-    serializer_class = UserSerializer	
-	
+    serializer_class = UserSerializer
+
 class GroupViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
     queryset = Group.objects.all()
-    serializer_class = GroupSerializer	
+    serializer_class = GroupSerializer
 
 class CourseViewSet(viewsets.ModelViewSet):
 		"""
@@ -326,7 +329,7 @@ class CourseViewSet(viewsets.ModelViewSet):
 		permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 		filter_backends = (filters.DjangoFilterBackend,)
 		filter_fields = ('course_name','students')
-	
+
 class SessionViewSet(viewsets.ModelViewSet):
 		"""
 		API endpoint that allows groups to be viewed or edited.
@@ -334,11 +337,11 @@ class SessionViewSet(viewsets.ModelViewSet):
 		queryset = Session.objects.all()
 		serializer_class = SessionSerializer
 		filter_backends = (filters.DjangoFilterBackend,)
-		filter_fields = ('course','session_name')	
+		filter_fields = ('course','session_name')
 		permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
-		
-		
+
+
 
 class TakeAwayList(generics.ListCreateAPIView):
 		queryset = TakeAway.objects.all()
@@ -346,15 +349,15 @@ class TakeAwayList(generics.ListCreateAPIView):
 		filter_backends = (filters.DjangoFilterBackend,)
 		filter_fields = ('user', 'is_public')
 		permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
-		
+
 		#def get_queryset(self):
-			
+
 				#	user = self.request.user
 				#	if user.is_authenticated():
 				#			return TakeAway.objects.filter(user=user,is_public=True)
-					
+
 				#	return TakeAway.objects.filter(user=None)
-		
+
 
 
 
