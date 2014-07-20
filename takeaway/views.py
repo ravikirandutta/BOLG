@@ -236,6 +236,9 @@ def mark_as_read(request):
 def test(request):
     return render_to_response("test.html")
 
+def index(request):
+    return render_to_response("index.html")
+
 def initload(request):
     User.objects.create_user(username="atluri",password="abc123").save()
     User.objects.create_user(username="ravi",password="abc123").save()
