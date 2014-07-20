@@ -26,6 +26,6 @@ urlpatterns = patterns('',
     url(r'^takeaways/(?P<pk>[0-9]+)/$', TakeAwayDetail.as_view(),name='takeaway-detail'),
 	url(r'^takeaways/$', TakeAwayList.as_view(), name='takeaway-list'),
 	   url(r'^takeaways/test', 'takeaway.views.test', name='test'),
-
+       url(r'^takeaways/index', 'takeaway.views.index', name='index'),
     url(r'^takeaway/initload', 'takeaway.views.initload', name='initload'),
 )
