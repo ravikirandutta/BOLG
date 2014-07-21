@@ -25,6 +25,8 @@
     <link href="/static/takeaway/css/style.css" rel="stylesheet">
     <!-- Widgets stylesheet -->
     <link href="/static/takeaway/css/widgets.css" rel="stylesheet">
+
+<link href="/static/takeaway/css/font-awesome.min.css" rel="stylesheet">
     <!-- Favicon -->
     <link rel="shortcut icon" href="#">
 </head>
@@ -160,7 +162,12 @@
                 <!-- If the main navigation has sub navigation, then add the class "has_submenu" to "li" of main navigation. -->
                 <ul id="sidebar-test" class="navi">
                     <!-- Use the class nred, ngreen, nblue, nlightblue, nviolet or norange to add background color. You need to use this in <li> tag. -->
-
+                    <li class="nred current">
+                        <a href="#">
+                            <i class="fa fa-desktop">
+                            </i>
+                            Courses
+                    </li>
 
                 </ul>
                 <!--/ Sidebar navigation -->
@@ -173,69 +180,6 @@
             <div class="clear"></div>
         </div>
 
-            <script type="text/javascript">
-
-      var Course = Backbone.Model.extend({
-        urlRoot:'/courses'
-      });
-
-      var CourseView = Backbone.View.extend({
-        tagName:'li',
-        className:'nlightblue',
-        template:_.template('<a href="#"><i class="fa fa-list"></i><%= course_name%></a>'),
-        render : function(){
-              this.$el.append(this.template(this.model.toJSON()));
-              return this;
-        }
-      });
-
-    var CourseList = Backbone.Collection.extend({
-            model: Course
-    });
-
-    var CourseListView = Backbone.View.extend({
-        className: 'navi',
-        render : function(){
-            this.collection.forEach(this.addOne,this);
-            return this;
-        },
-        addOne: function(course){
-            var courseObject = new Course();
-            courseObject.set(course);
-            var courseView = new CourseView({model:courseObject});
-            $(this.el).append(courseView.render().el);
-        }
-
-    });
-
-
-    var course = new Course();
-    course.fetch({success:function(collection, response){
-        var courses = collection.attributes.results;
-        var courseListView = new CourseListView({collection:courses});
-        $("#sidebar-test").append(courseListView.render().el);
-    }});
-
-
-    </script>
-
-<script type="text/template" id="takeaway-template">
-    <div class="widget-head">
-                            <div class="pull-left"><%= course%>-<%= session %>-<%= user%>  </div>
-                            <div class="widget-icons pull-right">
-                                <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
-                                <a href="#" class="wclose"><i class="fa fa-times"></i></a>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="widget-content">
-                            <div class="padd">
-                                <%=notes%>
-                            </div>
-                        </div>
-
-
-</script>
 
 
 
@@ -297,12 +241,121 @@
             </div>
             <!--/ Page heading ends -->
             <!-- Matter -->
-            <div class="matter">
-                <div id="takeaway-container" class="container">
 
-                    <!-- Dashboard Graph starts -->
+
+
+            <!-- session stuff-->
+
+                <div class="col-md-5">
+                                <div class="widget wred">
+                                    <!-- Widget title -->
+                                    <div class="widget-head">
+                                      <div class="pull-left">Session List</div>
+                                      <div class="widget-icons pull-right">
+                                        <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
+                                        <a href="#" class="wclose"><i class="fa fa-times"></i></a>
+                                      </div>
+                                      <div class="clearfix"></div>
+                                    </div>
+
+                                    <div class="widget-content referrer">
+                                        <!-- Widget content -->
+                                      <table id="session-table" class="table  table-bordered ">
+
+                                          </table>
+
+                                    </div>
+                                </div>
+                            </div>
+
+<!-- takeaway stuff-->
+        <div class="col-md-6">
+                      <!-- Widget -->
+                      <div class="widget worange">
+                        <!-- Widget title -->
+                        <div class="widget-head">
+                          <div class="pull-left">Recent Comments</div>
+                          <div class="widget-icons pull-right">
+                            <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
+                            <a href="#" class="wclose"><i class="fa fa-times"></i></a>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
+                        <div class="widget-content">
+                          <!-- Widget content -->
+                          <div class="padd">
+
+                            <ul id="takeaway-list" class="recent">
+                              <li>
+                                <div class="recent-content">
+                                  <div class="recent-meta">Posted on 25/1/2120 by Ashok</div>
+                                  <div>Vivamus diam elit diam, consectetur fermentum sed dapibus eget, Vivamus consectetur dapibus adipiscing elit.
+                                  </div>
+
+                                  <div class="btn-group">
+                                    <button class="btn btn-xs btn-success"><i class="fa fa-check"></i> </button>
+                                    <button class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> </button>
+                                    <button class="btn btn-xs btn-danger"><i class="fa fa-times"></i> </button>
+                                  </div>
+
+                                  <button class="btn btn-xs btn-danger pull-right">Spam</button>
+
+                                  <div class="clearfix"></div>
+                                </div>
+                              </li>
+
+
+
+                              <li>
+
+                                <div class="recent-content">
+                                  <div class="recent-meta">Posted on 25/1/2120 by Ashok</div>
+                                  <div>Vivamus diam elit diam, consectetur fermentum sed dapibus eget, Vivamus consectetur dapibus adipiscing elit.
+                                  </div>
+
+                                  <div class="btn-group">
+                                    <button class="btn btn-xs btn-success"><i class="fa fa-check"></i> </button>
+                                    <button class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> </button>
+                                    <button class="btn btn-xs btn-danger"><i class="fa fa-times"></i> </button>
+                                  </div>
+
+                                  <button class="btn btn-xs btn-danger pull-right">Spam</button>
+
+                                  <div class="clearfix"></div>
+                                </div>
+                              </li>
+
+
+                            </ul>
+
+                          </div>
+                        </div>
+
+                          <!-- Widget footer -->
+                          <div class="widget-foot">
+
+                                <ul class="pagination pull-right">
+                                  <li><a href="#">Prev</a></li>
+                                  <li><a href="#">1</a></li>
+                                  <li><a href="#">2</a></li>
+                                  <li><a href="#">3</a></li>
+                                  <li><a href="#">4</a></li>
+                                  <li><a href="#">5</a></li>
+                                  <li><a href="#">Next</a></li>
+                                </ul>
+                            <div class="clearfix"></div>
+
+                          </div>
+
+                      </div>
+
+                    </div>
+                  </div>
+
                 </div>
-            </div>
+                  </div>
+
             <!--/ Matter ends -->
         </div>
         <!--/ Mainbar ends -->
@@ -312,20 +365,188 @@
 
 
 
+
+
     <!-- Scroll to top -->
     <span class="totop"><a href="#"><i class="fa fa-chevron-up"></i></a>
     </span>
 
 
+           <script type="text/javascript">
+
+      var Course = Backbone.Model.extend({
+        urlRoot:'/courses'
+      });
+
+      var CourseView = Backbone.View.extend({
+        tagName:'li',
+        className:'nlightblue',
+        template:_.template('<a href="#"><i class="fa fa-list"></i><%= course_name%></a>'),
+        render : function(){
+              this.$el.append(this.template(this.model.toJSON()));
+              return this;
+        },
+        events: {"click a":"loadSessions"},
+        loadSessions: function(){
+            var sessionList = new SessionList();
+            sessionList.fetch({data: {course: this.model.id},
+                success: function(collection, response){
+                    var sessionListView = new SessionListView({collection:collection.models});
+                    sessionListView.render();
+                }});
+        }
+      });
+
+    var CourseList = Backbone.Collection.extend({
+            model: Course
+    });
+
+    var CourseListView = Backbone.View.extend({
+        className: 'navi',
+        render : function(){
+            this.collection.forEach(this.addOne,this);
+            return this;
+        },
+        addOne: function(course){
+            var courseObject = new Course();
+            courseObject.set(course);
+            var courseView = new CourseView({model:courseObject});
+            $(this.el).append(courseView.render().el);
+        }
+
+    });
+
+
+    var course = new Course();
+    course.fetch({success:function(collection, response){
+        var courses = collection.attributes.results;
+        var courseListView = new CourseListView({collection:courses});
+        $("#sidebar-test").append(courseListView.render().el);
+    }});
+
+
+    </script>
+
+<script type="text/template" id="takeaway-templates">
+    <div class="widget-head">
+                            <div class="pull-left"><%= course%>-<%= session %>-<%= user%>  </div>
+                            <div class="widget-icons pull-right">
+                                <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
+                                <a href="#" class="wclose"><i class="fa fa-times"></i></a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="widget-content">
+                            <div class="padd">
+                                <%=notes%>
+                            </div>
+                        </div>
+
+
+</script>
+
+
+<script type="text/template" id="session-template">
+
+                                          <th><center><%= id%></center></th>
+                                          <th><a><%= session_name%></a></th>
+                                          <th><%= session_dt%></th>
+
+</script>
+
+<script type="text/template" id="takeaway-template">
+    <li>
+                                <div class="recent-content">
+                                  <div class="recent-meta">Posted on 25/1/2120 by <%= user%></div>
+                                  <div><%= notes%>
+                                  </div>
+                                  <div class="btn-group">
+                                    <button class="btn btn-xs btn-success"><i class="fa fa-check"></i> </button>
+                                    <button class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> </button>
+                                    <button class="btn btn-xs btn-danger"><i class="fa fa-times"></i> </button>
+                                  </div>
+
+                                  <button class="btn btn-xs btn-danger pull-right">Spam</button>
+
+                                  <div class="clearfix"></div>
+                                </div>
+                              </li>
+
+</script>
+
+<script>
+
+var Session = Backbone.Model.extend({
+    urlRoot:'/sessions/'
+});
+
+var SessionView = Backbone.View.extend({
+     tagName: 'tr',
+    render: function(){
+        var template = _.template($('#session-template').html(),this.model.toJSON());
+        this.$el.html(template);
+        return this;
+    },
+    events:{"click a":"getTakeaways"},
+
+    getTakeaways: function(){
+        var takeaways = new TakeawayList();
+        takeaways.fetch({success: function(collection, response){
+            var takeawaysForSession = _.filter(collection.models[0].attributes.results,function(takeaway){
+                 var id = this.id;
+                 return takeaway.session==id;
+            }, this.model);
+            var takeawayListView = new TakeawayListView({collection:takeawaysForSession});
+            takeawayListView.render();
+        }});
+
+    }
+});
+
+
+
+var SessionList = Backbone.Collection.extend({
+    model:Session,
+    url:'/sessions',
+parse: function(response){
+        return response.results;
+    }
+});
+
+
+var SessionListView  = Backbone.View.extend({
+    el: $("#session-table"),
+    render: function(){
+        this.$el.html("");
+        this.collection.forEach(this.addOne,this);
+    },
+    addOne: function(session){
+         var sessionObject = new Session();
+              sessionObject.set(session);
+              var sessionView = new SessionView({model:sessionObject});
+              this.$el.append(sessionView.render().el);
+    }
+});
+
+var session = new Session();
+session.fetch({success: function(collection, response){
+    var sessionListView = new SessionListView({collection: collection.attributes.results});
+    //    $("#session-table").append(sessionListView.render().el);
+    sessionListView.render();
+}});
+
+</script>
+
+
+
+
    <script>
-
-
     var Takeaway = Backbone.Model.extend({
         urlRoot:'/takeaways/'
+
     });
     var TakeawayView = Backbone.View.extend({
 
-        className:'widget wlightblue',
         render: function(){
             var template = _.template($('#takeaway-template').html(),this.model.toJSON());
             $(this.el).html(template);
@@ -334,12 +555,14 @@
     });
 
     var TakeawayList = Backbone.Collection.extend({
-        model: Takeaway
+        model: Takeaway,
+        url:'/takeaways/'
     });
 
     var TakeawayListView = Backbone.View.extend({
-
+        el: $("#takeaway-list"),
         render: function(){
+            this.$el.html("");
             this.collection.forEach(this.addOne,this);
             return this;
         },
@@ -356,37 +579,37 @@ var takeaway = new Takeaway();
 takeaway.fetch({success:function(collection, response){
 
     var takeawayListView = new TakeawayListView({collection:collection.attributes.results});
-    $("#takeaway-container").append(takeawayListView.render().el);
+    takeawayListView.render();
 
 }});
         </script>
 
     <!-- Javascript files -->
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    <script src="/static/takeaway/js/jquery.js"></script>
     <!-- Bootstrap JS -->
     <script src="js/bootstrap.min.js"></script>
     <!-- jQuery UI -->
-    <script src="js/jquery-ui.min.js"></script>
+    <script src="/static/takeaway/js/jquery-ui.min.js"></script>
     <!-- jQuery Flot -->
-    <script src="js/excanvas.min.js"></script>
-    <script src="js/jquery.flot.js"></script>
-    <script src="js/jquery.flot.resize.js"></script>
-    <script src="js/jquery.flot.pie.js"></script>
-    <script src="js/jquery.flot.stack.js"></script>
+    <script src="/static/takeaway/js/excanvas.min.js"></script>
+    <script src="/static/takeaway/js/jquery.flot.js"></script>
+    <script src="/static/takeaway/js/jquery.flot.resize.js"></script>
+    <script src="/static/takeaway/js/jquery.flot.pie.js"></script>
+    <script src="/static/takeaway/js/jquery.flot.stack.js"></script>
     <!-- Sparklines -->
-    <script src="js/sparklines.js"></script>
+    <script src="/static/takeaway/js/sparklines.js"></script>
     <!-- jQuery Gritter -->
-    <script src="js/jquery.gritter.min.js"></script>
+    <script src="/static/takeaway/js/jquery.gritter.min.js"></script>
     <!-- Respond JS for IE8 -->
-    <script src="js/respond.min.js"></script>
+    <script src="/static/takeaway/js/respond.min.js"></script>
     <!-- HTML5 Support for IE -->
-    <script src="js/html5shiv.js"></script>
+    <script src="/static/takeaway/js/html5shiv.js"></script>
     <!-- Custom JS -->
-    <script src="js/custom.js"></script>
+    <script src="/static/takeaway/js/custom.js"></script>
 
     <!-- Script for this page -->
-    <script src="js/sparkline-index.js"></script>
+    <script src="/static/takeaway/js/sparkline-index.js"></script>
 
     <script type="text/javascript">
     $(function() {
