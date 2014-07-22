@@ -274,7 +274,7 @@
                       <div class="widget worange">
                         <!-- Widget title -->
                         <div class="widget-head">
-                          <div class="pull-left">Recent Comments</div>
+                          <div class="pull-left">Recent TakeAways</div>
                           <div class="widget-icons pull-right">
                             <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
                             <a href="#" class="wclose"><i class="fa fa-times"></i></a>
@@ -449,7 +449,7 @@
 <script type="text/template" id="session-template">
 
                                           <th><center><%= id%></center></th>
-                                          <th><a><%= session_name%></a></th>
+                                          <th><a id=<%= id%>><%= session_name%></a></th>
                                           <th><%= session_dt%></th>
 
 </script>
@@ -489,13 +489,21 @@ var SessionView = Backbone.View.extend({
     },
     events:{"click a":"getTakeaways"},
 
-    getTakeaways: function(){
+    getTakeaways: function(event){
         var takeaways = new TakeawayList();
+        var id = $(event.currentTarget).attr('id');
         takeaways.fetch({success: function(collection, response){
-            var takeawaysForSession = _.filter(collection.models[0].attributes.results,function(takeaway){
-                 var id = this.id;
-                 return takeaway.session==id;
-            }, this.model);
+            var takeawaysForSession = new Array();
+            var allTakeaways =collection.models[0].attributes.results;
+            for(var i =0,j=0;i < allTakeaways.length;i++){
+                var sessionId = allTakeaways[i].session;
+                if(  sessionId == id){
+                    takeawaysForSession[j]=allTakeaways[i];
+                    j++;
+                }
+            }
+
+
             var takeawayListView = new TakeawayListView({collection:takeawaysForSession});
             takeawayListView.render();
         }});
