@@ -27,6 +27,11 @@
     <link href="/static/takeaway/css/widgets.css" rel="stylesheet">
 
 <link href="/static/takeaway/css/font-awesome.min.css" rel="stylesheet">
+
+<link href="/static/takeaway/css/font-awesome.min.css" rel="stylesheet">
+
+<link href="/static/takeaway/css/app.css" rel="stylesheet">
+
     <!-- Favicon -->
     <link rel="shortcut icon" href="#">
 </head>
@@ -144,81 +149,120 @@
     </div>
 
 
+    <div class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" >
+        <div class="container">
+            <!-- Menu button for smallar screens -->
+            <div class="navbar-header">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="index.html" class="navbar-brand">College Notes Pro</a>
+            </div>
+            <!-- Site name for smallar screens -->
+            <!-- Navigation starts -->
+            <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                <!-- Links -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <img src="img/user.jpg" alt="" class="nav-user-pic img-responsive" />Sagar <b class="caret"></b>
+                        </a>
+                        <!-- Dropdown menu -->
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="fa fa-user"></i> Profile</a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-cogs"></i> Settings</a>
+                            </li>
+                            <li><a href="login.html"><i class="fa fa-power-off"></i> Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- Notifications -->
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Message button with number of latest messages count-->
+                    <li class="dropdown dropdown-big">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                            <i class="fa fa-envelope-o"></i> New Notes
+                            <span class="badge badge-important">6</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <!-- Heading - h5 -->
+                                <h5><i class="fa fa-envelope-o"></i> Notes</h5>
+                                <!-- Use hr tag to add border -->
+                                <hr />
+                            </li>
+                            <li>
+                                <!-- List item heading h6 -->
+                                <a href="#">Chapter 1 Finance - Sunil</a>
+                                <!-- List item para -->
+                                <p>Quisque eu consectetur erat eget semper...</p>
+                                <hr />
+                            </li>
+                            <li>
+                                <a href="#">Chapter 2 Marketing - Vijay</a>
+                                <p>Quisque eu consectetur erat eget semper...</p>
+                                <hr />
+                            </li>
+                            <li>
+                                <div class="drop-foot">
+                                    <a href="#">View All</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Members button with number of latest members count -->
+                    <li class="dropdown dropdown-big">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                            <i class="fa fa-user"></i> Classmates
+                            <span class="badge badge-success">6</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <!-- Heading - h5 -->
+                                <h5><i class="fa fa-user"></i> Classmates</h5>
+                                <!-- Use hr tag to add border -->
+                                <hr />
+                            </li>
+                            <li>
+                                <!-- List item heading h6-->
+                                <a href="#">Ravi Kumar</a>
+                                <span class="label label-warning pull-right">Finance</span>
+                                <div class="clearfix"></div>
+                                <hr />
+                            </li>
+                            <li>
+                                <a href="#">Balaji</a>
+                                <span class="label label-important pull-right">Marketing</span>
+                                <div class="clearfix"></div>
+                                <hr />
+                            </li>
+                            <li>
+                                <a href="#">Kumarasamy</a>
+                                <span class="label label-warning pull-right">Good in Everything</span>
+                                <div class="clearfix"></div>
+                                <hr />
+                            </li>
+                            <li>
+                                <div class="drop-foot">
+                                    <a href="#">View All</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
 
     <!-- Main content starts -->
     <div class="content">
         <!-- Sidebar -->
-        <div class="sidebar mainsidebar">
-            <div class="sidebar-dropdown"><a href="#">Navigation</a>
-            </div>
-            <div  class="sidebar-inner">
-                <!--
-                <div class="sidebar-widget">
-                    <form>
-                        <input type="text" class="form-control" placeholder="Search">
-                    </form>
-                </div> -->
-                <!--- Sidebar navigation -->
-                <!-- If the main navigation has sub navigation, then add the class "has_submenu" to "li" of main navigation. -->
-                <ul id="sidebar-test" class="navi">
-                    <!-- Use the class nred, ngreen, nblue, nlightblue, nviolet or norange to add background color. You need to use this in <li> tag. -->
-                    <li class="nred current">
-                        <a href="#">
-                            <i class="fa fa-desktop">
-                            </i>
-                            Courses
-                    </li>
-
-                </ul>
-                <!--/ Sidebar navigation -->
-
-                <!-- Date -->
-                <div class="sidebar-widget">
-                    <div id="todaydate"></div>
-                </div>
-            </div>
-            <div class="clear"></div>
-        </div>
-
-
-
-
-        <div class="clear"></div>
-        <!-- Sidebar ends -->
-
-        <!-- Sidebar -->
-        <div class="sidebar subsidebar" style="display:none">
-            <div class="sidebar-dropdown"><a href="#">Chapters</a>
-            </div>
-            <div class="sidebar-inner">
-
-                <!--- Sidebar navigation -->
-                <!-- If the main navigation has sub navigation, then add the class "has_submenu" to "li" of main navigation. -->
-                <ul class="navi navi2">
-                    <!-- Use the class nred, ngreen, nblue, nlightblue, nviolet or norange to add background color. You need to use this in <li> tag. -->
-
-                    <li class="nlightblue"><a href="index.html"><i class="fa fa-desktop"></i> Chapter 1 </a>
-                    </li>
-                    <li class="nlightblue"><a href="index.html"><i class="fa fa-desktop"></i> Chapter 2 </a>
-                    </li>
-                    <li class="nlightblue"><a href="index.html"><i class="fa fa-desktop"></i> Chapter 3 </a>
-                    </li>
-                    <li class="nlightblue"><a href="index.html"><i class="fa fa-desktop"></i> Chapter 4 </a>
-                    </li>
-                    <li class="nlightblue"><a href="index.html"><i class="fa fa-desktop"></i> Chapter 5 </a>
-                    </li>
-
-                </ul>
-                <!--/ Sidebar navigation -->
-
-                <!-- Date -->
-                <div class="sidebar-widget">
-                    <div id="todaydate"></div>
-                </div>
-            </div>
-            <div class="clear"></div>
-        </div>
-        <!-- Sidebar ends -->
 
         <!-- Main bar -->
         <div class="mainbar">
@@ -226,9 +270,9 @@
             <!-- Page heading -->
             <div class="page-head">
                 <!-- Page heading -->
-                <h2 class="pull-left">Todays Updates
+                <h2 class="pull-left">Courses
                     <!-- page meta -->
-                    <span class="page-meta">3 new class mates joined. 10 new</span>
+                    <span class="page-meta">List of courses</span>
                 </h2>
                 <!-- Breadcrumb -->
                 <div class="bread-crumb pull-right">
@@ -239,6 +283,17 @@
                 </div>
                 <div class="clearfix"></div>
             </div>
+
+             <div id="course-list" class="page-head">
+                <!-- Page heading -->
+                <!-- Breadcrumb -->
+              <!--  <div >
+                    <a href="#" class="course"><i class="fa fa-bars"></i> BUS 520P Managerial Finance</a>
+                    <a href="#" class="course"><i class="fa fa-bars"></i> BUS 634P Strategic Management</a>
+                </div>
+            -->
+                <div class="clearfix"></div>
+            </div>
             <!--/ Page heading ends -->
             <!-- Matter -->
 
@@ -246,32 +301,11 @@
 
             <!-- session stuff-->
 
-                <div class="col-md-5">
-                                <div class="widget wred">
-                                    <!-- Widget title -->
-                                    <div class="widget-head">
-                                      <div class="pull-left">Session List</div>
-                                      <div class="widget-icons pull-right">
-                                        <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
-                                        <a href="#" class="wclose"><i class="fa fa-times"></i></a>
-                                      </div>
-                                      <div class="clearfix"></div>
-                                    </div>
-
-                                    <div class="widget-content referrer">
-                                        <!-- Widget content -->
-                                      <table id="session-table" class="table  table-bordered ">
-
-                                          </table>
-
-                                    </div>
-                                </div>
-                            </div>
 
 <!-- takeaway stuff-->
-        <div class="col-md-6">
+        <div class="col-md-6" id="takeaway-container">
                       <!-- Widget -->
-                      <div class="widget worange">
+                      <div class="widget wlightblue">
                         <!-- Widget title -->
                         <div class="widget-head">
                           <div class="pull-left">Recent TakeAways</div>
@@ -379,14 +413,15 @@
       });
 
       var CourseView = Backbone.View.extend({
-        tagName:'li',
-        className:'nlightblue',
-        template:_.template('<a href="#"><i class="fa fa-list"></i><%= course_name%></a>'),
+        tagName: "a",
+        className: "course",
+
+        template:_.template('<span><i class="fa fa-bars"></i> <%= course_name%></span>'),
         render : function(){
               this.$el.append(this.template(this.model.toJSON()));
               return this;
         },
-        events: {"click a":"loadSessions"},
+        events: {"click span":"loadTakeaways"},
         loadSessions: function(){
             var sessionList = new SessionList();
             sessionList.fetch({data: {course: this.model.id},
@@ -394,7 +429,17 @@
                     var sessionListView = new SessionListView({collection:collection.models});
                     sessionListView.render();
                 }});
+        },
+
+        loadTakeaways : function(){
+            var takeawayList = new TakeawayList();
+            takeawayList.fetch({data: {course: this.model.id},
+                success: function(collection, response){
+                    var takeawayListView = new TakeawayListView({collection:collection.models});
+                    takeawayListView.render();
+                }});
         }
+
       });
 
     var CourseList = Backbone.Collection.extend({
@@ -402,7 +447,7 @@
     });
 
     var CourseListView = Backbone.View.extend({
-        className: 'navi',
+
         render : function(){
             this.collection.forEach(this.addOne,this);
             return this;
@@ -421,11 +466,68 @@
     course.fetch({success:function(collection, response){
         var courses = collection.attributes.results;
         var courseListView = new CourseListView({collection:courses});
-        $("#sidebar-test").append(courseListView.render().el);
+        $("#course-list").append(courseListView.render().el);
     }});
 
 
     </script>
+
+
+
+<script>
+        var EditInPlaceForm = Backbone.View.extend({
+    tagName: "form",
+
+    events: {
+        "submit": "save"
+    },
+
+    initialize: function (options) {
+        _.extend(this, options);
+    },
+
+    render: function () {
+        this.$el.html($("<input>", {
+            value: this.model.get(this.attribute)
+        }));
+        return this;
+    },
+
+    save: function () {
+        this.model.set(this.attribute, this.$el.find("input").val());
+        this.model.save();
+        return false;
+    }
+});
+
+var EditInPlaceView = Backbone.View.extend({
+
+    attribute: "notes",
+
+    initialize: function (options) {
+        _.extend(this, options);
+        this.model.on("change", this.render, this);
+    },
+
+    events: {
+        "dblclick": "edit"
+    },
+
+    render: function () {
+        this.$el.html(this.model.get(this.attribute));
+        return this;
+    },
+
+    edit: function () {
+        this.$el.html(new EditInPlaceForm({
+            model: this.model,
+            attribute: this.attribute
+        }).render().el);
+        this.$el.find("input").select();
+    }
+
+});
+</script>
 
 <script type="text/template" id="takeaway-templates">
     <div class="widget-head">
@@ -449,7 +551,7 @@
 <script type="text/template" id="session-template">
 
                                           <th><center><%= id%></center></th>
-                                          <th><a id=<%= id%>><%= session_name%></a></th>
+                                          <th><a> <%= session_name%></a></th>
                                           <th><%= session_dt%></th>
 
 </script>
@@ -458,8 +560,8 @@
     <li>
                                 <div class="recent-content">
                                   <div class="recent-meta">Posted on 25/1/2120 by <%= user%></div>
-                                  <div><%= notes%>
-                                  </div>
+                                  <div id="editable-notes"></div>
+
                                   <div class="btn-group">
                                     <button class="btn btn-xs btn-success"><i class="fa fa-check"></i> </button>
                                     <button class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> </button>
@@ -474,7 +576,15 @@
 
 </script>
 
+
+<script type="text/template" id="notes-template">
+    <div id="edit-in-place">
+    </div>
+    </script>
+
 <script>
+
+
 
 var Session = Backbone.Model.extend({
     urlRoot:'/sessions/'
@@ -557,7 +667,10 @@ session.fetch({success: function(collection, response){
 
         render: function(){
             var template = _.template($('#takeaway-template').html(),this.model.toJSON());
+            this.editInPlaceView = new EditInPlaceView({model:this.model});
+
             $(this.el).html(template);
+            this.$('#editable-notes').append(this.editInPlaceView.render().el);
             return this;
         }
     });
@@ -592,6 +705,7 @@ takeaway.fetch({success:function(collection, response){
 }});
         </script>
 
+
     <!-- Javascript files -->
     <!-- jQuery -->
     <script src="/static/takeaway/js/jquery.js"></script>
@@ -619,170 +733,7 @@ takeaway.fetch({success:function(collection, response){
     <!-- Script for this page -->
     <script src="/static/takeaway/js/sparkline-index.js"></script>
 
-    <script type="text/javascript">
-    $(function() {
 
-        /* Bar Chart starts */
-
-        var d1 = [];
-        for (var i = 0; i <= 30; i += 1)
-            d1.push([i, parseInt(Math.random() * 30)]);
-
-        var d2 = [];
-        for (var i = 0; i <= 30; i += 1)
-            d2.push([i, parseInt(Math.random() * 30)]);
-
-
-        var stack = 0,
-            bars = true,
-            lines = false,
-            steps = false;
-
-        function plotWithOptions() {
-            $.plot($("#bar-chart"), [d1, d2], {
-                series: {
-                    stack: stack,
-                    lines: {
-                        show: lines,
-                        fill: true,
-                        steps: steps
-                    },
-                    bars: {
-                        show: bars,
-                        barWidth: 0.8
-                    }
-                },
-                grid: {
-                    borderWidth: 0,
-                    hoverable: true,
-                    color: "#777"
-                },
-                colors: ["#52b9e9", "#0aa4eb"],
-                bars: {
-                    show: true,
-                    lineWidth: 0,
-                    fill: true,
-                    fillColor: {
-                        colors: [{
-                            opacity: 0.9
-                        }, {
-                            opacity: 0.8
-                        }]
-                    }
-                }
-            });
-        }
-
-        plotWithOptions();
-
-        $(".stackControls input").click(function(e) {
-            e.preventDefault();
-            stack = $(this).val() == "With stacking" ? true : null;
-            plotWithOptions();
-        });
-        $(".graphControls input").click(function(e) {
-            e.preventDefault();
-            bars = $(this).val().indexOf("Bars") != -1;
-            lines = $(this).val().indexOf("Lines") != -1;
-            steps = $(this).val().indexOf("steps") != -1;
-            plotWithOptions();
-        });
-
-        /* Bar chart ends */
-
-    });
-
-
-    /* Curve chart starts */
-
-    $(function() {
-        var sin = [],
-            cos = [];
-        for (var i = 0; i < 14; i += 0.5) {
-            sin.push([i, Math.sin(i)]);
-            cos.push([i, Math.cos(i)]);
-        }
-
-        var plot = $.plot($("#curve-chart"), [{
-            data: sin,
-            label: "sin(x)"
-        }, {
-            data: cos,
-            label: "cos(x)"
-        }], {
-            series: {
-                lines: {
-                    show: true,
-                    fill: true,
-                    fillColor: {
-                        colors: [{
-                            opacity: 0.05
-                        }, {
-                            opacity: 0.01
-                        }]
-                    }
-                },
-                points: {
-                    show: true
-                }
-            },
-            grid: {
-                hoverable: true,
-                clickable: true,
-                borderWidth: 0
-            },
-            yaxis: {
-                min: -1.2,
-                max: 1.2
-            },
-            colors: ["#fa3031", "#43c83c"]
-        });
-
-
-        function showTooltip(x, y, contents) {
-            $('<div id="tooltip">' + contents + '</div>').css({
-                position: 'absolute',
-                display: 'none',
-                top: y + 5,
-                width: 100,
-                left: x + 5,
-                border: '1px solid #000',
-                padding: '2px 8px',
-                color: '#ccc',
-                'background-color': '#000',
-                opacity: 0.9
-            }).appendTo("body").fadeIn(200);
-        }
-
-        var previousPoint = null;
-        $("#curve-chart").bind("plothover", function(event, pos, item) {
-            $("#x").text(pos.x.toFixed(2));
-            $("#y").text(pos.y.toFixed(2));
-
-            if (item) {
-                if (previousPoint != item.dataIndex) {
-                    previousPoint = item.dataIndex;
-
-                    $("#tooltip").remove();
-                    var x = item.datapoint[0].toFixed(2),
-                        y = item.datapoint[1].toFixed(2);
-
-                    showTooltip(item.pageX, item.pageY, item.series.label + " of " + x + " = " + y);
-                }
-            } else {
-                $("#tooltip").remove();
-                previousPoint = null;
-            }
-        });
-
-        $("#curve-chart").bind("plotclick", function(event, pos, item) {
-            if (item) {
-                $("#clickdata").text("You clicked point " + item.dataIndex + " in " + item.series.label + ".");
-                plot.highlight(item.series, item.datapoint);
-            }
-        });
-
-    });
 
     /* Curve chart ends */
     </script>
