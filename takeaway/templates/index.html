@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <!-- Title here -->
-    <title>College Notes Pro</title>
+    <title>Takeaway Pro</title>
     <!-- Description, Keywords and Author -->
     <meta name="description" content="Your description">
     <meta name="keywords" content="Your,Keywords">
@@ -20,8 +20,11 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js" type="text/javascript"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js" type="text/javascript"></script>
-  <script src="/static/takeaway/js/jquery.autosize.min.js" type="text/javascript"></script>
-  <script src="/static/takeaway/js/jquery.cookie.js" type="text/javascript"></script>
+  <script src="/static/takeaway/js/lib/jquery.autosize.min.js" type="text/javascript"></script>
+  <script src="/static/takeaway/js/lib/jquery.cookie.js" type="text/javascript"></script>
+  <script src="/static/takeaway/js/course.js" type="text/javascript"></script>
+  <script src="/static/takeaway/js/session.js" type="text/javascript"></script>
+
 
 
     <link href="/static/takeaway/css/style.css" rel="stylesheet">
@@ -50,7 +53,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="index.html" class="navbar-brand">College Notes Pro</a>
+                <a href="index.html" class="navbar-brand">Takeaway Pro</a>
             </div>
             <!-- Site name for smallar screens -->
             <!-- Navigation starts -->
@@ -161,7 +164,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="index.html" class="navbar-brand">College Notes Pro</a>
+                <a href="index.html" class="navbar-brand">Takeaway Pro</a>
             </div>
             <!-- Site name for smallar screens -->
             <!-- Navigation starts -->
@@ -310,7 +313,7 @@
                       <div class="widget wlightblue">
                         <!-- Widget title -->
                         <div class="widget-head">
-                          <div class="pull-left">Recent TakeAways</div>
+                          <div class="pull-left">TakeAways</div>
                           <div class="widget-icons pull-right">
                             <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
                             <a href="#" class="wclose"><i class="fa fa-times"></i></a>
@@ -323,46 +326,6 @@
                           <div class="padd">
 
                             <ul id="takeaway-list" class="recent">
-                              <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 25/1/2120 by Ashok</div>
-                                  <div>Vivamus diam elit diam, consectetur fermentum sed dapibus eget, Vivamus consectetur dapibus adipiscing elit.
-                                  </div>
-
-                                  <div class="btn-group">
-                                    <button class="btn btn-xs btn-success"><i class="fa fa-check"></i> </button>
-                                    <button class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> </button>
-                                    <button class="btn btn-xs btn-danger"><i class="fa fa-times"></i> </button>
-                                  </div>
-
-                                  <button class="btn btn-xs btn-danger pull-right">Spam</button>
-
-                                  <div class="clearfix"></div>
-                                </div>
-                              </li>
-
-
-
-                              <li>
-
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 25/1/2120 by Ashok</div>
-                                  <div>Vivamus diam elit diam, consectetur fermentum sed dapibus eget, Vivamus consectetur dapibus adipiscing elit.
-                                  </div>
-
-                                  <div class="btn-group">
-                                    <button class="btn btn-xs btn-success"><i class="fa fa-check"></i> </button>
-                                    <button class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> </button>
-                                    <button class="btn btn-xs btn-danger"><i class="fa fa-times"></i> </button>
-                                  </div>
-
-                                  <button class="btn btn-xs btn-danger pull-right">Spam</button>
-
-                                  <div class="clearfix"></div>
-                                </div>
-                              </li>
-
-
                             </ul>
 
                           </div>
@@ -408,150 +371,14 @@
     </span>
 
 
-           <script type="text/javascript">
 
-      var Course = Backbone.Model.extend({
-        urlRoot:'/courses'
-      });
-
-      var CourseView = Backbone.View.extend({
-        tagName: "a",
-        className: "course",
-
-        template:_.template('<span><i class="fa fa-bars"></i> <%= course_name%></span>'),
-        render : function(){
-              this.$el.append(this.template(this.model.toJSON()));
-              return this;
-        },
-        events: {"click span":"loadTakeaways"},
-        loadSessions: function(){
-            var sessionList = new SessionList();
-            sessionList.fetch({data: {course: this.model.id},
-                success: function(collection, response){
-                    var sessionListView = new SessionListView({collection:collection.models});
-                    sessionListView.render();
-                }});
-        },
-
-        loadTakeaways : function(){
-            var takeawayList = new TakeawayList();
-            takeawayList.fetch({data: {course: this.model.id},
-                success: function(collection, response){
-                    var takeawayListView = new TakeawayListView({collection:collection.models});
-                    takeawayListView.render();
-                }});
-        }
-
-      });
-
-    var CourseList = Backbone.Collection.extend({
-            model: Course
-    });
-
-    var CourseListView = Backbone.View.extend({
-
-        render : function(){
-            this.collection.forEach(this.addOne,this);
-            return this;
-        },
-        addOne: function(course){
-            var courseObject = new Course();
-            courseObject.set(course);
-            var courseView = new CourseView({model:courseObject});
-            $(this.el).append(courseView.render().el);
-        }
-
-    });
-
-
-    var course = new Course();
-    course.fetch({success:function(collection, response){
-        var courses = collection.attributes.results;
-        var courseListView = new CourseListView({collection:courses});
-        $("#course-list").append(courseListView.render().el);
-    }});
-
-
-
-    </script>
 
 
 
 <script>
-        var EditInPlaceForm = Backbone.View.extend({
-    tagName: "form",
-
-    events: {
-        "submit": "save"
-    },
-
-    initialize: function (options) {
-        _.extend(this, options);
-    },
-
-    render: function () {
-        this.$el.html($("<textarea>", {
-            val: this.model.get(this.attribute)
-        }));
-        this.$el.find("textarea").trigger('autosize.resize');
-        return this;
-    },
-
-    save: function () {
-        this.model.set(this.attribute, this.$el.find("textarea").val());
-        this.model.save();
-        return false;
-    }
-});
-
-var EditInPlaceView = Backbone.View.extend({
-    tagName:"pre",
-    attribute: "notes",
-    className: "takeaway-pre",
-
-    initialize: function (options) {
-        _.extend(this, options);
-        this.model.on("change", this.render, this);
-    },
-
-    events: {
-        "dblclick": "edit"
-    },
-
-    render: function () {
-        this.$el.html(this.model.get(this.attribute));
-        return this;
-    },
-
-    edit: function () {
-        this.$el.html(new EditInPlaceForm({
-            model: this.model,
-            attribute: this.attribute
-        }).render().el);
-        this.$el.find("textarea").autosize();
-        this.$el.find("textarea").select();
-    }
-
-});
-</script>
-
-<script type="text/template" id="takeaway-templates">
-    <div class="widget-head">
-                            <div class="pull-left"><%= course%>-<%= session %>-<%= user%>  </div>
-                            <div class="widget-icons pull-right">
-                                <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
-                                <a href="#" class="wclose"><i class="fa fa-times"></i></a>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="widget-content">
-                            <div class="padd">
-                                <%=notes%>
-                            </div>
-                        </div>
-
 
 </script>
+
 
 
 <script type="text/template" id="session-template">
@@ -561,6 +388,7 @@ var EditInPlaceView = Backbone.View.extend({
                                           <th><%= session_dt%></th>
 
 </script>
+
 
 <script type="text/template" id="takeaway-template">
     <li>
@@ -586,138 +414,17 @@ var EditInPlaceView = Backbone.View.extend({
 <script type="text/template" id="notes-template">
     <div id="edit-in-place">
     </div>
-    </script>
+</script>
+
+
 
 <script>
 
 
 
-var Session = Backbone.Model.extend({
-    urlRoot:'/sessions/'
-});
-
-var SessionView = Backbone.View.extend({
-     tagName: 'tr',
-    render: function(){
-        var template = _.template($('#session-template').html(),this.model.toJSON());
-        this.$el.html(template);
-        return this;
-    },
-    events:{"click a":"getTakeaways"},
-
-    getTakeaways: function(event){
-        var takeaways = new TakeawayList();
-        var id = $(event.currentTarget).attr('id');
-        takeaways.fetch({success: function(collection, response){
-            var takeawaysForSession = new Array();
-            var allTakeaways =collection.models[0].attributes.results;
-            for(var i =0,j=0;i < allTakeaways.length;i++){
-                var sessionId = allTakeaways[i].session;
-                if(  sessionId == id){
-                    takeawaysForSession[j]=allTakeaways[i];
-                    j++;
-                }
-            }
-
-
-            var takeawayListView = new TakeawayListView({collection:takeawaysForSession});
-            takeawayListView.render();
-        }});
-
-    }
-});
-
-
-
-var SessionList = Backbone.Collection.extend({
-    model:Session,
-    url:'/sessions',
-parse: function(response){
-        return response.results;
-    }
-});
-
-
-var SessionListView  = Backbone.View.extend({
-    el: $("#session-table"),
-    render: function(){
-        this.$el.html("");
-        this.collection.forEach(this.addOne,this);
-    },
-    addOne: function(session){
-         var sessionObject = new Session();
-              sessionObject.set(session);
-              var sessionView = new SessionView({model:sessionObject});
-              this.$el.append(sessionView.render().el);
-    }
-});
-
-var session = new Session();
-session.fetch({success: function(collection, response){
-    var sessionListView = new SessionListView({collection: collection.attributes.results});
-    //    $("#session-table").append(sessionListView.render().el);
-    sessionListView.render();
-}});
-
 </script>
 
 
-
-
-   <script>
-    var Takeaway = Backbone.Model.extend({
-        urlRoot:'/takeaways/'
-
-    });
-    var TakeawayView = Backbone.View.extend({
-
-        render: function(){
-            var template = _.template($('#takeaway-template').html(),this.model.toJSON());
-            this.editInPlaceView = new EditInPlaceView({model:this.model});
-
-            $(this.el).html(template);
-            this.$('#editable-notes').append(this.editInPlaceView.render().el);
-            return this;
-        },
-        events: {"click .btn-success":"updateNotes"},
-
-        updateNotes : function(){
-            var notes = this.$("textarea").val();
-            this.model.set({notes:notes});
-            this.model.save();
-            this.render();
-        }
-    });
-
-    var TakeawayList = Backbone.Collection.extend({
-        model: Takeaway,
-        url:'/takeaways/'
-    });
-
-    var TakeawayListView = Backbone.View.extend({
-        el: $("#takeaway-list"),
-        render: function(){
-            this.$el.html("");
-            this.collection.forEach(this.addOne,this);
-            return this;
-        },
-        addOne: function(takeaway){
-              var takeawayObject = new Takeaway();
-              takeawayObject.set(takeaway);
-              var takeawayView = new TakeawayView({model:takeawayObject});
-              this.$el.append(takeawayView.render().el);
-        }
-    });
-
-
-var takeaway = new Takeaway();
-takeaway.fetch({success:function(collection, response){
-
-    var takeawayListView = new TakeawayListView({collection:collection.attributes.results});
-    takeawayListView.render();
-
-}});
-        </script>
 
     <script>
 
@@ -741,30 +448,13 @@ $.ajaxSetup({
 
     <!-- Javascript files -->
     <!-- jQuery -->
-    <script src="/static/takeaway/js/jquery.js"></script>
+    <script src="/static/takeaway/js/lib/jquery.js"></script>
     <!-- Bootstrap JS -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/static/takeaway/js/lib/bootstrap.min.js"></script>
     <!-- jQuery UI -->
-    <script src="/static/takeaway/js/jquery-ui.min.js"></script>
-    <!-- jQuery Flot -->
-    <script src="/static/takeaway/js/excanvas.min.js"></script>
-    <script src="/static/takeaway/js/jquery.flot.js"></script>
-    <script src="/static/takeaway/js/jquery.flot.resize.js"></script>
-    <script src="/static/takeaway/js/jquery.flot.pie.js"></script>
-    <script src="/static/takeaway/js/jquery.flot.stack.js"></script>
-    <!-- Sparklines -->
-    <script src="/static/takeaway/js/sparklines.js"></script>
-    <!-- jQuery Gritter -->
-    <script src="/static/takeaway/js/jquery.gritter.min.js"></script>
-    <!-- Respond JS for IE8 -->
-    <script src="/static/takeaway/js/respond.min.js"></script>
-    <!-- HTML5 Support for IE -->
-    <script src="/static/takeaway/js/html5shiv.js"></script>
-    <!-- Custom JS -->
-    <script src="/static/takeaway/js/custom.js"></script>
 
-    <!-- Script for this page -->
-    <script src="/static/takeaway/js/sparkline-index.js"></script>
+
+    <script src="/static/takeaway/js/takeaway.js" type="text/javascript"></script>
 
 
 </body>
