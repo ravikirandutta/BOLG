@@ -80,11 +80,10 @@ var EditInPlaceView = Backbone.View.extend({
 
     var TakeawayList = Backbone.Collection.extend({
         model: Takeaway,
-        url:'/takeaways/'
+        url:'/sessions/'
     });
 
     var TakeawayListView = Backbone.View.extend({
-        el: $("#takeaway-list"),
         render: function(){
             this.$el.html("");
             this.collection.forEach(this.addOne,this);

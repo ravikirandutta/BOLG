@@ -5,10 +5,13 @@ var Session = Backbone.Model.extend({
 });
 
 var SessionView = Backbone.View.extend({
-     tagName: 'tr',
     render: function(){
+
         var template = _.template($('#session-template').html(),this.model.toJSON());
         this.$el.html(template);
+
+        var takeawayList = new TakeawayListView({collection:this.model.attributes.takeaway_set});
+        this.$el.find("#takeaway-list").append(takeawayList.render().el);
         return this;
     },
     events:{"click a":"getTakeaways"},
@@ -47,10 +50,11 @@ parse: function(response){
 
 
 var SessionListView  = Backbone.View.extend({
-    el: $("#session-table"),
+
     render: function(){
         this.$el.html("");
         this.collection.forEach(this.addOne,this);
+        return this;
     },
     addOne: function(session){
          var sessionObject = new Session();
@@ -60,11 +64,11 @@ var SessionListView  = Backbone.View.extend({
     }
 });
 
-var session = new Session();
+var takeawayList = new TakeawayList();
 session.fetch({success: function(collection, response){
     var sessionListView = new SessionListView({collection: collection.attributes.results});
-    //    $("#session-table").append(sessionListView.render().el);
-    sessionListView.render();
+       $("#takeaway-container").append(sessionListView.render().el);
+
 }});
 
 

@@ -310,44 +310,7 @@
 <!-- takeaway stuff-->
         <div class="col-md-6" id="takeaway-container">
                       <!-- Widget -->
-                      <div class="widget wlightblue">
-                        <!-- Widget title -->
-                        <div class="widget-head">
-                          <div class="pull-left">TakeAways</div>
-                          <div class="widget-icons pull-right">
-                            <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
-                            <a href="#" class="wclose"><i class="fa fa-times"></i></a>
-                          </div>
-                          <div class="clearfix"></div>
-                        </div>
 
-                        <div class="widget-content">
-                          <!-- Widget content -->
-                          <div class="padd">
-
-                            <ul id="takeaway-list" class="recent">
-                            </ul>
-
-                          </div>
-                        </div>
-
-                          <!-- Widget footer -->
-                          <div class="widget-foot">
-
-                                <ul class="pagination pull-right">
-                                  <li><a href="#">Prev</a></li>
-                                  <li><a href="#">1</a></li>
-                                  <li><a href="#">2</a></li>
-                                  <li><a href="#">3</a></li>
-                                  <li><a href="#">4</a></li>
-                                  <li><a href="#">5</a></li>
-                                  <li><a href="#">Next</a></li>
-                                </ul>
-                            <div class="clearfix"></div>
-
-                          </div>
-
-                      </div>
 
                     </div>
                   </div>
@@ -383,17 +346,39 @@
 
 <script type="text/template" id="session-template">
 
-                                          <th><center><%= id%></center></th>
-                                          <th><a> <%= session_name%></a></th>
-                                          <th><%= session_dt%></th>
+
+                    <div class="widget wlightblue">
+                        <!-- Widget title -->
+                        <div class="widget-head">
+                          <div class="pull-left"><%=session_name %></div>
+                          <div class="widget-icons pull-right">
+                            <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
+                            <a href="#" class="wclose"><i class="fa fa-times"></i></a>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
+                        <div class="widget-content">
+                          <!-- Widget content -->
+                          <div class="padd">
+
+                            <ul id="takeaway-list" class="recent">
+                            </ul>
+
+                          </div>
+                        </div>
+
+
+
+                      </div>
+
 
 </script>
-
 
 <script type="text/template" id="takeaway-template">
     <li>
                                 <div class="recent-content">
-                                  <div class="recent-meta">Posted on 25/1/2120 by <%= user%></div>
+                                  <div class="recent-meta">Posted on 25/1/2120 by </div>
                                   <div id="editable-notes"></div>
 
                                   <div class="btn-group">
@@ -415,16 +400,6 @@
     <div id="edit-in-place">
     </div>
 </script>
-
-
-
-<script>
-
-
-
-</script>
-
-
 
     <script>
 

@@ -14,21 +14,14 @@
               return this;
         },
         events: {"click span":"loadTakeaways"},
-        loadSessions: function(){
-            var sessionList = new SessionList();
-            sessionList.fetch({data: {course: this.model.id},
-                success: function(collection, response){
-                    var sessionListView = new SessionListView({collection:collection.models});
-                    sessionListView.render();
-                }});
-        },
 
         loadTakeaways : function(){
+            $("#takeaway-container").html("");
             var takeawayList = new TakeawayList();
             takeawayList.fetch({data: {course: this.model.id},
                 success: function(collection, response){
-                    var takeawayListView = new TakeawayListView({collection:collection.models});
-                    takeawayListView.render();
+                    var sessionListView = new SessionListView({collection:collection.models[0].attributes.results});
+                    $("#takeaway-container").append(sessionListView.render().el);
                 }});
         }
 

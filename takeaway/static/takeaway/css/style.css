@@ -42,7 +42,6 @@ body{
 	font-size: 13px;
 	line-height: 23px;
 	color: #666;
-	background:#111;  
 	padding-top: 45px;
 	-webkit-font-smoothing: antialiased;
 }
@@ -141,7 +140,7 @@ a.btn{
 .badge{
 	font-weight: 400;
 	padding: 3px 8px;
-	font-size: 13px;	
+	font-size: 13px;
 }
 
 .progress{
@@ -246,31 +245,31 @@ a.btn{
 
 .bblue{
 	background:#1171a3 !important;
-	color: #fff !important;	
+	color: #fff !important;
 	border: 0px !important;
 }
 
 .bgreen{
 	background: #43c83c !important;
-	color: #fff !important;	
+	color: #fff !important;
 	border: 0px !important;
 }
 
 .borange{
 	background:#f88529 !important;
-	color: #fff !important;	
-	border: 0px !important;	
+	color: #fff !important;
+	border: 0px !important;
 }
 
 .bred{
 	background: #fa3031 !important;
-	color: #fff !important;	
+	color: #fff !important;
 	border: 0px !important;
 }
 
 .bviolet{
 	background: #932ab6 !important;
-	color: #fff !important;	
+	color: #fff !important;
 	border: 0px !important;
 }
 
@@ -282,7 +281,7 @@ a.btn{
 .borange h2,.borange h3, .borange h3, .borange h4, .borange h5, .borange h6{
 	color: #fff !important;
 }
- 
+
 .blightblue a,
 .bblue a,
 .bgreen a,
@@ -352,7 +351,7 @@ form{
 	bottom: 0px;
 	left: 0px;
 	z-index: 104400;
-	background: #fa3031; 
+	background: #fa3031;
 }
 
 .totop a, .totop a:visited{
@@ -437,7 +436,7 @@ form{
     border-radius: 0px;
     border: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
-}  
+}
 
 .dropdown-menu li{
 	color: #777;
@@ -551,7 +550,7 @@ form{
 .sidebar ul{
 	padding: 0px;
 	margin: 0px;
-	list-style-type: none;	
+	list-style-type: none;
 }
 
 .sidebar ul li{
@@ -559,11 +558,11 @@ form{
 }
 
 .sidebar .sidebar-inner{
-  display: block; 
-  width:100%; 
-  margin: 0 auto; 
+  display: block;
+  width:100%;
+  margin: 0 auto;
   position: absolute;
-  z-index: 60;	
+  z-index: 60;
   background: #111;
 }
 
@@ -575,8 +574,8 @@ form{
 	margin: 0px;
 }
 
-.sidebar .navi > li > a{ 
-  display: block; 
+.sidebar .navi > li > a{
+  display: block;
   padding: 12px 20px;
   font-size: 15px;
   line-height: 25px;
@@ -586,23 +585,23 @@ form{
   background-color: #111;
 }
 
-.sidebar .navi > li > a:hover, .sidebar .navi > li.open > a { 
+.sidebar .navi > li > a:hover, .sidebar .navi > li.open > a {
   border-bottom: 1px solid #222;
   background-color: #222;
   color: #fff;
 }
 
-.sidebar .navi li ul { 
-	display: none; 
-	background: #181818; 
+.sidebar .navi li ul {
+	display: none;
+	background: #181818;
 }
 
 .sidebar .navi li.open ul{
 	display: block;
 }
 
-.sidebar .navi li ul li a { 
-  display: block; 
+.sidebar .navi li ul li a {
+  display: block;
   background: none;
   padding: 10px 0px;
   padding-left: 42px;
@@ -611,11 +610,11 @@ form{
   border-bottom: 1px solid #222;
 }
 
-.sidebar .navi li ul li.active a { 
+.sidebar .navi li ul li.active a {
   background: #050505;
   border-bottom: 1px solid #222;
 }
-.sidebar .navi li ul li.active a:hover { 
+.sidebar .navi li ul li.active a:hover {
   background: #050505;
 }
 
@@ -626,9 +625,9 @@ form{
 
 /* Sidebar colors */
 
-.sidebar .navi > li.nlightblue > a:hover, 
-.sidebar .navi > li.open.nlightblue > a, 
-.sidebar .navi > li.current.nlightblue > a { 
+.sidebar .navi > li.nlightblue > a:hover,
+.sidebar .navi > li.open.nlightblue > a,
+.sidebar .navi > li.current.nlightblue > a {
   background:#52b9e9 !important;
   -webkit-transition:background 0.5s ease;
   -moz-transition:background 0.5s ease;
@@ -636,9 +635,9 @@ form{
   transition:background 0.5s ease;
 }
 
-.sidebar .navi > li.nblue > a:hover, 
+.sidebar .navi > li.nblue > a:hover,
 .sidebar .navi > li.open.nblue > a,
-.sidebar .navi > li.current.nblue > a { 
+.sidebar .navi > li.current.nblue > a {
   background:#1171a3 !important;
   -webkit-transition:background 0.5s ease;
   -moz-transition:background 0.5s ease;
@@ -646,9 +645,9 @@ form{
   transition:background 0.5s ease;
 }
 
-.sidebar .navi > li.ngreen > a:hover, 
+.sidebar .navi > li.ngreen > a:hover,
 .sidebar .navi > li.open.ngreen > a,
-.sidebar .navi > li.current.ngreen > a { 
+.sidebar .navi > li.current.ngreen > a {
   background:#43c83c !important;
   -webkit-transition:background 0.5s ease;
   -moz-transition:background 0.5s ease;
@@ -656,9 +655,9 @@ form{
   transition:background 0.5s ease;
 }
 
-.sidebar .navi > li.norange > a:hover, 
+.sidebar .navi > li.norange > a:hover,
 .sidebar .navi > li.open.norange > a,
-.sidebar .navi > li.current.norange > a { 
+.sidebar .navi > li.current.norange > a {
   background:#f88529 !important;
   -webkit-transition:background 0.5s ease;
   -moz-transition:background 0.5s ease;
@@ -666,9 +665,9 @@ form{
   transition:background 0.5s ease;
 }
 
-.sidebar .navi > li.nred > a:hover, 
+.sidebar .navi > li.nred > a:hover,
 .sidebar .navi > li.open.nred > a,
-.sidebar .navi > li.current.nred > a { 
+.sidebar .navi > li.current.nred > a {
   background:#fa3031 !important;
   -webkit-transition:background 0.5s ease;
   -moz-transition:background 0.5s ease;
@@ -676,9 +675,9 @@ form{
   transition:background 0.5s ease;
 }
 
-.sidebar .navi > li.nviolet > a:hover, 
+.sidebar .navi > li.nviolet > a:hover,
 .sidebar .navi > li.open.nviolet > a,
-.sidebar .navi > li.current.nviolet > a { 
+.sidebar .navi > li.current.nviolet > a {
   background:#932ab6 !important;
   -webkit-transition:background 0.5s ease;
   -moz-transition:background 0.5s ease;
@@ -697,8 +696,8 @@ form{
 }
 
 .sidebar .sidebar-dropdown a{
-	color: #ddd;  
-	background-color: #343434;	
+	color: #ddd;
+	background-color: #343434;
 	padding:10px;
 	text-transform: uppercase;
 	text-align: center;
@@ -706,7 +705,7 @@ form{
 	line-height:19px;
 	display: block;
 	border-top: 1px solid #666;
-	border-bottom: 1px solid #333;  
+	border-bottom: 1px solid #333;
 }
 
 .sidebar .sidebar-dropdown a:hover{
@@ -803,9 +802,9 @@ form{
 	border: 1px solid #ccc;
 	margin-right: 3px;
 	padding: 3px 8px;
-	background-color: #fff;	
+	background-color: #fff;
 	color: #666;
-}	
+}
 
 .pagination li a:hover{
 	color: #333;
@@ -894,7 +893,7 @@ form{
 .slide-content .nav-tabs > li > a{
 	background: #111 !important;
 	margin: 0px !important;
-	border: 1px solid #222 !important; 
+	border: 1px solid #222 !important;
 	color: #888 !important;
 }
 
@@ -905,7 +904,7 @@ form{
 
 .slide-content .tab-content{
 	padding: 10px;
-} 
+}
 
 .slide-content hr{
 	border-bottom: 1px solid #212121 !important;
@@ -951,13 +950,13 @@ form{
 
 .mainbar .matter > .container{
 	margin-left:0px;
-}	
+}
 
 /* Widget */
 
 .widget {
   margin-top: 10px;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
   background: #fff;
 }
 
@@ -1161,7 +1160,7 @@ form{
 .fc-event-skin {
 	background-color: #ff5d5e;
 	border-color: #ff3839;
-}	
+}
 
 .fc-button-month, .fc-button-agendaWeek, .fc-button-agendaDay {
 	right: 20px;
@@ -1183,11 +1182,11 @@ form{
 }
 
 .fc-content {
-	background: #fff;	
+	background: #fff;
 }
 
 .fc-content td:hover{
-	background: #f3f3f3;	
+	background: #f3f3f3;
 }
 
 /* Current status */
@@ -1226,7 +1225,7 @@ form{
 	margin-bottom: 5px;
 	margin-right: 10px;
     padding: 20px 15px;
-  background-color: #f8f8f8;	
+  background-color: #f8f8f8;
   background: #f8f8f8;
   border: 1px solid #ccc;
   max-width: 100%;
@@ -1290,26 +1289,26 @@ form{
     height:120px; float:left; margin:15px
 }
 
-.ui-slider .ui-slider-handle { 
-	position: absolute; 
-	z-index: 2; 
-	width: 1em; 
-	height: 1em; 
-	cursor: default; 
+.ui-slider .ui-slider-handle {
+	position: absolute;
+	z-index: 2;
+	width: 1em;
+	height: 1em;
+	cursor: default;
 	background: #fafafa !important;
-	border: 1px solid #ccc !important; 
+	border: 1px solid #ccc !important;
 }
 
-.ui-slider-horizontal { 
-	height: .5em; 
-	border: 0px solid #eee !important; 
+.ui-slider-horizontal {
+	height: .5em;
+	border: 0px solid #eee !important;
 	background: #dfdfdf !important;
 }
 
-.ui-slider-vertical { 
-	height: 100px; 
+.ui-slider-vertical {
+	height: 100px;
 	width: 0.5em;
-	border: 0px solid #fff !important; 
+	border: 0px solid #fff !important;
 	background: #dfdfdf !important;
 }
 
@@ -1321,32 +1320,32 @@ form{
 .slider-red .ui-widget-header{
 	background: #dd514c !important;
 	border-color: #dd514c !important;
-}	
+}
 
 .slider-blue .ui-widget-header{
 	background: #36a5c6 !important;
 	border-color: #36a5c6 !important;
-}	
+}
 
 .slider-green .ui-widget-header{
 	background: #44c636 !important;
 	border-color: #44c636 !important;
-}	
+}
 
 .slider-yellow .ui-widget-header{
 	background: #fcd419 !important;
 	border-color: #fcd419 !important;
-}	
+}
 
 .slider-orange .ui-widget-header{
 	background: #fc9419 !important;
 	border-color: #fc9419 !important;
-}	
+}
 
 .slider-violet .ui-widget-header{
 	background: #9919fc !important;
 	border-color: #9919fc !important;
-}	
+}
 
 /* Toggle button */
 
@@ -1411,7 +1410,7 @@ form{
 
 #bar-chart{
 	height: 283px;
-	width: 99.5%;	
+	width: 99.5%;
 }
 
 #pie-chart,#pie-chart2,#pie-chart3{
@@ -1424,7 +1423,7 @@ form{
 #slist p{
 display: none;
 margin:5px 0px;
-padding:5px 10px !important; 
+padding:5px 10px !important;
 background:#fff;
 line-height: 25px;
 border:1px solid #eee;
@@ -1502,17 +1501,17 @@ border:1px solid #eee;
 	.mainbar .matter{
 		padding-left: 20px;
 		padding-right: 20px;
-	}			
+	}
 	.form-inline button{
    		margin-left:0px;
-   	} 
+   	}
 	.navbar,.navbar-inner{
 		margin-top: 0px !important;
 		margin-bottom: 0px !important;
 	}
 	.navbar-collapse .dropdown-big .dropdown-menu{
 		color: #bbb !important;
-	}	
+	}
 	.navbar-collapse .dropdown-big .dropdown-menu a{
 		color: #ccc !important;
 		padding-left: 0px !important;
@@ -1523,7 +1522,7 @@ border:1px solid #eee;
 	}
 	.navbar-collapse .dropdown-big .dropdown-menu h5{
 		color: #eee !important;
-	}		
+	}
 	.navbar-collapse .dropdown-menu{
 		padding: 10px 10px !important;
 	}
@@ -1555,7 +1554,7 @@ border:1px solid #eee;
 		margin: 0px;
 		float: none;
 	}
-	.today-datas{	
+	.today-datas{
 		text-align: center;
 	}
 	.slide-box{
@@ -1588,7 +1587,7 @@ border:1px solid #eee;
 	}
 	.nav-collapse .dropdown-big .dropdown-menu{
 		color: #bbb !important;
-	}	
+	}
 	.nav-collapse .dropdown-big .dropdown-menu a{
 		color: #ccc !important;
 		padding-left: 0px !important;
@@ -1599,7 +1598,7 @@ border:1px solid #eee;
 	}
 	.nav-collapse .dropdown-big .dropdown-menu h5{
 		color: #eee !important;
-	}		
+	}
 	.nav-collapse .dropdown-menu{
 		padding: 10px 10px !important;
 	}

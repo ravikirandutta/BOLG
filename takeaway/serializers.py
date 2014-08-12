@@ -24,7 +24,8 @@ class SessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Session
         fields = ('id','session_name', 'session_dt','course','takeaway_set')
-		
+        depth = 1
+
 class TakeAwaySerializer(serializers.ModelSerializer):
     class Meta:
         model = TakeAway
