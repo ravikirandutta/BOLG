@@ -6,8 +6,8 @@ from takeaway.models import *
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        #fields = ( 'username', 'email', 'groups')
-        fields = ('username')
+        fields = ( 'username', 'email', 'groups')
+        #fields = ('username')
         
     
 
@@ -23,10 +23,10 @@ class CourseSerializer(serializers.ModelSerializer):
 
 
 class TakeAwaySerializer(serializers.ModelSerializer):
-    user = serializers.Field(source='user.username')
+    username = serializers.Field(source='user.username')
     class Meta:
         model = TakeAway
-        fields = ('id','notes', 'user','course','session','is_public')
+        fields = ('id','notes', 'user','course','session','is_public','username')
         #depth = 1 
 
 class SessionSerializer(serializers.ModelSerializer):
