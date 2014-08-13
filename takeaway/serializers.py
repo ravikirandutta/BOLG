@@ -8,8 +8,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ( 'username', 'email', 'groups')
         #fields = ('username')
-        
-    
+
+
 
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,8 +27,8 @@ class TakeAwaySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TakeAway
-        fields = ('id','notes', 'user','course','session','is_public','username', 'tags')
-        depth = 1 
+        fields = ('id','notes', 'user','course','session','is_public','username', 'tags','created_dt')
+        depth = 1
 
 class SessionSerializer(serializers.ModelSerializer):
     takeaway_set = TakeAwaySerializer(source='takeaway_set')
@@ -42,5 +42,5 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = ('id', 'name')
-        
+
 

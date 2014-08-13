@@ -13,6 +13,7 @@
         this.$el.html($("<textarea>", {
             val: this.model.get(this.attribute)
         }));
+        this.$el.find("textarea").addClass("textarea");
         this.$el.find("textarea").trigger('autosize.resize');
         return this;
     },
@@ -105,4 +106,25 @@ takeaway.fetch({success:function(collection, response){
     takeawayListView.render();
 
 }});
+
+var NewTakeaway = Backbone.View.extend({
+     render: function(){
+        var template = _.template($('#new-takeaway-template').html(),this.model);
+        this.$el.append(template)
+        return this;
+     },
+     events: {"click .btn-primary":"createTakeaway"},
+
+     createTakeaway: function(){
+        var object = {};
+        object.notes = $("textarea").val();
+        object.user = 1;
+        object.course = 1;
+        object.session = 1;
+        var takeaway = new Takeaway();
+        takeaway.set(object);
+        takeaway.save();
+     }
+});
+
 

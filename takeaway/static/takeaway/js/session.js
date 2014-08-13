@@ -14,28 +14,16 @@ var SessionView = Backbone.View.extend({
         this.$el.find("#takeaway-list").append(takeawayList.render().el);
         return this;
     },
-    events:{"click a":"getTakeaways"},
+    events:{"click .btn-primary":"createTakeaway"},
 
-    getTakeaways: function(event){
-        var takeaways = new TakeawayList();
-        var id = $(event.currentTarget).attr('id');
-        takeaways.fetch({success: function(collection, response){
-            var takeawaysForSession = new Array();
-            var allTakeaways =collection.models[0].attributes.results;
-            for(var i =0,j=0;i < allTakeaways.length;i++){
-                var sessionId = allTakeaways[i].session;
-                if(  sessionId == id){
-                    takeawaysForSession[j]=allTakeaways[i];
-                    j++;
-                }
-            }
+    createTakeaway: function(){
+        var newTakeaway = new NewTakeaway({model:this.model.toJSON()});
 
-
-            var takeawayListView = new TakeawayListView({collection:takeawaysForSession});
-            takeawayListView.render();
-        }});
-
+        $("#newTakeaway").html("");
+         $("#newTakeaway").append(newTakeaway.render().el);
     }
+
+
 });
 
 
