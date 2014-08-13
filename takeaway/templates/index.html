@@ -419,6 +419,11 @@
                                     <button class="btn btn-xs btn-danger"><i class="fa fa-times"></i> </button>
                                   </div>
 
+                                    
+                                    <% _.each(tags, function(tag) { %> 
+                                        <span class="label label-success"><%=tag.name%></span>
+                                    <% }); %>
+
                                   <button class="btn btn-xs btn-danger pull-right">Spam</button>
 
                                   <div class="clearfix"></div>
