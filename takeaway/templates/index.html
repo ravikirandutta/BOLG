@@ -352,10 +352,10 @@
 
 
 <script type="text/template" id="new-takeaway-template">
-   <div class="modal-dialog">
+   <div id="takeawayModal" class="modal-dialog">
                                   <div class="modal-content">
                                   <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <button id="modalCloseButton" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                     <h4 class="modal-title">New Takeaway for <%=session_name%></h4>
                                   </div>
                                   <div class="modal-body">
@@ -419,8 +419,8 @@
                                     <button class="btn btn-xs btn-danger"><i class="fa fa-times"></i> </button>
                                   </div>
 
-                                    
-                                    <% _.each(tags, function(tag) { %> 
+
+                                    <% _.each(tags, function(tag) { %>
                                         <span class="label label-success"><%=tag.name%></span>
                                     <% }); %>
 

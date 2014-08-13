@@ -116,14 +116,17 @@ var NewTakeaway = Backbone.View.extend({
      events: {"click .btn-primary":"createTakeaway"},
 
      createTakeaway: function(){
+        this.model;
         var object = {};
         object.notes = $("textarea").val();
         object.user = 1;
-        object.course = 1;
-        object.session = 1;
+        object.course = this.model.course.id;
+        object.session = this.model.id;
         var takeaway = new Takeaway();
         takeaway.set(object);
         takeaway.save();
+        $("#modalCloseButton").click();
+
      }
 });
 
