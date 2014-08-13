@@ -17,16 +17,17 @@ from takeaway.permissions import IsOwnerOrReadOnly
 @login_required
 def home(request):
     #course = Course.objects.create(course_name="MARKETING" , created_by="ravid")
-    course_instance_list = Course.objects.filter(students=request.user)
+    #course_instance_list = Course.objects.filter(students=request.user)
 
-    return render_to_response("course_list.html",{'course_instance_list':course_instance_list},RequestContext(request))
+    return render_to_response("login.html",RequestContext(request))
+
 
 def index(request):
     #course = Course.objects.create(course_name="MARKETING" , created_by="ravid")
     user = authenticate(username=request.POST.get('Username'), password=request.POST.get('Password'))
     course_instance_list = Course.objects.filter(students=user)
 
-    return render_to_response("login.html",{'course_instance_list':course_instance_list},RequestContext(request))
+    return render_to_response("index.html",{'course_instance_list':course_instance_list},RequestContext(request))
 
 def personal_index(request):
     #course = Course.objects.create(course_name="MARKETING" , created_by="ravid")
@@ -78,7 +79,7 @@ def handlelogin(request):
             Course.objects.all()[0].students.add(newuser)
             Course.objects.all()[1].students.add(newuser)
             course_instance_list = Course.objects.filter(students=newuser)
-            return render_to_response("course_list.html",{'course_instance_list':course_instance_list,'logged_user':newuser},RequestContext(request))
+            return render_to_response("index.html",{'course_instance_list':course_instance_list,'logged_user':newuser},RequestContext(request))
 
 
     else:
@@ -93,7 +94,7 @@ def handlelogin(request):
                 logged_user = User.objects.get(username=request.POST.get('Username'))
                 course_instance_list = Course.objects.filter(students=logged_user)
                 notifications = logged_user.notifications.unread()
-                return render_to_response("course_list.html",{'course_instance_list':course_instance_list,'logged_user':logged_user,'notifications':notifications},RequestContext(request))
+                return render_to_response("index.html",{'course_instance_list':course_instance_list,'logged_user':logged_user,'notifications':notifications},RequestContext(request))
                 #return render_to_response("coursedetail.html",{'course':course_obj,'course_sessions_list':course_sessions_list,'userid':request.user},RequestContext(request))
 
             else:
@@ -102,6 +103,7 @@ def handlelogin(request):
         else:
             # the authentication system was unable to verify the username and password
             message =  "The username/password is incorrect."
+            #message=""
             return render_to_response("login.html",{ 'error_message': message },RequestContext(request))
 
 

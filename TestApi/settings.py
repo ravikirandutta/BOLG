@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'takeaway',
 	'rest_framework',
-    'south'
+    'south',    
+    'notifications',
 )
 
 MIDDLEWARE_CLASSES = (

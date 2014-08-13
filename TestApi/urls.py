@@ -16,7 +16,10 @@ router.register(r'sessions', views.SessionViewSet)
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'TestApi.views.home', name='home'),
+    url(r'^$', 'takeaway.views.home', name='home'),
+    url(r'^login/$', 'takeaway.views.home', name='login'),
+    url(r'^handlelogin/$', 'takeaway.views.handlelogin', name='handlelogin'),
+    url(r'^logout/$', 'takeaway.views.logoutuser', name='logoutuser'),
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
