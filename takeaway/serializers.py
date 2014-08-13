@@ -24,10 +24,11 @@ class CourseSerializer(serializers.ModelSerializer):
 
 class TakeAwaySerializer(serializers.ModelSerializer):
     username = serializers.Field(source='user.username')
+
     class Meta:
         model = TakeAway
-        fields = ('id','notes', 'user','course','session','is_public','username')
-        #depth = 1 
+        fields = ('id','notes', 'user','course','session','is_public','username', 'tags')
+        depth = 1 
 
 class SessionSerializer(serializers.ModelSerializer):
     takeaway_set = TakeAwaySerializer(source='takeaway_set')
@@ -37,4 +38,9 @@ class SessionSerializer(serializers.ModelSerializer):
         fields = ('id','session_name', 'session_dt','course','takeaway_set')
         depth = 1
 
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ('id', 'name')
+        
 
