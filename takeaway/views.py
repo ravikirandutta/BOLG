@@ -98,6 +98,7 @@ def handlelogin(request):
                 #return render_to_response("coursedetail.html",{'course':course_obj,'course_sessions_list':course_sessions_list,'userid':request.user},RequestContext(request))
 
             else:
+                
                 message =  "The password is valid, but the account has been disabled!"
                 return render_to_response("coursedetail.html",{'course':course_obj,'course_sessions_list':[]},RequestContext(request))
         else:
