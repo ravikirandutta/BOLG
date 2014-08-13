@@ -28,10 +28,18 @@ class TakeAwaySerializer(serializers.ModelSerializer):
     class Meta:
         model = TakeAway
         fields = ('id','notes', 'user','course','session','is_public','username', 'tags','created_dt')
+        #depth = 1
+
+class TakeAwayDeSerializer(serializers.ModelSerializer):
+    username = serializers.Field(source='user.username')
+
+    class Meta:
+        model = TakeAway
+        fields = ('id','notes', 'user','course','session','is_public','username', 'tags','created_dt')
         depth = 1
 
 class SessionSerializer(serializers.ModelSerializer):
-    takeaway_set = TakeAwaySerializer(source='takeaway_set')
+    takeaway_set = TakeAwayDeSerializer(source='takeaway_set')
 
     class Meta:
         model = Session
