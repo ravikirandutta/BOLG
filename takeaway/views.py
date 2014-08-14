@@ -14,14 +14,14 @@ from takeaway.permissions import IsOwnerOrReadOnly
 
 
 # Create your views here.
-@login_required
+
 def home(request):
     #course = Course.objects.create(course_name="MARKETING" , created_by="ravid")
     #course_instance_list = Course.objects.filter(students=request.user)
 
     return render_to_response("login.html",RequestContext(request))
 
-
+@login_required
 def index(request):
     #course = Course.objects.create(course_name="MARKETING" , created_by="ravid")
     user = authenticate(username=request.POST.get('Username'), password=request.POST.get('Password'))
@@ -29,35 +29,6 @@ def index(request):
 
     return render_to_response("index.html",{'course_instance_list':course_instance_list},RequestContext(request))
 
-def personal_index(request):
-    #course = Course.objects.create(course_name="MARKETING" , created_by="ravid")
-    course_instance_list = Enrollment.objects.get_enrolled_courses(request.user)
-
-    return render_to_response("home.html",{'course_instance_list':course_instance_list},RequestContext(request))
-
-def logincheck(request):
-    user = authenticate(username=request.POST.get('Username'), password=request.POST.get('Password'))
-    course_obj = None
-    course_sessions_list = Session.objects.filter(course=course_obj)
-    if user is not None:
-        # the password verified for the user
-        if user.is_active:
-            message = "User is valid, active and authenticated"
-            login(request,user)
-            logged_user = User.objects.get(username=request.POST.get('Username'))
-            course_instance_list = Course.objects.filter(students=logged_user)
-            return render_to_response("course_list.html",{'course_instance_list':course_instance_list,'logged_user':logged_user},RequestContext(request))
-            #return render_to_response("coursedetail.html",{'course':course_obj,'course_sessions_list':course_sessions_list,'userid':request.user},RequestContext(request))
-
-        else:
-            message =  "The password is valid, but the account has been disabled!"
-            return render_to_response("coursedetail.html",{'course':course_obj,'course_sessions_list':[]},RequestContext(request))
-    else:
-        # the authentication system was unable to verify the username and password
-        message =  "The username/password is incorrect."
-        return render_to_response("login.html",{ 'error_message': message },RequestContext(request))
-    return HttpResponse( message)
-    #return render_to_response("coursedetail.html",{'course':course_obj,'course_sessions_list':course_sessions_list},RequestContext(request))
 
 def handlelogin(request):
 
@@ -118,132 +89,6 @@ def logoutuser(request):
     logout(request)
     return render_to_response("login.html",RequestContext(request))
 
-def coursedetail(request,course_id=1):
-    course_obj = Course.objects.get(pk=course_id)
-    course_sessions_list = Session.objects.filter(course=course_obj)
-    return render_to_response("coursedetail.html",{'course':course_obj,'course_sessions_list':course_sessions_list,'userid':request.user},RequestContext(request))
-    #return HttpResponse( course_sessions_list)
-
-@login_required
-def personal_course_detail(request,course_id=1):
-    course_obj = Course.objects.get(pk=course_id)
-    course_sessions_list = Session.objects.filter(course=course_obj)
-    sessions_notes_list = TakeAway.objects.filter(course=course_obj,user=request.user).order_by('session')
-    return render_to_response("personal_takeaway.html",{'course':course_obj,'course_sessions_list':course_sessions_list,'sessions_notes_list':sessions_notes_list},RequestContext(request))
-@login_required
-def public_course_detail(request,course_id=1):
-    course_obj = Course.objects.get(pk=course_id)
-    course_sessions_list = Session.objects.filter(course=course_obj)
-    sessions_notes_list = TakeAway.objects.filter(course=course_obj,is_public=True).order_by('session')
-    return render_to_response("personal_takeaway.html",{'course':course_obj,'course_sessions_list':course_sessions_list,'sessions_notes_list':sessions_notes_list,'userid':request.user})
-
-@login_required
-def sessiondetail(request,session_id=1):
-    session_obj = Session.objects.get(pk=session_id)
-    course_obj = session_obj.course
-    sessions_notes_list = TakeAway.objects.filter(session=session_obj).filter(user=request.user)
-    return render_to_response("takeawaydetail.html",{'course':course_obj,'session':session_obj,'sessions_notes_list':sessions_notes_list},RequestContext(request))
-@login_required
-def sessiondetailall(request,session_id=1):
-    session_obj = Session.objects.get(pk=session_id)
-    course_obj = session_obj.course
-    sessions_notes_list = TakeAway.objects.filter(session=session_obj).filter(is_public=True).order_by('-vote_count')
-    return render_to_response("takeawaydetail.html",{'course':course_obj,'session':session_obj,'sessions_notes_list':sessions_notes_list},RequestContext(request))
-@login_required
-def savenotes(request):
-    takeaway = request.POST.get('text')
-    session_id = request.POST.get('session.id')
-    #return HttpResponse( request.user)
-    session_obj = Session.objects.get(pk=session_id)
-    course_obj = session_obj.course
-    takeaway =  TakeAway( course=course_obj,session=session_obj,notes=takeaway,user=request.user)
-    takeaway.save()
-    sessions_notes_list = TakeAway.objects.filter(session=session_obj).filter(user=request.user)
-
-
-    return render_to_response("takeawaydetail.html",{'course':course_obj,'session':session_obj,'sessions_notes_list':sessions_notes_list},RequestContext(request))
-
-def notes_delete(request):
-    message ="deleted"
-
-    takeaway_pk = request.POST.get('takeaway_id')
-    takeaway_to_delete = TakeAway.objects.get(pk=takeaway_pk)
-
-    takeaway_to_delete.delete()
-
-    return HttpResponse(takeaway_pk)
-
-def notes_edit(request):
-    message ="Success"
-    edited_text = request.POST.get('takeaway_text')
-    takeaway_pk = request.POST.get('takeaway_id')
-    takeaway_to_edit = TakeAway.objects.get(pk=takeaway_pk)
-    takeaway_to_edit.notes = edited_text
-    takeaway_to_edit.save()
-
-    return HttpResponse(message)
-
-@requires_csrf_token
-def make_public(request):
-    user = request.user
-    takeaway_id = request.POST.get('takeaway_id')
-
-    #takeaway_id = 10
-    takeaway = TakeAway.objects.get(pk=takeaway_id)
-    takeaway_user = takeaway.user
-    takeaway.toggle_public()
-    takeaway.save()
-    recipients = User.objects.all()
-    for recipient in recipients:
-        message =  ' posted a takeaway on '+ str(takeaway.session)
-        notify.send(request.user,recipient=recipient, verb=message)
-
-    # notify.send(request.user, recipient=recipient, verb=u'posted', action_object=takeaway,
-        #    description= "takeaway", target= session_obj)
-    return HttpResponse( str(takeaway.is_public))
-
-@requires_csrf_token
-def vote(request):
-    #user = request.POST.get('user')
-    user=request.user
-    #print >>sys.stderr, user
-    takeaway_id = request.POST.get('takeaway_id')
-    p_vote_value = request.POST.get('vote_value')
-    vote_value = int(p_vote_value)
-    #takeaway_id = 10
-    takeaway = TakeAway.objects.get(pk=takeaway_id)
-    takeaway_user = takeaway.user
-    vote_list = Vote.objects.filter(user=user,takeaway=takeaway)
-    #TODO: backend logic to
-    if vote_list is not None and vote_list.count() >0 :
-        vote = vote_list[0]
-        current_value = vote.vote_value
-        vote.vote_value = vote_value
-        vote.save()
-        increment = 0
-        if current_value == vote_value:
-            increment=0;
-        elif current_value == -vote_value:
-            increment = 2* vote_value
-
-        takeaway.vote_count = takeaway.vote_count + increment
-    elif vote_list.count() ==0 :
-        vote  = Vote(user=user,takeaway=takeaway,vote_value=vote_value).save()
-        takeaway.vote_count = takeaway.vote_count + vote_value
-      # incrementing or decrementing the vote value
-    takeaway.save()
-    return HttpResponse( str(takeaway.vote_count))
-
-def mark_as_read(request):
-    user = request.user
-    user.notifications.mark_all_as_read()
-    return HttpResponse(str("success"))
-
-def test(request):
-    return render_to_response("test.html")
-
-def index(request):
-    return render_to_response("index.html")
 
 def initload(request):
     User.objects.create_user(username="atluri",password="abc123").save()
