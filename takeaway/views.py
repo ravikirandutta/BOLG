@@ -94,11 +94,14 @@ def handlelogin(request):
                 logged_user = User.objects.get(username=request.POST.get('Username'))
                 course_instance_list = Course.objects.filter(students=logged_user)
                 notifications = logged_user.notifications.unread()
-                return render_to_response("index.html",{'course_instance_list':course_instance_list,'logged_user':logged_user,'notifications':notifications},RequestContext(request))
+                response  = render_to_response("index.html",{})
+                response.set_cookie('userid',logged_user.id);
+                return response
+                #return render_to_response("index.html",{'course_instance_list':course_instance_list,'logged_user':logged_user,'notifications':notifications},RequestContext(request))
                 #return render_to_response("coursedetail.html",{'course':course_obj,'course_sessions_list':course_sessions_list,'userid':request.user},RequestContext(request))
 
             else:
-                
+
                 message =  "The password is valid, but the account has been disabled!"
                 return render_to_response("coursedetail.html",{'course':course_obj,'course_sessions_list':[]},RequestContext(request))
         else:

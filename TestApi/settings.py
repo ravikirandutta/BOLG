@@ -38,7 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'takeaway',
 	'rest_framework',
-    'south',    
+    'south',
     'notifications',
 )
 
@@ -96,6 +96,16 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+#Email Settings
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "mbatakeaway@gmail.com"
+EMAIL_HOST_PASSWORD = "getabillion101"
+DEFAULT_FROM_EMAIL = 'mbatakeaway@gmail.com'
+DEFAULT_TO_EMAIL = 'suresh.atluri@gmail.com'
+
 
 
 # Static files (CSS, JavaScript, Images)
