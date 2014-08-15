@@ -69,11 +69,26 @@ var EditInPlaceView = Backbone.View.extend({
             this.$('#editable-notes').append(this.editInPlaceView.render().el);
             return this;
         },
-        events: {"click .btn-success":"updateNotes"},
+        events: {"click .btn-success":"updateNotes",
+                 "click .tag-remove":"removeTag"},
 
         updateNotes : function(){
             var notes = this.$("textarea").val();
             this.model.set({notes:notes});
+            this.model.save();
+            this.render();
+        },
+        removeTag : function(event){
+            //TODO : remove for loop and see if this can be reducded
+            var tags = this.model.get('tags');
+            var updatedTags = new Array();
+            for(var i=0; i < tags.length ; i++){
+                var tag = tags[i];
+                if(tag.id != event.currentTarget.name){
+                    updatedTags.push(tag);
+                }
+            }
+            this.model.set({tags:updatedTags});
             this.model.save();
             this.render();
         }
