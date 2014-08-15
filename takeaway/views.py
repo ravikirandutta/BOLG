@@ -200,6 +200,11 @@ class SessionViewSet(viewsets.ModelViewSet):
 		permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
 
+class TagViewSet(viewsets.ModelViewSet):
+        queryset = Tag.objects.all()
+        serializer_class = TagSerializer
+        filter_backends = (filters.DjangoFilterBackend,)
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
 
 class TakeAwayList(generics.ListCreateAPIView):

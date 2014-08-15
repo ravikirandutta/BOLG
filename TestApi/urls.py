@@ -12,6 +12,7 @@ router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'courses', views.CourseViewSet)
 router.register(r'sessions', views.SessionViewSet)
+router.register(r'tags', views.TagViewSet)
 #router.register(r'takeaways', views.TakeAwayViewSet)
 
 urlpatterns = patterns('',
