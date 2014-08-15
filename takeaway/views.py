@@ -1,4 +1,4 @@
-from django.shortcuts import render,render_to_response,RequestContext, HttpResponseRedirect, HttpResponse
+from django.shortcuts import render,render_to_response,redirect,RequestContext, HttpResponseRedirect, HttpResponse
 from django.core.context_processors import request
 from django.views.decorators.csrf import requires_csrf_token
 from django.contrib.auth import authenticate,login,logout
@@ -26,8 +26,11 @@ def index(request):
     #course = Course.objects.create(course_name="MARKETING" , created_by="ravid")
     user = authenticate(username=request.POST.get('Username'), password=request.POST.get('Password'))
     course_instance_list = Course.objects.filter(students=user)
-
-    return render_to_response("index.html",{'course_instance_list':course_instance_list},RequestContext(request))
+    userid = request.session.get('userid','0')
+    response = render_to_response("index.html",{})
+    if userid is not '0':
+        response.set_cookie(key='userid',value=userid)
+    return response
 
 
 def handlelogin(request):
@@ -50,8 +53,10 @@ def handlelogin(request):
             Course.objects.all()[0].students.add(newuser)
             Course.objects.all()[1].students.add(newuser)
             course_instance_list = Course.objects.filter(students=newuser)
-            return render_to_response("index.html",{'course_instance_list':course_instance_list,'logged_user':newuser},RequestContext(request))
-
+            logged_user = User.objects.get(username=request.POST.get('Username'))
+            request.session['userid'] = logged_user.id
+            response  = render_to_response("index.html",{})
+            return redirect('index')
 
     else:
         user = authenticate(username=request.POST.get('Username'), password=request.POST.get('Password'))
@@ -65,9 +70,9 @@ def handlelogin(request):
                 logged_user = User.objects.get(username=request.POST.get('Username'))
                 course_instance_list = Course.objects.filter(students=logged_user)
                 notifications = logged_user.notifications.unread()
+                request.session['userid'] = logged_user.id
                 response  = render_to_response("index.html",{})
-                response.set_cookie('userid',logged_user.id);
-                return response
+                return redirect('index')
                 #return render_to_response("index.html",{'course_instance_list':course_instance_list,'logged_user':logged_user,'notifications':notifications},RequestContext(request))
                 #return render_to_response("coursedetail.html",{'course':course_obj,'course_sessions_list':course_sessions_list,'userid':request.user},RequestContext(request))
 
