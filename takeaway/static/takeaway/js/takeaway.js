@@ -56,7 +56,18 @@ var EditInPlaceView = Backbone.View.extend({
 
 
     var Takeaway = Backbone.Model.extend({
-        urlRoot:'/takeaways/'
+        urlRoot:'/takeaways/',
+        modifyAndSave: function(){
+            var courseid = this.get('course').id;
+            this.set({'course':courseid});
+            var sessionid = this.get('session').id;
+            this.set({'session':sessionid});
+            var userid = this.get('user').id;
+            this.set({'user':userid});
+            var tags = this.get('tags');
+
+            this.save();
+        }
 
     });
     var TakeawayView = Backbone.View.extend({
@@ -75,7 +86,7 @@ var EditInPlaceView = Backbone.View.extend({
         updateNotes : function(){
             var notes = this.$("textarea").val();
             this.model.set({notes:notes});
-            this.model.save();
+            this.model.modifyAndSave();
             this.render();
         },
         removeTag : function(event){
