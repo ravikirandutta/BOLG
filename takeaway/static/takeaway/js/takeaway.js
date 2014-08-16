@@ -168,13 +168,15 @@ takeaway.fetch({success:function(collection, response){
 }});
 
 var NewTakeaway = Backbone.View.extend({
+     selectedTags : new Array(),
      render: function(){
         var template = _.template($('#new-takeaway-template').html(),this.model);
         this.$el.append(template);
         this.$('#tags-list').append(tagsListView.render().el);
         return this;
      },
-     events: {"click .btn-primary":"createTakeaway"},
+     events: {"click .btn-primary":"createTakeaway",
+              "click a":"toggleTag"},
 
      createTakeaway: function(){
         this.model;
@@ -183,11 +185,27 @@ var NewTakeaway = Backbone.View.extend({
         object.user = $.cookie("userid");
         object.course = this.model.course.id;
         object.session = this.model.id;
+        object.tags= this.selectedTags;
         var takeaway = new Takeaway();
         takeaway.set(object);
+        
 
         takeaway.save();
         $("#modalCloseButton").click();
+
+     },
+     toggleTag : function(event){
+            var tagClicked = event.currentTarget.name;
+            if(this.selectedTags.indexOf(tagClicked) >= 0){
+                event.currentTarget.parentElement.className="label label-important";
+                for(var i = this.selectedTags.length-1; i--;){
+                    if (this.selectedTags[i] === tagClicked) this.selectedTags.splice(i, 1);
+                }
+            }else{
+                this.selectedTags.push(tagClicked);
+                event.currentTarget.parentElement.className="label label-success";
+            }
+            
 
      }
 });

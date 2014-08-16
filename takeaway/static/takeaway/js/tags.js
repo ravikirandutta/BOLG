@@ -8,7 +8,7 @@
         tagName: "span",
         className: "label label-important",
 
-        template:_.template('<a><%= name%></a>'),
+        template:_.template('<a name="<%=id%>"><%= name%></a>'),
         render : function(){
               this.$el.append(this.template(this.model.toJSON()));
               return this;
