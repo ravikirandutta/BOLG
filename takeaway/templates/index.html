@@ -26,6 +26,7 @@
 
   <script src="/static/takeaway/js/session.js?{% now "U" %}" type="text/javascript"></script>
   <script src="/static/takeaway/js/course.js?{% now "U" %}" type="text/javascript"></script>
+  <script src="/static/takeaway/js/tags.js?{% now "U" %}" type="text/javascript"></script>
     <!-- jQuery -->
 
     <!-- Bootstrap JS -->
@@ -282,6 +283,7 @@ $.ajaxSetup({
                                   </div>
                                   <div class="modal-body">
                                     <textarea class="takeaway"></textarea>
+                                    <div id="tags-list" ></div>
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>

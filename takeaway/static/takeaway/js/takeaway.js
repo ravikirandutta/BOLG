@@ -137,6 +137,7 @@ var NewTakeaway = Backbone.View.extend({
      render: function(){
         var template = _.template($('#new-takeaway-template').html(),this.model);
         this.$el.append(template)
+        this.$('#tags-list').append(tagsListView.render().el);
         return this;
      },
      events: {"click .btn-primary":"createTakeaway"},
