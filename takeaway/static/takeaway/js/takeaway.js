@@ -54,6 +54,24 @@ var EditInPlaceView = Backbone.View.extend({
 
 });
 
+var InPlaceView = Backbone.View.extend({
+    tagName:"pre",
+    attribute: "notes",
+    className: "takeaway-pre",
+
+    initialize: function (options) {
+        _.extend(this, options);
+        this.model.on("change", this.render, this);
+    },
+
+
+    render: function () {
+        this.$el.html(this.model.get(this.attribute));
+        return this;
+    },
+
+});
+
 
     var Takeaway = Backbone.Model.extend({
         urlRoot:'/takeaways/',
@@ -75,9 +93,16 @@ var EditInPlaceView = Backbone.View.extend({
         render: function(){
             var template = _.template($('#takeaway-template').html(),this.model.toJSON());
             this.editInPlaceView = new EditInPlaceView({model:this.model});
-
+            this.inPlaceView = new InPlaceView({model:this.model});
             $(this.el).html(template);
-            this.$('#editable-notes').append(this.editInPlaceView.render().el);
+
+            var isOwner = this.model.get('isOwner');
+            if (!isOwner){
+                this.$('.btn-group').hide();
+                this.$('#editable-notes').append(this.inPlaceView.render().el);
+            }else{
+                this.$('#editable-notes').append(this.editInPlaceView.render().el);
+            }
             return this;
         },
         events: {"click .btn-success":"updateNotes",
@@ -109,19 +134,25 @@ var EditInPlaceView = Backbone.View.extend({
         model: Takeaway,
         url:'/sessions/',
         parse: function(response){
-             return response.results;
+             var collection =  response.results;
+             return collection;
         }
     });
 
     var TakeawayListView = Backbone.View.extend({
         render: function(){
             this.$el.html("");
+
             this.collection.forEach(this.addOne,this);
             return this;
         },
         addOne: function(takeaway){
               var takeawayObject = new Takeaway();
               takeawayObject.set(takeaway);
+               var userid = $.cookie('userid');
+                 if (takeaway.user.id == userid)  {
+                    takeawayObject.set({isOwner:true});
+                 }
               var takeawayView = new TakeawayView({model:takeawayObject});
               this.$el.append(takeawayView.render().el);
         }

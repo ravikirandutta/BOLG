@@ -20,7 +20,7 @@
             var takeawayList = new TakeawayList();
             takeawayList.fetch({data: {course: this.model.id},
                 success: function(collection, response){
-                    var sessionListView = new SessionListView({collection:collection.models[0].attributes.results});
+                    var sessionListView = new SessionListView({collection:collection});
                     $("#takeaway-container").append(sessionListView.render().el);
                 }});
         }

@@ -337,11 +337,12 @@ $.ajaxSetup({
                                   <div class="recent-meta">Posted on <%=created_dt%> by <%= username%></div>
                                   <div id="editable-notes"></div>
 
-                                  <div class="btn-group">
+                                   <div class="btn-group">
                                     <button class="btn btn-xs btn-success"><i class="fa fa-check"></i> </button>
                                     <button class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> </button>
                                     <button class="btn btn-xs btn-danger"><i class="fa fa-times"></i> </button>
                                   </div>
+
 
 
                                     <% _.each(tags, function(tag) { %>
@@ -354,6 +355,11 @@ $.ajaxSetup({
                                   <div class="clearfix"></div>
                                 </div>
                               </li>
+
+</script>
+
+<!--  the below includes the edit options and -->
+<script type="text/template" id="editable-takeaway-template">
 
 </script>
 

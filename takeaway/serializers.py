@@ -24,15 +24,15 @@ class CourseSerializer(serializers.ModelSerializer):
 
 class TakeAwaySerializer(serializers.ModelSerializer):
     username = serializers.Field(source='user.username')
-
     class Meta:
         model = TakeAway
         fields = ('id','notes', 'user','course','session','is_public','username', 'tags','created_dt')
         #depth = 1
 
+
 class TakeAwayFullSerializer(serializers.ModelSerializer):
     username = serializers.Field(source='user.username')
-
+    created_dt = serializers.DateTimeField(format='%m/%d/%y %H:%M')
     class Meta:
         model = TakeAway
         fields = ('id','notes', 'user','course','session','is_public','username', 'tags','created_dt')

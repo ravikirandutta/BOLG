@@ -17,6 +17,7 @@ var SessionView = Backbone.View.extend({
     events:{"click .btn-primary":"createTakeaway"},
 
     createTakeaway: function(){
+
         var newTakeaway = new NewTakeaway({model:this.model.toJSON()});
 
         $("#newTakeaway").html("");
@@ -32,7 +33,9 @@ var SessionList = Backbone.Collection.extend({
     model:Session,
     url:'/sessions',
 parse: function(response){
-        return response.results;
+        var collection =  response.results;
+
+        return collection;
     }
 });
 
