@@ -125,7 +125,7 @@ var InPlaceView = Backbone.View.extend({
                 }
             }
             this.model.set({tags:updatedTags});
-            this.model.save();
+            this.model.modifyAndSave();
             this.render();
         }
     });
