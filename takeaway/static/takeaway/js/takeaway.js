@@ -107,7 +107,10 @@ var EditInPlaceView = Backbone.View.extend({
 
     var TakeawayList = Backbone.Collection.extend({
         model: Takeaway,
-        url:'/sessions/'
+        url:'/sessions/',
+        parse: function(response){
+             return response.results;
+        }
     });
 
     var TakeawayListView = Backbone.View.extend({
