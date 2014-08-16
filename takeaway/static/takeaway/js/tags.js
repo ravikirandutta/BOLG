@@ -13,7 +13,7 @@
               this.$el.append(this.template(this.model.toJSON()));
               return this;
         }
-        
+
 
       });
 
@@ -24,6 +24,7 @@
     var TagsListView = Backbone.View.extend({
 
         render : function(){
+            this.$el.html("");
             this.collection.forEach(this.addOne,this);
             return this;
         },
@@ -33,7 +34,7 @@
             var tagView = new TagsView({model:tagObject});
             $(this.el).append(tagView.render().el);
             $(this.el).append('&nbsp;');
-            
+
         }
 
     });
@@ -44,5 +45,5 @@
     tags.fetch({success:function(collection, response){
         var tags = collection.attributes.results;
         tagsListView = new TagsListView({collection:tags});
-        
+
     }});
