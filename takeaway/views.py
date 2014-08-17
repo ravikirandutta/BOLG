@@ -206,6 +206,13 @@ class TagViewSet(viewsets.ModelViewSet):
         filter_backends = (filters.DjangoFilterBackend,)
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
+class RatingViewSet(viewsets.ModelViewSet):
+        queryset = Rating.objects.all()
+        serializer_class = RatingSerializer
+        filter_backends = (filters.DjangoFilterBackend,)
+        filter_fields = ('user', 'takeaway',)
+        permission_classes = (permissions.IsAuthenticated,)
+
 
 class TakeAwayList(generics.ListCreateAPIView):
 		queryset = TakeAway.objects.all()

@@ -83,15 +83,75 @@ class TakeAway(models.Model):
             self.is_public = True
 
 
-class TakeAwayProfile(models.Model):
+class Rating(models.Model):
 
+    takeaway = models.ForeignKey(TakeAway)
     user = models.ForeignKey(User)
-    school = models.TextField()
+    rating_value = models.FloatField(default=0)
+    already_rated = models.BooleanField(default=False) # If already rated then nothing can be changed.
 
-    def  __unicode__(self):
-        return self.school
+    def __unicode__(self):
+        return smart_unicode(self.rating_value)
+
+    def set_rating(self,value):
+        if self.already_rated :
+            pass# do nothing as user is trying to double vote
+
+        else :
+            rating_value = value
+
+class TakeAwayProfile(models.Model):
+    CLASS_2014 = '2014'
+    CLASS_2015 = '2015'
+    CLASS_2016 = '2016'
+    CLASS_2017 = '2017'
+    YEAR_IN_SCHOOL_CHOICES = (
+       (CLASS_2014, 'Class of 2014'),
+       (CLASS_2015, 'Class of 2015'),
+       (CLASS_2016, 'Class of 2016'),
+       (CLASS_2017, 'Class of 2017'),
+    )
+    FULL_TIME = 'FULL_TIME'
+    EVENING = 'EVENING'
+    PART_TIME = 'PART_TIME'
+    PROGRAM_CHOICES = (
+       (FULL_TIME, 'Full Time MBA'),
+       (EVENING, 'Evening MBA'),
+       (PART_TIME, 'Part Time MBA'),
+    )
+    MONDAY = 'MONDAY'
+    WEDNESDAY = 'WEDNESDAY'
+    WEEKEND = 'Weekend'
+    SECTION_CHOICES = (
+       (MONDAY, 'Monday'),
+       (WEDNESDAY, 'Wednesday'),
+       (WEEKEND, 'Weekend'),
+    )
+    user = models.ForeignKey(User, unique=True)
+   #avatar = models.ImageField("Profile Pic", upload_to="images/", blank=True, null=True)
+   # first_name = models.CharField(max_length=200,blank = True)
+   # last_name = models.CharField(max_length=200,blank = True)
+   # username = models.CharField(max_length=200,unique= True)
+    email = models.EmailField(unique= True)
+    school =  models.ForeignKey(School)
+    batch = models.CharField(max_length=200,choices=YEAR_IN_SCHOOL_CHOICES,
+                                      default=CLASS_2016)
+    program = models.CharField(max_length=500,choices=PROGRAM_CHOICES,
+                                     default=EVENING)
+    section = models.CharField(max_length=500,choices=SECTION_CHOICES,
+                                     default=WEEKEND)
+   #password = models.CharField(max_length=500)
+
+
+
+   # Not necessary right away
+    takeaway_count = models.IntegerField(default=0)
+
+    def __unicode__(self):
+        return unicode(self.user.username)
 
 class Vote(models.Model):
+
     VOTE_VALUES = (
     (1, 'UpVote'),
     (0, 'Nuetral'),
@@ -116,10 +176,14 @@ class Vote(models.Model):
 
 
 from registration.signals import user_registered
-
+import pdb
 def user_registered_callback(sender, user, request, **kwargs):
     profile = TakeAwayProfile(user = user)
-    profile.school =(request.POST["school"])
+    profile.email = request.POST["email"]
+    profile.school =School.objects.get(school_name=(request.POST["school"]))
+    profile.batch = request.POST["batch"]
+    profile.program = request.POST["program"]
+    profile.section = request.POST["section"]
 
     profile.save()
 

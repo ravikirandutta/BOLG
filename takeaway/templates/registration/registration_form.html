@@ -1,63 +1,140 @@
-{% extends "registration/base.html" %}
 
-{% block title %}Sign up{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      {% load staticfiles %}
+        <meta charset="utf-8">
+        <!-- Title here -->
+        <title>Register - MbaTakeaways</title>
+        <!-- Description, Keywords and Author -->
+        <meta name="description" content="Your description">
+        <meta name="keywords" content="Your,Keywords">
+        <meta name="author" content="ResponsiveWebInc">
 
-{% block content %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  {% if form.errors %}
-  <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
-  {% endif %}
+        <!-- Styles -->
+          <link href="{% static "takeaway/css/bootstrap.min.css"%}" rel="stylesheet">
+        <!-- Font awesome CSS -->
+        <link href="{% static "takeaway/css/font-awesome.min.css"%}" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="{% static "takeaway/css/style.css"%}" rel="stylesheet">
 
-  <h1>Create an account</h1>
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="#">
+    </head>
 
-  <form method="post" action="" class="wide">
-	{% csrf_token %}
-    <p>
-      <label for="id_username">Username:</label>
-      {% if form.username.errors %}
-        <p class="errors">{{ form.username.errors.as_text }}</p>
-      {% endif %}
-      {{ form.username }}
-    </p>
-    <p>
-      <label for="id_email">Email address:</label>
-      {% if form.email.errors %}
-        <p class="errors">{{ form.email.errors.as_text }}</p>
-      {% endif %}
-      {{ form.email }}
-    </p>
-    <p>
-      <label for="id_password1">Password:</label>
-      {% if form.password1.errors %}
-        <p class="errors">{{ form.password1.errors.as_text }}</p>
-      {% endif %}
-      {{ form.password1 }}
-    </p>
-    <p>
-      <label for="id_password2">Password (type again to catch typos):</label>
-      {% if form.password2.errors %}
-        <p class="errors">{{ form.password2.errors.as_text }}</p>
-      {% endif %}
-      {{ form.password2 }}
-    </p>
+    <body>
 
-    <p>
-      <label for="id_password2">School:</label>
-      {{ form.school}}
-    </p>
-    <p class="submit"><input type="submit" value="Register &rarr;"></p>
-  </form>
+        <div class="admin-form">
+            <!-- Widget starts -->
+            <div class="widget wred">
+                <div class="widget-head">
+                    <i class="fa fa-lock"></i> Register
+                </div>
+                <div class="widget-content">
+                    <div class="padd">
+                      <form  method="post" action="" class="form-horizontal">
+                        <!-- Registration form starts -->
+                          <!-- Name -->
+                          {% csrf_token %}
+                          <div class="form-group">
+                            <label class="control-label col-lg-3" for="username">Username</label>
+                            <div class="col-lg-9">
 
-{% endblock %}
 
-{% block content-related %}
-<p>Fill out the form to the left (all fields are required), and your
-account will be created; you'll be sent an email with instructions on how
-to finish your registration.</p>
+                              {{form.username}}
+                            </div>
+                          </div>
 
-<p>We'll only use your email to send you signup instructions. We hate spam
-as much as you do.</p>
+                           <div class="form-group">
+                            <label class="control-label col-lg-3" for="email">Email</label>
+                            <div class="col-lg-9">
+                              {{form.email}}
+                            </div>
+                          </div>
 
-<p>This account will let you log into the ticket tracker, claim tickets,
-and be exempt from spam filtering.</p>
-{% endblock %}
+                               <div class="form-group">
+                            <label class="control-label col-lg-3" for="id_password1">Password</label>
+                            <div class="col-lg-9">
+
+
+                              {{form.password1}}
+                            </div>
+                          </div>
+                           <div class="form-group">
+                            <label class="control-label col-lg-3" for="id_password2">Password again</label>
+                            <div class="col-lg-9">
+                                      {{form.password2}}
+                            </div>
+                          </div>
+
+
+                          <!-- Email -->
+
+                          <!-- Select box -->
+                          <div class="form-group">
+                            <label class="control-label col-lg-3">Batch</label>
+                            <div class="col-lg-9">
+                              {{form.batch}}
+                            </div>
+                          </div>
+                          <!-- Username -->
+                          <div class="form-group">
+                            <label class="control-label col-lg-3" for="program">Program</label>
+                            <div class="col-lg-9">
+                              {{form.program}}
+                            </div>
+                          </div>
+                          <!-- Password -->
+                          <div class="form-group">
+                            <label class="control-label col-lg-3" for="section">Section</label>
+                            <div class="col-lg-9">
+                              {{form.section}}
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-lg-3" for="section">School</label>
+                            <div class="col-lg-9">
+                              {{form.school}}
+                            </div>
+                          </div>
+
+
+                          <!-- Accept box and button s-->
+                          <div class="form-group">
+                            <div class="col-lg-9 col-lg-offset-3">
+                              <div class="checkbox">
+                              <label>
+                                <input type="checkbox"> Accept Terms &amp; Conditions
+                              </label>
+                              </div>
+                              <button type="submit" class="btn btn-danger">Register</button>
+                              <button type="reset" class="btn btn-success">Reset</button>
+                            </div>
+                          </div>
+
+                      </form>
+                    </div>
+                </div>
+                <div class="widget-foot">
+                    Already Registred? <a href="/login">Login</a>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Javascript files -->
+        <!-- jQuery -->
+       <script src="{% static "takeaway/js/lib/jquery.js"%}"></script>
+        <!-- Bootstrap JS -->
+      <script src="{% static "takeaway/js/lib/bootstrap.min.js"%}"></script>
+
+       <script src="{% static "takeaway/js/lib/respond.min.js"%}"></script> <!-- Respond JS for IE8 -->
+
+        <!-- HTML5 Support for IE -->
+       <script src="{% static "takeaway/js/lib/html5shiv.js"%}"></script>
+
+    </body>
+</html>

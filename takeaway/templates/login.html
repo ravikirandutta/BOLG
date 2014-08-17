@@ -1,71 +1,107 @@
-<html>
-<head>
 
-{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load staticfiles %}
+        <meta charset="utf-8">
+        <!-- Title here -->
+        <title>Login - MbaTakeaways</title>
+        <!-- Description, Keywords and Author -->
+        <meta name="description" content="Your description">
+        <meta name="keywords" content="Your,Keywords">
+        <meta name="author" content="ResponsiveWebInc">
 
-<link rel="stylesheet" type="text/css" href="{% static "takeaway/login.css" %}">
-  <script src="http://getbootstrap.com/dist/js/bootstrap.js"></script>
-  <link href="/static/takeaway/css/bootstrap.min.css" rel="stylesheet">
-  
-</head>
-  <body>
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="{% static "takeaway/login.js" %}"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Styles -->
+        <!-- Bootstrap CSS -->
+
+        <link href="{% static "takeaway/css/bootstrap.min.css"%}" rel="stylesheet">
+        <!-- Font awesome CSS -->
+        <link href="{% static "takeaway/css/font-awesome.min.css"%}" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="{% static "takeaway/css/style.css"%}" rel="stylesheet">
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="#">
+    </head>
+
+    <body>
+
+        <!-- Form area -->
+        <div class="admin-form">
+            <!-- Widget starts -->
+            <div class="widget worange">
+                <!-- Widget head -->
+                <div class="widget-head">
+                    <i class="fa fa-lock"></i> Login
+                </div>
 
 
-<!--<form action="{% url 'handlelogin'  %}" method="post" name="login_form" id="login_form"> {% csrf_token %}
-<div align="center">
-<input id="new_user" class="new_user" type="button" value="I am a new user" lang="en-US" style="top: 13px;">
-  <span>  </span><br/>
-  <input name="Username" autocorrect="off" autocapitalize="off" spellcheck="false" class="email" placeholder="Email" lang="en-US" style="top: 93px;"><br/>
-  <input name="Password" type="password" class="password" placeholder="Password" lang="en-US" style="top: 123px;">
-  <input id ="mode" name="Mode" type="hidden" value="login" />
-    <input type="submit" class="login" value="login" style="top: 150px;"/>
-    </div>
-  </form>-->
+                <span class=" widget-content">
+                    <br>  {% if error_message %} <br> <p class="wdiget-content" style="color:red;text-align:center" ><strong>{{ error_message }}</strong></p> <br> {% endif %} <br>
+                 </span>
 
-  <div class="container" >
-    <h1>TakeAway PRO</h1>
-  <div>
 
-  <div id = "login" class="container">
+                <div class="widget-content">
+                    <div class="padd">
+                        <!-- Login form -->
+                        <form action="{% url 'handlelogin'  %}" class="form-horizontal" method="post" name="login_form" id="login_form"> {% csrf_token %}
 
-      <!--<form class="form-signin" role="form">-->
-      <form action="{% url 'handlelogin'  %}" class="form-signin" method="post" name="login_form" id="login_form"> {% csrf_token %}
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <br>  {% if error_message %} <br> <p style="color:red" ><strong>{{ error_message }}</strong></p> <br> {% endif %} <br>
-        <input name="Username" type="text" class="form-control" placeholder="Email address" required autofocus>
-        <input name="Password"  type="password" class="form-control" placeholder="Password" required>
-        <div class="checkbox"> 
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
+
+
+                            <!-- Email -->
+                            <div class="form-group">
+                                  <label class="control-label col-lg-3" for="inputEmail">Email</label>
+                                  <div class="col-lg-9">
+                                    <input type="text" class="form-control" name="Username" placeholder="Your .edu email">
+                                  </div>
+                            </div>
+                            <!-- Password -->
+                            <div class="form-group">
+                                  <label class="control-label col-lg-3" for="inputPassword">Password</label>
+                                  <div class="col-lg-9">
+                                    <input type="password" class="form-control" name="Password" placeholder="Password">
+                                  </div>
+                            </div>
+
+                            <input type="hidden" name="Mode" value="login" >
+
+                            <!-- Remember me checkbox and sign in button -->
+                            <div class="form-group">
+                                <div class="col-lg-9 col-lg-offset-3">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> Remember me
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-9 col-lg-offset-3">
+                                    <button type="submit" class="btn btn-danger">Sign in</button>
+                                    <button type="reset" class="btn btn-default">Reset</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="widget-foot">
+                  Not Registred? <a href="/accounts/register">Register here</a>
+                </div>
+            </div>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <button class="btn btn-lg btn-primary btn-block" type="button" onclick="show_register()">New User</button>
-        <input type="hidden" name="Mode" value="login" >
-      </form>
 
-    </div>
-  
-   <div id ="register" class="container" style="display:none">
 
-      <!--<form class="form-signin" role="form">-->
-      <form action="{% url 'handlelogin'  %}" class="form-signin" method="post" name="login_form" id="login_form"> {% csrf_token %}
-        <h2 class="form-signin-heading">Enter Details</h2>
-        <input name="Firstname" type="text" class="form-control" placeholder="First Name" required autofocus>
-          <input name="Lastname" type="text" class="form-control" placeholder="Last Name" required >
-        <input name="Username" type="text" class="form-control" placeholder="Email address" required >
-          
-        <input name="Password"  type="password" class="form-control" placeholder="Password" required>
-        
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-        <button class="btn btn-lg btn-primary btn-block" type="button" onclick="show_login()">Existing User</button>
-        <input type="hidden" name="Mode" value="Register" >
-      </form>
+        <!-- Javascript files -->
+        <!-- jQuery -->
+        <script src="{% static "takeaway/js/lib/jquery.js"%}"></script>
+        <!-- Bootstrap JS -->
+      <script src="{% static "takeaway/js/lib/bootstrap.min.js"%}"></script>
 
-    </div>
-  
+       <script src="{% static "takeaway/js/lib/respond.min.js"%}"></script> <!-- Respond JS for IE8 -->
 
-  </body>
+        <!-- HTML5 Support for IE -->
+       <script src="{% static "takeaway/js/lib/html5shiv.js"%}"></script>
+
+    </body>
 </html>

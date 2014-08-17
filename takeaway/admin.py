@@ -7,6 +7,7 @@ from takeaway.models import TakeAway
 from takeaway.models import School
 from takeaway.models import Enrollment
 from takeaway.models import Tag
+from takeaway.models import TakeAwayProfile
 
 
 admin.site.register(School)
@@ -15,3 +16,4 @@ admin.site.register(Session)
 admin.site.register(TakeAway)
 admin.site.register(Enrollment)
 admin.site.register(Tag)
+admin.site.register(TakeAwayProfile)
