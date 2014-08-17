@@ -55,6 +55,13 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'takeaway', ['Enrollment'])
 
+        # Adding model 'Tag'
+        db.create_table(u'takeaway_tag', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
+        ))
+        db.send_create_signal(u'takeaway', ['Tag'])
+
         # Adding model 'TakeAway'
         db.create_table(u'takeaway_takeaway', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -65,8 +72,51 @@ class Migration(SchemaMigration):
             ('updated_dt', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
             ('is_public', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('vote_count', self.gf('django.db.models.fields.IntegerField')(default=0)),
         ))
         db.send_create_signal(u'takeaway', ['TakeAway'])
+
+        # Adding M2M table for field tags on 'TakeAway'
+        m2m_table_name = db.shorten_name(u'takeaway_takeaway_tags')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('takeaway', models.ForeignKey(orm[u'takeaway.takeaway'], null=False)),
+            ('tag', models.ForeignKey(orm[u'takeaway.tag'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['takeaway_id', 'tag_id'])
+
+        # Adding model 'Rating'
+        db.create_table(u'takeaway_rating', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('takeaway', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['takeaway.TakeAway'])),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('rating_value', self.gf('django.db.models.fields.FloatField')(default=0)),
+            ('already_rated', self.gf('django.db.models.fields.BooleanField')(default=False)),
+        ))
+        db.send_create_signal(u'takeaway', ['Rating'])
+
+        # Adding model 'TakeAwayProfile'
+        db.create_table(u'takeaway_takeawayprofile', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], unique=True)),
+            ('email', self.gf('django.db.models.fields.EmailField')(unique=True, max_length=75)),
+            ('school', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['takeaway.School'])),
+            ('batch', self.gf('django.db.models.fields.CharField')(default='2016', max_length=200)),
+            ('program', self.gf('django.db.models.fields.CharField')(default='EVENING', max_length=500)),
+            ('section', self.gf('django.db.models.fields.CharField')(default='Weekend', max_length=500)),
+            ('takeaway_count', self.gf('django.db.models.fields.IntegerField')(default=0)),
+        ))
+        db.send_create_signal(u'takeaway', ['TakeAwayProfile'])
+
+        # Adding model 'Vote'
+        db.create_table(u'takeaway_vote', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('takeaway', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['takeaway.TakeAway'])),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('vote_value', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('already_voted', self.gf('django.db.models.fields.BooleanField')(default=True)),
+        ))
+        db.send_create_signal(u'takeaway', ['Vote'])
 
 
     def backwards(self, orm):
@@ -85,8 +135,23 @@ class Migration(SchemaMigration):
         # Deleting model 'Enrollment'
         db.delete_table(u'takeaway_enrollment')
 
+        # Deleting model 'Tag'
+        db.delete_table(u'takeaway_tag')
+
         # Deleting model 'TakeAway'
         db.delete_table(u'takeaway_takeaway')
+
+        # Removing M2M table for field tags on 'TakeAway'
+        db.delete_table(db.shorten_name(u'takeaway_takeaway_tags'))
+
+        # Deleting model 'Rating'
+        db.delete_table(u'takeaway_rating')
+
+        # Deleting model 'TakeAwayProfile'
+        db.delete_table(u'takeaway_takeawayprofile')
+
+        # Deleting model 'Vote'
+        db.delete_table(u'takeaway_vote')
 
 
     models = {
@@ -143,6 +208,14 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'student': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
+        u'takeaway.rating': {
+            'Meta': {'object_name': 'Rating'},
+            'already_rated': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'rating_value': ('django.db.models.fields.FloatField', [], {'default': '0'}),
+            'takeaway': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['takeaway.TakeAway']"}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
+        },
         u'takeaway.school': {
             'Meta': {'object_name': 'School'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -157,6 +230,11 @@ class Migration(SchemaMigration):
             'session_name': ('django.db.models.fields.CharField', [], {'max_length': '1000'}),
             'updated_dt': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
         },
+        u'takeaway.tag': {
+            'Meta': {'object_name': 'Tag'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+        },
         u'takeaway.takeaway': {
             'Meta': {'object_name': 'TakeAway'},
             'course': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['takeaway.Course']"}),
@@ -165,8 +243,29 @@ class Migration(SchemaMigration):
             'is_public': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'notes': ('django.db.models.fields.TextField', [], {}),
             'session': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['takeaway.Session']"}),
+            'tags': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['takeaway.Tag']", 'symmetrical': 'False'}),
             'updated_dt': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"}),
+            'vote_count': ('django.db.models.fields.IntegerField', [], {'default': '0'})
+        },
+        u'takeaway.takeawayprofile': {
+            'Meta': {'object_name': 'TakeAwayProfile'},
+            'batch': ('django.db.models.fields.CharField', [], {'default': "'2016'", 'max_length': '200'}),
+            'email': ('django.db.models.fields.EmailField', [], {'unique': 'True', 'max_length': '75'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'program': ('django.db.models.fields.CharField', [], {'default': "'EVENING'", 'max_length': '500'}),
+            'school': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['takeaway.School']"}),
+            'section': ('django.db.models.fields.CharField', [], {'default': "'Weekend'", 'max_length': '500'}),
+            'takeaway_count': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']", 'unique': 'True'})
+        },
+        u'takeaway.vote': {
+            'Meta': {'object_name': 'Vote'},
+            'already_voted': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'takeaway': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['takeaway.TakeAway']"}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"}),
+            'vote_value': ('django.db.models.fields.IntegerField', [], {'default': '0'})
         }
     }
 
