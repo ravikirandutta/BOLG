@@ -342,13 +342,15 @@ $.ajaxSetup({
                                     <button class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> </button>
                                     <button class="btn btn-xs btn-danger"><i class="fa fa-times"></i> </button>
                                   </div>
-
+                                  
+                                   <div class="rateit"></div>
 
 
                                     <% _.each(tags, function(tag) { %>
 
                                         <i><%=tag.name%></i><button class="btn btn-xs btn-danger tag-remove" name='<%=tag.id%>' ><i class="fa fa-times"></i> </button>&nbsp;
                                     <% }); %>
+
 
                                   <button class="btn btn-xs btn-danger pull-right">Spam</button>
 
