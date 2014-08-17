@@ -52,3 +52,10 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 
+class RatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = ('id', 'user','takeaway','rating_value')
+
+
+

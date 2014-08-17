@@ -82,6 +82,23 @@ class TakeAway(models.Model):
             self.is_public = True
 
 
+class Rating(models.Model):
+    
+    takeaway = models.ForeignKey(TakeAway)
+    user = models.ForeignKey(User)
+    rating_value = models.FloatField(default=0)
+    already_rated = models.BooleanField(default=False) # If already rated then nothing can be changed.
+
+    def __unicode__(self):
+        return smart_unicode(self.rating_value)
+
+    def set_rating(self,value):
+        if self.already_rated :
+            pass# do nothing as user is trying to double vote
+
+        else :
+            rating_value = value
+        
 
 
 
