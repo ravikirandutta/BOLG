@@ -3,6 +3,8 @@ from rest_framework import routers,generics
 from takeaway import views
 from takeaway.views import *
 from takeaway.models import *
+from takeaway.forms import *
+
 
 from django.contrib import admin
 admin.autodiscover()
@@ -33,4 +35,8 @@ urlpatterns = patterns('',
 
        url(r'^takeaways/index', 'takeaway.views.index', name='index'),
     url(r'^takeaway/initload', 'takeaway.views.initload', name='initload'),
+     url(r'accounts/register/$',
+       TakeAwayRegistrationView.as_view(),
+        name = 'registration_register'),
+    url(r'^accounts/', include('registration.backends.default.urls')),
 )

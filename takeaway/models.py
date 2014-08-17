@@ -71,6 +71,7 @@ class TakeAway(models.Model):
     user = models.ForeignKey(User)
     is_public = models.BooleanField(default=False)
     vote_count = models.IntegerField(default=0)
+
     tags = models.ManyToManyField(Tag)
 
     def __unicode__(self):
@@ -82,8 +83,13 @@ class TakeAway(models.Model):
             self.is_public = True
 
 
+class TakeAwayProfile(models.Model):
 
+    user = models.ForeignKey(User)
+    school = models.TextField()
 
+    def  __unicode__(self):
+        return self.school
 
 class Vote(models.Model):
     VOTE_VALUES = (
@@ -109,5 +115,14 @@ class Vote(models.Model):
             vote_value = value
 
 
+from registration.signals import user_registered
+
+def user_registered_callback(sender, user, request, **kwargs):
+    profile = TakeAwayProfile(user = user)
+    profile.school =(request.POST["school"])
+
+    profile.save()
+
+user_registered.connect(user_registered_callback)
 
 

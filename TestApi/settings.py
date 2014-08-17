@@ -34,12 +34,14 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+     'django.contrib.humanize',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'takeaway',
 	'rest_framework',
     'south',
     'notifications',
+    'registration',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -96,6 +98,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+ACCOUNT_ACTIVATION_DAYS=7
 
 #Email Settings
 EMAIL_USE_TLS = True

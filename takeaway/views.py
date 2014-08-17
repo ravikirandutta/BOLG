@@ -229,3 +229,14 @@ class TakeAwayDetail(generics.RetrieveUpdateDestroyAPIView):
 		queryset = TakeAway.objects.all()
 		serializer_class = TakeAwaySerializer
 		permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
+
+from registration.backends.default.views import RegistrationView
+from forms import TakeawayProfileRegistrationForm
+
+class TakeAwayRegistrationView(RegistrationView):
+    form_class = TakeawayProfileRegistrationForm
+
+
+
+
