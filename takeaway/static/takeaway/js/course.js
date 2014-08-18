@@ -18,6 +18,7 @@
         events: {"click span":"loadTakeaways"},
 
         loadTakeaways : function(){
+            $(".searchbox").css("display","block");
             $("#takeaway-container").html("");
             var takeawayList = new TakeawayList();
             takeawayList.fetch({data: {course: this.model.id},
