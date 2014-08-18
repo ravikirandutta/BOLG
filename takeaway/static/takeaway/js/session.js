@@ -55,10 +55,5 @@ var SessionListView  = Backbone.View.extend({
     }
 });
 
-session.fetch({success: function(collection, response){
-    var sessionListView = new SessionListView({collection: collection.attributes.results});
-       $("#takeaway-container").append(sessionListView.render().el);
-
-}});
 
 

@@ -26,10 +26,12 @@
   <script src="/static/takeaway/js/lib/jquery.autosize.min.js" type="text/javascript"></script>
 
   <script src="/static/takeaway/js/lib/jquery.cookie.js" type="text/javascript"></script>
+  <script src="/static/takeaway/js/lib/bootstrap-tagsinput.js" type="text/javascript"></script>
 
   <script src="/static/takeaway/js/session.js?{% now "U" %}" type="text/javascript"></script>
   <script src="/static/takeaway/js/course.js?{% now "U" %}" type="text/javascript"></script>
   <script src="/static/takeaway/js/tags.js?{% now "U" %}" type="text/javascript"></script>
+  <script src="/static/takeaway/js/app.js?{% now "U" %}" type="text/javascript"></script>
     <!-- jQuery -->
 
     <!-- Bootstrap JS -->
@@ -46,6 +48,7 @@
 
 
 
+<link href="/static/takeaway/css/bootstrap-tagsinput.css" rel="stylesheet">
     <link href="/static/takeaway/css/style.css" rel="stylesheet">
     <!-- Widgets stylesheet -->
     <link href="/static/takeaway/css/widgets.css" rel="stylesheet">
@@ -53,6 +56,7 @@
 <link href="/static/takeaway/css/font-awesome.min.css" rel="stylesheet">
 
 <link href="/static/takeaway/css/font-awesome.min.css" rel="stylesheet">
+
 
 
 <link href="/static/takeaway/css/app.css?{% now "U" %}" rel="stylesheet">
@@ -228,6 +232,14 @@ $.ajaxSetup({
             -->
                 <div class="clearfix"></div>
             </div>
+
+
+<div class="searchbox">
+
+<input  type="text" class="search-query" data-role="tagsinput" placeholder="Search by tag">
+    <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+<div id="results-indicator"></div>
+</div>
             <!--/ Page heading ends -->
             <!-- Matter -->
 

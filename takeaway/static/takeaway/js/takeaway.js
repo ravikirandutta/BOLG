@@ -1,3 +1,4 @@
+ var searchTag = null;
  var EditInPlaceForm = Backbone.View.extend({
     tagName: "form",
 
@@ -100,7 +101,7 @@ var InPlaceView = Backbone.View.extend({
             if (!isOwner){
                 this.$('.btn-group').hide();
                 this.$('.tag-remove').hide();
-                
+
                 this.$('#editable-notes').append(this.inPlaceView.render().el);
             }else{
                 this.$('#editable-notes').append(this.editInPlaceView.render().el);
@@ -155,8 +156,20 @@ var InPlaceView = Backbone.View.extend({
                  if (takeaway.user.id == userid)  {
                     takeawayObject.set({isOwner:true});
                  }
+
+              var tags = takeawayObject.get('tags');
+              var hasTag = false;
+              if(searchTag){
+              _.each(tags,function(tag){
+                  if(tag.name === searchTag){
+                    hasTag = true;
+                  }
+              });
+          }
+              if( searchTag ==null || hasTag){
               var takeawayView = new TakeawayView({model:takeawayObject});
               this.$el.append(takeawayView.render().el);
+          }
         }
     });
 
@@ -190,7 +203,7 @@ var NewTakeaway = Backbone.View.extend({
         object.tags= this.selectedTags;
         var takeaway = new Takeaway();
         takeaway.set(object);
-        
+
 
         takeaway.save();
         $("#modalCloseButton").click();
@@ -207,7 +220,7 @@ var NewTakeaway = Backbone.View.extend({
                 this.selectedTags.push(tagClicked);
                 event.currentTarget.parentElement.className="label label-success";
             }
-            
+
 
      }
 });

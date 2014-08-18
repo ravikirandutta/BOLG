@@ -79,7 +79,7 @@ def handlelogin(request):
             else:
 
                 message =  "The password is valid, but the account has been disabled!"
-                return render_to_response("coursedetail.html",{'course':course_obj,'course_sessions_list':[]},RequestContext(request))
+                return render_to_response("registration/registration_complete.html",{})
         else:
             # the authentication system was unable to verify the username and password
             message =  "The username/password is incorrect."
@@ -145,6 +145,10 @@ def initload(request):
     Session(course=course2,session_name="X. Capital Structure, Perfect Markets, and Corporate Taxes (week 9)",session_dt="2014-09-30").save()
     Session(course=course2,session_name="XI. Capital Budgeting and Valuation with Leverage (week 9)",session_dt="2014-10-01").save()
 
+    Tag(name="theory").save()
+    Tag(name="application").save()
+    Tag(name="example").save()
+    Tag(name="case").save()
 
     #session1 = Session.objects.get(session_name__contains="Week 1",course=course1)
     #session2 = Session.objects.get(session_name__contains="Week 1",course=course1)

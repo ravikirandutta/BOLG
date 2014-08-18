@@ -4,6 +4,8 @@
         urlRoot:'/courses'
       });
 
+      var sessionListView;
+
       var CourseView = Backbone.View.extend({
         tagName: "a",
         className: "course",
@@ -20,7 +22,7 @@
             var takeawayList = new TakeawayList();
             takeawayList.fetch({data: {course: this.model.id},
                 success: function(collection, response){
-                    var sessionListView = new SessionListView({collection:collection});
+                     sessionListView = new SessionListView({collection:collection});
                     $("#takeaway-container").append(sessionListView.render().el);
                 }});
         }

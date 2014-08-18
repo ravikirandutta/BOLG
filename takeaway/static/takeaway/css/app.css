@@ -22,3 +22,18 @@ div .mainbar {
     height:193px;
 }
 
+.searchbox{
+    padding-left: 50px;
+margin-top: 20px;
+}
+
+
+.bootstrap-tagsinput input {
+    border:none !important;
+
+}
+
+.bootstrap-tagsinput{
+    margin-top:10px;
+}
+
