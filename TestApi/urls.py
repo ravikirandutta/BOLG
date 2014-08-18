@@ -7,6 +7,7 @@ from takeaway.forms import *
 
 
 from django.contrib import admin
+from django.contrib.auth.views import password_change
 admin.autodiscover()
 
 router = routers.DefaultRouter()
@@ -24,6 +25,17 @@ urlpatterns = patterns('',
     url(r'^login/$', 'takeaway.views.home', name='login'),
     url(r'^handlelogin/$', 'takeaway.views.handlelogin', name='handlelogin'),
     url(r'^logout/$', 'takeaway.views.logoutuser', name='logoutuser'),
+    url(r'^user/password/reset/$', 
+        'django.contrib.auth.views.password_reset', 
+        {'post_reset_redirect' : '/user/password/reset/done/'},
+        name="password_reset"),
+    (r'^user/password/reset/done/$',
+        'django.contrib.auth.views.password_reset_done'),
+    (r'^user/password/reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', 
+        'django.contrib.auth.views.password_reset_confirm', 
+        {'post_reset_redirect' : '/user/password/done/'}),
+    (r'^user/password/done/$', 
+        'django.contrib.auth.views.password_reset_complete'),
 
     # url(r'^blog/', include('blog.urls')),
 
