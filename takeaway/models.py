@@ -71,6 +71,8 @@ class TakeAway(models.Model):
     user = models.ForeignKey(User)
     is_public = models.BooleanField(default=False)
     vote_count = models.IntegerField(default=0)
+    average_rating = models.FloatField()
+    total_raters = models.IntegerField()
 
     tags = models.ManyToManyField(Tag)
 
@@ -176,7 +178,7 @@ class Vote(models.Model):
 
 
 from registration.signals import user_registered
-import pdb
+
 def user_registered_callback(sender, user, request, **kwargs):
     profile = TakeAwayProfile(user = user)
     profile.email = request.POST["email"]
