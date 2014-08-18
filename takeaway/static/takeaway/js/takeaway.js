@@ -27,6 +27,7 @@
 });
 
 var EditInPlaceView = Backbone.View.extend({
+    id:"takeaway",
     tagName:"pre",
     attribute: "notes",
     className: "takeaway-pre",
@@ -41,6 +42,7 @@ var EditInPlaceView = Backbone.View.extend({
     },
 
     render: function () {
+        this.id = this.id+this.model.get('id');
         this.$el.html(this.model.get(this.attribute));
         return this;
     },
@@ -56,6 +58,7 @@ var EditInPlaceView = Backbone.View.extend({
 });
 
 var InPlaceView = Backbone.View.extend({
+    id:"takeaway",
     tagName:"pre",
     attribute: "notes",
     className: "takeaway-pre",
@@ -63,10 +66,12 @@ var InPlaceView = Backbone.View.extend({
     initialize: function (options) {
         _.extend(this, options);
         this.model.on("change", this.render, this);
+
     },
 
 
     render: function () {
+        this.id = this.id+this.model.get('id');
         this.$el.html(this.model.get(this.attribute));
         return this;
     },
@@ -77,15 +82,23 @@ var InPlaceView = Backbone.View.extend({
     var Takeaway = Backbone.Model.extend({
         urlRoot:'/takeaways/',
         modifyAndSave: function(){
+            var modifiedTakeaway = new Takeaway();
             var courseid = this.get('course').id;
-            this.set({'course':courseid});
+            modifiedTakeaway.set({'course':courseid});
             var sessionid = this.get('session').id;
-            this.set({'session':sessionid});
+            modifiedTakeaway.set({'session':sessionid});
             var userid = this.get('user').id;
-            this.set({'user':userid});
+            modifiedTakeaway.set({'user':userid});
             var tags = this.get('tags');
+            var tagIds = new Array();
+            _.each(tags,function(tag){
+                tagIds.push(tag.id);
+            });
+            modifiedTakeaway.set({"tags":tagIds});
+            modifiedTakeaway.set({"id":this.get('id')});
+            modifiedTakeaway.set({"notes":this.get('notes')});
+            modifiedTakeaway.save();
 
-            this.save();
         }
 
     });
@@ -130,6 +143,7 @@ var InPlaceView = Backbone.View.extend({
             this.model.set({tags:updatedTags});
             this.model.modifyAndSave();
             this.render();
+
         }
     });
 
@@ -207,6 +221,8 @@ var NewTakeaway = Backbone.View.extend({
 
         takeaway.save();
         $("#modalCloseButton").click();
+        var courseid = "#course"+object.course;
+        $(courseid).click();
 
      },
      toggleTag : function(event){
