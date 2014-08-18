@@ -71,8 +71,8 @@ class TakeAway(models.Model):
     user = models.ForeignKey(User)
     is_public = models.BooleanField(default=False)
     vote_count = models.IntegerField(default=0)
-    average_rating = models.FloatField()
-    total_raters = models.IntegerField()
+    average_rating = models.FloatField(default=0)
+    total_raters = models.IntegerField(default=0)
 
     tags = models.ManyToManyField(Tag)
 
