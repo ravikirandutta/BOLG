@@ -185,6 +185,11 @@ def user_registered_callback(sender, user, request, **kwargs):
     profile.program = request.POST["program"]
     profile.section = request.POST["section"]
 
+    user.first_name = request.POST["firstname"]
+    user.last_name = request.POST["lastname"]
+
+    user.save()
+
     profile.save()
 
 user_registered.connect(user_registered_callback)

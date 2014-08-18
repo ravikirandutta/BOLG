@@ -53,6 +53,8 @@ class TakeawayProfileRegistrationForm(RegistrationForm):
 
     school = forms.CharField()
     email = forms.CharField()
+    firstname = forms.CharField()
+    lastname = forms.CharField()
     batch = forms.ChoiceField(choices=YEAR_IN_SCHOOL_CHOICES,
                                       )
     program = forms.ChoiceField(choices=PROGRAM_CHOICES,)

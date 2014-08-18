@@ -38,6 +38,22 @@
                         <!-- Registration form starts -->
                           <!-- Name -->
                           {% csrf_token %}
+                           <div class="form-group">
+                            <label class="control-label col-lg-3" for="username">First Name</label>
+                            <div class="col-lg-9">
+
+
+                              {{form.firstname}}
+                            </div>
+                          </div>
+                             <div class="form-group">
+                            <label class="control-label col-lg-3" for="username">Last Name</label>
+                            <div class="col-lg-9">
+
+
+                              {{form.lastname}}
+                            </div>
+                            </div>
                           <div class="form-group">
                             <label class="control-label col-lg-3" for="username">Username</label>
                             <div class="col-lg-9">
@@ -97,7 +113,7 @@
                           <div class="form-group">
                             <label class="control-label col-lg-3" for="section">School</label>
                             <div class="col-lg-9">
-                              {{form.school}}
+                              <input id="id_school" name="school" type="text" value="EMORY"/>
                             </div>
                           </div>
 
