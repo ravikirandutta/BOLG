@@ -26,7 +26,7 @@ class TakeAwaySerializer(serializers.ModelSerializer):
     username = serializers.Field(source='user.username')
     class Meta:
         model = TakeAway
-        fields = ('id','notes', 'user','course','session','is_public','username', 'tags','created_dt')
+        fields = ('id','notes', 'user','course','session','is_public','username', 'tags','created_dt','average_rating','total_raters')
         #depth = 1
 
 

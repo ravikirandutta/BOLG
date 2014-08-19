@@ -176,8 +176,10 @@ class Vote(models.Model):
         elif not self.already_voted and  (value == 1 or value == 0 or value == -1) :
             vote_value = value
 
-
+from django.dispatch import receiver
 from registration.signals import user_registered
+from django.db.models.signals import post_save
+
 
 def user_registered_callback(sender, user, request, **kwargs):
     profile = TakeAwayProfile(user = user)
@@ -195,5 +197,16 @@ def user_registered_callback(sender, user, request, **kwargs):
     profile.save()
 
 user_registered.connect(user_registered_callback)
+
+@receiver(post_save, sender=Rating)
+def recalculate_rating(sender, **kwargs):
+    if kwargs.get('created', False):
+        rating_obj = kwargs.get('instance')
+        takeaway= TakeAway.objects.get(pk=kwargs.get('instance').takeaway.id)
+        final_rating = ( (takeaway.average_rating * takeaway.total_raters) + rating_obj.rating_value  ) / (takeaway.total_raters + 1)
+        takeaway.average_rating = final_rating
+        takeaway.total_raters = takeaway.total_raters + 1
+        takeaway.save()
+        rating_obj.already_rated = True
 
 
