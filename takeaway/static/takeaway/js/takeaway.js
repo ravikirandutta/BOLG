@@ -199,7 +199,7 @@ takeaway.fetch({success:function(collection, response){
 var NewTakeaway = Backbone.View.extend({
      selectedTags : new Array(),
      render: function(){
-        var template = _.template($('#new-takeaway-template').html(),this.model);
+        var template = _.template($('#new-takeaway-template').html(),this.model.toJSON());
         this.$el.append(template);
         this.$('#tags-list').append(tagsListView.render().el);
         return this;
@@ -212,8 +212,8 @@ var NewTakeaway = Backbone.View.extend({
         var object = {};
         object.notes = $("textarea").val();
         object.user = $.cookie("userid");
-        object.course = this.model.course.id;
-        object.session = this.model.id;
+        object.course = this.model.get('course').id;
+        object.session = this.model.get('id');
         object.tags= this.selectedTags;
         var takeaway = new Takeaway();
         takeaway.set(object);

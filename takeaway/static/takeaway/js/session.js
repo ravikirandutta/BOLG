@@ -11,6 +11,8 @@ var SessionView = Backbone.View.extend({
         this.$el.html(template);
 
         var takeawayList = new TakeawayListView({collection:this.model.attributes.takeaway_set});
+
+
         this.$el.find("#takeaway-list").append(takeawayList.render().el);
         return this;
     },
@@ -18,7 +20,7 @@ var SessionView = Backbone.View.extend({
 
     createTakeaway: function(){
 
-        var newTakeaway = new NewTakeaway({model:this.model.toJSON()});
+        var newTakeaway = new NewTakeaway({model:this.model});
 
         $("#newTakeaway").html("");
          $("#newTakeaway").append(newTakeaway.render().el);
