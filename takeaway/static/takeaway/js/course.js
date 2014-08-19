@@ -10,7 +10,7 @@
         tagName: "a",
         className: "course",
 
-        template:_.template('<span><i class="fa fa-bars"></i> <%= course_name%></span>'),
+        template:_.template('<span id="course<%=id%>"><i class="fa fa-bars"></i> <%= course_name%></span>'),
         render : function(){
               this.$el.append(this.template(this.model.toJSON()));
               return this;
