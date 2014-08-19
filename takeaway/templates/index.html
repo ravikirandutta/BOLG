@@ -46,7 +46,9 @@
 
     <script src="/static/takeaway/js/takeaway.js?{% now "U" %}" type="text/javascript"></script>
 
+<style type="text/css">
 
+</style>
 
 
 
@@ -371,6 +373,14 @@ $.ajaxSetup({
                                         <i><%=tag.name%></i><button class="btn btn-xs btn-danger tag-remove" name='<%=tag.id%>' ><i class="fa fa-times"></i> </button>&nbsp;
                                     <% }); %>
 
+
+<span class="star-rating">
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
 
                                   <button class="btn btn-xs btn-danger pull-right">Spam</button>
 
