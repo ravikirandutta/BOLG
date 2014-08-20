@@ -78,7 +78,6 @@ var InPlaceView = Backbone.View.extend({
 
 });
 
-
     var Takeaway = Backbone.Model.extend({
         urlRoot:'/takeaways/',
         modifyAndSave: function(){
@@ -102,6 +101,7 @@ var InPlaceView = Backbone.View.extend({
         }
 
     });
+    
     var TakeawayView = Backbone.View.extend({
 
         render: function(){
@@ -116,8 +116,13 @@ var InPlaceView = Backbone.View.extend({
                 this.$('.tag-remove').hide();
 
                 this.$('#editable-notes').append(this.inPlaceView.render().el);
+                var rating = new RatingsView({model:this.model});
+                this.$("#rating").html("");
+                this.$("#rating").append(rating.render().el);
+                
             }else{
                 this.$('#editable-notes').append(this.editInPlaceView.render().el);
+                
             }
             return this;
         },
@@ -240,6 +245,8 @@ var NewTakeaway = Backbone.View.extend({
 
      }
 });
+
+
 
 
 
