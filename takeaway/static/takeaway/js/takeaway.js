@@ -78,7 +78,6 @@ var InPlaceView = Backbone.View.extend({
 
 });
 
-
     var Takeaway = Backbone.Model.extend({
         urlRoot:'/takeaways/',
         modifyAndSave: function(){
@@ -102,6 +101,7 @@ var InPlaceView = Backbone.View.extend({
         }
 
     });
+
     var TakeawayView = Backbone.View.extend({
 
         render: function(){
@@ -115,6 +115,9 @@ var InPlaceView = Backbone.View.extend({
                 this.$('.btn-group').hide();
                 this.$('.tag-remove').hide();
 
+                var rating = new RatingsView({model:this.model});
+                this.$("#rating").html("");
+                this.$("#rating").append(rating.render().el);
 
             }
             this.$('#editable-notes').append(this.inPlaceView.render().el);
@@ -280,15 +283,20 @@ var NewTakeaway = Backbone.View.extend({
         var takeaway = new Takeaway();
         takeaway.set(object);
         takeaway.set({'tags':assignedTags});
+        takeaway.set({'average_rating':this.model.get('average_rating')});
+        takeaway.set({'total_raters':this.model.get('total_raters')});
         takeaway.save();
-        $("#modalCloseButton").click();
+        $("#editableTakeaway").modal('hide');
         this.model.set({"notes":object.notes});
+
         assignedTags =[];
         //refreshSessionlistView();
 
      }
 
  });
+
+
 
 
 

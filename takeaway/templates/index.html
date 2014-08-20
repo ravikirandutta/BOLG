@@ -33,7 +33,6 @@
   <script src="/static/takeaway/js/course.js?{% now "U" %}" type="text/javascript"></script>
   <script src="/static/takeaway/js/tags.js?{% now "U" %}" type="text/javascript"></script>
   <script src="/static/takeaway/js/app.js?{% now "U" %}" type="text/javascript"></script>
-  <script src="/static/takeaway/js/lib/bootstrap-rating-input.min.js" type="text/javascript"></script>
     <!-- jQuery -->
 
     <!-- Bootstrap JS -->
@@ -43,10 +42,13 @@
     <script src="/static/takeaway/js/lib/custom.js"></script>
 
 
-
+    <script src="/static/takeaway/js/ratings.js?{% now "U" %}" type="text/javascript"></script>
     <script src="/static/takeaway/js/takeaway.js?{% now "U" %}" type="text/javascript"></script>
+    
 
+<style type="text/css">
 
+</style>
 
 
 
@@ -397,6 +399,10 @@ $.ajaxSetup({
 
                                     </div>
 
+
+                                    <span id="rating"></span>
+
+
                                   <button class="btn btn-xs btn-danger pull-right">Spam</button>
 
                                   <div class="clearfix"></div>
@@ -409,7 +415,15 @@ $.ajaxSetup({
 <script type="text/template" id="editable-takeaway-template">
 
 </script>
-
+<script type="text/template" id="rating-template">
+ <span class="star-rating">
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+</script>
 
 <script type="text/template" id="notes-template">
     <div id="edit-in-place">
