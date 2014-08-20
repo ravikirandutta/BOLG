@@ -115,10 +115,9 @@ var InPlaceView = Backbone.View.extend({
                 this.$('.btn-group').hide();
                 this.$('.tag-remove').hide();
 
-                this.$('#editable-notes').append(this.inPlaceView.render().el);
-            }else{
-                this.$('#editable-notes').append(this.editInPlaceView.render().el);
+
             }
+            this.$('#editable-notes').append(this.inPlaceView.render().el);
             return this;
         },
         events: {"click button ":"updateNotes",
