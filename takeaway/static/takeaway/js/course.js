@@ -7,10 +7,10 @@
       var sessionListView;
 
       var CourseView = Backbone.View.extend({
-        tagName: "a",
+        tagName: "li",
         className: "course",
 
-        template:_.template('<span id="course<%=id%>"><i class="fa fa-bars"></i> <%= course_name%></span>'),
+        template:_.template('<a><span id="course<%=id%>"><i class="fa fa-bars"></i> <%= course_name%></span></a>'),
         render : function(){
               this.$el.append(this.template(this.model.toJSON()));
               return this;
@@ -18,6 +18,9 @@
         events: {"click span":"loadTakeaways"},
 
         loadTakeaways : function(){
+            $(".course").addClass('course-deselected');
+            $(this.el).removeClass('course-deselected');
+            $(this.el).addClass('course-selected');
             $(".searchbox").css("display","block");
             $("#takeaway-container").html("");
             var takeawayList = new TakeawayList();
@@ -36,6 +39,8 @@
 
     var CourseListView = Backbone.View.extend({
 
+        tagName: "ul",
+        className: "nav nav-pills",
         render : function(){
             this.collection.forEach(this.addOne,this);
             return this;

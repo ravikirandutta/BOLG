@@ -41,3 +41,11 @@ a span{
     cursor:pointer;
 }
 
+.course-selected{
+    text-decoration:underline;
+}
+
+.course-deselected{
+    text-decoration:none;
+}
+
