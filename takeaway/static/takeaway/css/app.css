@@ -43,6 +43,7 @@ a span{
 
 .course-selected{
     text-decoration:underline;
+    text-decoration-style:double;
 }
 
 .course-deselected{
