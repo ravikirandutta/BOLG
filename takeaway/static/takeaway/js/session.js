@@ -16,7 +16,7 @@ var SessionView = Backbone.View.extend({
         this.$el.find("#takeaway-list").append(takeawayList.render().el);
         return this;
     },
-    events:{"click .btn-primary":"createTakeaway"},
+    events:{"click  a":"createTakeaway"},
 
     createTakeaway: function(){
 
