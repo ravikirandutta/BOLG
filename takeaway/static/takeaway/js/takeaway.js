@@ -96,6 +96,10 @@ var InPlaceView = Backbone.View.extend({
             modifiedTakeaway.set({"tags":tagIds});
             modifiedTakeaway.set({"id":this.get('id')});
             modifiedTakeaway.set({"notes":this.get('notes')});
+
+        modifiedTakeaway.set({'average_rating':this.model.get('average_rating')});
+        modifiedTakeaway.set({'total_raters':this.model.get('total_raters')});
+
             modifiedTakeaway.save();
 
         }
@@ -104,12 +108,20 @@ var InPlaceView = Backbone.View.extend({
 
     var TakeawayView = Backbone.View.extend({
 
+         initialize: function(){
+           this.model.on('change', this.renderWithBootstrapSwitch, this);
+
+
+         },
+        renderWithBootstrapSwitch : function(){
+            this.render();
+            $("[name='my-checkbox']").bootstrapSwitch();
+        },
         render: function(){
             var template = _.template($('#takeaway-template').html(),this.model.toJSON());
             this.editInPlaceView = new EditInPlaceView({model:this.model});
             this.inPlaceView = new InPlaceView({model:this.model});
             $(this.el).html(template);
-
             var isOwner = this.model.get('isOwner');
             if (!isOwner){
                 this.$('.btn-group').hide();
@@ -118,6 +130,7 @@ var InPlaceView = Backbone.View.extend({
                 var rating = new RatingsView({model:this.model});
                 this.$("#rating").html("");
                 this.$("#rating").append(rating.render().el);
+                this.$('.switch').hide();
 
             }
             this.$('#editable-notes').append(this.inPlaceView.render().el);
@@ -125,7 +138,9 @@ var InPlaceView = Backbone.View.extend({
         },
         events: {"click #update ":"updateNotes",
                   "click #delete ":"deleteTakeaway",
-                 "click .tag-remove":"removeTag"},
+                 "click .tag-remove":"removeTag",
+                    },
+
 
         deleteTakeaway : function(){
             this.model.destroy();
@@ -136,6 +151,7 @@ var InPlaceView = Backbone.View.extend({
             var editableTakeaway = new EditableTakeaway({model:this.model});
              $("#editableTakeaway").html("");
             $("#editableTakeaway").append(editableTakeaway.render().el);
+            $("[name='my-checkbox']").bootstrapSwitch();
 
            // var notes = this.$("textarea").val();
             //this.model.set({notes:notes});
@@ -173,11 +189,17 @@ var InPlaceView = Backbone.View.extend({
             this.$el.html("");
 
             this.collection.forEach(this.addOne,this);
+            //$("[name='my-checkbox']").bootstrapSwitch();
             return this;
         },
+
         addOne: function(takeaway){
-              var takeawayObject = new Takeaway();
+
+
+
+                var takeawayObject = new Takeaway();
               takeawayObject.set(takeaway);
+
                var userid = $.cookie('userid');
                  if (takeaway.user.id == userid)  {
                     takeawayObject.set({isOwner:true});
@@ -193,10 +215,17 @@ var InPlaceView = Backbone.View.extend({
               });
           }
               if( searchTag ==null || hasTag){
-              var takeawayView = new TakeawayView({model:takeawayObject});
-              this.$el.append(takeawayView.render().el);
+                if(takeawayObject.get('isOwner') || takeawayObject.get('is_public') ){
+                    var takeawayView = new TakeawayView({model:takeawayObject});
+                    this.$el.append(takeawayView.render().el);
+                }
+
           }
         }
+
+
+
+
     });
 
 
@@ -290,11 +319,13 @@ var NewTakeaway = Backbone.View.extend({
         takeaway.set({'tags':assignedTags});
         takeaway.set({'average_rating':this.model.get('average_rating')});
         takeaway.set({'total_raters':this.model.get('total_raters')});
+        takeaway.set({'is_public':$("#edit-checkbox").prop('checked')});
         takeaway.save();
         $("#editableTakeaway").modal('hide');
         this.model.set({"notes":object.notes});
-
+        this.model.set({'is_public':takeaway.get('is_public')});
         assignedTags =[];
+
         //refreshSessionlistView();
 
      }
