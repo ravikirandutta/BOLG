@@ -229,6 +229,17 @@ var NewTakeaway = Backbone.View.extend({
         object.session = this.model.get('id');
         object.tags= this.selectedTags;
         var takeaway = new Takeaway();
+
+        takeaway.on("error", function(model, error){
+                $.gritter.add({
+                    title: 'Unexpected error',
+                    text: 'Please try again later.',
+                    sticky: false,
+                    time: ''
+                });
+        });
+
+
         takeaway.set(object);
 
 
@@ -286,6 +297,15 @@ var NewTakeaway = Backbone.View.extend({
 
         object.id= this.model.get('id');
         var takeaway = new Takeaway();
+        takeaway.on("error", function(model, error){
+                $.gritter.add({
+                    title: 'Unexpected error',
+                    text: 'Please try again later.',
+                    sticky: false,
+                    time: ''
+                });
+            });
+
         takeaway.set(object);
         takeaway.set({'tags':assignedTags});
         takeaway.set({'average_rating':this.model.get('average_rating')});
