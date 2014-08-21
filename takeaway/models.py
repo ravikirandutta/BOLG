@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.encoding import smart_unicode
 from django.contrib.auth.models import User
+from notifications.models import Notification
 # Create your models here.
 
 class School(models.Model):

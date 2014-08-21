@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from takeaway.models import *
+from notifications.models import Notification
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -57,5 +58,11 @@ class RatingSerializer(serializers.ModelSerializer):
         model = Rating
         fields = ('id', 'user','takeaway','rating_value')
 
+class NotificationSerializerUserOnly(serializers.ModelSerializer):
+    username = serializers.Field(source='recipient.username')
+    first_name = serializers.Field(source='recipient.first_name')
+    class Meta:
+        model = Notification
+        #depth = 1
 
 

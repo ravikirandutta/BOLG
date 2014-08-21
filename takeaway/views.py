@@ -250,4 +250,12 @@ class TakeAwayRegistrationView(RegistrationView):
 
 
 
-
+class NotificationViewSet(viewsets.ModelViewSet):
+        """
+        API endpoint that allows groups to be viewed or edited.
+        """
+        queryset = Notification.objects.all()
+        serializer_class = NotificationSerializerUserOnly
+        filter_backends = (filters.DjangoFilterBackend,)
+        filter_fields = ('recipient','verb')
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
