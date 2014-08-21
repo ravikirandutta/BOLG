@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.encoding import smart_unicode
 from django.contrib.auth.models import User
+from notifications.models import Notification
 # Create your models here.
 
 class School(models.Model):
@@ -176,10 +177,8 @@ class Vote(models.Model):
         elif not self.already_voted and  (value == 1 or value == 0 or value == -1) :
             vote_value = value
 
-from django.dispatch import receiver
-from registration.signals import user_registered
-from django.db.models.signals import post_save
 
+from registration.signals import user_registered
 
 def user_registered_callback(sender, user, request, **kwargs):
     profile = TakeAwayProfile(user = user)
@@ -196,17 +195,22 @@ def user_registered_callback(sender, user, request, **kwargs):
 
     profile.save()
 
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+@receiver(post_save,sender=Rating)
+def update_takeaway_on_rating_save(sender, **kwargs):
+    if kwargs.get('created',False):
+        rating = kwargs.get("instance")
+        takeaway = TakeAway.objects.get(pk=rating.takeaway.id)
+        rating_value = rating.rating_value
+        total_raters = takeaway.total_raters +1
+        average_rating = ((takeaway.average_rating * takeaway.total_raters)+rating_value)/total_raters
+        takeaway.average_rating = average_rating
+        takeaway.total_raters = total_raters
+        takeaway.save()
+
 user_registered.connect(user_registered_callback)
 
-@receiver(post_save, sender=Rating)
-def recalculate_rating(sender, **kwargs):
-    if kwargs.get('created', False):
-        rating_obj = kwargs.get('instance')
-        takeaway= TakeAway.objects.get(pk=kwargs.get('instance').takeaway.id)
-        final_rating = ( (takeaway.average_rating * takeaway.total_raters) + rating_obj.rating_value  ) / (takeaway.total_raters + 1)
-        takeaway.average_rating = final_rating
-        takeaway.total_raters = takeaway.total_raters + 1
-        takeaway.save()
-        rating_obj.already_rated = True
+
 
 

@@ -27,7 +27,7 @@ def index(request):
     user = authenticate(username=request.POST.get('Username'), password=request.POST.get('Password'))
     course_instance_list = Course.objects.filter(students=user)
     userid = request.session.get('userid','0')
-    response = render_to_response("index.html",{})
+    response = render_to_response("index.html",{},RequestContext(request))
     if userid is not '0':
         response.set_cookie(key='userid',value=userid)
     return response
@@ -250,4 +250,12 @@ class TakeAwayRegistrationView(RegistrationView):
 
 
 
-
+class NotificationViewSet(viewsets.ModelViewSet):
+        """
+        API endpoint that allows groups to be viewed or edited.
+        """
+        queryset = Notification.objects.all()
+        serializer_class = NotificationSerializerUserOnly
+        filter_backends = (filters.DjangoFilterBackend,)
+        filter_fields = ('recipient','verb')
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)

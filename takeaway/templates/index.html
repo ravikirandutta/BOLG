@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <!-- Title here -->
-    <title>Takeaway Pro</title>
+    <title>MBATakeaways</title>
     <!-- Description, Keywords and Author -->
     <meta name="description" content="Your description">
     <meta name="keywords" content="Your,Keywords">
@@ -27,7 +27,11 @@
 
   <script src="/static/takeaway/js/lib/jquery.cookie.js" type="text/javascript"></script>
   <script src="/static/takeaway/js/lib/bootstrap-tagsinput.js" type="text/javascript"></script>
-  <script src="/static/takeaway/js/lib/jquery.gritter.min.js" type="text/javascript"></script>
+  
+
+
+<link rel="stylesheet" type="text/css" href="/static/takeaway/css/jquery.gritter.css" />
+<script src="/static/takeaway/js/jquery.gritter.min.js" type="text/javascript"></script>
 
   <script src="/static/takeaway/js/session.js?{% now "U" %}" type="text/javascript"></script>
   <script src="/static/takeaway/js/course.js?{% now "U" %}" type="text/javascript"></script>
@@ -44,7 +48,7 @@
 
     <script src="/static/takeaway/js/ratings.js?{% now "U" %}" type="text/javascript"></script>
     <script src="/static/takeaway/js/takeaway.js?{% now "U" %}" type="text/javascript"></script>
-    
+
 
 <style type="text/css">
 
@@ -103,7 +107,7 @@ $.ajaxSetup({
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="{% url 'index'%}" class="navbar-brand">Takeaway Pro</a>
+                <a href="{% url 'index'%}" class="navbar-brand">MBATakeaways</a>
             </div>
             <!-- Site name for smallar screens -->
             <!-- Navigation starts -->
@@ -119,8 +123,8 @@ $.ajaxSetup({
                         <ul class="dropdown-menu">
                             <li><a href="#"><i class="fa fa-user"></i> Profile</a>
                             </li>
-                            <li><a href="#"><i class="fa fa-cogs"></i> Settings</a>
-                            </li>
+
+
                             <li><a href="{% url 'logoutuser'%}"><i class="fa fa-power-off"></i> Logout</a>
                             </li>
                         </ul>
@@ -161,7 +165,7 @@ $.ajaxSetup({
                         </ul>
                     </li>
                     <!-- Members button with number of latest members count -->
-                    <li class="dropdown dropdown-big">
+                    <li class="dropdown dropdown-big" style="display:none">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown">
                             <i class="fa fa-user"></i> Classmates
                             <span class="badge badge-success">6</span>
@@ -196,7 +200,7 @@ $.ajaxSetup({
                                 <div class="drop-foot">
                                     <a href="#">View All</a>
                                 </div>
-                            </li>
+                            </li> #}
                         </ul>
                     </li>
                 </ul>
@@ -242,7 +246,7 @@ $.ajaxSetup({
 
 <div class="searchbox" style="display:none">
 
-<input  type="text" class="search-query" data-role="tagsinput" placeholder="Search by tag">
+<input  type="text" class="search-query" data-role="tagsinput" placeholder="Filter by tag">
     <button id="search-by-tag" type="submit" class="btn"><i class="fa fa-search"></i></button>
 <div id="results-indicator"></div>
 </div>
@@ -294,6 +298,10 @@ $.ajaxSetup({
 
 </div>
 
+<div id="editableTakeaway" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+
+</div>
+
 
 <script type="text/template" id="new-takeaway-template">
    <div id="takeawayModal" class="modal-dialog">
@@ -303,7 +311,7 @@ $.ajaxSetup({
                                     <h4 class="modal-title">New Takeaway for <%=session_name%></h4>
                                   </div>
                                   <div class="modal-body">
-                                    <textarea class="takeaway"></textarea>
+                                    <textarea id="create-textarea" class="takeaway"></textarea>
                                     <div id="tags-list" ></div>
                                   </div>
                                   <div class="modal-footer">
@@ -315,6 +323,24 @@ $.ajaxSetup({
 </script>
 
 
+<script type="text/template" id="edit-takeaway-template">
+   <div id="editTakeawayModal" class="modal-dialog">
+                                  <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button id="modalCloseButton" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">New Takeaway for <%=session.session_name%></h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <textarea id="edit-textarea" class="takeaway"><%=notes%></textarea>
+                                    <div id="tags-list" ></div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                    <button type="button" class="btn btn-primary">Save</button>
+                                  </div>
+                                </div>
+                                </div>
+</script>
 
 
 
@@ -359,20 +385,23 @@ $.ajaxSetup({
                                   <div id="editable-notes"></div>
 
                                    <div class="btn-group">
-                                    <button class="btn btn-xs btn-success"><i class="fa fa-check"></i> </button>
-                                    <button class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> </button>
-                                    <button class="btn btn-xs btn-danger"><i class="fa fa-times"></i> </button>
-                                  </div>
+
+                                    <button id="update" class="btn btn-xs btn-primary"  data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
+                                    <button id="delete" class="btn btn-xs btn-danger"><i class="fa fa-trash-o fa-lg"></i> </button>
+
 
 
 
 
 
                                     <% _.each(tags, function(tag) { %>
+                                    <!--
+                                        <i><%=tag.name%></i><button class="btn btn-xs btn-danger tag-remove" name='<%=tag.id%>' ><i class="fa fa-times"></i> </button>&nbsp; -->
+                                        <span class="label label-warning"><i class="fa fa-tags"></i><%=tag.name%></span>
 
-                                        <i><%=tag.name%></i><button class="btn btn-xs btn-danger tag-remove" name='<%=tag.id%>' ><i class="fa fa-times"></i> </button>&nbsp;
                                     <% }); %>
 
+                                    </div>
 
 
                                     <span id="rating"></span>

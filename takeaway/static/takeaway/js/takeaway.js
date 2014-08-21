@@ -101,7 +101,7 @@ var InPlaceView = Backbone.View.extend({
         }
 
     });
-    
+
     var TakeawayView = Backbone.View.extend({
 
         render: function(){
@@ -115,25 +115,32 @@ var InPlaceView = Backbone.View.extend({
                 this.$('.btn-group').hide();
                 this.$('.tag-remove').hide();
 
-                this.$('#editable-notes').append(this.inPlaceView.render().el);
                 var rating = new RatingsView({model:this.model});
                 this.$("#rating").html("");
                 this.$("#rating").append(rating.render().el);
-                
-            }else{
-                this.$('#editable-notes').append(this.editInPlaceView.render().el);
-                
+
             }
+            this.$('#editable-notes').append(this.inPlaceView.render().el);
             return this;
         },
-        events: {"click .btn-success":"updateNotes",
+        events: {"click #update ":"updateNotes",
+                  "click #delete ":"deleteTakeaway",
                  "click .tag-remove":"removeTag"},
 
+        deleteTakeaway : function(){
+            this.model.destroy();
+            refreshSessionlistView();
+        },
         updateNotes : function(){
-            var notes = this.$("textarea").val();
-            this.model.set({notes:notes});
-            this.model.modifyAndSave();
-            this.render();
+
+            var editableTakeaway = new EditableTakeaway({model:this.model});
+             $("#editableTakeaway").html("");
+            $("#editableTakeaway").append(editableTakeaway.render().el);
+
+           // var notes = this.$("textarea").val();
+            //this.model.set({notes:notes});
+            //this.model.modifyAndSave();
+            //this.render();
         },
         removeTag : function(event){
             //TODO : remove for loop and see if this can be reducded
@@ -206,6 +213,7 @@ var NewTakeaway = Backbone.View.extend({
      render: function(){
         var template = _.template($('#new-takeaway-template').html(),this.model.toJSON());
         this.$el.append(template);
+
         this.$('#tags-list').append(tagsListView.render().el);
         return this;
      },
@@ -215,12 +223,23 @@ var NewTakeaway = Backbone.View.extend({
      createTakeaway: function(){
         this.model;
         var object = {};
-        object.notes = $("textarea").val();
+        object.notes = $("#create-textarea").val();
         object.user = $.cookie("userid");
         object.course = this.model.get('course').id;
         object.session = this.model.get('id');
         object.tags= this.selectedTags;
         var takeaway = new Takeaway();
+
+        takeaway.on("error", function(model, error){
+                $.gritter.add({
+                    title: 'Unexpected error',
+                    text: 'Please try again later.',
+                    sticky: false,
+                    time: ''
+                });
+        });
+
+
         takeaway.set(object);
 
 
@@ -245,6 +264,62 @@ var NewTakeaway = Backbone.View.extend({
 
      }
 });
+
+ var EditableTakeaway = Backbone.View.extend({
+    render : function(){
+         var template = _.template($('#edit-takeaway-template').html(),this.model.toJSON());
+         this.$el.append(template);
+         var currentTags = this.model.get('tags');
+           var tags = new Tags();
+           var tagsListView = null;
+           var that = this;
+    tags.fetch({success:function(coll, response){
+        var tagsList = new TagsList(coll.attributes.results);
+        tagsListView = new TagsListView({collection:tagsList, currentTags:currentTags,display:false});
+        that.$('#tags-list').append(tagsListView.render().el);
+        that.tagsListView = tagsListView;
+    }});
+
+
+         return this;
+    },
+
+    events: {"click .btn-primary":"updateTakeaway"
+              },
+
+     updateTakeaway: function(){
+        this.model;
+        var object = {};
+        object.notes = $("#edit-textarea").val();
+        object.user = $.cookie("userid");
+        object.course = this.model.get('course').id;
+        object.session = this.model.get('session').id;
+
+        object.id= this.model.get('id');
+        var takeaway = new Takeaway();
+        takeaway.on("error", function(model, error){
+                $.gritter.add({
+                    title: 'Unexpected error',
+                    text: 'Please try again later.',
+                    sticky: false,
+                    time: ''
+                });
+            });
+
+        takeaway.set(object);
+        takeaway.set({'tags':assignedTags});
+        takeaway.set({'average_rating':this.model.get('average_rating')});
+        takeaway.set({'total_raters':this.model.get('total_raters')});
+        takeaway.save();
+        $("#editableTakeaway").modal('hide');
+        this.model.set({"notes":object.notes});
+
+        assignedTags =[];
+        //refreshSessionlistView();
+
+     }
+
+ });
 
 
 

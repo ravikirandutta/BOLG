@@ -42,8 +42,17 @@ a span{
 }
 
 
+.course-selected{
+    text-decoration:underline;
+    text-decoration-style:double;
+}
+
+.course-deselected{
+    text-decoration:none;
+}
+
 .star-rating {
-  top: 5px;  
+  top: 5px;
   font-size: 0;
   white-space: nowrap;
   display: inline-block;
