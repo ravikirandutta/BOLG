@@ -13,8 +13,8 @@ $('input').on('itemRemoved',function(event){
         refreshSessionlistView();
 });
 
+});
+
 function refreshSessionlistView(){
     $("#takeaway-container").append(sessionListView.render().el);
 }
-
-});

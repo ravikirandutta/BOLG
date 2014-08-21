@@ -123,9 +123,14 @@ var InPlaceView = Backbone.View.extend({
             this.$('#editable-notes').append(this.inPlaceView.render().el);
             return this;
         },
-        events: {"click button ":"updateNotes",
+        events: {"click #update ":"updateNotes",
+                  "click #delete ":"deleteTakeaway",
                  "click .tag-remove":"removeTag"},
 
+        deleteTakeaway : function(){
+            this.model.destroy();
+            refreshSessionlistView();
+        },
         updateNotes : function(){
 
             var editableTakeaway = new EditableTakeaway({model:this.model});
@@ -218,7 +223,7 @@ var NewTakeaway = Backbone.View.extend({
      createTakeaway: function(){
         this.model;
         var object = {};
-        object.notes = $("textarea").val();
+        object.notes = $("#create-textarea").val();
         object.user = $.cookie("userid");
         object.course = this.model.get('course').id;
         object.session = this.model.get('id');
@@ -274,7 +279,7 @@ var NewTakeaway = Backbone.View.extend({
      updateTakeaway: function(){
         this.model;
         var object = {};
-        object.notes = $("textarea").val();
+        object.notes = $("#edit-textarea").val();
         object.user = $.cookie("userid");
         object.course = this.model.get('course').id;
         object.session = this.model.get('session').id;

@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <!-- Title here -->
-    <title>Takeaway Pro</title>
+    <title>MBATakeaways</title>
     <!-- Description, Keywords and Author -->
     <meta name="description" content="Your description">
     <meta name="keywords" content="Your,Keywords">
@@ -44,7 +44,7 @@
 
     <script src="/static/takeaway/js/ratings.js?{% now "U" %}" type="text/javascript"></script>
     <script src="/static/takeaway/js/takeaway.js?{% now "U" %}" type="text/javascript"></script>
-    
+
 
 <style type="text/css">
 
@@ -103,7 +103,7 @@ $.ajaxSetup({
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="{% url 'index'%}" class="navbar-brand">Takeaway Pro</a>
+                <a href="{% url 'index'%}" class="navbar-brand">MBATakeaways</a>
             </div>
             <!-- Site name for smallar screens -->
             <!-- Navigation starts -->
@@ -242,7 +242,7 @@ $.ajaxSetup({
 
 <div class="searchbox" style="display:none">
 
-<input  type="text" class="search-query" data-role="tagsinput" placeholder="Search by tag">
+<input  type="text" class="search-query" data-role="tagsinput" placeholder="Filter by tag">
     <button id="search-by-tag" type="submit" class="btn"><i class="fa fa-search"></i></button>
 <div id="results-indicator"></div>
 </div>
@@ -307,7 +307,7 @@ $.ajaxSetup({
                                     <h4 class="modal-title">New Takeaway for <%=session_name%></h4>
                                   </div>
                                   <div class="modal-body">
-                                    <textarea class="takeaway"></textarea>
+                                    <textarea id="create-textarea" class="takeaway"></textarea>
                                     <div id="tags-list" ></div>
                                   </div>
                                   <div class="modal-footer">
@@ -327,7 +327,7 @@ $.ajaxSetup({
                                     <h4 class="modal-title">New Takeaway for <%=session.session_name%></h4>
                                   </div>
                                   <div class="modal-body">
-                                    <textarea class="takeaway"><%=notes%></textarea>
+                                    <textarea id="edit-textarea" class="takeaway"><%=notes%></textarea>
                                     <div id="tags-list" ></div>
                                   </div>
                                   <div class="modal-footer">
@@ -382,8 +382,8 @@ $.ajaxSetup({
 
                                    <div class="btn-group">
 
-                                    <button class="btn btn-xs btn-primary"  data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button class="btn btn-xs btn-danger"><i class="fa fa-trash-o fa-lg"></i> </button>
+                                    <button id="update" class="btn btn-xs btn-primary"  data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
+                                    <button id="delete" class="btn btn-xs btn-danger"><i class="fa fa-trash-o fa-lg"></i> </button>
 
 
 
