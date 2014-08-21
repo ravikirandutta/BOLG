@@ -194,6 +194,22 @@ def user_registered_callback(sender, user, request, **kwargs):
 
     profile.save()
 
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+@receiver(post_save,sender=Rating)
+def update_takeaway_on_rating_save(sender, **kwargs):
+    if kwargs.get('created',False):
+        rating = kwargs.get("instance")
+        takeaway = TakeAway.objects.get(pk=rating.takeaway.id)
+        rating_value = rating.rating_value
+        total_raters = takeaway.total_raters +1
+        average_rating = ((takeaway.average_rating * takeaway.total_raters)+rating_value)/total_raters
+        takeaway.average_rating = average_rating
+        takeaway.total_raters = total_raters
+        takeaway.save()
+
 user_registered.connect(user_registered_callback)
+
+
 
 
