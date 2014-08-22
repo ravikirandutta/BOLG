@@ -24,6 +24,7 @@ var SessionView = Backbone.View.extend({
 
         $("#newTakeaway").html("");
          $("#newTakeaway").append(newTakeaway.render().el);
+         $("[name='my-checkbox']").bootstrapSwitch();
     }
 
 

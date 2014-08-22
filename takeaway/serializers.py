@@ -58,11 +58,8 @@ class RatingSerializer(serializers.ModelSerializer):
         model = Rating
         fields = ('id', 'user','takeaway','rating_value')
 
-class NotificationSerializerUserOnly(serializers.ModelSerializer):
-    username = serializers.Field(source='recipient.username')
-    first_name = serializers.Field(source='recipient.first_name')
+
+
+class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
-        #depth = 1
-
-

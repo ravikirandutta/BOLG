@@ -11,7 +11,7 @@ $(document).ready(function(){
       $(".sidebar .sidebar-inner").slideDown(350);
     }
     else{
-      $(".sidebar .sidebar-inner").slideUp(350); 
+      $(".sidebar .sidebar-inner").slideUp(350);
     }
   });
 
@@ -46,12 +46,12 @@ $(document).ready(function(){
         // hide any open menus and remove all other classes
         $(".sidebar .sidebar-inner").slideUp(350);
         $(".sidebar-dropdown a").removeClass("dropy");
-        
+
         // open our new menu and add the dropy class
         $(".sidebar .sidebar-inner").slideDown(350);
         $(this).addClass("dropy");
       }
-      
+
       else if($(this).hasClass("dropy")) {
         $(this).removeClass("dropy");
         $(".sidebar .sidebar-inner").slideUp(350);
@@ -73,18 +73,18 @@ $('.wclose').click(function(e){
 $('.wminimize').click(function(e){
 	e.preventDefault();
 	var $wcontent = $(this).parent().parent().next('.widget-content');
-	if($wcontent.is(':visible')) 
+	if($wcontent.is(':visible'))
 	{
 	  $(this).children('i').removeClass('fa fa-chevron-up');
 	  $(this).children('i').addClass('fa fa-chevron-down');
 	}
-	else 
+	else
 	{
 	  $(this).children('i').removeClass('fa fa-chevron-down');
 	  $(this).children('i').addClass('fa fa-chevron-up');
-	}            
+	}
 	$wcontent.toggle(500);
-}); 
+});
 
 /* Progressbar animation */
 
@@ -122,7 +122,7 @@ $(function(){
 	  if ($(this).scrollTop()>300)
 	  {
 		$('.totop').fadeIn();
-	  } 
+	  }
 	  else
 	  {
 		$('.totop').fadeOut();
@@ -168,14 +168,10 @@ $(document).ready(function(){
 
   }, 4000);
 
-  
+
 });
 
 /* Sidebar calendar */
-
-$(function() {
-	$( "#todaydate" ).datepicker();
-});
 
 /* Modal fix */
 
@@ -198,7 +194,7 @@ $('.slide-box-head').click(function() {
       },500);
       $slidebtn.children("i").removeClass().addClass("fa fa-chevron-left");
     }
-}); 
+});
 
 
 $('.sclose').click(function(e){
@@ -211,18 +207,18 @@ $('.sclose').click(function(e){
 $('.sminimize').click(function(e){
 	e.preventDefault();
 	var $wcontent = $(this).parent().parent().next('.slide-content');
-	if($wcontent.is(':visible')) 
+	if($wcontent.is(':visible'))
 	{
 	  $(this).children('i').removeClass('fa fa-chevron-down');
 	  $(this).children('i').addClass('fa fa-chevron-up');
 	}
-	else 
+	else
 	{
 	  $(this).children('i').removeClass('fa fa-chevron-up');
 	  $(this).children('i').addClass('fa fa-chevron-down');
-	}            
+	}
 	$wcontent.toggle(0);
-}); 
+});
 
 
-  
+

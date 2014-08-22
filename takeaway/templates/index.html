@@ -16,6 +16,20 @@
     <!-- Styles -->
     <!-- Bootstrap CSS -->
     <link href="/static/takeaway/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/takeaway/css/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="/static/takeaway/css/bootstrap-switch.css" rel="stylesheet">
+<link href="/static/takeaway/css/style.css" rel="stylesheet">
+    <!-- Widgets stylesheet -->
+    <link href="/static/takeaway/css/widgets.css" rel="stylesheet">
+
+<link href="/static/takeaway/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+
+
+<link href="/static/takeaway/css/app.css?{% now "U" %}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/static/takeaway/css/jquery.gritter.css" />
 
 
 
@@ -24,14 +38,14 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js" type="text/javascript"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js" type="text/javascript"></script>
   <script src="/static/takeaway/js/lib/jquery.autosize.min.js" type="text/javascript"></script>
-
+  <script src="/static/takeaway/js/lib/bootstrap.min.js"></script>
   <script src="/static/takeaway/js/lib/jquery.cookie.js" type="text/javascript"></script>
   <script src="/static/takeaway/js/lib/bootstrap-tagsinput.js" type="text/javascript"></script>
-  
 
-
-<link rel="stylesheet" type="text/css" href="/static/takeaway/css/jquery.gritter.css" />
+  <script src="/static/takeaway/js/lib/bootstrap-switch.js" type="text/javascript"></script>
+  <script src="/static/takeaway/js/lib/jquery.gritter.min.js" type="text/javascript"></script>
 <script src="/static/takeaway/js/jquery.gritter.min.js" type="text/javascript"></script>
+
 
   <script src="/static/takeaway/js/session.js?{% now "U" %}" type="text/javascript"></script>
   <script src="/static/takeaway/js/course.js?{% now "U" %}" type="text/javascript"></script>
@@ -40,7 +54,7 @@
     <!-- jQuery -->
 
     <!-- Bootstrap JS -->
-    <script src="/static/takeaway/js/lib/bootstrap.min.js"></script>
+
 
     <!-- jQuery UI -->
     <script src="/static/takeaway/js/lib/custom.js"></script>
@@ -77,18 +91,6 @@
     </style>
 
 
-<link href="/static/takeaway/css/bootstrap-tagsinput.css" rel="stylesheet">
-    <link href="/static/takeaway/css/style.css" rel="stylesheet">
-    <!-- Widgets stylesheet -->
-    <link href="/static/takeaway/css/widgets.css" rel="stylesheet">
-
-<link href="/static/takeaway/css/font-awesome.min.css" rel="stylesheet">
-
-
-
-
-
-<link href="/static/takeaway/css/app.css?{% now "U" %}" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="#">
@@ -350,6 +352,7 @@ $.ajaxSetup({
                                   <div class="modal-body">
                                     <textarea id="create-textarea" class="takeaway"></textarea>
                                     <div id="tags-list" ></div>
+                                       <input id="create-checkbox" type="checkbox" class="switch" name="my-checkbox" data-on-text="public" data-off-text="private">
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -370,6 +373,12 @@ $.ajaxSetup({
                                   <div class="modal-body">
                                     <textarea id="edit-textarea" class="takeaway"><%=notes%></textarea>
                                     <div id="tags-list" ></div>
+                                                                         <input id="edit-checkbox" type="checkbox" class="switch" name="my-checkbox" data-on-text="public" data-off-text="private"
+
+                                     <% if (is_public) { %>
+                                            checked
+                                        <% } %>
+                                     >
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -425,12 +434,6 @@ $.ajaxSetup({
 
                                     <button id="update" class="btn btn-xs btn-primary"  data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
                                     <button id="delete" class="btn btn-xs btn-danger"><i class="fa fa-trash-o fa-lg"></i> </button>
-
-
-
-
-
-
                                     <% _.each(tags, function(tag) { %>
                                     <!--
                                         <i><%=tag.name%></i><button class="btn btn-xs btn-danger tag-remove" name='<%=tag.id%>' ><i class="fa fa-times"></i> </button>&nbsp; -->
@@ -439,6 +442,13 @@ $.ajaxSetup({
                                     <% }); %>
 
                                     </div>
+
+                                     <input type="checkbox" class="switch" name="my-checkbox" data-on-text="public" data-off-text="private"
+                                      disabled = "true"
+                                     <% if (is_public) { %>
+                                            checked
+                                        <% } %>
+                                     >
 
 
                                     <span id="rating"></span>

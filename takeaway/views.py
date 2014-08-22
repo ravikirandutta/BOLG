@@ -244,18 +244,19 @@ class TakeAwayDetail(generics.RetrieveUpdateDestroyAPIView):
 
 from registration.backends.default.views import RegistrationView
 from forms import TakeawayProfileRegistrationForm
+from notifications.models import Notification
 
 class TakeAwayRegistrationView(RegistrationView):
     form_class = TakeawayProfileRegistrationForm
-
-
 
 class NotificationViewSet(viewsets.ModelViewSet):
         """
         API endpoint that allows groups to be viewed or edited.
         """
         queryset = Notification.objects.all()
-        serializer_class = NotificationSerializerUserOnly
+        serializer_class = NotificationSerializer
         filter_backends = (filters.DjangoFilterBackend,)
-        filter_fields = ('recipient','verb')
+        #filter_fields = ('course','session_name')
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
+

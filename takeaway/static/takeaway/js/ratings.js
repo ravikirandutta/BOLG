@@ -11,12 +11,12 @@
 		},
 		events : {"click":"rateTakeaway"},
 
-		rateTakeaway : function(event){
+		rateTakeaway : function(){
 			this.model;
 			var rating = new Rating();
 			var userId = this.model.get('user').id;
 			var takeAwayId = this.model.get('id');
-			var ratingValue = event.target.value;
+			var ratingValue = "5";
 			rating.set({'user':userId});
 
 			rating.set({'takeaway':takeAwayId});

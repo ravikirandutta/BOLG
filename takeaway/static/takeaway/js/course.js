@@ -28,6 +28,8 @@
                 success: function(collection, response){
                      sessionListView = new SessionListView({collection:collection});
                     $("#takeaway-container").append(sessionListView.render().el);
+
+                    $("[name='my-checkbox']").bootstrapSwitch();
                 }});
         }
 
