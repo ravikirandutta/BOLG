@@ -141,7 +141,7 @@ $(document).ready(function(){
 
   /* Auto notification */
 
-  setTimeout(function() {
+/*  setTimeout(function() {
 
             var unique_id = $.gritter.add({
                 // (string | mandatory) the heading of the notification
@@ -166,7 +166,7 @@ $(document).ready(function(){
                 });
             }, 10000);
 
-  }, 4000);
+  }, 4000);*/
 
   
 });

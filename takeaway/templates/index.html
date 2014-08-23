@@ -53,6 +53,7 @@
   <script src="/static/takeaway/js/course.js?{% now "U" %}" type="text/javascript"></script>
   <script src="/static/takeaway/js/tags.js?{% now "U" %}" type="text/javascript"></script>
   <script src="/static/takeaway/js/app.js?{% now "U" %}" type="text/javascript"></script>
+  <script src="/static/takeaway/js/notification.js?{% now "U" %}" type="text/javascript"></script>
     <!-- jQuery -->
 
     <!-- Bootstrap JS -->
@@ -160,28 +161,18 @@ $.ajaxSetup({
                     <!-- Message button with number of latest messages count-->
                     <li class="dropdown dropdown-big">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                            <i class="fa fa-envelope-o"></i> New Notes
-                            <span class="badge badge-important">6</span>
+                            <i class="fa fa-envelope-o"></i> My Inbox
+                            <span class="badge badge-important" id="inboxSize"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
                                 <!-- Heading - h5 -->
-                                <h5><i class="fa fa-envelope-o"></i> Notes</h5>
+                                <h5><i class="fa fa-envelope-o"></i> New Takeaways</h5>
                                 <!-- Use hr tag to add border -->
                                 <hr />
                             </li>
-                            <li>
-                                <!-- List item heading h6 -->
-                                <a href="#">Chapter 1 Finance - Sunil</a>
-                                <!-- List item para -->
-                                <p>Quisque eu consectetur erat eget semper...</p>
-                                <hr />
-                            </li>
-                            <li>
-                                <a href="#">Chapter 2 Marketing - Vijay</a>
-                                <p>Quisque eu consectetur erat eget semper...</p>
-                                <hr />
-                            </li>
+
+                            <div id="notifications-list"> </div>
                             <li>
                                 <div class="drop-foot">
                                     <a href="#">View All</a>
