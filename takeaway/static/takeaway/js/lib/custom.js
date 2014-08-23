@@ -174,7 +174,7 @@ $(document).ready(function(){
 /* Sidebar calendar */
 
 $(function() {
-	//$( "#todaydate" ).datepicker();
+	 //$( "#todaydate" ).datepicker();  //commented as it was not resolved
 });
 
 /* Modal fix */

@@ -50,9 +50,9 @@
     });      
 
 
-    var notifications = new Notifications();
+    var notifications = new Notifications({urlRoot:'/notifications'});
     var notificationsListView = null;
-    notifications.fetch({success:function(collection, response){
+    notifications.fetch({data: {recipient: $.cookie('userid')},success:function(collection, response){
         var notificationsList = new NotificationsList(collection.attributes.results);
         notificationsListView = new NotificationsListView({collection:notificationsList});
         $('#notifications-list').append(notificationsListView.render().el);
