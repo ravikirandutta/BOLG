@@ -8,7 +8,7 @@
 
 
 
-      var NotificationsView = Backbone.View.extend({
+  	var NotificationsView = Backbone.View.extend({
         
         
 
@@ -22,11 +22,11 @@
 
         notificationClick:function(){
 
-            alert("notification clicked");
+            //alert("notification clicked");
         }
 
 
-      });
+  	});
 
     var NotificationsListView = Backbone.View.extend({
         initialize: function(options){
@@ -50,14 +50,11 @@
     });      
 
 
-    
-
     var notifications = new Notifications();
     var notificationsListView = null;
     notifications.fetch({success:function(collection, response){
         var notificationsList = new NotificationsList(collection.attributes.results);
         notificationsListView = new NotificationsListView({collection:notificationsList});
         $('#notifications-list').append(notificationsListView.render().el);
-        console.log(notificationsList);
         $('#inboxSize').append(notificationsList.length);
     }});
