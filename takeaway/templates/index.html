@@ -162,23 +162,24 @@ $.ajaxSetup({
                     <!-- Message button with number of latest messages count-->
                     <li class="dropdown dropdown-big">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                            <i class="fa fa-envelope-o"></i> My Inbox
+                            <i class="fa fa-envelope-o"></i> Notifications
                             <span class="badge badge-important" id="inboxSize"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
                                 <!-- Heading - h5 -->
                                 <h5><i class="fa fa-envelope-o"></i> New Takeaways</h5>
+
                                 <!-- Use hr tag to add border -->
                                 <hr />
                             </li>
 
-                            <div id="notifications-list"> </div>
-                            <li>
+                            <div id="notifications-list" style="height:300px;overflow-y : auto"> </div>
+                            <!-- <li>
                                 <div class="drop-foot">
                                     <a href="#">View All</a>
                                 </div>
-                            </li>
+                            </li> -->
                         </ul>
                     </li>
                     <!-- Members button with number of latest members count -->
@@ -213,11 +214,12 @@ $.ajaxSetup({
                                 <div class="clearfix"></div>
                                 <hr />
                             </li>
+                                                    
                             <li>
                                 <div class="drop-foot">
                                     <a href="#">View All</a>
                                 </div>
-                            </li> #}
+                            </li> 
                         </ul>
                     </li>
                 </ul>
