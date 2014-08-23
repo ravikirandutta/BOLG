@@ -41,6 +41,10 @@ a span{
     cursor:pointer;
 }
 
+.takeaway-pre{
+font-family: "serif" !important;
+font-size:15px !important;
+}
 
 .course-selected{
     text-decoration:underline;
@@ -103,3 +107,8 @@ a span{
   width: 100%;
 }
 
+
+
+.btn-group-left{
+  float:left;
+}

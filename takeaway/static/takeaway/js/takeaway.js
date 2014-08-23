@@ -97,8 +97,9 @@ var InPlaceView = Backbone.View.extend({
             modifiedTakeaway.set({"id":this.get('id')});
             modifiedTakeaway.set({"notes":this.get('notes')});
 
-        modifiedTakeaway.set({'average_rating':this.model.get('average_rating')});
-        modifiedTakeaway.set({'total_raters':this.model.get('total_raters')});
+        modifiedTakeaway.set({'average_rating':this.get('average_rating')});
+        modifiedTakeaway.set({'total_raters':this.get('total_raters')});
+        modifiedTakeaway.set({'is_public':this.get('is_public')});
 
             modifiedTakeaway.save();
 
@@ -127,7 +128,7 @@ var InPlaceView = Backbone.View.extend({
                 this.$('.btn-group').hide();
                 this.$('.tag-remove').hide();
 
-                var rating = new RatingsView({model:this.model});
+                var rating = new RatingsView({model:this.model,takeaway:this.model});
                 this.$("#rating").html("");
                 this.$("#rating").append(rating.render().el);
                 this.$('.switch').hide();
@@ -139,9 +140,16 @@ var InPlaceView = Backbone.View.extend({
         events: {"click #update ":"updateNotes",
                   "click #delete ":"deleteTakeaway",
                  "click .tag-remove":"removeTag",
+                 "click .bootstrap-switch":"updateVisibility"
                     },
 
 
+        updateVisibility :function(){
+            var is_public = $("[name='my-checkbox']").prop('checked');
+            this.model.set({'is_public':is_public});
+            this.model.modifyAndSave();
+
+        },
         deleteTakeaway : function(){
             this.model.destroy();
             refreshSessionlistView();
@@ -203,6 +211,8 @@ var InPlaceView = Backbone.View.extend({
                var userid = $.cookie('userid');
                  if (takeaway.user.id == userid)  {
                     takeawayObject.set({isOwner:true});
+                 }else{
+                    takeawayObject.set({isOwner:false});
                  }
 
               var tags = takeawayObject.get('tags');
