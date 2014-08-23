@@ -9,9 +9,6 @@
 
 
   	var NotificationsView = Backbone.View.extend({
-        
-        
-
         template:_.template('<li><a href="#"><%=verb%></a><p><%=description%></p><hr /></li>'),
         render : function(){
           	this.$el.append(this.template(this.model.toJSON()));
@@ -19,15 +16,10 @@
         },
 
         events:{"click a":"notificationClick"},
-
         notificationClick:function(){
-        	
-        	this.model.set({'unread':false});
+        	this.model.set({'unread':'False'});
         	this.model.save();
-            
         }
-
-
   	});
 
     var NotificationsListView = Backbone.View.extend({
@@ -54,9 +46,10 @@
 
     var notifications = new Notifications({urlRoot:'/notifications'});
     var notificationsListView = null;
-    notifications.fetch({data: {recipient: $.cookie('userid'), unread:true},success:function(collection, response){
+    notifications.fetch({data: {recipient: $.cookie('userid'), unread:'True'},success:function(collection, response){
         var notificationsList = new NotificationsList(collection.attributes.results);
         notificationsListView = new NotificationsListView({collection:notificationsList});
         $('#notifications-list').append(notificationsListView.render().el);
         $('#inboxSize').append(notificationsList.length);
     }});
+
