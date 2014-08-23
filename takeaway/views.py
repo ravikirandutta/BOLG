@@ -216,14 +216,17 @@ class RatingViewSet(viewsets.ModelViewSet):
         filter_backends = (filters.DjangoFilterBackend,)
         filter_fields = ('user', 'takeaway',)
         permission_classes = (permissions.IsAuthenticated,)
+        paginate_by = 100
 
 
 class TakeAwayList(generics.ListCreateAPIView):
-		queryset = TakeAway.objects.all()
-		serializer_class = TakeAwaySerializer
-		filter_backends = (filters.DjangoFilterBackend,)
-		filter_fields = ('user', 'is_public')
-		permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
+    queryset = TakeAway.objects.all()
+    serializer_class = TakeAwaySerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('user', 'is_public')
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+    paginate_by = 100
 
 		#def get_queryset(self):
 
