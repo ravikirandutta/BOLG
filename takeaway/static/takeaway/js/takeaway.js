@@ -127,10 +127,13 @@ var InPlaceView = Backbone.View.extend({
             if (!isOwner){
                 this.$('.btn-group').hide();
                 this.$('.tag-remove').hide();
-
+                var isRated= this.model.get("alreadyRated");
+                if(!isRated){
                 var rating = new RatingsView({model:this.model,takeaway:this.model});
                 this.$("#rating").html("");
                 this.$("#rating").append(rating.render().el);
+                }
+                
                 this.$('.switch').hide();
 
             }
@@ -193,6 +196,10 @@ var InPlaceView = Backbone.View.extend({
     });
 
     var TakeawayListView = Backbone.View.extend({
+        initialize: function(options){
+            this.options = options;
+
+        },
         render: function(){
             this.$el.html("");
 
@@ -239,13 +246,21 @@ var InPlaceView = Backbone.View.extend({
     });
 
 
-var takeaway = new Takeaway();
-takeaway.fetch({success:function(collection, response){
+// var takeaway = new Takeaway();
+// takeaway.fetch({success:function(collection, response){
+//     var userRatings= new Rating();
+//     userRatings.fetch({data:{user:$.cookie('userid')} ,success:function(response){
+//         var ratings=response.attributes.results;
+//         var ratingsMap= {};
+//         for(rating in ratings){
+//             ratingsMap[rating["takeaway"]]=rating["rating_value"];
+//         }
+//         var takeawayListView = new TakeawayListView({collection:collection.attributes.results, ratingsmap:ratingsMap});
+//     takeawayListView.render();
+//     }});
+    
 
-    var takeawayListView = new TakeawayListView({collection:collection.attributes.results});
-    takeawayListView.render();
-
-}});
+// }});
 
 var NewTakeaway = Backbone.View.extend({
      selectedTags : new Array(),

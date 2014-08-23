@@ -23,14 +23,36 @@
             $(this.el).addClass('course-selected');
             $(".searchbox").css("display","block");
             $("#takeaway-container").html("");
+            var course=this.model.id;
             var takeawayList = new TakeawayList();
-            takeawayList.fetch({data: {course: this.model.id},
+            var userRatings= new Rating();
+            userRatings.fetch({data:{user:$.cookie('userid')} ,success:function(response){
+            var ratings=response.attributes.results;
+            var ratingsMap= {};
+            _.each(ratings,function(rating){
+                ratingsMap[rating["takeaway"]]=rating["rating_value"];
+            });
+            takeawayList.fetch({data: {course: course},
                 success: function(collection, response){
-                     sessionListView = new SessionListView({collection:collection});
+
+                    _.each(collection.models,function(obj){
+                        _.each(obj.attributes.takeaway_set,function(takeaway){
+                            if(ratingsMap[takeaway.id]>-1)
+                                {
+                                    takeaway.rating=ratingsMap[takeaway.id];
+                                    takeaway.alreadyRated=true;
+                                }
+                            else{
+                                takeaway.alreadyRated=false;
+                            }
+                        });
+                    });
+                     sessionListView = new SessionListView({collection:collection,ratingsMap:ratingsMap});
                     $("#takeaway-container").append(sessionListView.render().el);
 
                     $("[name='my-checkbox']").bootstrapSwitch();
                 }});
+        }});
         }
 
       });
