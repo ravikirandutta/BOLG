@@ -9,25 +9,18 @@
 
 
   	var NotificationsView = Backbone.View.extend({
-        
-        
-
-        template:_.template('<li><a href="#"><%=verb%></a><p><%=description%></p><hr /></li>'),
+        template:_.template('<li><a href="#"><%=verb%></a><span class="label label-important pull-right">New</span><p><%=description%></p><hr /></li>'),
         render : function(){
           	this.$el.append(this.template(this.model.toJSON()));
             return this;
         },
 
         events:{"click a":"notificationClick"},
-
         notificationClick:function(){
-        	
-        	this.model.set({'unread':false});
-        	this.model.save();
-            
+        	this.model.save({'unread':'False'}, {success :function(model, response){
+                 reloadNotifications();
+            }});
         }
-
-
   	});
 
     var NotificationsListView = Backbone.View.extend({
@@ -52,11 +45,19 @@
     });      
 
 
+
+    function reloadNotifications(){
+        notifications.fetch({data: {recipient: $.cookie('userid'), unread:'True'},success:function(collection, response){
+            var notificationsList = new NotificationsList(collection.attributes.results);
+            notificationsListView = new NotificationsListView({collection:notificationsList});
+            
+            $('#notifications-list').html(notificationsListView.render().el);
+            $('#inboxSize').html(notificationsList.length);
+            
+        }});
+
+    }
     var notifications = new Notifications({urlRoot:'/notifications'});
     var notificationsListView = null;
-    notifications.fetch({data: {recipient: $.cookie('userid'), unread:true},success:function(collection, response){
-        var notificationsList = new NotificationsList(collection.attributes.results);
-        notificationsListView = new NotificationsListView({collection:notificationsList});
-        $('#notifications-list').append(notificationsListView.render().el);
-        $('#inboxSize').append(notificationsList.length);
-    }});
+    reloadNotifications();
+
