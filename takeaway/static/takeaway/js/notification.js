@@ -21,8 +21,10 @@
         events:{"click a":"notificationClick"},
 
         notificationClick:function(){
-
-            //alert("notification clicked");
+        	
+        	this.model.set({'unread':false});
+        	this.model.save();
+            
         }
 
 
@@ -52,7 +54,7 @@
 
     var notifications = new Notifications({urlRoot:'/notifications'});
     var notificationsListView = null;
-    notifications.fetch({data: {recipient: $.cookie('userid')},success:function(collection, response){
+    notifications.fetch({data: {recipient: $.cookie('userid'), unread:true},success:function(collection, response){
         var notificationsList = new NotificationsList(collection.attributes.results);
         notificationsListView = new NotificationsListView({collection:notificationsList});
         $('#notifications-list').append(notificationsListView.render().el);
