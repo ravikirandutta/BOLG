@@ -256,7 +256,7 @@ class NotificationViewSet(viewsets.ModelViewSet):
         queryset = Notification.objects.all()
         serializer_class = NotificationSerializer
         filter_backends = (filters.DjangoFilterBackend,)
-        #filter_fields = ('course','session_name')
+        filter_fields = ('recipient',)
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
 
