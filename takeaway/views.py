@@ -32,6 +32,8 @@ def index(request):
         response.set_cookie(key='userid',value=userid)
     return response
 
+def profile(request):
+    return render_to_response("profile.html",RequestContext(request))
 
 def handlelogin(request):
 
