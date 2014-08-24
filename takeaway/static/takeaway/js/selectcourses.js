@@ -19,13 +19,13 @@ var AvailableCourseView = Backbone.View.extend({
 	}
 
 });
-var CourseList = Backbone.Collection.extend({
+var AvailableCourseList = Backbone.Collection.extend({
 	model:AvailableCourse
 });
 
 var AvailableCourseListView = Backbone.View.extend({
 	tagName : "ul",
-	className: "courseList",
+	className: "courselist",
 	render : function(){
 		this.collection.forEach(this.addOne,this);
 		return this;
@@ -34,7 +34,7 @@ var AvailableCourseListView = Backbone.View.extend({
 		var  availableCourseObject = new AvailableCourse();
 		availableCourseObject.set(availableCourse);
 		var availableCourseView = new AvailableCourseView({model:availableCourseObject});
-		$(this.el).append(availableCourseView.render.el);
+		$(this.el).append(availableCourseView.render().el);
 	}
 
 });
