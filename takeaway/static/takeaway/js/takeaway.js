@@ -128,10 +128,15 @@ var InPlaceView = Backbone.View.extend({
                 this.$('.btn-group').hide();
                 this.$('.tag-remove').hide();
                 var isRated= this.model.get("alreadyRated");
+                var userRating = this.model.get("rating");
                 if(!isRated){
                 var rating = new RatingsView({model:this.model,takeaway:this.model});
                 this.$("#rating").html("");
                 this.$("#rating").append(rating.render().el);
+                }
+                else{
+                    this.$("#rating").html("| Your Rating("+userRating+")");
+
                 }
                 
                 this.$('.switch').hide();
