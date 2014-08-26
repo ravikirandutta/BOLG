@@ -107,8 +107,8 @@ def initload(request):
     School(school_name="STANFORD").save()
     School(school_name="COX").save()
     school1= School.objects.get(school_name="EMORY")
-    school1= School.objects.get(school_name="STANFORD")
-    school1= School.objects.get(school_name="COX")
+    school2= School.objects.get(school_name="STANFORD")
+    school3= School.objects.get(school_name="COX")
 
     Program(name="Full Time MBA",school=school1).save()
     Program(name="Evening MBA",school=school1).save()
@@ -333,6 +333,16 @@ class CourseInstanceViewSet(viewsets.ModelViewSet):
         filter_backends = (filters.DjangoFilterBackend,)
         filter_fields = ('course','program','batch','year',)
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
+        def get_queryset(self):
+            """
+            Optionally returns just the course Instances related to a particular school
+            """
+            queryset = CourseInstance.objects.all()
+            school_id = self.request.QUERY_PARAMS.get('school_id', None)
+            if school_id is not None:
+                queryset = queryset.filter(course__in=Course.objects.filter(school=School.objects.get(id=school_id)) )
+            return queryset
 
 class ProgramViewSet(viewsets.ModelViewSet):
         """
