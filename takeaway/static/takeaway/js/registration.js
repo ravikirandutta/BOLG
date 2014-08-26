@@ -15,38 +15,14 @@ $(document).ready(function(){
                    school_id = response.id;
 
                    if(school_id){
-
-
-
                    var program = new Program();
                    program.fetch({data: {school:school_id},success:function(response){
                         var programs = {};
 
                                 programs = response.attributes;
                                 _.each(programs, function(program){
-                                    var option = '<option value='+program.name+'>'+program.name+'</option>';
+                                    var option = '<option value='+program.id+'>'+program.name+'</option>';
                                     $("#id_program").append(option);
-                                });
-                   }});
-
-                   var section = new Section();
-                   section.fetch({data: {school:school_id},success:function(response){
-                        var sections = {};
-                                sections = response.attributes;
-                                _.each(sections, function(section){
-                                    var option = '<option value='+section.name+'>'+section.name+'</option>';
-                                    $("#id_section").append(option);
-                                });
-                   }});
-
-                   var term = new Term();
-                   term.fetch({data: {school:school_id},success:function(response){
-                        var terms = {};
-
-                                terms = response.attributes;
-                                _.each(terms, function(term){
-                                    var option = '<option value='+term.id+'>'+term.description+'</option>';
-                                    $("#id_term").append(option);
                                 });
                    }});
                    }

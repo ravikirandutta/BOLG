@@ -211,9 +211,7 @@ def user_registered_callback(sender, user, request, **kwargs):
     profile.email = request.POST["email"]
     profile.school =School.objects.get(school_name=(request.POST["school"].upper()))
     profile.batch = request.POST["batch"]
-    profile.program = Program.objects.get(name=(request.POST["program"].upper()))
-    profile.section = Section.objects.get(name=(request.POST["section"].upper()))
-    profile.term = Term.objects.get(name=(request.POST["term"].upper()))
+    profile.program = Program.objects.get(pk=(request.POST["program"]))
     user.first_name = request.POST["firstname"]
     user.last_name = request.POST["lastname"]
 
@@ -231,7 +229,7 @@ def update_takeaway_on_rating_save(sender, **kwargs):
         rating_value = rating.rating_value
         total_raters = takeaway.total_raters +1
         average_rating = ((takeaway.average_rating * takeaway.total_raters)+rating_value)/total_raters
-        
+
         takeaway.average_rating = average_rating
         takeaway.total_raters = total_raters
         takeaway.save()
@@ -249,8 +247,8 @@ def create_notifications_on_takeaway(sender, **kwargs):
 
         #pdb.set_trace()
         for recipient in recipients:
-            
-            message =  str(takeaway.user) + ' posted a takeaway on ' + str(takeaway.session )  +' of course ' + str(takeaway.course ) 
+
+            message =  str(takeaway.user) + ' posted a takeaway on ' + str(takeaway.session )  +' of course ' + str(takeaway.course )
             notify.send(takeaway.user,recipient=recipient, verb='NEW_TAKEAWAY',description= message)
             #pdb.set_trace()
 
