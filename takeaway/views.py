@@ -32,6 +32,8 @@ def index(request):
         response.set_cookie(key='userid',value=userid)
     return response
 
+def profile(request):
+    return render_to_response("profile.html",RequestContext(request))
 
 def handlelogin(request):
 
@@ -276,14 +278,17 @@ class RatingViewSet(viewsets.ModelViewSet):
         filter_backends = (filters.DjangoFilterBackend,)
         filter_fields = ('user', 'takeaway',)
         permission_classes = (permissions.IsAuthenticated,)
+        paginate_by = 100
 
 
 class TakeAwayList(generics.ListCreateAPIView):
-		queryset = TakeAway.objects.all()
-		serializer_class = TakeAwaySerializer
-		filter_backends = (filters.DjangoFilterBackend,)
-		filter_fields = ('user', 'is_public')
-		permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
+    queryset = TakeAway.objects.all()
+    serializer_class = TakeAwaySerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('user', 'is_public')
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+    paginate_by = 100
 
 		#def get_queryset(self):
 
@@ -316,8 +321,8 @@ class NotificationViewSet(viewsets.ModelViewSet):
         queryset = Notification.objects.all()
         serializer_class = NotificationSerializer
         filter_backends = (filters.DjangoFilterBackend,)
-        #filter_fields = ('course','session_name')
-        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+        filter_fields = ('recipient','verb','unread')
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 class CourseInstanceViewSet(viewsets.ModelViewSet):
         """

@@ -231,11 +231,28 @@ def update_takeaway_on_rating_save(sender, **kwargs):
         rating_value = rating.rating_value
         total_raters = takeaway.total_raters +1
         average_rating = ((takeaway.average_rating * takeaway.total_raters)+rating_value)/total_raters
+        
         takeaway.average_rating = average_rating
         takeaway.total_raters = total_raters
         takeaway.save()
 
 user_registered.connect(user_registered_callback)
+
+import pdb
+from notifications import notify
+@receiver(post_save,sender=TakeAway)
+def create_notifications_on_takeaway(sender, **kwargs):
+    #pdb.set_trace()
+    if kwargs.get('created',False):
+        takeaway = kwargs.get("instance")
+        recipients = User.objects.filter(is_active=True)
+
+        #pdb.set_trace()
+        for recipient in recipients:
+            
+            message =  str(takeaway.user) + ' posted a takeaway on ' + str(takeaway.session )  +' of course ' + str(takeaway.course ) 
+            notify.send(takeaway.user,recipient=recipient, verb='NEW_TAKEAWAY',description= message)
+            #pdb.set_trace()
 
 
 

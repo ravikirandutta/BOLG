@@ -30,6 +30,7 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'takeaway.views.home', name='home'),
     url(r'^login/$', 'takeaway.views.home', name='login'),
+    url(r'^profile/$', 'takeaway.views.profile', name='profile'),
     url(r'^handlelogin/$', 'takeaway.views.handlelogin', name='handlelogin'),
     url(r'^logout/$', 'takeaway.views.logoutuser', name='logoutuser'),
     url(r'^user/password/reset/$',
