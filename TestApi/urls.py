@@ -13,11 +13,17 @@ admin.autodiscover()
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
+router.register(r'schools', views.SchoolViewSet)
 router.register(r'courses', views.CourseViewSet)
 router.register(r'sessions', views.SessionViewSet)
 router.register(r'tags', views.TagViewSet)
 router.register(r'ratings', views.RatingViewSet)
 router.register(r'notifications', views.NotificationViewSet)
+router.register(r'courseInstances', views.CourseInstanceViewSet)
+router.register(r'programs', views.ProgramViewSet)
+router.register(r'sections', views.SectionViewSet)
+router.register(r'status', views.StatusViewSet)
+router.register(r'terms', views.TermViewSet)
 #router.register(r'takeaways', views.TakeAwayViewSet)
 
 urlpatterns = patterns('',
@@ -26,16 +32,16 @@ urlpatterns = patterns('',
     url(r'^login/$', 'takeaway.views.home', name='login'),
     url(r'^handlelogin/$', 'takeaway.views.handlelogin', name='handlelogin'),
     url(r'^logout/$', 'takeaway.views.logoutuser', name='logoutuser'),
-    url(r'^user/password/reset/$', 
-        'django.contrib.auth.views.password_reset', 
+    url(r'^user/password/reset/$',
+        'django.contrib.auth.views.password_reset',
         {'post_reset_redirect' : '/user/password/reset/done/'},
         name="password_reset"),
     (r'^user/password/reset/done/$',
         'django.contrib.auth.views.password_reset_done'),
-    (r'^user/password/reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', 
-        'django.contrib.auth.views.password_reset_confirm', 
+    (r'^user/password/reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
+        'django.contrib.auth.views.password_reset_confirm',
         {'post_reset_redirect' : '/user/password/done/'}),
-    (r'^user/password/done/$', 
+    (r'^user/password/done/$',
         'django.contrib.auth.views.password_reset_complete'),
 
     # url(r'^blog/', include('blog.urls')),

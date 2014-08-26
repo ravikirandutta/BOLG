@@ -82,8 +82,8 @@ var InPlaceView = Backbone.View.extend({
         urlRoot:'/takeaways/',
         modifyAndSave: function(){
             var modifiedTakeaway = new Takeaway();
-            var courseid = this.get('course').id;
-            modifiedTakeaway.set({'course':courseid});
+            var courseid = this.get('courseInstance').id;
+            modifiedTakeaway.set({'courseInstance':courseid});
             var sessionid = this.get('session').id;
             modifiedTakeaway.set({'session':sessionid});
             var userid = this.get('user').id;
@@ -264,7 +264,7 @@ var NewTakeaway = Backbone.View.extend({
         var object = {};
         object.notes = $("#create-textarea").val();
         object.user = $.cookie("userid");
-        object.course = this.model.get('course').id;
+        object.courseInstance = this.model.get('courseInstance').id;
         object.session = this.model.get('id');
         object.tags= this.selectedTags;
 
@@ -285,7 +285,7 @@ var NewTakeaway = Backbone.View.extend({
 
         takeaway.save();
         $("#modalCloseButton").click();
-        var courseid = "#course"+object.course;
+        var courseid = "#course"+object.courseInstance;
         $(courseid).click();
 
      },
@@ -332,7 +332,7 @@ var NewTakeaway = Backbone.View.extend({
         var object = {};
         object.notes = $("#edit-textarea").val();
         object.user = $.cookie("userid");
-        object.course = this.model.get('course').id;
+        object.courseInstance = this.model.get('courseInstance').id;
         object.session = this.model.get('session').id;
 
         object.id= this.model.get('id');

@@ -1,7 +1,7 @@
 
 
       var Course = Backbone.Model.extend({
-        urlRoot:'/courses'
+        urlRoot:'/courseInstances'
       });
 
       var sessionListView;
@@ -10,7 +10,7 @@
         tagName: "li",
         className: "course",
 
-        template:_.template('<a><span id="course<%=id%>"><i class="fa fa-bars"></i> <%= course_name%></span></a>'),
+        template:_.template('<a><span id="course<%=id%>"><i class="fa fa-bars"></i> <%= course.course_name%></span></a>'),
         render : function(){
               this.$el.append(this.template(this.model.toJSON()));
               return this;
@@ -24,7 +24,7 @@
             $(".searchbox").css("display","block");
             $("#takeaway-container").html("");
             var takeawayList = new TakeawayList();
-            takeawayList.fetch({data: {course: this.model.id},
+            takeawayList.fetch({data: {courseInstance: this.model.id},
                 success: function(collection, response){
                      sessionListView = new SessionListView({collection:collection});
                     $("#takeaway-container").append(sessionListView.render().el);

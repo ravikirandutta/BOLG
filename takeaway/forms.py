@@ -11,6 +11,9 @@ class TakeawayForm(ModelForm):
         fields=['notes']
 
 
+class ChoiceFieldNoValidation(forms.ChoiceField):
+    def validate(self, value):
+        pass
 
 
 class TakeawayProfileRegistrationForm(RegistrationForm):
@@ -26,25 +29,25 @@ class TakeawayProfileRegistrationForm(RegistrationForm):
        (CLASS_2016, 'Class of 2016'),
        (CLASS_2017, 'Class of 2017'),
     )
-    FULL_TIME = 'FULL_TIME'
-    EVENING = 'EVENING'
-    PART_TIME = 'PART_TIME'
-    PROGRAM_CHOICES = (
-       (FULL_TIME, 'Full Time MBA'),
-       (EVENING, 'Evening MBA'),
-       (PART_TIME, 'Part Time MBA'),
-    )
-    MONDAY = 'MONDAY'
-    WEDNESDAY = 'WEDNESDAY'
-    WEEKEND = 'Weekend'
-    SECTION_CHOICES = (
-       (MONDAY, 'Monday'),
-       (WEDNESDAY, 'Wednesday'),
-       (WEEKEND, 'Weekend'),
-    )
+    # FULL_TIME = 'FULL_TIME'
+    # EVENING = 'EVENING'
+    # PART_TIME = 'PART_TIME'
+    # PROGRAM_CHOICES = (
+    #    (FULL_TIME, 'Full Time MBA'),
+    #    (EVENING, 'Evening MBA'),
+    #    (PART_TIME, 'Part Time MBA'),
+    # )
+    # MONDAY = 'MONDAY'
+    # WEDNESDAY = 'WEDNESDAY'
+    # WEEKEND = 'Weekend'
+    # SECTION_CHOICES = (
+    #    (MONDAY, 'Monday'),
+    #    (WEDNESDAY, 'Wednesday'),
+    #    (WEEKEND, 'Weekend'),
+    # )
 
 
-    #     batch = models.CharField(max_length=200,choices=YEAR_IN_SCHOOL_CHOICES,
+    # batch = forms.CharField(max_length=200,choices=YEAR_IN_SCHOOL_CHOICES,
     #                                   default=CLASS_2016)
     # program = models.CharField(max_length=500,choices=PROGRAM_CHOICES,
     #                                  default=EVENING)
@@ -52,18 +55,15 @@ class TakeawayProfileRegistrationForm(RegistrationForm):
     #                                  default=WEEKEND)
 
     school = forms.CharField()
-    email = forms.CharField()
+    # email = forms.CharField()
     firstname = forms.CharField()
     lastname = forms.CharField()
-    batch = forms.ChoiceField(choices=YEAR_IN_SCHOOL_CHOICES,
-                                      )
-    program = forms.ChoiceField(choices=PROGRAM_CHOICES,)
-    section = forms.ChoiceField(choices=SECTION_CHOICES,)
+    batch = forms.ChoiceField(choices=YEAR_IN_SCHOOL_CHOICES,)
+    program = ChoiceFieldNoValidation()
 
-    class Meta:
-        model=TakeAwayProfile
-        fields=['email','school','batch','program','section']
-
+    # class Meta:
+    #     model=TakeAwayProfile
+    #     fields=['email','school','batch','program','section']
 
 
 

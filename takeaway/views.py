@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User,Group
 from rest_framework import viewsets
 from takeaway.serializers import *
-from takeaway.models import Course,Session,TakeAway,School,Enrollment,Vote
+from takeaway.models import Course,Session,TakeAway,School,Enrollment,Vote,CourseInstance,Program,Term,Status,Section
 from rest_framework import permissions
 from rest_framework import generics
 from rest_framework import filters
@@ -25,7 +25,7 @@ def home(request):
 def index(request):
     #course = Course.objects.create(course_name="MARKETING" , created_by="ravid")
     user = authenticate(username=request.POST.get('Username'), password=request.POST.get('Password'))
-    course_instance_list = Course.objects.filter(students=user)
+    course_instance_list = CourseInstance.objects.filter(students=user)
     userid = request.session.get('userid','0')
     response = render_to_response("index.html",{},RequestContext(request))
     if userid is not '0':
@@ -61,14 +61,14 @@ def handlelogin(request):
     else:
         user = authenticate(username=request.POST.get('Username'), password=request.POST.get('Password'))
         course_obj = None
-        course_sessions_list = Session.objects.filter(course=course_obj)
+
         if user is not None:
             # the password verified for the user
             if user.is_active:
                 message = "User is valid, active and authenticated"
                 login(request,user)
                 logged_user = User.objects.get(username=request.POST.get('Username'))
-                course_instance_list = Course.objects.filter(students=logged_user)
+                course_instance_list = CourseInstance.objects.filter(students=logged_user)
                 notifications = logged_user.notifications.unread()
                 request.session['userid'] = logged_user.id
                 response  = render_to_response("index.html",{})
@@ -108,42 +108,96 @@ def initload(request):
     school1= School.objects.get(school_name="STANFORD")
     school1= School.objects.get(school_name="COX")
 
+    Program(name="Full Time MBA",school=school1).save()
+    Program(name="Evening MBA",school=school1).save()
+    Program(name="Part Time MBA",school=school1).save()
+
+    program1 = Program.objects.get(name='Part Time MBA')
+
+
+    Section(name="Monday",school=school1).save()
+    Section(name="Wednesday",school=school1).save()
+    Section(name="Weekend",school=school1).save()
+
+    section1 = Section.objects.get(name='Monday')
+    section2 = Section.objects.get(name='Wednesday')
+
+    Term(description="Ist Semester",school=school1).save()
+    Term(description="IInd Semester",school=school1).save()
+
+    term1 = Term.objects.get(description="Ist Semester")
+
+
+    Status(value="Active",school=school1).save()
+    status1 = Status.objects.get(value="Active")
     Course(school=school1,course_name="BUS 634P Strategic Management",created_by="admin", course_desc="Today's corporate leaders must be able to account for and leverage digital technology and novel operating practices. By studying systems and processes that define the operating and information practices in firms, markets and society, Goizueta students will have the tools to manage as globalization and emerging digital technologies continue to transform the structure, form and governance of these systems and processes.").save()
     Course(school=school1,course_name="BUS 520P Managerial Finance",created_by="admin", course_desc="This course develops a market-oriented framework for analyzing the investment decisions made by corporations. Lectures and readings will provide an introduction to iscounted cash flow techniques, capital budgeting principles and problems, financial security and project valuation, capital structure, capital market efficiency and portfolio theory.").save()
     Course(school=school1,course_name="MARKETING",created_by="admin", course_desc="Today's corporate leaders must be able to account for and leverage digital technology and novel operating practices. By studying systems and processes that define the operating and information practices in firms, markets and society, Goizueta students will have the tools to manage as globalization and emerging digital technologies continue to transform the structure, form and governance of these systems and processes.").save()
     course1 = Course.objects.filter(course_name__startswith="BUS 634P")[0]
     course2 = Course.objects.filter(course_name__startswith="BUS 520P")[0]
     course3 = Course.objects.get(course_name="MARKETING")
-    course1.students.add(user1,user2)
-    course2.students.add(user1,user2)
-    course1.save()
-    course2.save()
+
+
+    CourseInstance(course=course1,section=section1,program = program1,batch="2014",year="2014",status=status1,term= term1 ).save()
+    CourseInstance(course=course1,section=section2,program = program1,batch="2014",year="2014",status=status1,term= term1 ).save()
+    CourseInstance(course=course2,section=section2,program = program1,batch="2014",year="2014",status=status1,term= term1 ).save()
+    courseInstance1 = CourseInstance.objects.filter(program=program1,section=section1,course=course1)[0]
+    courseInstance2 = CourseInstance.objects.filter(program=program1,section=section2,course=course2)[0]
+    courseInstance3 = CourseInstance.objects.filter(program=program1,section=section2,course=course1)[0]
+
+
+    courseInstance1.students.add(user1,user2)
+    courseInstance2.students.add(user1,user2)
+    courseInstance3.students.add(user1,user2)
+
+    courseInstance1.save()
+    courseInstance2.save()
+    courseInstance3.save()
+
+
+
+
+
+
 
     #BUS 634P Strategic Management
-    Session(course=course1,session_name="Week 1 : Course Introduction",session_dt="2014-06-21").save()
-    Session(course=course1,session_name="Week 2 : Competitor Dynamics",session_dt="2014-06-22").save()
-    Session(course=course1,session_name="Week 3 : Industry Analysis",session_dt="2014-06-23").save()
-    Session(course=course1,session_name="Week 4 : Industry Analysis",session_dt="2014-06-24").save()
-    Session(course=course1,session_name="Week 5 : Competitive Advantage",session_dt="2014-06-25").save()
-    Session(course=course1,session_name="Week 6 : Industry Evolution and Revolution",session_dt="2014-06-26").save()
-    Session(course=course1,session_name="Week 7 : Managing Human Assets F0r Competitive Advantage",session_dt="2014-06-27").save()
-    Session(course=course1,session_name="Week 8 : Business Model Innovation",session_dt="2014-06-28").save()
-    Session(course=course1,session_name="Week 9 : Corporate-Level Strategy: Diversification & Vertical Integration",session_dt="2014-06-29").save()
-    Session(course=course1,session_name="Week 10 : Strategy Implementation",session_dt="2014-06-30").save()
+    Session(courseInstance=courseInstance1,session_name="Week 1 : Course Introduction",session_dt="2014-06-21").save()
+    Session(courseInstance=courseInstance1,session_name="Week 2 : Competitor Dynamics",session_dt="2014-06-22").save()
+    Session(courseInstance=courseInstance1,session_name="Week 3 : Industry Analysis",session_dt="2014-06-23").save()
+    Session(courseInstance=courseInstance1,session_name="Week 4 : Industry Analysis",session_dt="2014-06-24").save()
+    Session(courseInstance=courseInstance1,session_name="Week 5 : Competitive Advantage",session_dt="2014-06-25").save()
+    Session(courseInstance=courseInstance1,session_name="Week 6 : Industry Evolution and Revolution",session_dt="2014-06-26").save()
+    Session(courseInstance=courseInstance1,session_name="Week 7 : Managing Human Assets F0r Competitive Advantage",session_dt="2014-06-27").save()
+    Session(courseInstance=courseInstance1,session_name="Week 8 : Business Model Innovation",session_dt="2014-06-28").save()
+    Session(courseInstance=courseInstance1,session_name="Week 9 : Corporate-Level Strategy: Diversification & Vertical Integration",session_dt="2014-06-29").save()
+    Session(courseInstance=courseInstance1,session_name="Week 10 : Strategy Implementation",session_dt="2014-06-30").save()
 
 
     #  BUS 520P Managerial Finance  complete session list loaded.
-    Session(course=course2,session_name="I. Financial Decision Making (week 1)",session_dt="2014-06-21").save()
-    Session(course=course2,session_name="II. Time Value of Money, Annuities and Perpetuities (week 2)",session_dt="2014-08-22").save()
-    Session(course=course2,session_name="III. Fundamentals of Capital Budgeting (week 3)",session_dt="2014-09-23").save()
-    Session(course=course2,session_name="IV. Investment Decision Rules (week 4) ",session_dt="2014-09-24").save()
-    Session(course=course2,session_name="V. Interest Rates (week 4) ",session_dt="2014-09-25").save()
-    Session(course=course2,session_name="VI. Valuing Bonds (week 5)",session_dt="2014-09-26").save()
-    Session(course=course2,session_name="VII. Valuing Stocks (weeks 6-8)",session_dt="2014-09-27").save()
-    Session(course=course2,session_name="VIII. Capital Markets and the Pricing of Risk (week 8)",session_dt="2014-09-28").save()
-    Session(course=course2,session_name="IX. Estimating the Cost of Capital ( week 8) ",session_dt="2014-09-29").save()
-    Session(course=course2,session_name="X. Capital Structure, Perfect Markets, and Corporate Taxes (week 9)",session_dt="2014-09-30").save()
-    Session(course=course2,session_name="XI. Capital Budgeting and Valuation with Leverage (week 9)",session_dt="2014-10-01").save()
+    Session(courseInstance=courseInstance2,session_name="I. Financial Decision Making (week 1)",session_dt="2014-06-21").save()
+    Session(courseInstance=courseInstance2,session_name="II. Time Value of Money, Annuities and Perpetuities (week 2)",session_dt="2014-08-22").save()
+    Session(courseInstance=courseInstance2,session_name="III. Fundamentals of Capital Budgeting (week 3)",session_dt="2014-09-23").save()
+    Session(courseInstance=courseInstance2,session_name="IV. Investment Decision Rules (week 4) ",session_dt="2014-09-24").save()
+    Session(courseInstance=courseInstance2,session_name="V. Interest Rates (week 4) ",session_dt="2014-09-25").save()
+    Session(courseInstance=courseInstance2,session_name="VI. Valuing Bonds (week 5)",session_dt="2014-09-26").save()
+    Session(courseInstance=courseInstance2,session_name="VII. Valuing Stocks (weeks 6-8)",session_dt="2014-09-27").save()
+    Session(courseInstance=courseInstance2,session_name="VIII. Capital Markets and the Pricing of Risk (week 8)",session_dt="2014-09-28").save()
+    Session(courseInstance=courseInstance2,session_name="IX. Estimating the Cost of Capital ( week 8) ",session_dt="2014-09-29").save()
+    Session(courseInstance=courseInstance2,session_name="X. Capital Structure, Perfect Markets, and Corporate Taxes (week 9)",session_dt="2014-09-30").save()
+    Session(courseInstance=courseInstance2,session_name="XI. Capital Budgeting and Valuation with Leverage (week 9)",session_dt="2014-10-01").save()
+
+
+
+    Session(courseInstance=courseInstance3,session_name="Week 1 : Course Introduction",session_dt="2014-06-21").save()
+    Session(courseInstance=courseInstance3,session_name="Week 2 : Competitor Dynamics",session_dt="2014-06-22").save()
+    Session(courseInstance=courseInstance3,session_name="Week 3 : Industry Analysis",session_dt="2014-06-23").save()
+    Session(courseInstance=courseInstance3,session_name="Week 4 : Industry Analysis",session_dt="2014-06-24").save()
+    Session(courseInstance=courseInstance3,session_name="Week 5 : Competitive Advantage",session_dt="2014-06-25").save()
+    Session(courseInstance=courseInstance3,session_name="Week 6 : Industry Evolution and Revolution",session_dt="2014-06-26").save()
+    Session(courseInstance=courseInstance3,session_name="Week 7 : Managing Human Assets F0r Competitive Advantage",session_dt="2014-06-27").save()
+    Session(courseInstance=courseInstance3,session_name="Week 8 : Business Model Innovation",session_dt="2014-06-28").save()
+    Session(courseInstance=courseInstance3,session_name="Week 9 : Corporate-Level Strategy: Diversification & Vertical Integration",session_dt="2014-06-29").save()
+    Session(courseInstance=courseInstance3,session_name="Week 10 : Strategy Implementation",session_dt="2014-06-30").save()
 
     Tag(name="theory").save()
     Tag(name="application").save()
@@ -183,25 +237,31 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
+class SchoolViewSet(viewsets.ModelViewSet):
+        queryset = School.objects.all()
+        serializer_class = SchoolSerializer
+        filter_backends = (filters.DjangoFilterBackend,)
+        filter_fields = ('school_name',)
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
+
 class CourseViewSet(viewsets.ModelViewSet):
-		"""
-		API endpoint that allows groups to be viewed or edited.
-		"""
-		queryset = Course.objects.all()
-		serializer_class = CourseSerializer
-		permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
-		filter_backends = (filters.DjangoFilterBackend,)
-		filter_fields = ('course_name','students')
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('course_name',)
+
+
+
+
 
 class SessionViewSet(viewsets.ModelViewSet):
-		"""
-		API endpoint that allows groups to be viewed or edited.
-		"""
-		queryset = Session.objects.all()
-		serializer_class = SessionSerializer
-		filter_backends = (filters.DjangoFilterBackend,)
-		filter_fields = ('course','session_name')
-		permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+    queryset = Session.objects.all()
+    serializer_class = SessionSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('session_name','courseInstance',)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
 
 class TagViewSet(viewsets.ModelViewSet):
@@ -257,6 +317,56 @@ class NotificationViewSet(viewsets.ModelViewSet):
         serializer_class = NotificationSerializer
         filter_backends = (filters.DjangoFilterBackend,)
         #filter_fields = ('course','session_name')
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
+class CourseInstanceViewSet(viewsets.ModelViewSet):
+        """
+        API endpoint that allows groups to be viewed or edited.
+        """
+        queryset = CourseInstance.objects.all()
+        serializer_class = CourseInstanceSerializer
+        filter_backends = (filters.DjangoFilterBackend,)
+        filter_fields = ('course','program','batch','year')
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
+class ProgramViewSet(viewsets.ModelViewSet):
+        """
+        API endpoint that allows groups to be viewed or edited.
+        """
+        queryset = Program.objects.all()
+        serializer_class = ProgramSerializer
+        filter_backends = (filters.DjangoFilterBackend,)
+        filter_fields = ('school',)
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
+class SectionViewSet(viewsets.ModelViewSet):
+        """
+        API endpoint that allows groups to be viewed or edited.
+        """
+        queryset = Section.objects.all()
+        serializer_class = SectionSerializer
+        filter_backends = (filters.DjangoFilterBackend,)
+        filter_fields = ('school',)
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
+class StatusViewSet(viewsets.ModelViewSet):
+        """
+        API endpoint that allows groups to be viewed or edited.
+        """
+        queryset = Status.objects.all()
+        serializer_class = StatusSerializer
+        filter_backends = (filters.DjangoFilterBackend,)
+        filter_fields = ('school',)
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
+class TermViewSet(viewsets.ModelViewSet):
+        """
+        API endpoint that allows groups to be viewed or edited.
+        """
+        queryset = Term.objects.all()
+        serializer_class = TermSerializer
+        filter_backends = (filters.DjangoFilterBackend,)
+        filter_fields = ('school',)
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
 

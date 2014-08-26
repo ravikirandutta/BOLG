@@ -20,14 +20,20 @@ class GroupSerializer(serializers.ModelSerializer):
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = ('id', 'course_name', 'course_desc', 'students','session_set')
+        fields = ('id', 'course_name', 'course_desc','session_set',)
+
+class SchoolSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = School
+        fields = ('id', 'school_name',)
+
 
 
 class TakeAwaySerializer(serializers.ModelSerializer):
     username = serializers.Field(source='user.username')
     class Meta:
         model = TakeAway
-        fields = ('id','notes', 'user','course','session','is_public','username', 'tags','created_dt','average_rating','total_raters')
+        fields = ('id','notes', 'user','courseInstance','session','is_public','username', 'tags','created_dt','average_rating','total_raters')
         #depth = 1
 
 
@@ -36,7 +42,7 @@ class TakeAwayFullSerializer(serializers.ModelSerializer):
     created_dt = serializers.DateTimeField(format='%m/%d/%y %H:%M')
     class Meta:
         model = TakeAway
-        fields = ('id','notes', 'user','course','session','is_public','username', 'tags','created_dt','average_rating','total_raters')
+        fields = ('id','notes', 'user','courseInstance','session','is_public','username', 'tags','created_dt','average_rating','total_raters')
         depth = 1
 
 class SessionSerializer(serializers.ModelSerializer):
@@ -44,7 +50,7 @@ class SessionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Session
-        fields = ('id','session_name', 'session_dt','course','takeaway_set')
+        fields = ('id','session_name', 'session_dt','takeaway_set','courseInstance')
         depth = 1
 
 class TagSerializer(serializers.ModelSerializer):
@@ -63,3 +69,31 @@ class RatingSerializer(serializers.ModelSerializer):
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
+
+class CourseInstanceSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CourseInstance
+        fields = ('id','course','section','batch','program','year','status')
+        depth = 1
+
+class ProgramSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Program
+
+
+class SectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Section
+
+
+class StatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Status
+
+
+class TermSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Term
+
+

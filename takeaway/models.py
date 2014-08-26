@@ -14,7 +14,6 @@ class Course(models.Model):
      course_name = models.CharField(max_length=400)
      course_desc = models.TextField()
      created_by = models.CharField(max_length=400)
-     students = models.ManyToManyField(User)
      created_dt = models.DateTimeField(auto_now_add=True,auto_now=False)
      updated_dt = models.DateTimeField(auto_now_add=False,auto_now=True)
 
@@ -28,15 +27,6 @@ class Course(models.Model):
         return self.students
 
 
-class Session(models.Model):
-    course = models.ForeignKey(Course)
-    session_name = models.CharField(max_length=1000)
-    session_dt = models.DateField()
-    created_dt = models.DateTimeField(auto_now_add=True,auto_now=False)
-    updated_dt = models.DateTimeField(auto_now_add=False,auto_now=True)
-
-    def __unicode__(self):
-        return smart_unicode(self.session_name)
 
 
 #class EnrollmentManager(models.Manager):
@@ -62,8 +52,62 @@ class Tag(models.Model):
         return smart_unicode(self.name)
 
 
-class TakeAway(models.Model):
+
+class Program(models.Model):
+    school = models.ForeignKey(School)
+    name= models.CharField(max_length=100)
+    def __unicode__(self):
+        return smart_unicode(self.name)
+
+
+class Term(models.Model):
+    school = models.ForeignKey(School)
+    description= models.CharField(max_length=100)
+    def __unicode__(self):
+        return smart_unicode(self.description)
+
+
+class Section(models.Model):
+    school = models.ForeignKey(School)
+    name= models.CharField(max_length=100)
+    def  __unicode__(self):
+        return smart_unicode(self.name)
+
+
+
+class Status(models.Model):
+    school = models.ForeignKey(School)
+    value= models.CharField(max_length=100)
+    def __unicode__(self):
+        return smart_unicode(self.value)
+
+
+class CourseInstance(models.Model):
     course = models.ForeignKey(Course)
+    section =  models.ForeignKey(Section)
+    students = models.ManyToManyField(User)
+    program = models.ForeignKey(Program)
+    batch = models.IntegerField(max_length=100)
+    year = models.IntegerField(max_length=100)
+    status = models.ForeignKey(Status)
+    term = models.ForeignKey(Term)
+    def  __unicode__(self):
+        return smart_unicode(self.course.course_name)
+
+
+class Session(models.Model):
+    courseInstance = models.ForeignKey(CourseInstance)
+    session_name = models.CharField(max_length=1000)
+    session_dt = models.DateField()
+    created_dt = models.DateTimeField(auto_now_add=True,auto_now=False)
+    updated_dt = models.DateTimeField(auto_now_add=False,auto_now=True)
+
+    def __unicode__(self):
+        return smart_unicode(self.session_name)
+
+
+class TakeAway(models.Model):
+    courseInstance = models.ForeignKey(CourseInstance)
     session = models.ForeignKey(Session)
     notes = models.TextField()
     created_dt = models.DateTimeField(auto_now_add=True,auto_now=False)
@@ -113,22 +157,7 @@ class TakeAwayProfile(models.Model):
        (CLASS_2016, 'Class of 2016'),
        (CLASS_2017, 'Class of 2017'),
     )
-    FULL_TIME = 'FULL_TIME'
-    EVENING = 'EVENING'
-    PART_TIME = 'PART_TIME'
-    PROGRAM_CHOICES = (
-       (FULL_TIME, 'Full Time MBA'),
-       (EVENING, 'Evening MBA'),
-       (PART_TIME, 'Part Time MBA'),
-    )
-    MONDAY = 'MONDAY'
-    WEDNESDAY = 'WEDNESDAY'
-    WEEKEND = 'Weekend'
-    SECTION_CHOICES = (
-       (MONDAY, 'Monday'),
-       (WEDNESDAY, 'Wednesday'),
-       (WEEKEND, 'Weekend'),
-    )
+
     user = models.ForeignKey(User, unique=True)
    #avatar = models.ImageField("Profile Pic", upload_to="images/", blank=True, null=True)
    # first_name = models.CharField(max_length=200,blank = True)
@@ -138,10 +167,8 @@ class TakeAwayProfile(models.Model):
     school =  models.ForeignKey(School)
     batch = models.CharField(max_length=200,choices=YEAR_IN_SCHOOL_CHOICES,
                                       default=CLASS_2016)
-    program = models.CharField(max_length=500,choices=PROGRAM_CHOICES,
-                                     default=EVENING)
-    section = models.CharField(max_length=500,choices=SECTION_CHOICES,
-                                     default=WEEKEND)
+    program = models.ForeignKey(Program)
+    courseInstances = models.ManyToManyField(CourseInstance)
    #password = models.CharField(max_length=500)
 
 
@@ -182,11 +209,11 @@ from registration.signals import user_registered
 def user_registered_callback(sender, user, request, **kwargs):
     profile = TakeAwayProfile(user = user)
     profile.email = request.POST["email"]
-    profile.school =School.objects.get(school_name=(request.POST["school"]))
+    profile.school =School.objects.get(school_name=(request.POST["school"].upper()))
     profile.batch = request.POST["batch"]
-    profile.program = request.POST["program"]
-    profile.section = request.POST["section"]
-
+    profile.program = Program.objects.get(name=(request.POST["program"].upper()))
+    profile.section = Section.objects.get(name=(request.POST["section"].upper()))
+    profile.term = Term.objects.get(name=(request.POST["term"].upper()))
     user.first_name = request.POST["firstname"]
     user.last_name = request.POST["lastname"]
 
@@ -209,6 +236,36 @@ def update_takeaway_on_rating_save(sender, **kwargs):
         takeaway.save()
 
 user_registered.connect(user_registered_callback)
+
+
+
+    # ACTIVE = 'Active'
+    # ARCHIVED = 'Archived'
+    # STATUS_CHOICES = (
+    #     (ACTIVE,'Active'),
+    #     (ARCHIVED,'Archived')
+    # )
+    # SECTION_CHOICES = (
+    #    ('Monday', 'Monday'),
+    #    ('Wednesday', 'Wednesday'),
+    #    ('Weekend', 'Weekend'),
+    # )
+    # TERM_CHOICES = (
+    #     ('1','Ist Semester'),
+    #     ('2','IInd Semester')
+    # )
+    # FULL_TIME = 'FULL_TIME'
+    # EVENING = 'EVENING'
+    # PART_TIME = 'PART_TIME'
+    # PROGRAM_CHOICES = (
+    #    (FULL_TIME, 'Full Time MBA'),
+    #    (EVENING, 'Evening MBA'),
+    #    (PART_TIME, 'Part Time MBA'),
+    # )
+
+
+
+
 
 
 
