@@ -54,4 +54,5 @@ urlpatterns = patterns('',
        TakeAwayRegistrationView.as_view(),
         name = 'registration_register'),
     url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^passwordchange/', include('django.contrib.auth.urls')),
 )
