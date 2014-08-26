@@ -331,7 +331,7 @@ class CourseInstanceViewSet(viewsets.ModelViewSet):
         queryset = CourseInstance.objects.all()
         serializer_class = CourseInstanceSerializer
         filter_backends = (filters.DjangoFilterBackend,)
-        filter_fields = ('course','program','batch','year')
+        filter_fields = ('course','program','batch','year',)
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
 class ProgramViewSet(viewsets.ModelViewSet):
@@ -374,4 +374,13 @@ class TermViewSet(viewsets.ModelViewSet):
         filter_fields = ('school',)
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
+class TakeAwayProfileViewSet(viewsets.ModelViewSet):
+        """
+        API endpoint that allows groups to be viewed or edited.
+        """
+        queryset = TakeAwayProfile.objects.all()
+        serializer_class = TakeAwayProfileSerializer
+        filter_backends = (filters.DjangoFilterBackend,)
+        filter_fields = ('id','user',)
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 

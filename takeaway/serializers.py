@@ -71,10 +71,10 @@ class NotificationSerializer(serializers.ModelSerializer):
         model = Notification
 
 class CourseInstanceSerializer(serializers.ModelSerializer):
-
+    school_id = serializers.RelatedField(source='course.school.id')
     class Meta:
         model = CourseInstance
-        fields = ('id','course','section','batch','program','year','status')
+        fields = ('id','course','section','batch','program','year','status','school_id')
         depth = 1
 
 class ProgramSerializer(serializers.ModelSerializer):
@@ -95,5 +95,9 @@ class StatusSerializer(serializers.ModelSerializer):
 class TermSerializer(serializers.ModelSerializer):
     class Meta:
         model = Term
+
+class TakeAwayProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=TakeAwayProfile
 
 

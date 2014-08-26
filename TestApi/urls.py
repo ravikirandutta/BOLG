@@ -24,6 +24,7 @@ router.register(r'programs', views.ProgramViewSet)
 router.register(r'sections', views.SectionViewSet)
 router.register(r'status', views.StatusViewSet)
 router.register(r'terms', views.TermViewSet)
+router.register(r'takeawayprofiles', views.TakeAwayProfileViewSet)
 #router.register(r'takeaways', views.TakeAwayViewSet)
 
 urlpatterns = patterns('',
