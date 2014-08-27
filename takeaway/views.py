@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User,Group
 from rest_framework import viewsets
 from takeaway.serializers import *
-from takeaway.models import Course,Session,TakeAway,School,Enrollment,Vote,CourseInstance,Program,Term,Status,Section
+from takeaway.models import Course,Session,TakeAway,School,Enrollment,Vote,CourseInstance,Program,Term,Status,Section,TakeAwayProfile
 from rest_framework import permissions
 from rest_framework import generics
 from rest_framework import filters
@@ -25,7 +25,7 @@ def home(request):
 def index(request):
     #course = Course.objects.create(course_name="MARKETING" , created_by="ravid")
     user = authenticate(username=request.POST.get('Username'), password=request.POST.get('Password'))
-    course_instance_list = CourseInstance.objects.filter(students=user)
+    # course_instance_list = CourseInstance.objects.filter(students=user)
     userid = request.session.get('userid','0')
     response = render_to_response("index.html",{},RequestContext(request))
     if userid is not '0':
@@ -54,7 +54,7 @@ def handlelogin(request):
             login(request,newuser)
             Course.objects.all()[0].students.add(newuser)
             Course.objects.all()[1].students.add(newuser)
-            course_instance_list = Course.objects.filter(students=newuser)
+            # course_instance_list = Course.objects.filter(students=newuser)
             logged_user = User.objects.get(username=request.POST.get('Username'))
             request.session['userid'] = logged_user.id
             response  = render_to_response("index.html",{})
@@ -70,7 +70,7 @@ def handlelogin(request):
                 message = "User is valid, active and authenticated"
                 login(request,user)
                 logged_user = User.objects.get(username=request.POST.get('Username'))
-                course_instance_list = CourseInstance.objects.filter(students=logged_user)
+                # course_instance_list = CourseInstance.objects.filter(students=logged_user)
                 notifications = logged_user.notifications.unread()
                 request.session['userid'] = logged_user.id
                 response  = render_to_response("index.html",{})
@@ -148,9 +148,9 @@ def initload(request):
     courseInstance3 = CourseInstance.objects.filter(program=program1,section=section2,course=course1)[0]
 
 
-    courseInstance1.students.add(user1,user2)
-    courseInstance2.students.add(user1,user2)
-    courseInstance3.students.add(user1,user2)
+    # courseInstance1.students.add(user1,user2)
+    # courseInstance2.students.add(user1,user2)
+    # courseInstance3.students.add(user1,user2)
 
     courseInstance1.save()
     courseInstance2.save()
@@ -340,8 +340,11 @@ class CourseInstanceViewSet(viewsets.ModelViewSet):
             """
             queryset = CourseInstance.objects.all()
             school_id = self.request.QUERY_PARAMS.get('school_id', None)
+            student_id = self.request.QUERY_PARAMS.get('students', None)
             if school_id is not None:
                 queryset = queryset.filter(course__in=Course.objects.filter(school=School.objects.get(id=school_id)) )
+            if student_id is not None:
+                queryset = queryset.filter(students__in=TakeAwayProfile.objects.filter(user=User.objects.get(id=student_id)))
             return queryset
 
 class ProgramViewSet(viewsets.ModelViewSet):

@@ -10,7 +10,7 @@
         tagName: "li",
         className: "course",
 
-        template:_.template('<a><span id="course<%=id%>"><i class="fa fa-bars"></i> <%= course.course_name%></span></a>'),
+        template:_.template('<a><span id="course<%=id%>"><i class="fa fa-folder-open"></i> <%= course.course_name%></span></a>'),
         render : function(){
               this.$el.append(this.template(this.model.toJSON()));
               return this;
@@ -82,9 +82,9 @@
 
     });
 
-
+    var userid = $.cookie('userid')
     var course = new Course();
-    course.fetch({success:function(collection, response){
+    course.fetch({data:{students:userid},success:function(collection, response){
         var courses = collection.attributes.results;
         var courseListView = new CourseListView({collection:courses});
         $("#course-list").append(courseListView.render().el);

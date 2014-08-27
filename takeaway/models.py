@@ -85,7 +85,7 @@ class Status(models.Model):
 class CourseInstance(models.Model):
     course = models.ForeignKey(Course)
     section =  models.ForeignKey(Section)
-    students = models.ManyToManyField(User)
+    # students = models.ManyToManyField(TakeAwayProfile)
     program = models.ForeignKey(Program)
     batch = models.IntegerField(max_length=100)
     year = models.IntegerField(max_length=100)
@@ -168,7 +168,7 @@ class TakeAwayProfile(models.Model):
     batch = models.CharField(max_length=200,choices=YEAR_IN_SCHOOL_CHOICES,
                                       default=CLASS_2016)
     program = models.ForeignKey(Program)
-    courseInstances = models.ManyToManyField(CourseInstance)
+    courseInstances = models.ManyToManyField(CourseInstance,related_name='students')
    #password = models.CharField(max_length=500)
 
 
@@ -220,7 +220,7 @@ def user_registered_callback(sender, user, request, **kwargs):
     profile.save()
 
 from django.dispatch import receiver
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save,pre_save
 @receiver(post_save,sender=Rating)
 def update_takeaway_on_rating_save(sender, **kwargs):
     if kwargs.get('created',False):
@@ -236,7 +236,22 @@ def update_takeaway_on_rating_save(sender, **kwargs):
 
 user_registered.connect(user_registered_callback)
 
-import pdb
+# import pdb
+
+# @receiver(pre_save,sender=TakeAwayProfile)
+# def update_courseInstance_with_students(sender,**kwargs):
+#     pdb.set_trace()
+#     if not kwargs.get('created',False):
+#         takeAwayProfilePayload = kwargs.get("instance")
+#         courseInstances = takeAwayProfile.courseInstances.all()
+#         user = takeAwayProfile.user
+#         actualTakeAwayProfile = TakeAwayProfile.object.filter(user=user)[0]
+
+#         for courseInstance in courseInstances:
+#             courseInstance.students.add(user)
+
+
+
 from notifications import notify
 @receiver(post_save,sender=TakeAway)
 def create_notifications_on_takeaway(sender, **kwargs):

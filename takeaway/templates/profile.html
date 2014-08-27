@@ -51,7 +51,7 @@
 
   <script src="/static/takeaway/js/session.js?{% now "U" %}" type="text/javascript"></script>
 <script src="/static/takeaway/js/takeawayprofile.js?{% now "U" %}" type="text/javascript"></script>
-  <script src="/static/takeaway/js/selectcourses.js?" type="text/javascript"></script>
+  <script src="/static/takeaway/js/selectcourses.js?{% now "U" %}" type="text/javascript"></script>
   <script src="/static/takeaway/js/app.js?{% now "U" %}" type="text/javascript"></script>
   <script src="/static/takeaway/js/notification.js?{% now "U" %}" type="text/javascript"></script>
     <!-- jQuery -->
@@ -66,16 +66,18 @@
 
     .availablecourses li {
     display:list-item;
-    float: left;
-    width: 25%;
-    height: 100px;
-    padding: 0px;
+    float:left;
+    width: 30%;
+    height: 80px;
+    padding-top: 5px;
     font-size: 20px;
-    line-height: 5;
+    line-height: 4;
     text-align: center;
     background-color: #f9f9f9;
+    border:  1px solid #fff;
 
     }
+
 
     .courselist{
 
@@ -87,8 +89,8 @@
     }
 
     .registered{
-    color: #fff;
-    background-color: #563d7c;
+    color: #fff ;
+    background-color: #563d7c !important;
     }
 
 
@@ -241,12 +243,7 @@ $.ajaxSetup({
                 <!-- Page heading -->
 
                 <!-- Breadcrumb -->
-                <div class="bread-crumb pull-right">
-                    <a href="/takeaways/index.html"><i class="fa fa-home"></i> Home</a>
-                    <!-- Divider -->
-                    <span class="divider">/</span>
-                    <a href="/takeaways/index.html" class="bread-current">Dashboard</a>
-                </div>
+
                 <div class="clearfix"></div>
             </div>
 

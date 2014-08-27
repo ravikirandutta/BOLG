@@ -87,15 +87,6 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'takeaway', ['CourseInstance'])
 
-        # Adding M2M table for field students on 'CourseInstance'
-        m2m_table_name = db.shorten_name(u'takeaway_courseinstance_students')
-        db.create_table(m2m_table_name, (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('courseinstance', models.ForeignKey(orm[u'takeaway.courseinstance'], null=False)),
-            ('user', models.ForeignKey(orm[u'auth.user'], null=False))
-        ))
-        db.create_unique(m2m_table_name, ['courseinstance_id', 'user_id'])
-
         # Adding model 'Session'
         db.create_table(u'takeaway_session', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -202,9 +193,6 @@ class Migration(SchemaMigration):
         # Deleting model 'CourseInstance'
         db.delete_table(u'takeaway_courseinstance')
 
-        # Removing M2M table for field students on 'CourseInstance'
-        db.delete_table(db.shorten_name(u'takeaway_courseinstance_students'))
-
         # Deleting model 'Session'
         db.delete_table(u'takeaway_session')
 
@@ -282,7 +270,6 @@ class Migration(SchemaMigration):
             'program': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['takeaway.Program']"}),
             'section': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['takeaway.Section']"}),
             'status': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['takeaway.Status']"}),
-            'students': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.User']", 'symmetrical': 'False'}),
             'term': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['takeaway.Term']"}),
             'year': ('django.db.models.fields.IntegerField', [], {'max_length': '100'})
         },
