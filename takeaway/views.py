@@ -115,7 +115,7 @@ def initload(request):
     Program(name="Part Time MBA",school=school1).save()
 
     program1 = Program.objects.get(name='Part Time MBA')
-
+    program2 = Program.objects.get(name='Evening MBA')
 
     Section(name="Monday",school=school1).save()
     Section(name="Wednesday",school=school1).save()
@@ -140,12 +140,12 @@ def initload(request):
     course3 = Course.objects.get(course_name="MARKETING")
 
 
-    CourseInstance(course=course1,section=section1,program = program1,batch="2014",year="2014",status=status1,term= term1 ).save()
-    CourseInstance(course=course1,section=section2,program = program1,batch="2014",year="2014",status=status1,term= term1 ).save()
-    CourseInstance(course=course2,section=section2,program = program1,batch="2014",year="2014",status=status1,term= term1 ).save()
-    courseInstance1 = CourseInstance.objects.filter(program=program1,section=section1,course=course1)[0]
-    courseInstance2 = CourseInstance.objects.filter(program=program1,section=section2,course=course2)[0]
-    courseInstance3 = CourseInstance.objects.filter(program=program1,section=section2,course=course1)[0]
+    CourseInstance(course=course1,section=section1,program = program2,batch="2014",year="2014",status=status1,term= term1 ).save()
+
+    CourseInstance(course=course2,section=section2,program = program2,batch="2014",year="2014",status=status1,term= term1 ).save()
+    courseInstance1 = CourseInstance.objects.filter(program=program2,section=section1,course=course1)[0]
+    courseInstance2 = CourseInstance.objects.filter(program=program2,section=section2,course=course2)[0]
+
 
 
     # courseInstance1.students.add(user1,user2)
@@ -154,7 +154,7 @@ def initload(request):
 
     courseInstance1.save()
     courseInstance2.save()
-    courseInstance3.save()
+
 
 
 
@@ -190,22 +190,16 @@ def initload(request):
 
 
 
-    Session(courseInstance=courseInstance3,session_name="Week 1 : Course Introduction",session_dt="2014-06-21").save()
-    Session(courseInstance=courseInstance3,session_name="Week 2 : Competitor Dynamics",session_dt="2014-06-22").save()
-    Session(courseInstance=courseInstance3,session_name="Week 3 : Industry Analysis",session_dt="2014-06-23").save()
-    Session(courseInstance=courseInstance3,session_name="Week 4 : Industry Analysis",session_dt="2014-06-24").save()
-    Session(courseInstance=courseInstance3,session_name="Week 5 : Competitive Advantage",session_dt="2014-06-25").save()
-    Session(courseInstance=courseInstance3,session_name="Week 6 : Industry Evolution and Revolution",session_dt="2014-06-26").save()
-    Session(courseInstance=courseInstance3,session_name="Week 7 : Managing Human Assets F0r Competitive Advantage",session_dt="2014-06-27").save()
-    Session(courseInstance=courseInstance3,session_name="Week 8 : Business Model Innovation",session_dt="2014-06-28").save()
-    Session(courseInstance=courseInstance3,session_name="Week 9 : Corporate-Level Strategy: Diversification & Vertical Integration",session_dt="2014-06-29").save()
-    Session(courseInstance=courseInstance3,session_name="Week 10 : Strategy Implementation",session_dt="2014-06-30").save()
 
     Tag(name="theory").save()
     Tag(name="application").save()
     Tag(name="example").save()
     Tag(name="case").save()
 
+
+
+    TakeAwayProfile(user=user1,email="sureshatluri@gmail.com",school=school1,batch="2014",program=program2).save()
+    TakeAwayProfile(user=user2,email="ravidutta@gmail.com",school=school1,batch="2014",program=program2).save()
     #session1 = Session.objects.get(session_name__contains="Week 1",course=course1)
     #session2 = Session.objects.get(session_name__contains="Week 1",course=course1)
     #session3 = Session.objects.get(session_name="Week 3 : Mastering Strategic Planning",course=course1)

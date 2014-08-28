@@ -23,7 +23,7 @@
               return this;
         },
 
-        events:{"click a":"toggleSelection"},
+        events:{"click":"toggleSelection"},
 
         toggleSelection:function(){
 
