@@ -335,7 +335,7 @@ var NewTakeaway = Backbone.View.extend({
            var that = this;
     tags.fetch({success:function(coll, response){
         var tagsList = new TagsList(coll.attributes.results);
-        tagsListView = new TagsListView({collection:tagsList, currentTags:currentTags,display:false});
+        tagsListView = new TagsListView({collection:tagsList, currentTags:currentTags});
         that.$('#tags-list').append(tagsListView.render().el);
         that.tagsListView = tagsListView;
     }});

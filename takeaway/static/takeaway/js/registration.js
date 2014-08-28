@@ -11,7 +11,7 @@ $(document).ready(function(){
         $("#id_term").find('option').remove();
 
         var school = new School();
-            school.fetch({data: {school_name: $('#id_school').val()},success:function(response){
+            school.fetch({data: {school_name: $('#id_school').val().toUpperCase()},success:function(response){
                    school_id = response.id;
 
                    if(school_id){

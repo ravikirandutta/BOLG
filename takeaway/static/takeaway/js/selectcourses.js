@@ -24,7 +24,13 @@ var AvailableCourseView = Backbone.View.extend({
 			profile.set(response);
 			var courseInstances = profile.get('courseInstances');
 			var courseInstanceId = that.model.id;
-			var index = courseInstances.indexOf(courseInstanceId);
+			var index = -1;
+			if(courseInstances){
+				 index = courseInstances.indexOf(courseInstanceId);
+			}else{
+				courseInstances = [];
+			}
+
 			if(index>=0){
 				courseInstances.splice(index,1);
 			}else{
@@ -66,7 +72,7 @@ var AvailableCourseListView = Backbone.View.extend({
 	addOne: function(availableCourse){
 		var  availableCourseObject = new AvailableCourse();
 		availableCourseObject.set(availableCourse);
-		if(this.registeredCourses.indexOf(availableCourseObject.get('id')) >= 0){
+		if(this.registeredCourses && this.registeredCourses.indexOf(availableCourseObject.get('id')) >= 0){
 			availableCourseObject.set({'alreadyRegistered':true});
 		}
 		var availableCourseView = new AvailableCourseView({model:availableCourseObject});

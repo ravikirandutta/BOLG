@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from takeaway.models import TakeAway
 from takeaway.models import TakeAwayProfile
 from django import forms
-from registration.forms import RegistrationForm
+from registration.forms import RegistrationForm,RegistrationFormUniqueEmail
 
 # Create the form class
 class TakeawayForm(ModelForm):
@@ -16,7 +16,7 @@ class ChoiceFieldNoValidation(forms.ChoiceField):
         pass
 
 
-class TakeawayProfileRegistrationForm(RegistrationForm):
+class TakeawayProfileRegistrationForm(RegistrationFormUniqueEmail):
 
 
     CLASS_2014 = '2014'

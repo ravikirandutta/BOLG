@@ -214,9 +214,7 @@ def user_registered_callback(sender, user, request, **kwargs):
     profile.program = Program.objects.get(pk=(request.POST["program"]))
     user.first_name = request.POST["firstname"]
     user.last_name = request.POST["lastname"]
-
     user.save()
-
     profile.save()
 
 from django.dispatch import receiver
@@ -263,7 +261,7 @@ def create_notifications_on_takeaway(sender, **kwargs):
         #pdb.set_trace()
         for recipient in recipients:
 
-            message =  str(takeaway.user) + ' posted a takeaway on ' + str(takeaway.session )  +' of course ' + str(takeaway.course )
+            message =  str(takeaway.user) + ' posted a takeaway on ' + str(takeaway.session )  +' of course ' + str(takeaway.courseInstance )
             notify.send(takeaway.user,recipient=recipient, verb='NEW_TAKEAWAY',description= message)
             #pdb.set_trace()
 
