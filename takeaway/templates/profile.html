@@ -234,36 +234,70 @@ $.ajaxSetup({
     <!-- Main content starts -->
     <div class="content">
         <!-- Sidebar -->
+        <div class="sidebar mainsidebar">
+            <div class="sidebar-dropdown"><a href="#">Navigation</a>
+            </div>
+            <div class="sidebar-inner">
+                <!-- 
+                <div class="sidebar-widget">
+                    <form>
+                        <input type="text" class="form-control" placeholder="Search">
+                    </form>
+                </div> -->
+                <!--- Sidebar navigation -->
+                <!-- If the main navigation has sub navigation, then add the class "has_submenu" to "li" of main navigation. -->
+                <ul class="navi">
+                    <!-- Use the class nred, ngreen, nblue, nlightblue, nviolet or norange to add background color. You need to use this in <li> tag. -->
+
+                    <li class="nred current"><a href="index.html"><i class="fa fa-desktop"></i> Courses</a>
+                    </li>
+
+                    <li class="nlightblue"><a href="#"><i class="fa fa-list"></i> Change Password</a>
+                        
+                        </li>
+                    
+                </ul>
+                <!--/ Sidebar navigation -->
+
+                
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="clear"></div>
+        <!-- Sidebar ends -->
 
         <!-- Main bar -->
-        <div class="mainbar">
+        <div class="mainbar" style="margin-left:230px">
 
             <!-- Page heading -->
             <div class="page-head">
                 <!-- Page heading -->
-
-                <!-- Breadcrumb -->
-
+                <h1 id="choose-course-heading" class="pull-left">Select from the following courses</h1>
                 <div class="clearfix"></div>
             </div>
 
-
-            <div >
+            <div class="matter">
                    <div class="row">
     <div class="col-xs-12" role="main">
     <div class="courses">
-    <h1 id="choose-course-heading">Select from the following courses</h1>
+    
     <div id="available-course-list"  class="availablecourses">
 
 
     </div>
     </div>
     </div>
-    </div>
 
 
                 <div class="clearfix"></div>
             </div>
+                <!-- Breadcrumb -->
+
+                <div class="clearfix"></div>
+            </div>
+
+
 
 
 
