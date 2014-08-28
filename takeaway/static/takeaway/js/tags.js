@@ -8,6 +8,10 @@
         tagName: "span",
         className: "label label-warning",
 
+        initialize: function(options){
+            this.callback = options.callback;
+        },
+
         template:_.template('<a name="<%=id%>"><i class="fa fa-tags"></i><%= name%></a>'),
         render : function(){
             if(this.model.get('selected')){
@@ -23,12 +27,14 @@
 
         toggleSelection:function(){
 
+                this.callback(this.model.get('id'));
+
                 if(this.model.get('selected')){
-                     this.$el.removeClass('label-warning');
-                     this.$el.addClass('label-success');
-                }else{
-                    this.$el.addClass('label-warning');
-                     this.$el.removeClass('label-success');
+                    this.$el.removeClass('label-success');
+                     this.$el.addClass('label-warning');
+                    }else{
+                         this.$el.removeClass('label-warning');
+                        this.$el.addClass('label-success');
                 }
 
                 this.model.set({'selected':!this.model.get('selected')});
@@ -44,7 +50,7 @@
     var TagsListView = Backbone.View.extend({
         initialize: function(options){
             this.options = options;
-
+            this.callback = options.callback;
             assignedTags = [];
 
         },
@@ -71,9 +77,9 @@
             }
 
 
-            var tagView = new TagsView({model:tag});
+            var tagView = new TagsView({model:tag,callback:this.callback});
             $(this.el).append(tagView.render().el);
-            $(this.el).append('&nbsp;');
+                $(this.el).append('&nbsp;');
 
         }
 

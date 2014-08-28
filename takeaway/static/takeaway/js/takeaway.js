@@ -403,7 +403,37 @@ var NewTakeaway = Backbone.View.extend({
            var that = this;
     tags.fetch({success:function(coll, response){
         var tagsList = new TagsList(coll.attributes.results);
-        tagsListView = new TagsListView({collection:tagsList, currentTags:currentTags});
+        var callback = function(id){
+            var tags = that.model.get('tags');
+            if(tags ){
+                var foundTag = _.find(tags,function(tag){
+                    return tag.id == id;
+                });
+                if(foundTag){
+                    var index = tags.indexOf(foundTag);
+                tags.splice(index,1);
+                }else{
+                    var tagToBeAdded = _.find(tagsList.models, function(tag){
+                    return tag.attributes.id == id;
+                });
+                var tagModelToBeAdded = new Tags();
+                tagModelToBeAdded.set(tagToBeAdded);
+                tags.push(tagModelToBeAdded.toJSON());
+                }
+
+            }else{
+                    tags = [];
+                var tagToBeAdded = _.find(tagsList.models, function(tag){
+                    return tag.attributes.id == id;
+                });
+                var tagModelToBeAdded = new Tags();
+                tagModelToBeAdded.set(tagToBeAdded);
+                tags.push(tagModelToBeAdded.toJSON());
+            }
+            that.model.set({'tags':tags});
+        };
+        tagsListView = new TagsListView({collection:tagsList, currentTags:currentTags,callback:callback});
+
         that.$('#tags-list').append(tagsListView.render().el);
         that.tagsListView = tagsListView;
     }});
@@ -435,7 +465,11 @@ var NewTakeaway = Backbone.View.extend({
             });
 
         takeaway.set(object);
-        takeaway.set({'tags':assignedTags});
+        tags = this.model.get('tags');
+        var tagIds = _.map(tags, function(tag){
+            return tag.id;
+        });
+        takeaway.set({'tags':tagIds});
         takeaway.set({'average_rating':this.model.get('average_rating')});
         takeaway.set({'total_raters':this.model.get('total_raters')});
         takeaway.set({'is_public':$("#edit-checkbox").prop('checked')});
@@ -443,7 +477,7 @@ var NewTakeaway = Backbone.View.extend({
         $("#editableTakeaway").modal('hide');
         this.model.set({"notes":object.notes});
         this.model.set({'is_public':takeaway.get('is_public')});
-        assignedTags =[];
+        this.model.set({'tags':tags});
 
         //refreshSessionlistView();
 
