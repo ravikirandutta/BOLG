@@ -109,15 +109,29 @@ var InPlaceView = Backbone.View.extend({
 
     var TakeawayView = Backbone.View.extend({
 
-         initialize: function(){
-           this.model.on('change', this.renderWithBootstrapSwitch, this);
+        initialize : function(){
 
+            _.bindAll(this, 'beforeRender', 'render', 'afterRender');
+            var _this = this;
+             this.render = _.wrap(this.render, function(render) {
+              _this.beforeRender();
+                 render();
+
+                  _this.afterRender();
+              return _this;
+            });
+             this.model.on("change", this.render, this);
+         },
+         beforeRender: function(){
 
          },
-        renderWithBootstrapSwitch : function(){
-            this.render();
-            $("[name='my-checkbox']").bootstrapSwitch();
+         afterRender : function(){
+            this.$el.find("[name='my-checkbox']").bootstrapSwitch();
         },
+        // renderWithBootstrapSwitch : function(){
+        //     this.render();
+
+        // },
         render: function(){
             var template = _.template($('#takeaway-template').html(),this.model.toJSON());
             this.editInPlaceView = new EditInPlaceView({model:this.model});
@@ -167,7 +181,7 @@ var InPlaceView = Backbone.View.extend({
             var editableTakeaway = new EditableTakeaway({model:this.model});
              $("#editableTakeaway").html("");
             $("#editableTakeaway").append(editableTakeaway.render().el);
-            $("[name='my-checkbox']").bootstrapSwitch();
+
 
            // var notes = this.$("textarea").val();
             //this.model.set({notes:notes});
@@ -203,8 +217,23 @@ var InPlaceView = Backbone.View.extend({
     var TakeawayListView = Backbone.View.extend({
         initialize: function(options){
             this.options = options;
+           _.bindAll(this, 'beforeRender', 'render', 'afterRender');
+            var _this = this;
+             this.render = _.wrap(this.render, function(render) {
+              _this.beforeRender();
+                 render();
 
-        },
+                  _this.afterRender();
+              return _this;
+            });
+         },
+         beforeRender: function(){
+
+         },
+         afterRender : function(){
+            $("[name='my-checkbox']").bootstrapSwitch();
+         },
+
         render: function(){
             this.$el.html("");
 
@@ -268,6 +297,25 @@ var InPlaceView = Backbone.View.extend({
 // }});
 
 var NewTakeaway = Backbone.View.extend({
+    initialize: function(options){
+            this.options = options;
+           _.bindAll(this, 'beforeRender', 'render', 'afterRender');
+            var _this = this;
+             this.render = _.wrap(this.render, function(render) {
+              _this.beforeRender();
+                 render();
+
+                  _this.afterRender();
+              return _this;
+            });
+         },
+         beforeRender: function(){
+
+         },
+         afterRender : function(){
+            this.$el.find("#create-checkbox").bootstrapSwitch();
+         },
+
      selectedTags : new Array(),
      render: function(){
         var template = _.template($('#new-takeaway-template').html(),this.model.toJSON());
@@ -326,6 +374,26 @@ var NewTakeaway = Backbone.View.extend({
 });
 
  var EditableTakeaway = Backbone.View.extend({
+    initialize: function(options){
+            this.options = options;
+           _.bindAll(this, 'beforeRender', 'render', 'afterRender');
+            var _this = this;
+             this.render = _.wrap(this.render, function(render) {
+              _this.beforeRender();
+                 render();
+
+                  _this.afterRender();
+              return _this;
+            });
+         },
+         beforeRender: function(){
+
+         },
+         afterRender : function(){
+            this.$el.find("#edit-checkbox").bootstrapSwitch();
+         },
+
+
     render : function(){
          var template = _.template($('#edit-takeaway-template').html(),this.model.toJSON());
          this.$el.append(template);
