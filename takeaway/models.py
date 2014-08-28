@@ -256,18 +256,19 @@ def create_notifications_on_takeaway(sender, **kwargs):
     #pdb.set_trace()
     if kwargs.get('created',False):
         takeaway = kwargs.get("instance")
-        recipients = takeaway.courseInstance.students.all()
+        if takeaway.is_public == True :
+            recipients = takeaway.courseInstance.students.all()
 
 
-        #pdb.set_trace()
-        for recipient in recipients:
-            recipient_user = recipient.user
-            curr_user = takeaway.user
-            if recipient_user.id <> curr_user.id:
+            #pdb.set_trace()
+            for recipient in recipients:
+                recipient_user = recipient.user
+                curr_user = takeaway.user
+                if recipient_user.id <> curr_user.id:
 
-                message =  str(takeaway.user) + ' posted a takeaway on ' + str(takeaway.session )  +' of course ' + str(takeaway.courseInstance )
-                notify.send(takeaway.user,recipient=recipient_user, verb='NEW_TAKEAWAY',description= message)
-                #pdb.set_trace()
+                    message =  str(takeaway.user) + ' posted a takeaway on ' + str(takeaway.session )  +' of course ' + str(takeaway.courseInstance )
+                    notify.send(takeaway.user,recipient=recipient_user, verb='NEW_TAKEAWAY',description= message)
+                    #pdb.set_trace()
 
 
 
