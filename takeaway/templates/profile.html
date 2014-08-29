@@ -74,7 +74,7 @@
     line-height: 4;
     text-align: center;
     background-color: #f9f9f9;
-    border:  1px solid #fff;
+    border:  1px solid #1A0B0B;
 
     }
 
@@ -94,6 +94,13 @@
     }
 
 
+#section{
+    font-size: 12px;
+    margin-top: 40px;
+    text-decoration: underline;
+    position: relative;
+    top: 30px;
+}
     </style>
 
 
@@ -309,18 +316,27 @@ $.ajaxSetup({
     <span id="course<%=id%>"><%= course.course_name%>
     </span>
 
-      <span id="tick" ><i class="fa fa-check-circle" style="
+
+
+     <span id="tick"
+     <% if (alreadyRegistered) { %>
+        style="display:block"
+        <% } %>
+
+        <% if (!alreadyRegistered) { %>
+        style="display:none"
+        <% } %>
+
+        ><i class="fa fa-check-circle" style="
     position: relative;
     bottom: 25px;
 "></i></span>
 
-<span id="section" style="
-    font-size: 12px;
-    margin-top: 40px;
-    text-decoration: underline;
-    position: relative;
-    top: 30px;
-"><%=section.name%></span>
+
+
+
+
+<span id="section" ><%=section.name%></span>
 </script>
 
 
