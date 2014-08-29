@@ -20,20 +20,29 @@ def home(request):
     #course_instance_list = Course.objects.filter(students=request.user)
 
     return render_to_response("login.html",RequestContext(request))
-
+import pdb
 @login_required
 def index(request):
     #course = Course.objects.create(course_name="MARKETING" , created_by="ravid")
-    user = authenticate(username=request.POST.get('Username'), password=request.POST.get('Password'))
+
+
     # course_instance_list = CourseInstance.objects.filter(students=user)
     userid = request.session.get('userid','0')
     response = render_to_response("index.html",{},RequestContext(request))
     if userid is not '0':
         response.set_cookie(key='userid',value=userid)
+    user = User.objects.get(pk=userid)
+    takeAwayProfile = TakeAwayProfile.objects.filter(user=user)[0];
+    if len(takeAwayProfile.courseInstances.all())==0:
+        return redirect('profile')
     return response
 
 def profile(request):
-    return render_to_response("profile.html",RequestContext(request))
+    userid = request.session.get('userid','0')
+    response = render_to_response("profile.html",{},RequestContext(request))
+    if userid is not '0':
+        response.set_cookie(key='userid',value=userid)
+    return response
 
 def handlelogin(request):
 
@@ -57,6 +66,7 @@ def handlelogin(request):
             # course_instance_list = Course.objects.filter(students=newuser)
             logged_user = User.objects.get(username=request.POST.get('Username'))
             request.session['userid'] = logged_user.id
+
             response  = render_to_response("index.html",{})
             return redirect('index')
 
@@ -73,6 +83,7 @@ def handlelogin(request):
                 # course_instance_list = CourseInstance.objects.filter(students=logged_user)
                 notifications = logged_user.notifications.unread()
                 request.session['userid'] = logged_user.id
+
                 response  = render_to_response("index.html",{})
                 return redirect('index')
                 #return render_to_response("index.html",{'course_instance_list':course_instance_list,'logged_user':logged_user,'notifications':notifications},RequestContext(request))
