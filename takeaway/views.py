@@ -338,7 +338,7 @@ class CourseInstanceViewSet(viewsets.ModelViewSet):
         serializer_class = CourseInstanceSerializer
         filter_backends = (filters.DjangoFilterBackend,)
         filter_fields = ('course','program','batch','year',)
-        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
         def get_queryset(self):
             """
