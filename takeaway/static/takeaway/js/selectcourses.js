@@ -5,7 +5,7 @@ var AvailableCourse = Backbone.Model.extend({
 var userid = $.cookie('userid');
 var AvailableCourseView = Backbone.View.extend({
 	tagName: "li",
-	template:_.template('<span><%=section.name%></span><span id="course<%=id%>"><%= course.course_name%></span>'),
+	template:_.template('<span id="course<%=id%>"><%= course.course_name%></span>'),
 	render : function(){
 		this.$el.append(this.template(this.model.toJSON()));
 		if(this.model.get('alreadyRegistered')){
@@ -49,6 +49,7 @@ var AvailableCourseView = Backbone.View.extend({
 	//save course here by sending the required data.
 
 	},
+	 
 
 	// showCourseClicked: function(){
 	// 	this.$el.css("background-color",'')
