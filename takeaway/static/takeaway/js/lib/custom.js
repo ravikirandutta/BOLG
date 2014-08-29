@@ -175,7 +175,7 @@ $(document).ready(function(){
 
 $(function() {
 	 //$( "#todaydate" ).datepicker();  //commented as it was not resolved
-});
+
 
 /* Modal fix */
 
@@ -224,5 +224,7 @@ $('.sminimize').click(function(e){
 	$wcontent.toggle(0);
 }); 
 
+$('.sminimize').trigger('click');
 
+});
   
