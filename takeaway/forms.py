@@ -2,6 +2,7 @@ from django.forms import ModelForm
 from takeaway.models import TakeAway
 from takeaway.models import TakeAwayProfile
 from django import forms
+from django.core.exceptions import ValidationError
 from registration.forms import RegistrationForm,RegistrationFormUniqueEmail
 
 # Create the form class
@@ -12,6 +13,10 @@ class TakeawayForm(ModelForm):
 
 
 class ChoiceFieldNoValidation(forms.ChoiceField):
+    def validate(self, value):
+        pass
+
+class ProgramChoiceField(forms.ChoiceField):
     def validate(self, value):
         pass
 
@@ -59,7 +64,7 @@ class TakeawayProfileRegistrationForm(RegistrationFormUniqueEmail):
     firstname = forms.CharField()
     lastname = forms.CharField()
     batch = forms.ChoiceField(choices=YEAR_IN_SCHOOL_CHOICES,)
-    program = ChoiceFieldNoValidation()
+    program = ProgramChoiceField()
 
     # class Meta:
     #     model=TakeAwayProfile

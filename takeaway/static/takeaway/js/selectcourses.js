@@ -5,9 +5,9 @@ var AvailableCourse = Backbone.Model.extend({
 var userid = $.cookie('userid');
 var AvailableCourseView = Backbone.View.extend({
 	tagName: "li",
-	template:_.template('<span id="course<%=id%>"><%= course.course_name%></span>'),
+
 	render : function(){
-		this.$el.append(this.template(this.model.toJSON()));
+		this.$el.append(_.template($('#course-template').html(),this.model.toJSON()));
 		if(this.model.get('alreadyRegistered')){
 			this.$el.addClass('registered');
 		}
@@ -42,14 +42,16 @@ var AvailableCourseView = Backbone.View.extend({
 		}});
 
 		if(this.$el.hasClass("registered")){
+			this.$el.find("#tick").css("display",'none');
 			this.$el.removeClass("registered");
 		}else{
+			this.$el.find("#tick").css("display",'block');
 			this.$el.addClass("registered");
 		}
 	//save course here by sending the required data.
 
 	},
-	 
+
 
 	// showCourseClicked: function(){
 	// 	this.$el.css("background-color",'')
@@ -73,6 +75,7 @@ var AvailableCourseListView = Backbone.View.extend({
 	addOne: function(availableCourse){
 		var  availableCourseObject = new AvailableCourse();
 		availableCourseObject.set(availableCourse);
+		availableCourseObject.set({'alreadyRegistered':false});
 		if(this.registeredCourses && this.registeredCourses.indexOf(availableCourseObject.get('id')) >= 0){
 			availableCourseObject.set({'alreadyRegistered':true});
 		}
