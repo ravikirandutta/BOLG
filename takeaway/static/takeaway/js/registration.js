@@ -4,6 +4,9 @@ $(document).ready(function(){
     $('#id_email').blur(function(){
         $("#id_username").val($("#id_email").val());
     });
+    $('#id_school').focus(function(){
+      $("#school_error").remove();
+    });
     $('#id_school').blur(function(){
 
         $("#id_program").find('option').remove();
@@ -25,12 +28,23 @@ $(document).ready(function(){
                                     $("#id_program").append(option);
                                 });
                    }});
+                   }else{
+                       var html = "<ul id='school_error' class='errolist'><li>School "+$('#id_school').val()+" not supported right now. Please check the spelling</li></ul>"
+                       $("#school").prepend(html);
                    }
+            }, error: function(){
+
             }});
-
-
-
     });
+
+
+
+$("#registration-form").on('submit',function(e){
+
+    if(!$("#id_program").val()){
+        return false;
+    }
+});
 
 
 });
