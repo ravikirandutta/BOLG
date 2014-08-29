@@ -328,6 +328,7 @@ class NotificationViewSet(viewsets.ModelViewSet):
         filter_backends = (filters.DjangoFilterBackend,)
         filter_fields = ('recipient','verb','unread')
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+        paginate_by = 100
 
 class CourseInstanceViewSet(viewsets.ModelViewSet):
         """

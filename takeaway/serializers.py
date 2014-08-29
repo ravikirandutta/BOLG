@@ -67,8 +67,19 @@ class RatingSerializer(serializers.ModelSerializer):
 
 
 class NotificationSerializer(serializers.ModelSerializer):
+    actor_username = serializers.SerializerMethodField('get_actor_username')
     class Meta:
         model = Notification
+
+    def get_actor_username(self, obj):
+        try:
+            actor = User.objects.get(pk=obj.actor_object_id)
+        except User.DoesNotExist :
+            actor = None
+
+        if actor:
+            return actor.username
+        return None    
 
 class CourseInstanceSerializer(serializers.ModelSerializer):
     school_id = serializers.RelatedField(source='course.school.id')
