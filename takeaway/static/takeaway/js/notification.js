@@ -26,20 +26,30 @@
     var NotificationsListView = Backbone.View.extend({
         initialize: function(options){
         },
-
         render : function(){
-            this.$el.html("");
+            this.$el.html("<a id='markAllAsRead' href='#''>Mark all as read</a>");
 
 			this.collection.forEach(this.addOne,this);
 
             return this;
         },
+        events:{"click #markAllAsRead":"markAllAsRead"},
         addOne: function(notification){
 
             var notificationView = new NotificationsView({model:notification});
             $(this.el).append(notificationView.render().el);
             //$(this.el).append('&nbsp;');
 
+        },
+        markAllAsRead : function(){
+           if(this.collection.models != null){
+               _.each(this.collection.models,function(item){
+                    item.save({'unread':'False'}, {success :function(model, response){
+                    }});
+                });
+               reloadNotifications();
+
+            }
         }
 
     });      
