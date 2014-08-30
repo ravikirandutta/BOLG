@@ -4,6 +4,7 @@ from takeaway import views
 from takeaway.views import *
 from takeaway.models import *
 from takeaway.forms import *
+from django.views.generic.base import TemplateView
 
 
 from django.contrib import admin
@@ -52,7 +53,7 @@ urlpatterns = patterns('',
 	url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 	#url(r'^takeaways/$', views.TakeAwayList.as_view()),
-    url(r'^takeaways/(?P<pk>[0-9]+)/$', TakeAwayDetail.as_view(),name='takeaway-detail'),
+    url(r'^takeaways/(?P<pk>-?[0-9]+)/$', TakeAwayDetail.as_view(),name='takeaway-detail'),
 	url(r'^takeaways/$', TakeAwayList.as_view(), name='takeaway-list'),
 
        url(r'^takeaways/index', 'takeaway.views.index', name='index'),
