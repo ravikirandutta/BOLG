@@ -20,9 +20,12 @@
         loadTakeaways : function(){
 
             $("#tab1").html("");
-            _.each(this.model.get('students'),function(studentName){
-              $("#tab1").append('<div class="slide-data"><div class="slide-data-text">'+studentName+'</div><div class="clearfix"></div></div>');
-            });
+            if(this.model.get('students')){
+                var sortedList = _.sortBy(this.model.get('students'), function(name){return name});
+                _.each(sortedList,function(studentName){
+                  $("#tab1").append('<div class="slide-data"><div class="slide-data-text">'+studentName+'</div><div class="clearfix"></div></div>');
+                });
+            }
 
 
             $(".course").addClass('course-deselected');
