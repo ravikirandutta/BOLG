@@ -19,6 +19,7 @@
 
         loadTakeaways : function(){
 
+            $('.slide-box').show();
             $("#tab1").html("");
             if(this.model.get('students')){
                 var sortedList = _.sortBy(this.model.get('students'), function(name){return name});
