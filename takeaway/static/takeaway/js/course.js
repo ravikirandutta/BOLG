@@ -18,6 +18,13 @@
         events: {"click span":"loadTakeaways"},
 
         loadTakeaways : function(){
+
+            $("#tab1").html("");
+            _.each(this.model.get('students'),function(studentName){
+              $("#tab1").append('<div class="slide-data"><div class="slide-data-text">'+studentName+'</div><div class="clearfix"></div></div>');
+            });
+
+
             $(".course").addClass('course-deselected');
             $(this.el).removeClass('course-deselected');
             $(this.el).addClass('course-selected');
@@ -89,3 +96,6 @@
         var courseListView = new CourseListView({collection:courses});
         $("#course-list").append(courseListView.render().el);
     }});
+
+
+

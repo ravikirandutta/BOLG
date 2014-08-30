@@ -116,3 +116,8 @@ font-size:15px !important;
 #heading{
   font-size:16pt;
 }
+
+.errorlist{
+  color:red;
+}
+

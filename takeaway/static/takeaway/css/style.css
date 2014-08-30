@@ -475,8 +475,12 @@ form{
 }
 
 .navbar{
-	background: #111;
-	border-bottom:1px solid #333;
+	/*background: #111;
+	border-bottom:1px solid #333;*/
+
+    background: #3b5998;
+    border-bottom:1px solid #333;
+
 }
 
 .navbar .navbar-brand{
@@ -784,7 +788,8 @@ form{
 	margin-left: 230px;
 	margin-right: 0px;
 	width: auto;
-	background:#fff;
+	/*background:#fff;*/
+    background:#e9eaed;
 	min-height: 800px;
 }
 
@@ -1089,8 +1094,11 @@ form{
 }
 
 .widget.wlightblue .widget-head{
-  background-color: #52b9e9;
+ /* background-color: #52b9e9;
   border: 1px solid #52b9e9;
+  color: #fff;*/
+   background-color: #3b5998;
+  border: 1px solid #3E738C;
   color: #fff;
 }
 
