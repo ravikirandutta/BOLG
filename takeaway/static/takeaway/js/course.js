@@ -10,7 +10,7 @@
         tagName: "li",
         className: "course",
 
-        template:_.template('<a><span id="course<%=id%>"><i class="fa fa-folder-open"></i> <%= course.course_name%></span></a>'),
+        template:_.template('<a><span id="course<%=id%>"><i class="fa fa-folder-open"></i> <b><%= course.course_name%></b></span></a>'),
         render : function(){
               this.$el.append(this.template(this.model.toJSON()));
               return this;
@@ -42,7 +42,7 @@
             _.each(ratings,function(rating){
                 ratingsMap[rating["takeaway"]]=rating["rating_value"];
             });
-                takeawayList.fetch({data: {courseInstance: that.model.get('id')},
+                takeawayList.fetch({data: {courseInstance: that.model.get('id'),ordering:'session_dt'},
 
                     success: function(collection, response){
 
