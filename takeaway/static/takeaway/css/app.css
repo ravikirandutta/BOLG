@@ -3,12 +3,12 @@ div .mainbar {
 }
 
 #takeaway-container{
-    padding:40px;
+   /* padding:40px;*/
     width:100%;
 }
 
  .course{
-    font-size:25px;
+    font-size:20px;
     margin-left:30px;
     margin-right:30px;
 }
@@ -24,7 +24,7 @@ div .mainbar {
 
 .searchbox{
     padding-left: 50px;
-margin-top: 20px;
+/*margin-top: 20px;*/
 }
 
 
