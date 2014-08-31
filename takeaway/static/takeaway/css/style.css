@@ -1644,7 +1644,12 @@ border:1px solid #eee;
 	border-left: 2px solid gray;
 }
 
+.password-change-form {
+	max-width: 650px;
+	margin: 50px auto;
+}
 
+.password-change-form form { padding-top: 10px; }
 
 
 
