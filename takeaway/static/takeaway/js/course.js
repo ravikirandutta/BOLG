@@ -10,7 +10,7 @@
         tagName: "li",
         className: "course",
 
-        template:_.template('<a><span id="course<%=id%>"><i class="fa fa-folder-open"></i> <b><%= course.course_name%></b></span></a>'),
+        template:_.template('<a class="course-item"><span id="course<%=id%>"><i class="fa fa-folder-open"></i> <b><%= course.course_name%></b></span></a>'),
         render : function(){
               this.$el.append(this.template(this.model.toJSON()));
               return this;

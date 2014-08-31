@@ -38,7 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'takeaway',
-	'rest_framework',
+    'rest_framework',
     'south',
     'notifications',
     'registration',
@@ -52,7 +52,13 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'takeaway.middleware.AutoLogout',
 )
+
+#session auto timeout
+AUTO_LOGOUT_DELAY = 1
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
 
 ROOT_URLCONF = 'TestApi.urls'
 
@@ -69,21 +75,21 @@ REST_FRAMEWORK = {
 import os
 is_local = False
 try:
-	is_local = os.environ['local']
+    is_local = os.environ['local']
 except KeyError:
-	print "Environment is not local"
+    print "Environment is not local"
 
 DATABASES = {
-    	'default': {
+        'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    	}
+        }
 }
 
 
 if not is_local:
-	import dj_database_url
-	DATABASES['default'] =  dj_database_url.config()
+    import dj_database_url
+    DATABASES['default'] =  dj_database_url.config()
 
 
 
@@ -141,12 +147,6 @@ TEMPLATE_DIRS =(
                 os.path.join(os.path.dirname(os.path.dirname(__file__)),"static","templates")
                 )
 
-#Cache
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-    }
-}
 
 if DEBUG:
     MEDIA_URL = '/media/'

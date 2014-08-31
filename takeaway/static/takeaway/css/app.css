@@ -11,7 +11,10 @@ div .mainbar {
     font-size:20px;
     margin-left:30px;
     margin-right:30px;
-    color:#000;
+}
+
+.course-item{
+  color:#000 !important;
 }
 
 .textarea {
@@ -122,6 +125,8 @@ font-size:15px !important;
   color:red;
 }
 
+
+
 .bred {
     background: none repeat scroll 0 0 #428bca !important;
     border: 0 none !important;
@@ -149,3 +154,9 @@ font-size:15px !important;
     font-weight: 600;
     width: 60%;
 }
+
+.ourblue{
+  background:#3b5998 !important;
+
+}
+
