@@ -28,6 +28,8 @@ router.register(r'terms', views.TermViewSet)
 router.register(r'takeawayprofiles', views.TakeAwayProfileViewSet)
 #router.register(r'takeaways', views.TakeAwayViewSet)
 
+handler404 = 'takeaway.views.error'
+
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'takeaway.views.home', name='home'),
