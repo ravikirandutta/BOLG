@@ -147,12 +147,6 @@ TEMPLATE_DIRS =(
                 os.path.join(os.path.dirname(os.path.dirname(__file__)),"static","templates")
                 )
 
-#Cache
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-    }
-}
 
 if DEBUG:
     MEDIA_URL = '/media/'
