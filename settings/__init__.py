@@ -10,7 +10,3 @@ elif ENVIRONMENT == "local":
 elif ENVIRONMENT == "qa":
     from qa import *
 
-try:
-    from local import *
-except ImportError:
-    pass

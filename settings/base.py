@@ -20,11 +20,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'wbp9#x=oa)8ioxh668kk+pe2fhg-=$w8^wbtrq*$a&^7^mp7c@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = True
 
-# TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = True
 
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -147,4 +147,9 @@ TEMPLATE_DIRS =(
                 os.path.join(os.path.dirname(os.path.dirname(__file__)),"static","templates")
                 )
 
+if DEBUG:
+    MEDIA_URL = '/media/'
+    STATIC_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__)),"static","static")
+    MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__)),"static","media")
+    STATICFILE_DIRS = os.path.join(os.path.dirname(os.path.dirname(__file__)),"static","static")
 
