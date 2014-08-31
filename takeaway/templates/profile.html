@@ -261,7 +261,7 @@ $.ajaxSetup({
                 <ul class="navi">
                     <!-- Use the class nred, ngreen, nblue, nlightblue, nviolet or norange to add background color. You need to use this in <li> tag. -->
 
-                    <li class=" current ourblue" id="selcet-classes"><a  class="ourblue" href="#"><i class="fa fa-desktop"></i> Courses</a>
+                    <li class="ourblue current" id="selcet-classes"><a  class="ourblue" href="#"><i class="fa fa-desktop"></i> Courses</a>
                     </li>
 
 
@@ -296,14 +296,17 @@ $.ajaxSetup({
                              <div class="courses">
 
                                 <div id="available-course-list"  class="availablecourses">
-
+                                <div id="select-course-info" class="alert alert-info"><span class="glyphicon glyphicon-info-sign"></span> Lets get started! Proceed by selecting one or more courses, click on course to select</div>
+                                <div id="select-course-warning" class="alert alert-warning"><span class="glyphicon glyphicon-warning-sign"></span> Sorry! You need to select atleast one course to get started.</div>
 
                                  </div>
+
                             </div>
                         </div>
 
 
                         <div class="clearfix"></div>
+                        <div id="select-course-complete"class="btn btn-primary col-lg-offset-4"><a style="color:white" href="/takeaways/index">I'm done selecting courses</a></div>
                 </div>
                 <!-- Breadcrumb -->
 
