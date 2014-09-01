@@ -1651,6 +1651,10 @@ border:1px solid #eee;
 
 .password-change-form form { padding-top: 10px; }
 
+#select-course-info, #select-course-warning{ font-size: 18px; display: none;}
+
+#select-course-complete {margin-top: 80px;}
+ 
 
 
 

@@ -28,6 +28,8 @@ router.register(r'terms', views.TermViewSet)
 router.register(r'takeawayprofiles', views.TakeAwayProfileViewSet)
 #router.register(r'takeaways', views.TakeAwayViewSet)
 
+handler404 = 'takeaway.views.error'
+
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'takeaway.views.home', name='home'),
@@ -63,4 +65,5 @@ urlpatterns = patterns('',
         name = 'registration_register'),
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^passwordchange/', include('django.contrib.auth.urls')),
+    url(r'^load_courses/',  'takeaway.custom_course_creation_script.load_courses', name='load_courses'),
 )

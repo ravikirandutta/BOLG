@@ -36,9 +36,18 @@ var AvailableCourseView = Backbone.View.extend({
 			}else{
 				courseInstances.push(that.model.id);
 			}
-
+			if(courseInstances.length<1){
+			$('#select-course-warning').css('display','block');
+			$('#select-course-complete').css('display','none');
+			} else{
+				$('#select-course-info').css('display','none');
+				$('#select-course-warning').css('display','none');
+				$('#select-course-complete').css('display','inline-block');
+			}
 			profile.set({'courseInstances':courseInstances});
 			profile.save({parse:false});
+
+
 		}});
 
 		if(this.$el.hasClass("registered")){
@@ -95,6 +104,10 @@ var AvailableCourseListView = Backbone.View.extend({
 		var courseInstances = response.attributes.courseInstances;
 		var school = response.attributes.school;
 		var availableCourse = new AvailableCourse();
+		if(courseInstances.length<1){
+			$('#select-course-info').css('display','block');
+			$('#select-course-complete').css('display','none');
+		}
 		availableCourse.fetch({data:{school_id:school},success:function(collection,response){
 
 		var availableCourses= collection.attributes.results;

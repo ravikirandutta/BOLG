@@ -20,7 +20,11 @@ def home(request):
     #course_instance_list = Course.objects.filter(students=request.user)
 
     return render_to_response("login.html",RequestContext(request))
-import pdb
+
+
+def error(request):
+    return render_to_response("error.html", RequestContext(request))
+
 @login_required
 def index(request):
     #course = Course.objects.create(course_name="MARKETING" , created_by="ravid")

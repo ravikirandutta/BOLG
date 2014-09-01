@@ -7,8 +7,6 @@ if ENVIRONMENT == "live":
     from live import *
 elif ENVIRONMENT == "local":
     from local import *
+elif ENVIRONMENT == "qa":
+    from qa import *
 
-try:
-    from local import *
-except ImportError:
-    pass
