@@ -65,4 +65,5 @@ urlpatterns = patterns('',
         name = 'registration_register'),
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^passwordchange/', include('django.contrib.auth.urls')),
+    url(r'^load_courses/',  'takeaway.custom_course_creation_script.load_courses', name='load_courses'),
 )
