@@ -10,10 +10,30 @@ def load_courses(request):
 	# 2017 core courses
 	{'course_name':"BUS 500P Management Practice" , 'year':"2017" , 'section' : "Weekend",'batch':"2017" , 'code':"BUS 500P"},
 	{'course_name':"BUS 540P Marketing Management" , 'year':"2017" , 'section' : "Monday",'batch':"2017", 'code':"BUS 540P"},
-	{'course_name':"BUS 540P Marketing Management " , 'year':"2017" , 'section' : "Wednesday",'batch':"2017", 'code':"BUS 540P"},
+	{'course_name':"BUS 540P Marketing Management" , 'year':"2017" , 'section' : "Wednesday",'batch':"2017", 'code':"BUS 540P"},
 	{'course_name':"BUS 550P Data & Decision Analytics" , 'year':"2017" , 'section' : "Monday",'batch':"2017", 'code':"BUS 550P"},
 	{'course_name':"BUS 550P Data & Decision Analytics" , 'year':"2017" , 'section' : "Wednesday",'batch':"2017", 'code':"BUS 550P"},
-
+	# Electives
+	{ 'course_name':"BUS 506P Strategy&Org Hlth Care Sector",'code':"BUS 506P",'year':"2014",'batch':"2014",'section':"Wednesday"},
+	{ 'course_name':"BUS 524P Sports Finance",'code':"BUS 524P",'year':"2014",'batch':"2014",'section':"Monday"},
+	{ 'course_name':"BUS 532P Business and Society",'code':"BUS 532P",'year':"2014",'batch':"2014",'section':"Wednesday"},
+	{ 'course_name':"BUS 537P Managing Groups & Teams",'code':"BUS 537P",'year':"2014",'batch':"2014",'section':"Monday"},
+	{ 'course_name':"BUS 545P Predictive Sports Analytics",'code':"BUS 545P",'year':"2014",'batch':"2014",'section':"Wednesday"},
+	{ 'course_name':"BUS 547P Product & Brand Management",'code':"BUS 547P",'year':"2014",'batch':"2014",'section':"Tuesday"},
+	{ 'course_name':"BUS 548P Sales & Business Development",'code':"BUS 548P",'year':"2014",'batch':"2014",'section':"Monday"},
+	{ 'course_name':"BUS 555P Appcology: New Commerce Infra",'code':"BUS 555P",'year':"2014",'batch':"2014",'section':"Monday"},
+	{ 'course_name':"BUS 563P The Business of Sport",'code':"BUS 563P",'year':"2014",'batch':"2014",'section':"Weekend"},
+	{ 'course_name':"BUS 623P Security Analy&Portfolio Mgmt",'code':"BUS 623P",'year':"2014",'batch':"2014",'section':"Wednesday"},
+	{ 'course_name':"BUS 628P Investment Banking",'code':"BUS 628P",'year':"2014",'batch':"2014",'section':"Thursday"},
+	{ 'course_name':"BUS 629P Fixed Income Portfolio Mgt",'code':"BUS 629P",'year':"2014",'batch':"2014",'section':"Monday"},
+	{ 'course_name':"BUS 632P Negotiations",'code':"BUS 632P",'year':"2014",'batch':"2014",'section':"Tuesday"},
+	{ 'course_name':"BUS 651P Strategic Decision Analysis",'code':"BUS 651P",'year':"2014",'batch':"2014",'section':"Wednesday"},
+	{ 'course_name':"BUS 653P Operations Strategy",'code':"BUS 632PBUS",'year':"2014",'batch':"2014",'section':"Monday"},
+	{ 'course_name':"BUS 659P Process Analysis & Six Sigma",'code':"BUS 659P",'year':"2014",'batch':"2014",'section':"Monday"},
+	{ 'course_name':"BUS 661P Applied Entrepreneurship",'code':"BUS 661P",'year':"2014",'batch':"2014",'section':"Monday"},
+	{ 'course_name':"BUS 680P Illiquid Alternt. Investments",'code':"BUS 680P",'year':"2014",'batch':"2014",'section':"Monday"},
+	{ 'course_name':"BUS 685P Private Equity Investing",'code':"BUS 685P",'year':"2014",'batch':"2014",'section':"Monday"},
+	{ 'course_name':"BUS 688P Real Estate Devpt & Invest",'code':"BUS 688P",'year':"2014",'batch':"2014",'section':"Monday"},
 	]
 
 

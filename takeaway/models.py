@@ -266,7 +266,7 @@ def create_notifications_on_takeaway(sender, **kwargs):
                 curr_user = takeaway.user
                 if recipient_user.id <> curr_user.id:
 
-                    message =  str(takeaway.user) + ' posted a takeaway on ' + str(takeaway.session )  +' of course ' + str(takeaway.courseInstance )
+                    message =  str(takeaway.courseInstance )
                     notify.send(takeaway.user,recipient=recipient_user, verb='NEW_TAKEAWAY',description= message)
                     #pdb.set_trace()
 
