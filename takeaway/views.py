@@ -328,12 +328,25 @@ class NotificationViewSet(viewsets.ModelViewSet):
         """
         API endpoint that allows groups to be viewed or edited.
         """
+             
         queryset = Notification.objects.all()
         serializer_class = NotificationSerializer
         filter_backends = (filters.DjangoFilterBackend,)
         filter_fields = ('recipient','verb','unread')
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
         paginate_by = 100
+
+        def get_queryset(self):
+
+            queryset = Notification.objects.all()
+            mark_all_as_read  = self.request.QUERY_PARAMS.get('mark_all_as_read', None)
+            if mark_all_as_read == "True":
+                user = self.request.user
+                if user.is_authenticated:
+                    user.notifications.mark_all_as_read()
+                 
+            return queryset
+
 
 class CourseInstanceViewSet(viewsets.ModelViewSet):
         """
@@ -344,6 +357,7 @@ class CourseInstanceViewSet(viewsets.ModelViewSet):
         filter_backends = (filters.DjangoFilterBackend,)
         filter_fields = ('course','program','batch','year',)
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+        paginate_by = 100
 
         def get_queryset(self):
             """
