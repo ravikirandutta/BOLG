@@ -340,11 +340,11 @@ class NotificationViewSet(viewsets.ModelViewSet):
 
             queryset = Notification.objects.all()
             mark_all_as_read  = self.request.QUERY_PARAMS.get('mark_all_as_read', None)
-            if mark_all_as_read is not None:
+            if mark_all_as_read == "True":
                 user = self.request.user
                 if user.is_authenticated:
                     user.notifications.mark_all_as_read()
-                    return queryset
+                 
             return queryset
 
 
