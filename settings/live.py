@@ -1,5 +1,5 @@
 DEBUG = False
 TEMPLATE_DEBUG = False
-ALLOWED_HOSTS = ['takeawaypro.herokuapp.com']
+ALLOWED_HOSTS = ['www.mbatakeaways.com']
 
 AUTO_LOGOUT_DELAY = 5
