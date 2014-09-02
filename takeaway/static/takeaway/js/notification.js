@@ -7,6 +7,7 @@
     });
 
 
+/*
   	var NotificationsView = Backbone.View.extend({
         template:_.template('<li><a href="#"><%=verb%></a><span class="label label-important pull-right">New</span><p><%=description%></p><hr /></li>'),
         render : function(){
@@ -53,7 +54,7 @@
 
     });      
 
-
+*/
 
     function reloadNotifications(){
         notifications.fetch({data: {recipient: $.cookie('userid'), unread:'True'},success:function(collection, response){
@@ -161,7 +162,7 @@
         },
         render : function(){
             
-            //this.$el.html("<a id='markAllAsRead' href='#''>Mark all as read</a>");
+            this.$el.html("<a id='markAllAsRead' href='#'><b>Mark all as read</b></a>");
             this.collection.forEach(this.addOne,this);
 
             return this;
@@ -174,14 +175,9 @@
 
         },
         markAllAsRead : function(){
-           if(this.collection.models != null){
-               _.each(this.collection.models,function(item){
-                    item.save({'unread':'False'}, {success :function(model, response){
-                    }});
-                });
-               reloadNotifications();
-
-            }
+           
+           $.get("/notifications", {mark_all_as_read : "True"});
+           reloadNotifications();
         }
 
     });  
