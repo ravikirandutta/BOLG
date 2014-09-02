@@ -65,10 +65,10 @@
     <style type="text/css">
 
     .availablecourses li {
+    position:relative;
     display:list-item;
     float:left;
     width: 30%;
-    height: 80px;
     padding-top: 5px;
     font-size: 16px;
     line-height: 4;
@@ -85,21 +85,30 @@
     }
     .courselist li:hover {
     color: #fff;
-    background-color: #563d7c;
+    background-color: #3b5998;
     }
 
     .registered{
+    position:relative;
     color: #fff ;
-    background-color: #563d7c !important;
+    background-color: #3b5998 !important;
     }
 
 
 #section{
     font-size: 12px;
-    margin-top: 40px;
     text-decoration: underline;
-    position: relative;
-    top: 30px;
+    position:absolute;
+    bottom:3px;
+    right:0px;
+    line-height:1;
+}
+
+#tick{
+    position:absolute;
+    top:0px;
+    right:5px;
+    line-height:1
 }
     </style>
 
@@ -332,16 +341,13 @@ $.ajaxSetup({
         style="display:none"
         <% } %>
 
-        ><i class="fa fa-check-circle" style="
-    position: relative;
-    bottom: 25px;
-"></i></span>
+        ><i class="fa fa-check-circle"></i></span>
 
 
 
 
 
-<span id="section" ><%=section.name%></span>
+<span id="section" style=""><%=section.name%></span>
 </script>
 
 
