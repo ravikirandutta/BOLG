@@ -16,7 +16,7 @@ router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'schools', views.SchoolViewSet)
 router.register(r'courses', views.CourseViewSet)
-router.register(r'sessions', views.SessionViewSet)
+#router.register(r'sessions', views.SessionViewSet)
 router.register(r'tags', views.TagViewSet)
 router.register(r'ratings', views.RatingViewSet)
 router.register(r'notifications', views.NotificationViewSet)
@@ -54,9 +54,10 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 	url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-	#url(r'^takeaways/$', views.TakeAwayList.as_view()),
+	url(r'^sessions/(?P<pk>-?[0-9]+)/$', SessionDetail.as_view(),name='session-detail'),
     url(r'^takeaways/(?P<pk>-?[0-9]+)/$', TakeAwayDetail.as_view(),name='takeaway-detail'),
 	url(r'^takeaways/$', TakeAwayList.as_view(), name='takeaway-list'),
+    url(r'^sessions/$', SessionList.as_view(), name='session-list'),
 
        url(r'^takeaways/index', 'takeaway.views.index', name='index'),
     url(r'^takeaway/initload', 'takeaway.views.initload', name='initload'),
@@ -67,3 +68,6 @@ urlpatterns = patterns('',
     url(r'^passwordchange/', include('django.contrib.auth.urls')),
     url(r'^load_courses/',  'takeaway.custom_course_creation_script.load_courses', name='load_courses'),
 )
+
+
+

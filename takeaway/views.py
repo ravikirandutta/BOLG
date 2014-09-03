@@ -267,13 +267,18 @@ class CourseViewSet(viewsets.ModelViewSet):
 
 
 
-class SessionViewSet(viewsets.ModelViewSet):
+class SessionList(generics.ListCreateAPIView):
     queryset = Session.objects.all()
     serializer_class = SessionSerializer
     filter_backends = (filters.DjangoFilterBackend,filters.OrderingFilter)
     filter_fields = ('session_name','courseInstance',)
     ordering_fields = ('session_dt','created_dt')
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
+class SessionDetail(generics.RetrieveUpdateDestroyAPIView):
+        queryset = Session.objects.all()
+        serializer_class = SessionDetailSerializer
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly)
 
 
 class TagViewSet(viewsets.ModelViewSet):
