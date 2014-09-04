@@ -24,6 +24,12 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
+ADMINS = (
+      ('RAVI', 'ravi.dutta@gmail.com'),
+)
+
+MANAGERS = ADMINS
+
 ALLOWED_HOSTS = []
 
 
