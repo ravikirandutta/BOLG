@@ -15,6 +15,9 @@ from takeaway.permissions import IsOwnerOrReadOnly
 
 # Create your views here.
 
+import logging
+logger = logging.getLogger(__name__)
+
 def home(request):
     #course = Course.objects.create(course_name="MARKETING" , created_by="ravid")
     #course_instance_list = Course.objects.filter(students=request.user)
@@ -296,6 +299,7 @@ class RatingViewSet(viewsets.ModelViewSet):
         paginate_by = 100
 
 
+
 class TakeAwayList(generics.ListCreateAPIView):
 
     queryset = TakeAway.objects.all()
@@ -305,7 +309,9 @@ class TakeAwayList(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
     paginate_by = 100
 
-		#def get_queryset(self):
+
+
+	           	# def get_queryset(self):
 
 				#	user = self.request.user
 				#	if user.is_authenticated():
@@ -333,7 +339,7 @@ class NotificationViewSet(viewsets.ModelViewSet):
         """
         API endpoint that allows groups to be viewed or edited.
         """
-             
+
         queryset = Notification.objects.all()
         serializer_class = NotificationSerializer
         filter_backends = (filters.DjangoFilterBackend,)
@@ -349,7 +355,7 @@ class NotificationViewSet(viewsets.ModelViewSet):
                 user = self.request.user
                 if user.is_authenticated:
                     user.notifications.mark_all_as_read()
-                 
+
             return queryset
 
 
