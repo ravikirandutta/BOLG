@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.encoding import smart_unicode
 from django.contrib.auth.models import User
+from django import forms
 # Create your models here.
 
 class School(models.Model):
@@ -271,35 +272,23 @@ def create_notifications_on_takeaway(sender, **kwargs):
                     #pdb.set_trace()
 
 
+# Contact us model so that we save all the feedback sent to us in DB
+class ContactUs(models.Model):
 
-    # ACTIVE = 'Active'
-    # ARCHIVED = 'Archived'
-    # STATUS_CHOICES = (
-    #     (ACTIVE,'Active'),
-    #     (ARCHIVED,'Archived')
-    # )
-    # SECTION_CHOICES = (
-    #    ('Monday', 'Monday'),
-    #    ('Wednesday', 'Wednesday'),
-    #    ('Weekend', 'Weekend'),
-    # )
-    # TERM_CHOICES = (
-    #     ('1','Ist Semester'),
-    #     ('2','IInd Semester')
-    # )
-    # FULL_TIME = 'FULL_TIME'
-    # EVENING = 'EVENING'
-    # PART_TIME = 'PART_TIME'
-    # PROGRAM_CHOICES = (
-    #    (FULL_TIME, 'Full Time MBA'),
-    #    (EVENING, 'Evening MBA'),
-    #    (PART_TIME, 'Part Time MBA'),
-    # )
+    
+    subject = models.CharField(max_length=100)
+    message = models.TextField()
+    sender = models.EmailField()
+    cc_myself = models.BooleanField(default=False)
 
+#     # user = models.ForeignKey(User)    Need a user model so that we can track registered users and anonymous users
 
+    def __unicode__(self):        
+        return smart_unicode(self.subject)
 
-
-
-
-
-
+# # A simple contact form with four fields.
+# class ContactForm(forms.Form):
+#     name = forms.CharField()
+#     email = forms.EmailField()
+#     topic = forms.CharField()
+#     message = forms.CharField(widget=forms.Textarea)

@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from takeaway.models import TakeAway
-from takeaway.models import TakeAwayProfile
+from takeaway.models import TakeAwayProfile,ContactUs
 from django import forms
 from django.core.exceptions import ValidationError
 from registration.forms import RegistrationForm,RegistrationFormUniqueEmail
@@ -71,4 +71,14 @@ class TakeawayProfileRegistrationForm(RegistrationFormUniqueEmail):
     #     fields=['email','school','batch','program','section']
 
 
+class ContactForm(forms.ModelForm):
 
+    subject = forms.CharField(max_length=100,help_text="Subject")
+    message = forms.CharField(help_text="Message")
+    sender = forms.EmailField(help_text="Your email")
+    cc_myself = forms.BooleanField(help_text="cc_myself",required=False)
+
+    # An inline class to provide additional information on the form.
+    class Meta:
+        # Provide an association between the ModelForm and a model
+        model = ContactUs
