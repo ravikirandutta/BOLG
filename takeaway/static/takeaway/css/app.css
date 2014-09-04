@@ -160,3 +160,11 @@ font-size:15px !important;
 
 }
 
+#category_form{
+  max-width: 650px;
+  margin: 50px auto;
+}
+#message{
+  width:50%;
+}
+
