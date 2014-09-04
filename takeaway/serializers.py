@@ -53,6 +53,14 @@ class SessionSerializer(serializers.ModelSerializer):
         fields = ('id','session_name', 'session_dt','takeaway_set','courseInstance')
         depth = 1
 
+class SessionDetailSerializer(serializers.ModelSerializer):
+    
+
+    class Meta:
+        model = Session
+        fields = ('id','session_name', 'session_dt')
+        
+
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag

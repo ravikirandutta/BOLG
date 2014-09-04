@@ -117,11 +117,27 @@ $.ajaxSetup({
         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
             xhr.setRequestHeader("X-CSRFToken", csrftoken);
         }
+    },
+    complete: function(xhr, status) {
+        if (xhr.status == 403) {
+           window.location.replace("/takeaways/index");
+        }
     }
+
 });
 </script>
 
+<!-- google analytics tracking code -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
+  ga('create', 'UA-54183707-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
 
 
     <div class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" >
@@ -135,6 +151,9 @@ $.ajaxSetup({
                     <span class="icon-bar"></span>
                 </button>
                 <a href="{% url 'index'%}" class="navbar-brand" id="heading">MBA Takeaways</a>
+                <span class="beta" style=" color: #fff;
+     position: absolute;top: 30px;left: 180px;font-size: 9px;
+">BETA</span>
             </div>
             <!-- Site name for smallar screens -->
             <!-- Navigation starts -->
@@ -556,6 +575,7 @@ $.ajaxSetup({
 
  <div id="raty">
     </div>
+    {% include "copyright.html"%}
 
     <!-- Javascript files -->
 
