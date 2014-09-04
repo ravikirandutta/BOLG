@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 from django import forms
 # Create your models here.
 
+import logging
+logger = logging.getLogger(__name__)
+
 class School(models.Model):
     school_name = models.CharField(max_length=400)
 
@@ -254,10 +257,13 @@ user_registered.connect(user_registered_callback)
 from notifications import notify
 @receiver(post_save,sender=TakeAway)
 def create_notifications_on_takeaway(sender, **kwargs):
+
+
+    takeaway = kwargs.get("instance")
     #pdb.set_trace()
     if kwargs.get('created',False):
-        takeaway = kwargs.get("instance")
         if takeaway.is_public == True :
+            logger.info("public takeaway created by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)
             recipients = takeaway.courseInstance.students.all()
 
 
@@ -270,6 +276,10 @@ def create_notifications_on_takeaway(sender, **kwargs):
                     message =  str(takeaway.courseInstance )
                     notify.send(takeaway.user,recipient=recipient_user, verb='NEW_TAKEAWAY',description= message)
                     #pdb.set_trace()
+        else:
+            logger.info("private takeaway created by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)
+    else:
+        logger.info("takeaway "+str(takeaway.id)+" updated by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)
 
 
 # Contact us model so that we save all the feedback sent to us in DB

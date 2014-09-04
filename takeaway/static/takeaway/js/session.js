@@ -5,6 +5,10 @@ var Session = Backbone.Model.extend({
 });
 
 var SessionView = Backbone.View.extend({
+    
+    initialize : function(){
+             this.model.on("change", this.render, this);
+         },
     render: function(){
 
         var template = _.template($('#session-template').html(),this.model.toJSON());
@@ -16,7 +20,9 @@ var SessionView = Backbone.View.extend({
         this.$el.find("#takeaway-list").append(takeawayList.render().el);
         return this;
     },
-    events:{"click  a":"createTakeaway"},
+    events:{"click  a":"createTakeaway",
+            "click #edit-session-link":"editSession"
+            },
 
     createTakeaway: function(){
 
@@ -25,7 +31,13 @@ var SessionView = Backbone.View.extend({
         $("#newTakeaway").html("");
          $("#newTakeaway").append(newTakeaway.render().el);
          //$("[name='my-checkbox']").bootstrapSwitch();
-    }
+    },
+
+    editSession:function(){
+        var newEditSession = new EditSessionView({model:this.model});
+        $("#editSession").html("");
+        $("#editSession").append(newEditSession.render().el);
+    },
 
 
 });
@@ -36,7 +48,7 @@ var SessionList = Backbone.Collection.extend({
     model:Session,
     url:'/sessions',
 parse: function(response){
-        var collection =  response.results;
+        var collection =  response.responseesults;
 
         return collection;
     }
@@ -58,5 +70,23 @@ var SessionListView  = Backbone.View.extend({
     }
 });
 
+var EditSessionView = Backbone.View.extend({
+
+    render: function(){
+        var template = _.template($('#edit-session-template').html(),this.model.toJSON());
+        this.$el.append(template);
+        return this;
+     },
+     events:{"click .btn-primary":"updateSession"},
+
+     updateSession: function(){
+        var newSessionName= $("#edit-session-textarea").val();
+        this.model.set({"session_name":newSessionName});
+        this.model.save();
+        $("#editSessionmodalCloseButton").click();
+     }
+
+
+})
 
 

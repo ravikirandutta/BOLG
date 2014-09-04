@@ -21,11 +21,14 @@ div .mainbar {
     width:1328px;
 }
 
-.takeaway{
+.takeaway {
     width:562px;
     height:193px;
 }
 
+.session_name_edit{
+  width: 100%;
+}
 .searchbox{
     padding-left: 50px;
 /*margin-top: 20px;*/
