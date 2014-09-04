@@ -453,7 +453,7 @@ def ContactUs(request):
             sender = form.cleaned_data['sender']
             cc_myself = form.cleaned_data['cc_myself']
 
-            recipients = ['f2003484@gmail.com']
+            recipients = ['Support@mbatakeaways.com']
             if cc_myself:
                 recipients.append(sender)
 
@@ -461,7 +461,7 @@ def ContactUs(request):
 
             # Now call the index() view.
             # The user will be shown the homepage.
-            return home(request)
+            return render_to_response('contact_us.html', {'form': form,'message':'Thanks for reaching out. Your message has been sent.'}, context)
         else:
             # The supplied form contained errors - just print them to the terminal.
             print form.errors
@@ -472,4 +472,5 @@ def ContactUs(request):
 
     # Bad form (or form details), no form supplied...
     # Render the form with error messages (if any).
-    return render_to_response('contact_us.html', {'form': form,}, context)
+
+    return render_to_response('contact_us.html', {'form': form}, context)

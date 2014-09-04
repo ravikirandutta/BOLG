@@ -163,3 +163,13 @@ font-size:15px !important;
 
 }
 
+#category_form{
+  max-width: 650px;
+  margin: 50px auto;
+  font-size: 16px;
+}
+#message{
+  width:50%;
+}
+
+
