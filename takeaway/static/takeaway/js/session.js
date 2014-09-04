@@ -16,7 +16,9 @@ var SessionView = Backbone.View.extend({
         this.$el.find("#takeaway-list").append(takeawayList.render().el);
         return this;
     },
-    events:{"click  a":"createTakeaway"},
+    events:{"click  a":"createTakeaway",
+            "click #edit-session-link":"editSession"
+            },
 
     createTakeaway: function(){
 
@@ -25,7 +27,13 @@ var SessionView = Backbone.View.extend({
         $("#newTakeaway").html("");
          $("#newTakeaway").append(newTakeaway.render().el);
          //$("[name='my-checkbox']").bootstrapSwitch();
-    }
+    },
+
+    editSession:function(){
+        var newEditSession = new EditSessionView({model:this.model});
+        $("#editSession").html("");
+        $("#editSession").append(newEditSession.render().el);
+    },
 
 
 });
@@ -58,5 +66,13 @@ var SessionListView  = Backbone.View.extend({
     }
 });
 
+var EditSessionView = Backbone.View.extend({
+
+    render: function(){
+        var template = _.template($('#edit-session-template').html(),this.model.toJSON());
+        this.$el.append(template);
+        return this;
+     },
+})
 
 

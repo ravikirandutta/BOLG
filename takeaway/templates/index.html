@@ -368,7 +368,9 @@ $.ajaxSetup({
 <div id="newTakeaway" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
 
 </div>
+<div id="editSession" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
 
+</div>
 <div id="editableTakeaway" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
 
 </div>
@@ -385,6 +387,25 @@ $.ajaxSetup({
                                     <textarea id="create-textarea" class="takeaway"></textarea>
                                     <div id="tags-list" ></div>
                                        <input id="create-checkbox" type="checkbox" class="switch" name="my-checkbox" data-on-text="public" data-off-text="private">
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                    <button type="button" class="btn btn-primary">Save</button>
+                                  </div>
+                                </div>
+                                </div>
+</script>
+
+<script type="text/template" id="edit-session-template">
+   <div id="editSessionModal" class="modal-dialog">
+                                  <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button id="modalCloseButton" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">Editing Sesiion Name</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <textarea id="create-textarea" class="session_name_edit"><%=session_name%></textarea>
+                                    
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -430,7 +451,7 @@ $.ajaxSetup({
                     <div class="widget wlightblue">
                         <!-- Widget title -->
                         <div class="widget-head">
-                          <div class="pull-left"><%=session_name %></div>
+                          <div class="pull-left"><%=session_name %> <span><a id="edit-session-link" href="#" data-toggle="modal" data-target="#editSession" title="Edit Session">Edit</a></span></div>
                           <div class="widget-icons pull-right">
 
 
