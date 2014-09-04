@@ -5,6 +5,10 @@ var Session = Backbone.Model.extend({
 });
 
 var SessionView = Backbone.View.extend({
+    
+    initialize : function(){
+             this.model.on("change", this.render, this);
+         },
     render: function(){
 
         var template = _.template($('#session-template').html(),this.model.toJSON());
@@ -44,7 +48,7 @@ var SessionList = Backbone.Collection.extend({
     model:Session,
     url:'/sessions',
 parse: function(response){
-        var collection =  response.results;
+        var collection =  response.responseesults;
 
         return collection;
     }
@@ -73,6 +77,16 @@ var EditSessionView = Backbone.View.extend({
         this.$el.append(template);
         return this;
      },
+     events:{"click .btn-primary":"updateSession"},
+
+     updateSession: function(){
+        var newSessionName= $("#edit-session-textarea").val();
+        this.model.set({"session_name":newSessionName});
+        this.model.save();
+        $("#editSessionmodalCloseButton").click();
+     }
+
+
 })
 
 
