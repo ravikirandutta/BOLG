@@ -11,6 +11,7 @@ from rest_framework import permissions
 from rest_framework import generics
 from rest_framework import filters
 from takeaway.permissions import IsOwnerOrReadOnly
+from takeaway.forms import *
 
 
 # Create your views here.
@@ -433,3 +434,42 @@ class TakeAwayProfileViewSet(viewsets.ModelViewSet):
         filter_fields = ('id','user',)
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
+from django.core.mail import send_mail
+def ContactUs(request):
+    # Get the context from the request.
+    context = RequestContext(request)
+
+    # A HTTP POST?
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+
+        # Have we been provided with a valid form?
+        if form.is_valid():
+            # Save the new category to the database.
+            form.save(commit=True)
+
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            sender = form.cleaned_data['sender']
+            cc_myself = form.cleaned_data['cc_myself']
+
+            recipients = ['f2003484@gmail.com']
+            if cc_myself:
+                recipients.append(sender)
+
+            send_mail(subject, message, sender, recipients)
+
+            # Now call the index() view.
+            # The user will be shown the homepage.
+            return home(request)
+        else:
+            # The supplied form contained errors - just print them to the terminal.
+            print form.errors
+    else:
+        # If the request was not a POST, display the form to enter details.
+        form = ContactForm()
+
+
+    # Bad form (or form details), no form supplied...
+    # Render the form with error messages (if any).
+    return render_to_response('contact_us.html', {'form': form,}, context)
