@@ -453,7 +453,7 @@ def ContactUs(request):
             sender = form.cleaned_data['sender']
             cc_myself = form.cleaned_data['cc_myself']
 
-            recipients = ['f2003484@gmail.com']
+            recipients = ['Support@mbatakeaways.com']
             if cc_myself:
                 recipients.append(sender)
 
