@@ -8,7 +8,7 @@ ALLOWED_HOSTS = ['takeawayhub.herokuapp.com']
 
 AUTO_LOGOUT_DELAY = 5
 SERVER_EMAIL='takeawayhub@heroku.com'
-
+import sys
 
 LOGGING = {
     'version': 1,
