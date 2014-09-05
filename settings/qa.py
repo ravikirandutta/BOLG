@@ -30,11 +30,11 @@ LOGGING = {
         },
     },
     'loggers': {
-        'django': {
-            'handlers':['file'],
-            'propagate': True,
-            'level':'INFO',
-        },
+        # 'django': {
+        #     'handlers':['file'],
+        #     'propagate': True,
+        #     'level':'INFO',
+        # },
         'takeaway': {
             'handlers': ['console'],
             'level': 'DEBUG',
