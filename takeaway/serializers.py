@@ -20,7 +20,7 @@ class GroupSerializer(serializers.ModelSerializer):
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = ('id', 'course_name', 'course_desc','session_set',)
+        fields = ('id', 'course_name', 'course_desc','school')
 
 class SchoolSerializer(serializers.ModelSerializer):
     class Meta:
