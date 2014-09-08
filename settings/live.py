@@ -4,7 +4,7 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 ALLOWED_HOSTS = ['www.mbatakeaways.com']
 
-AUTO_LOGOUT_DELAY = 5
+AUTO_LOGOUT_DELAY = 15
 
 import sys
 
