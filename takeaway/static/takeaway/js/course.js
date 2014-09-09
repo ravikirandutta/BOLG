@@ -99,6 +99,8 @@
         var courses = collection.attributes.results;
         var courseListView = new CourseListView({collection:courses});
         $("#course-list").append(courseListView.render().el);
+
+        $(".fa-folder-open")[0].click();
     }});
 
 
