@@ -2,7 +2,7 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = ['localhost']
 
-AUTO_LOGOUT_DELAY = 5
+AUTO_LOGOUT_DELAY = 45
 
 LOGGING = {
     'version': 1,

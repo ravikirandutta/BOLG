@@ -4,8 +4,9 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 ALLOWED_HOSTS = ['www.mbatakeaways.com']
 
-AUTO_LOGOUT_DELAY = 5
+AUTO_LOGOUT_DELAY = 75
 
+import sys
 
 LOGGING = {
     'version': 1,
@@ -24,20 +25,21 @@ LOGGING = {
             'level':'INFO',
             'class':'logging.StreamHandler',
             'stream': sys.stdout
-        },,
+        },
     },
     'loggers': {
-        'django': {
-            'handlers':['file'],
-            'propagate': True,
-            'level':'INFO',
-        },
+        # 'django': {
+        #     'handlers':['file'],
+        #     'propagate': True,
+        #     'level':'INFO',
+        # },
         'takeaway': {
             'handlers': ['console'],
             'level': 'DEBUG',
         },
     }
 }
+
 
 
 
