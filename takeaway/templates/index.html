@@ -119,9 +119,9 @@ $.ajaxSetup({
             xhr.setRequestHeader("X-CSRFToken", csrftoken);
         }
 
-        if(settings.type == 'PUT'){
-            settings.url = settings.url+"/";
-        }
+             if(settings.type == 'PUT' || settings.type == 'DELETE'){
+                if (settings.url.substr(-1) != '/') settings.url += '/';
+            }
 
     },
     complete: function(xhr, status) {
