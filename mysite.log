@@ -1,0 +1,15 @@
+[04/Sep/2014 17:37:02] WARNING [django.request:143] Not Found: /favicon.ico
+[04/Sep/2014 17:45:56] INFO [takeaway.models:280] private takeaway created by ravi in courseInstance BUS 634P Strategic Management
+[04/Sep/2014 17:53:05] INFO [takeaway.models:280] private takeaway created by ravi in courseInstance BUS 634P Strategic Management
+[08/Sep/2014 04:35:54] WARNING [django.request:143] Not Found: /Images/informatica-logo.png
+[08/Sep/2014 04:38:36] WARNING [django.request:143] Not Found: /Images/informatica-logo.png
+[08/Sep/2014 04:46:17] WARNING [django.request:143] Not Found: /Images/informatica-logo.png
+[08/Sep/2014 18:40:30] WARNING [django.request:143] Not Found: /Images/informatica-logo.png
+[08/Sep/2014 18:49:22] WARNING [django.request:143] Not Found: /Images/informatica-logo.png
+[08/Sep/2014 18:52:39] WARNING [django.request:143] Not Found: /favicon.ico
+[09/Sep/2014 02:26:06] INFO [takeaway.models:280] private takeaway created by atluri in courseInstance BUS 634P Strategic Management
+[09/Sep/2014 02:27:08] INFO [takeaway.models:282] takeaway 3 updated by atluri in courseInstance BUS 634P Strategic Management
+[09/Sep/2014 02:28:50] INFO [takeaway.models:282] takeaway 1 updated by ravi in courseInstance BUS 634P Strategic Management
+[09/Sep/2014 02:28:51] INFO [takeaway.models:282] takeaway 2 updated by ravi in courseInstance BUS 634P Strategic Management
+[09/Sep/2014 02:29:12] INFO [takeaway.models:266] public takeaway created by ravi in courseInstance BUS 634P Strategic Management
+[09/Sep/2014 02:33:25] INFO [takeaway.models:266] public takeaway created by atluri in courseInstance BUS 634P Strategic Management

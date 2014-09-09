@@ -51,6 +51,7 @@ a span{
 .takeaway-pre{
 font-family: "serif" !important;
 font-size:15px !important;
+
 }
 
 .course-selected{
@@ -172,4 +173,8 @@ font-size:15px !important;
   width:50%;
 }
 
+.takeaway-pre-owner{
 
+color:#000;
+background-color:#e7edf8;
+}

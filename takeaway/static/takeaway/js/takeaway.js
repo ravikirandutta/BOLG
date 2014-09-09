@@ -149,14 +149,17 @@ var InPlaceView = Backbone.View.extend({
                 this.$("#rating").append(rating.render().el);
                 }
                 else{
-                    this.$("#rating").html("| Your Rating("+userRating+")");
 
+                    this.$("#rating").html("| Your Rating("+userRating+")");
                 }
 
                 this.$('.switch').hide();
 
             }
             this.$('#editable-notes').append(this.inPlaceView.render().el);
+            if(isOwner){
+              this.$("#takeaway").addClass('takeaway-pre-owner');
+            }
             return this;
         },
         events: {"click #update ":"updateNotes",
