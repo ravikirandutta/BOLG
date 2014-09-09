@@ -64,7 +64,7 @@
                             });
                      sessionListView = new SessionListView({collection:collection,ratingsMap:ratingsMap});
                     $("#takeaway-container").append(sessionListView.render().el);
-
+                    $('div.rateit, span.rateit').rateit();
                     $("[name='my-checkbox']").bootstrapSwitch();
                 }});
         }});
