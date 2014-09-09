@@ -135,6 +135,14 @@ $.ajaxSetup({
         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
             xhr.setRequestHeader("X-CSRFToken", csrftoken);
         }
+        if(settings.type == 'PUT'){
+            settings.url = settings.url+"/";
+        }
+    },
+     complete: function(xhr, status) {
+        if (xhr.status == 403) {
+           window.location.replace("/takeaways/index");
+        }
     }
 });
 </script>
