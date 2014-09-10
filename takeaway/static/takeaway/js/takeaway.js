@@ -106,6 +106,11 @@ var InPlaceView = Backbone.View.extend({
         }
 
     });
+  var Rating = Backbone.Model.extend({
+    urlRoot:'/ratings/'
+  });
+
+  
 
     var TakeawayView = Backbone.View.extend({
 
@@ -126,6 +131,7 @@ var InPlaceView = Backbone.View.extend({
 
          },
          afterRender : function(){
+             $('div.rateit, span.rateit').rateit();
             this.$el.find("[name='my-checkbox']").bootstrapSwitch();
         },
         // renderWithBootstrapSwitch : function(){
@@ -143,15 +149,6 @@ var InPlaceView = Backbone.View.extend({
                 this.$('.tag-remove').hide();
                 var isRated= this.model.get("alreadyRated");
                 var userRating = this.model.get("rating");
-                if(!isRated){
-                var rating = new RatingsView({model:this.model,takeaway:this.model});
-                this.$("#rating").html("");
-                this.$("#rating").append(rating.render().el);
-                }
-                else{
-
-                    this.$("#rating").html("| Your Rating("+userRating+")");
-                }
 
                 this.$('.switch').hide();
 
@@ -160,12 +157,14 @@ var InPlaceView = Backbone.View.extend({
             if(isOwner){
               this.$("#takeaway").addClass('takeaway-pre-owner');
             }
+
             return this;
         },
         events: {"click #update ":"updateNotes",
                   "click #delete ":"deleteTakeaway",
                  "click .tag-remove":"removeTag",
-                 "click .bootstrap-switch":"updateVisibility"
+                 "click .bootstrap-switch":"updateVisibility",
+                 "rated .rateit":"rateTakeaway"
                     },
 
 
@@ -205,6 +204,27 @@ var InPlaceView = Backbone.View.extend({
             this.model.modifyAndSave();
             this.render();
 
+        },
+        rateTakeaway:function(event,value){
+          this.model;
+          var rating = new Rating();
+          var userId = this.model.get('user').id;
+      var takeAwayId = this.model.get('id');
+      var ratingValue = value;
+      rating.set({'user':$.cookie("userid")});
+
+      rating.set({'takeaway':takeAwayId});
+      rating.set({'rating_value':ratingValue});
+      rating.save();
+
+      var takeaway = this.model;
+      this.model.set({'alreadyRated':true});
+      this.model.set({'rating':ratingValue});
+      var average_rating = takeaway.get('average_rating');
+      var total_raters = takeaway.get('total_raters');
+      average_rating = ((Number(average_rating)*Number(total_raters))+ Number(ratingValue))/(Number(total_raters)+1);
+
+      takeaway.set({'average_rating':Number(average_rating).toFixed(1)});
         }
     });
 
