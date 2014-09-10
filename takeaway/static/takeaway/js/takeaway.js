@@ -501,6 +501,7 @@ var NewTakeaway = Backbone.View.extend({
         this.model.set({"notes":object.notes});
         this.model.set({'is_public':takeaway.get('is_public')});
         this.model.set({'tags':tags});
+        //this is to trigger some change in the model so that the view refreshes
         var random  = this.model.get('random');
         this.model.set({'random':!random});
         //refreshSessionlistView();
