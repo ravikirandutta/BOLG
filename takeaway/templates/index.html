@@ -475,11 +475,11 @@ $.ajaxSetup({
                     <div class="widget wlightblue">
                         <!-- Widget title -->
                         <div class="widget-head">
-                          <div class="pull-left"><%=session_name %> </div>
+                          <div class="pull-left"><%=session_name %> <a id="edit-session-link" href="#" data-toggle="modal" data-target="#editSession" class="glyphicon glyphicon-edit" title="Edit Session"></a> </div>
                           <div class="widget-icons pull-right">
 
 
-                            <a id="edit-session-link" href="#" data-toggle="modal" data-target="#editSession" class="glyphicon glyphicon-edit" title="Edit Session"></a>
+                            <a href="#" data-toggle="modal" data-target="#newTakeaway" class="btn btn-primary " title="New Takeaway"><span class="glyphicon glyphicon-pencil"></span> New Takeaway</a>
                             <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
                             <a href="#" class="wclose"><i class="fa fa-times"></i></a>
                           </div>
@@ -492,7 +492,6 @@ $.ajaxSetup({
 
                             <ul id="takeaway-list" class="recent">
                             </ul>
-                            <a href="#" data-toggle="modal" data-target="#newTakeaway" class="btn btn-primary " title="New Takeaway"><span class="glyphicon glyphicon-pencil"></span> New Takeaway</a>
 
                           </div>
                         </div>
