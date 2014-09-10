@@ -61,6 +61,7 @@
                                     takeaway.alreadyRated=false;
                                     }
                                 });
+                            takeaway.totalRatings=obj.attributes.takeaway_set.length;
                             });
                      sessionListView = new SessionListView({collection:collection,ratingsMap:ratingsMap});
                     $("#takeaway-container").append(sessionListView.render().el);
