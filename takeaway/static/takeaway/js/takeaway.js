@@ -110,7 +110,7 @@ var InPlaceView = Backbone.View.extend({
     urlRoot:'/ratings/'
   });
 
-  
+
 
     var TakeawayView = Backbone.View.extend({
 
@@ -501,7 +501,8 @@ var NewTakeaway = Backbone.View.extend({
         this.model.set({"notes":object.notes});
         this.model.set({'is_public':takeaway.get('is_public')});
         this.model.set({'tags':tags});
-
+        var random  = this.model.get('random');
+        this.model.set({'random':!random});
         //refreshSessionlistView();
 
      }
