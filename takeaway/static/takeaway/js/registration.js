@@ -7,7 +7,7 @@ $(document).ready(function(){
     $('#id_school').focus(function(){
       $("#school_error").remove();
     });
-    $('#id_school').blur(function(){
+   // $('#id_school').blur(function(){
 
         $("#id_program").find('option').remove();
         $("#id_section").find('option').remove();
@@ -35,7 +35,7 @@ $(document).ready(function(){
             }, error: function(){
 
             }});
-    });
+   // });
 
 
 
