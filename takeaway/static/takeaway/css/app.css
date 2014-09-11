@@ -176,5 +176,10 @@ font-size:15px !important;
 .takeaway-pre-owner{
 
 color:#000;
-background-color:#e7edf8;
+background-color:#e7edf8w;
+}
+
+#edit-session-link{
+  color:#fff;
+  margin-left:6px;
 }
