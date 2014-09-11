@@ -4,6 +4,8 @@ var Session = Backbone.Model.extend({
     urlRoot:'/sessions/'
 });
 
+var isPrivateView = false;
+
 var SessionView = Backbone.View.extend({
 
     initialize : function(){
@@ -19,6 +21,12 @@ var SessionView = Backbone.View.extend({
         takeawaySet = _.sortBy(takeawaySet,function(takeaway){
           return (5-takeaway.average_rating)  ;
         });
+
+        if(isPrivateView){
+          takeawaySet = _.filter(takeawaySet,function(takeaway){
+            return takeaway.user.id == $.cookie('userid')  ;
+          });
+        }
 
         var takeawayList = new TakeawayListView({collection:takeawaySet});
 
@@ -94,5 +102,4 @@ var EditSessionView = Backbone.View.extend({
 
 
 })
-
 
