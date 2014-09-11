@@ -337,9 +337,8 @@ $.ajaxSetup({
 </div>
 
 
-
 <div class="searchbox" style="display:none; float:right; margin-right:40px;">
-
+<input id="pubPrivateTakeaways" type="checkbox" class="switch" name="my-checkbox" data-on-text="All Takeaways" data-off-text="My Takeaways" checked="true">
 <input  type="text" class="search-query" data-role="tagsinput" placeholder="Filter by tag">
     <button id="search-by-tag" type="submit" class="btn"><i class="fa fa-search"></i></button>
 <div id="results-indicator"></div>
@@ -588,6 +587,19 @@ $.ajaxSetup({
 
     <!-- Javascript files -->
 
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+    $('#pubPrivateTakeaways').on('switchChange.bootstrapSwitch', function(event, state) {
+            isPrivateView = !state;
+            sessionListView.render();
+    });
+
+});
+</script>
 
 </body>
 
