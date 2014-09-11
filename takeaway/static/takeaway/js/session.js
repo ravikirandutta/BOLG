@@ -71,6 +71,25 @@ parse: function(response){
 
 var SessionListView  = Backbone.View.extend({
 
+     initialize: function(options){
+            this.options = options;
+           _.bindAll(this, 'beforeRender', 'render', 'afterRender');
+            var _this = this;
+             this.render = _.wrap(this.render, function(render) {
+              _this.beforeRender();
+                 render();
+
+                  _this.afterRender();
+              return _this;
+            });
+         },
+         beforeRender: function(){
+
+         },
+         afterRender : function(){
+            $('div.rateit, span.rateit').rateit();
+         },
+
     render: function(){
         this.$el.html("");
         this.collection.forEach(this.addOne,this);
