@@ -184,3 +184,20 @@ color:#000;
 background-color:#e7edf8;
 }
 
+#registration{
+  background-color: #3b5998;
+  border-color: #3b5998;
+}
+
+#registration-page{
+  background-color: #e9eaed;
+}
+#reset-btn{
+  background: #2fa5ce !important;
+  border-color: #fff;
+}
+
+#register-btn{
+  background: #2d57c9 !important;
+  border-color: #fff;
+}
