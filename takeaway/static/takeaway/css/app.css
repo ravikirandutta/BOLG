@@ -163,6 +163,11 @@ font-size:15px !important;
   background:#3b5998 !important;
 
 }
+#edit-session-link{
+  color:#fff;
+  margin-left:6px;
+}
+
 
 #category_form{
   max-width: 650px;
@@ -176,10 +181,6 @@ font-size:15px !important;
 .takeaway-pre-owner{
 
 color:#000;
-background-color:#e7edf8w;
+background-color:#e7edf8;
 }
 
-#edit-session-link{
-  color:#fff;
-  margin-left:6px;
-}

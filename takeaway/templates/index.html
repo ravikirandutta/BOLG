@@ -525,7 +525,7 @@ $.ajaxSetup({
                                     <% }); %>
                                      <% if (!isOwner) {%>
                                     <div class="rateit" data-rateit-value=<%=average_rating%> data-rateit-ispreset="true" data-rateit-readonly=<%=alreadyRated%> data-rateit-resetable="false"></div> 
-                                        <span class="total-raters">(<%=total_raters%>)</span>
+                                        <span class="total-raters">(<i class="fa fa-user"></i> <%=total_raters%>)</span>
                                     <%}%>
                                     
                                      <% if (isOwner) {%>
