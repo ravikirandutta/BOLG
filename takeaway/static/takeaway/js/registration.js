@@ -1,7 +1,17 @@
 $(document).ready(function(){
     var school_id ;
 
+    $('#id_email').focus(function(){
+        $("#email_error").remove();
+        $("#register-btn").prop("disabled",false);
+    });
     $('#id_email').blur(function(){
+       if(!$("#id_email").val().match(/@emory.edu$/)){
+           var html = "<ul id='email_error' class='errolist'><li>Email should belong to emory.edu</li></ul>"
+           $("#email").prepend(html);
+           $("#register-btn").prop("disabled",true);
+       }
+
         $("#id_username").val($("#id_email").val());
     });
     $('#id_school').focus(function(){
