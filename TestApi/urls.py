@@ -71,6 +71,8 @@ urlpatterns = patterns('',
     # url(r'^contact/thankyou/', 'takeaway.views.thankyou'),
     # url(r'^contact/', 'takeaway.views.contactview'),
     url(r'^contact/', 'takeaway.views.ContactUs', name='contact_us'),
+    url(r'^contact_login/','takeaway.views.ContactUsLogin',name='contact_us_login'), 
+
 )
 
 
