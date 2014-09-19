@@ -211,6 +211,7 @@ class Vote(models.Model):
 from registration.signals import user_registered
 
 def user_registered_callback(sender, user, request, **kwargs):
+    logger.info("REGISTERED callback for user: "+user.email)
     profile = TakeAwayProfile(user = user)
     profile.email = request.POST["email"]
     profile.school =School.objects.get(school_name=(request.POST["school"].upper()))
@@ -220,6 +221,7 @@ def user_registered_callback(sender, user, request, **kwargs):
     user.last_name = request.POST["lastname"]
     user.save()
     profile.save()
+    logger.info("Takeaway profile successfully created for user: "+user.email)
 
 from django.dispatch import receiver
 from django.db.models.signals import post_save,pre_save
@@ -285,7 +287,7 @@ def create_notifications_on_takeaway(sender, **kwargs):
 # Contact us model so that we save all the feedback sent to us in DB
 class ContactUs(models.Model):
 
-    
+
     subject = models.CharField(max_length=100)
     message = models.TextField()
     sender = models.EmailField()
@@ -293,7 +295,7 @@ class ContactUs(models.Model):
 
 #     # user = models.ForeignKey(User)    Need a user model so that we can track registered users and anonymous users
 
-    def __unicode__(self):        
+    def __unicode__(self):
         return smart_unicode(self.subject)
 
 # # A simple contact form with four fields.
