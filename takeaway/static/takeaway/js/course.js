@@ -70,7 +70,12 @@
                                         var takeawayFavObj = _.find(favList.attributes.results,function(favItem){
                                           return favItem.takeaway == takeaway.id  ;
                                         });
-                                        takeaway.favObj = takeawayFavObj;
+                                        if( takeawayFavObj === undefined){
+                                            takeaway.favObj = null;
+                                        }else{
+                                            takeaway.favObj = takeawayFavObj;    
+                                        }
+                                        
 
                                     }
                                 });

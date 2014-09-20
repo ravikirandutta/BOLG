@@ -31,7 +31,7 @@ var SessionView = Backbone.View.extend({
 
         if(isFavView){
           takeawaySet = _.filter(takeawaySet,function(takeaway){
-            return takeaway.favObj != null ;
+            return takeaway.favObj != null && takeaway.favObj.id > 0;
           });
         }
 

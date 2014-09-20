@@ -240,18 +240,12 @@ var InPlaceView = Backbone.View.extend({
               var favObj = this.model.get("favObj");
               fav.set({'id': favObj.id});
 
-              fav.destroy();
-              this.$("#myfav").removeClass("glyphicon glyphicon-heart");
-              this.$("#myfav").addClass("glyphicon glyphicon-heart-empty");
-              this.model.set({"favObj":null});
-              
-
-
-              // fav.destroy({success:function(model, respone){
-              //   this.$("#myfav").removeClass("glyphicon glyphicon-heart");
-              //   this.$("#myfav").addClass("glyphicon glyphicon-heart-empty");
-              //   this.model.set({"favObj":null});
-              // }});
+              var  thisObj = this;
+              fav.destroy({success:function(model, respone){
+                thisObj.$("#myfav").removeClass("glyphicon glyphicon-heart");
+                thisObj.$("#myfav").addClass("glyphicon glyphicon-heart-empty");
+                thisObj.model.set({"favObj":null});
+              }});
             }else{
               var takeAwayId = this.model.get('id');
               var courseInstance = this.model.get('courseInstance').id;
@@ -259,11 +253,15 @@ var InPlaceView = Backbone.View.extend({
               fav.set({'user':$.cookie("userid")});
               fav.set({'takeaway':takeAwayId});
               fav.set({'courseInstance':courseInstance});
-              fav.save();
 
-              this.$("#myfav").removeClass("glyphicon glyphicon-heart-empty");
-              this.$("#myfav").addClass("glyphicon glyphicon-heart");
-              this.model.set({"favObj":fav});
+              var  thisObj = this;
+              fav.save(null, {success:function(model, respone){
+                thisObj.$("#myfav").removeClass("glyphicon glyphicon-heart");
+                thisObj.$("#myfav").addClass("glyphicon glyphicon-heart-empty");
+                var favObj = {};
+                favObj.id = model.get("id");
+                thisObj.model.set({"favObj":favObj});
+              }});
 
             }
         }
