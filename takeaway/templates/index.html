@@ -338,11 +338,14 @@ $.ajaxSetup({
 
 
 <div class="searchbox" style="display:none; float:right; margin-right:40px;">
-<input id="pubPrivateTakeaways" type="checkbox" class="switch" name="my-checkbox" data-on-text="All Takeaways" data-off-text="My Takeaways" checked="true">
-<input id="favoriteTakeaways" type="checkbox" class="switch" name="my-checkbox" data-on-text="All Takeaways" data-off-text="My Favourites" checked="true">
-<input  type="text" class="search-query" data-role="tagsinput" placeholder="Filter by tag">
-    <button id="search-by-tag" type="submit" class="btn"><i class="fa fa-search"></i></button>
-<div id="results-indicator"></div>
+
+    <input id="allBtn" type="button" class="btn" value="All" onclick="showAllTakeaways()">
+    <input id="myBtn" type="button" class="btn" value="My" onclick="showMyTakeaways()">
+    <input id="favBtn" type="button" class="btn" value="Favorites" onclick="showFavTakeaways()">
+
+    <input  type="text" class="search-query" data-role="tagsinput" placeholder="Filter by tag">
+        <button id="search-by-tag" type="submit" class="btn"><i class="fa fa-search"></i></button>
+    <div id="results-indicator"></div>
 </div>
             <!--/ Page heading ends -->
             <!-- Matter -->
@@ -607,9 +610,32 @@ $(document).ready(function(){
             isFavView = !state;
             sessionListView.render();
     });
-
-
 });
+
+
+    function showFavTakeaways(){
+        isFavView = true;
+        isPrivateView = false;
+        var courseid = "#course"+courseInstanceId;
+        $(courseid).click();
+    }
+
+    function showMyTakeaways(){
+        isPrivateView = true;
+        isFavView = false;
+        var courseid = "#course"+courseInstanceId;
+        $(courseid).click();
+    }
+
+    function showAllTakeaways(){
+        isPrivateView = false;
+        isFavView = false;
+        var courseid = "#course"+courseInstanceId;
+        $(courseid).click();
+
+    }
+
+
 </script>
 
 </body>

@@ -5,6 +5,7 @@
       });
 
       var sessionListView;
+      var courseInstanceId;
 
       var CourseView = Backbone.View.extend({
         tagName: "li",
@@ -34,6 +35,7 @@
             $(this.el).addClass('course-selected');
             $(".searchbox").css("display","block");
             $("#takeaway-container").html("");
+
             var course=this.model.id;
             var takeawayList = new TakeawayList();
 
@@ -48,6 +50,7 @@
             });
 
             var favoritesList = new Favorites();
+            courseInstanceId = that.model.get('id');
             favoritesList.fetch({data:{user:$.cookie('userid'), courseInstance: that.model.get('id')} ,success:function(favList, response){
                 
                 takeawayList.fetch({data: {courseInstance: that.model.get('id'),ordering:'session_dt'},
