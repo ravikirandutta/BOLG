@@ -80,26 +80,10 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 
-import os
-is_local = False
-try:
-    is_local = os.environ['local']
-except KeyError:
-    print "Environment is not local"
-
+import dj_database_url
 DATABASES = {
-        'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
+         'default': dj_database_url.config()
 }
-
-
-if not is_local:
-    import dj_database_url
-    DATABASES['default'] =  dj_database_url.config()
-
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -117,21 +101,21 @@ USE_TZ = True
 ACCOUNT_ACTIVATION_DAYS=7
 
 #Email Settings
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = "mbatakeaway@gmail.com"
-EMAIL_HOST_PASSWORD = "getabillion101"
-DEFAULT_FROM_EMAIL = 'mbatakeaway@gmail.com'
-DEFAULT_TO_EMAIL = 'suresh.atluri@gmail.com'
-
 # EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.office365.com'
+# EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_PORT = 587
-# EMAIL_HOST_USER = "support@mbatakeaways.com"
-# EMAIL_HOST_PASSWORD = "Pakodi123!"
-# DEFAULT_FROM_EMAIL = 'support@mbatakeaways.com'
+# EMAIL_HOST_USER = "mbatakeaway@gmail.com"
+# EMAIL_HOST_PASSWORD = "getabillion101"
+# DEFAULT_FROM_EMAIL = 'mbatakeaway@gmail.com'
 # DEFAULT_TO_EMAIL = 'suresh.atluri@gmail.com'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "support@mbatakeaways.com"
+EMAIL_HOST_PASSWORD = "Pakodi123!"
+DEFAULT_FROM_EMAIL = 'support@mbatakeaways.com'
+DEFAULT_TO_EMAIL = 'suresh.atluri@gmail.com'
 
 
 
