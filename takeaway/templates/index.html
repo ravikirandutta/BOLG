@@ -339,6 +339,7 @@ $.ajaxSetup({
 
 <div class="searchbox" style="display:none; float:right; margin-right:40px;">
 <input id="pubPrivateTakeaways" type="checkbox" class="switch" name="my-checkbox" data-on-text="All Takeaways" data-off-text="My Takeaways" checked="true">
+<input id="favoriteTakeaways" type="checkbox" class="switch" name="my-checkbox" data-on-text="All Takeaways" data-off-text="My Favourites" checked="true">
 <input  type="text" class="search-query" data-role="tagsinput" placeholder="Filter by tag">
     <button id="search-by-tag" type="submit" class="btn"><i class="fa fa-search"></i></button>
 <div id="results-indicator"></div>
@@ -542,6 +543,11 @@ $.ajaxSetup({
                                      </span>
                                      </div>
 
+                                     <div id="favourite"> 
+                                       <a href="#"> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
+
+                                     </div>
+
 
 
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
@@ -596,6 +602,12 @@ $(document).ready(function(){
             isPrivateView = !state;
             sessionListView.render();
     });
+
+    $('#favoriteTakeaways').on('switchChange.bootstrapSwitch', function(event, state) {
+            isFavView = !state;
+            sessionListView.render();
+    });
+
 
 });
 </script>

@@ -5,6 +5,7 @@ var Session = Backbone.Model.extend({
 });
 
 var isPrivateView = false;
+var isFavView = false;
 
 var SessionView = Backbone.View.extend({
 
@@ -27,6 +28,13 @@ var SessionView = Backbone.View.extend({
             return takeaway.user.id == $.cookie('userid')  ;
           });
         }
+
+        if(isFavView){
+          takeawaySet = _.filter(takeawaySet,function(takeaway){
+            return takeaway.favObj != null ;
+          });
+        }
+
 
         var takeawayList = new TakeawayListView({collection:takeawaySet});
 

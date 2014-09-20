@@ -158,13 +158,20 @@ var InPlaceView = Backbone.View.extend({
               this.$("#takeaway").addClass('takeaway-pre-owner');
             }
 
+            if(this.model.get("favObj") != null){
+              this.$("#myfav").removeClass("glyphicon glyphicon-heart-empty");
+              this.$("#myfav").addClass("glyphicon glyphicon-heart");
+            }
+            
+
             return this;
         },
         events: {"click #update ":"updateNotes",
                   "click #delete ":"deleteTakeaway",
                  "click .tag-remove":"removeTag",
                  "click .bootstrap-switch":"updateVisibility",
-                 "rated .rateit":"rateTakeaway"
+                 "rated .rateit":"rateTakeaway",
+                 "click #myfav":"toggleMyFavAction"
                     },
 
 
@@ -225,6 +232,40 @@ var InPlaceView = Backbone.View.extend({
       average_rating = ((Number(average_rating)*Number(total_raters))+ Number(ratingValue))/(Number(total_raters)+1);
 
       takeaway.set({'average_rating':Number(average_rating).toFixed(1)});
+        },
+        toggleMyFavAction : function(){
+
+          var fav = new Favorites();
+            if(this.model.get("favObj") != null){
+              var favObj = this.model.get("favObj");
+              fav.set({'id': favObj.id});
+
+              fav.destroy();
+              this.$("#myfav").removeClass("glyphicon glyphicon-heart");
+              this.$("#myfav").addClass("glyphicon glyphicon-heart-empty");
+              this.model.set({"favObj":null});
+              
+
+
+              // fav.destroy({success:function(model, respone){
+              //   this.$("#myfav").removeClass("glyphicon glyphicon-heart");
+              //   this.$("#myfav").addClass("glyphicon glyphicon-heart-empty");
+              //   this.model.set({"favObj":null});
+              // }});
+            }else{
+              var takeAwayId = this.model.get('id');
+              var courseInstance = this.model.get('courseInstance').id;
+
+              fav.set({'user':$.cookie("userid")});
+              fav.set({'takeaway':takeAwayId});
+              fav.set({'courseInstance':courseInstance});
+              fav.save();
+
+              this.$("#myfav").removeClass("glyphicon glyphicon-heart-empty");
+              this.$("#myfav").addClass("glyphicon glyphicon-heart");
+              this.model.set({"favObj":fav});
+
+            }
         }
     });
 
@@ -512,6 +553,11 @@ var NewTakeaway = Backbone.View.extend({
 
 
 
+  var Favorites = Backbone.Model.extend({
+    urlRoot:'/favorites/'
+  });
 
 
-
+    var FavoritesList = Backbone.Collection.extend({
+            model: Favorites
+    });

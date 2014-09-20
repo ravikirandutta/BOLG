@@ -46,6 +46,16 @@
             _.each(ratings,function(rating){
                 ratingsMap[rating["takeaway"]]=rating["rating_value"];
             });
+
+
+            $.get( "/favorites/?user="+$.cookie('userid')+"&courseInstance="+that.model.get('id')
+                    , function(collection, response) {
+                        })
+                        .always(function(favList, response) {
+                                
+                            
+
+
                 takeawayList.fetch({data: {courseInstance: that.model.get('id'),ordering:'session_dt'},
 
                     success: function(collection, response){
@@ -60,6 +70,15 @@
                                 else{
                                     takeaway.alreadyRated=false;
                                     }
+
+                                    if(favList.results.length > 0){
+
+                                        var takeawayFavObj = _.find(favList.results,function(favItem){
+                                          return favItem.takeaway == takeaway.id  ;
+                                        });
+                                        takeaway.favObj = takeawayFavObj;
+
+                                    }
                                 });
                             
                             });
@@ -67,7 +86,12 @@
                     $("#takeaway-container").append(sessionListView.render().el);
                     $('div.rateit, span.rateit').rateit();
                     $("[name='my-checkbox']").bootstrapSwitch();
-                }});
+                }});                                
+
+
+            });
+
+
         }});
         }
 
