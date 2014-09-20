@@ -47,15 +47,9 @@
                 ratingsMap[rating["takeaway"]]=rating["rating_value"];
             });
 
-
-            $.get( "/favorites/?user="+$.cookie('userid')+"&courseInstance="+that.model.get('id')
-                    , function(collection, response) {
-                        })
-                        .always(function(favList, response) {
-                                
-                            
-
-
+            var favoritesList = new Favorites();
+            favoritesList.fetch({data:{user:$.cookie('userid'), courseInstance: that.model.get('id')} ,success:function(favList, response){
+                
                 takeawayList.fetch({data: {courseInstance: that.model.get('id'),ordering:'session_dt'},
 
                     success: function(collection, response){
@@ -71,9 +65,9 @@
                                     takeaway.alreadyRated=false;
                                     }
 
-                                    if(favList.results.length > 0){
+                                    if(favList.attributes.results.length > 0){
 
-                                        var takeawayFavObj = _.find(favList.results,function(favItem){
+                                        var takeawayFavObj = _.find(favList.attributes.results,function(favItem){
                                           return favItem.takeaway == takeaway.id  ;
                                         });
                                         takeaway.favObj = takeawayFavObj;
@@ -89,7 +83,13 @@
                 }});                                
 
 
-            });
+
+
+            }});
+
+
+
+
 
 
         }});

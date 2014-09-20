@@ -557,7 +557,3 @@ var NewTakeaway = Backbone.View.extend({
     urlRoot:'/favorites/'
   });
 
-
-    var FavoritesList = Backbone.Collection.extend({
-            model: Favorites
-    });
