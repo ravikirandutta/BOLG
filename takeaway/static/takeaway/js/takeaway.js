@@ -424,7 +424,7 @@ var NewTakeaway = Backbone.View.extend({
      toggleTag : function(event){
             var tagClicked = event.currentTarget.name;
             if(this.selectedTags.indexOf(tagClicked) >= 0){
-                event.currentTarget.parentElement.className="label label-important";
+                event.currentTarget.parentElement.className="label label-warning";
                 for(var i = this.selectedTags.length-1; i--;){
                     if (this.selectedTags[i] === tagClicked) this.selectedTags.splice(i, 1);
                 }
