@@ -599,20 +599,6 @@ $.ajaxSetup({
 
 <script type="text/javascript">
 
-$(document).ready(function(){
-
-    $('#pubPrivateTakeaways').on('switchChange.bootstrapSwitch', function(event, state) {
-            isPrivateView = !state;
-            sessionListView.render();
-    });
-
-    $('#favoriteTakeaways').on('switchChange.bootstrapSwitch', function(event, state) {
-            isFavView = !state;
-            sessionListView.render();
-    });
-});
-
-
     function showFavTakeaways(){
         isFavView = true;
         isPrivateView = false;
