@@ -72,6 +72,13 @@ class RatingSerializer(serializers.ModelSerializer):
         model = Rating
         fields = ('id', 'user','takeaway','rating_value')
 
+class FavoriteSerializer(serializers.ModelSerializer):
+    takeaway = serializers.PrimaryKeyRelatedField()
+    #takeaway = TakeAwayFullSerializer(source='takeaway')
+    is_takeaway_public = serializers.Field(source='takeaway.is_public')
+    class Meta:
+        model = Favorite
+
 
 
 class NotificationSerializer(serializers.ModelSerializer):

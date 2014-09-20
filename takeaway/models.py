@@ -207,6 +207,16 @@ class Vote(models.Model):
         elif not self.already_voted and  (value == 1 or value == 0 or value == -1) :
             vote_value = value
 
+class Favorite(models.Model):
+
+    takeaway = models.ForeignKey(TakeAway)
+    user = models.ForeignKey(User)
+    courseInstance = models.ForeignKey(CourseInstance)
+    
+    
+
+    def __unicode__(self):
+        return smart_unicode(self.user)
 
 from registration.signals import user_registered
 
