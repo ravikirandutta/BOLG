@@ -158,13 +158,20 @@ var InPlaceView = Backbone.View.extend({
               this.$("#takeaway").addClass('takeaway-pre-owner');
             }
 
+            if(this.model.get("favObj") != null){
+              this.$("#myfav").removeClass("glyphicon glyphicon-heart-empty");
+              this.$("#myfav").addClass("glyphicon glyphicon-heart");
+            }
+            
+
             return this;
         },
         events: {"click #update ":"updateNotes",
                   "click #delete ":"deleteTakeaway",
                  "click .tag-remove":"removeTag",
                  "click .bootstrap-switch":"updateVisibility",
-                 "rated .rateit":"rateTakeaway"
+                 "rated .rateit":"rateTakeaway",
+                 "click #myfav":"toggleMyFavAction"
                     },
 
 
@@ -225,6 +232,38 @@ var InPlaceView = Backbone.View.extend({
       average_rating = ((Number(average_rating)*Number(total_raters))+ Number(ratingValue))/(Number(total_raters)+1);
 
       takeaway.set({'average_rating':Number(average_rating).toFixed(1)});
+        },
+        toggleMyFavAction : function(){
+
+          var fav = new Favorites();
+            if(this.model.get("favObj") != null){
+              var favObj = this.model.get("favObj");
+              fav.set({'id': favObj.id});
+
+              var  thisObj = this;
+              fav.destroy({success:function(model, respone){
+                thisObj.$("#myfav").removeClass("glyphicon glyphicon-heart");
+                thisObj.$("#myfav").addClass("glyphicon glyphicon-heart-empty");
+                thisObj.model.set({"favObj":null});
+              }});
+            }else{
+              var takeAwayId = this.model.get('id');
+              var courseInstance = this.model.get('courseInstance').id;
+
+              fav.set({'user':$.cookie("userid")});
+              fav.set({'takeaway':takeAwayId});
+              fav.set({'courseInstance':courseInstance});
+
+              var  thisObj = this;
+              fav.save(null, {success:function(model, respone){
+                thisObj.$("#myfav").removeClass("glyphicon glyphicon-heart");
+                thisObj.$("#myfav").addClass("glyphicon glyphicon-heart-empty");
+                var favObj = {};
+                favObj.id = model.get("id");
+                thisObj.model.set({"favObj":favObj});
+              }});
+
+            }
         }
     });
 
@@ -383,7 +422,7 @@ var NewTakeaway = Backbone.View.extend({
      toggleTag : function(event){
             var tagClicked = event.currentTarget.name;
             if(this.selectedTags.indexOf(tagClicked) >= 0){
-                event.currentTarget.parentElement.className="label label-important";
+                event.currentTarget.parentElement.className="label label-warning";
                 for(var i = this.selectedTags.length-1; i--;){
                     if (this.selectedTags[i] === tagClicked) this.selectedTags.splice(i, 1);
                 }
@@ -512,6 +551,7 @@ var NewTakeaway = Backbone.View.extend({
 
 
 
-
-
+  var Favorites = Backbone.Model.extend({
+    urlRoot:'/favorites/'
+  });
 

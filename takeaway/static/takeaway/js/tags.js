@@ -27,7 +27,7 @@
 
         toggleSelection:function(){
 
-                this.callback(this.model.get('id'));
+                //this.callback(this.model.get('id'));
 
                 if(this.model.get('selected')){
                     this.$el.removeClass('label-success');

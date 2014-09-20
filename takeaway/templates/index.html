@@ -95,7 +95,7 @@
 
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="#">
+    <link rel="shortcut icon" href="/static/takeaway/img/icons/pen-icon.png">
 </head>
 
 <body>
@@ -193,8 +193,6 @@ $.ajaxSetup({
                             <i class="fa fa-envelope-o"></i> Notifications
                             <span class="badge badge-important" id="inboxSize"></span>
                         </a>
-                        <li><a href="/contact/"> Contact Us</a>
-                            </li>
                         <ul class="dropdown-menu">
                             <li>
                                 <!-- Heading - h5 -->
@@ -212,6 +210,8 @@ $.ajaxSetup({
                             </li> -->
                         </ul>
                     </li>
+                    <li><a href="/contact/"> Contact Us</a>
+                            </li>
                     <!-- Members button with number of latest members count -->
                     <li class="dropdown dropdown-big" style="display:none">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown">
@@ -338,10 +338,14 @@ $.ajaxSetup({
 
 
 <div class="searchbox" style="display:none; float:right; margin-right:40px;">
-<input id="pubPrivateTakeaways" type="checkbox" class="switch" name="my-checkbox" data-on-text="All Takeaways" data-off-text="My Takeaways" checked="true">
-<input  type="text" class="search-query" data-role="tagsinput" placeholder="Filter by tag">
-    <button id="search-by-tag" type="submit" class="btn"><i class="fa fa-search"></i></button>
-<div id="results-indicator"></div>
+
+    <input id="allBtn" type="button" class="btn" value="All" onclick="showAllTakeaways()">
+    <input id="myBtn" type="button" class="btn" value="My" onclick="showMyTakeaways()">
+    <input id="favBtn" type="button" class="btn" value="Favorites" onclick="showFavTakeaways()">
+
+    <input  type="text" class="search-query" data-role="tagsinput" placeholder="Filter by tag">
+        <button id="search-by-tag" type="submit" class="btn"><i class="fa fa-search"></i></button>
+    <div id="results-indicator"></div>
 </div>
             <!--/ Page heading ends -->
             <!-- Matter -->
@@ -409,7 +413,7 @@ $.ajaxSetup({
                                   <div class="modal-body">
                                     <textarea id="create-textarea" class="takeaway"></textarea>
                                     <div id="tags-list" ></div>
-                                       <input id="create-checkbox" type="checkbox" class="switch" name="my-checkbox" data-on-text="public" data-off-text="private">
+                                       <input id="create-checkbox" type="checkbox" class="switch" name="my-checkbox" data-on-text="public" data-off-text="private" checked>
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -542,6 +546,11 @@ $.ajaxSetup({
                                      </span>
                                      </div>
 
+                                     <div id="favourite"> 
+                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
+
+                                     </div>
+
 
 
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
@@ -590,14 +599,29 @@ $.ajaxSetup({
 
 <script type="text/javascript">
 
-$(document).ready(function(){
+    function showFavTakeaways(){
+        isFavView = true;
+        isPrivateView = false;
+        var courseid = "#course"+courseInstanceId;
+        $(courseid).click();
+    }
 
-    $('#pubPrivateTakeaways').on('switchChange.bootstrapSwitch', function(event, state) {
-            isPrivateView = !state;
-            sessionListView.render();
-    });
+    function showMyTakeaways(){
+        isPrivateView = true;
+        isFavView = false;
+        var courseid = "#course"+courseInstanceId;
+        $(courseid).click();
+    }
 
-});
+    function showAllTakeaways(){
+        isPrivateView = false;
+        isFavView = false;
+        var courseid = "#course"+courseInstanceId;
+        $(courseid).click();
+
+    }
+
+
 </script>
 
 </body>

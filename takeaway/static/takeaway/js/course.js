@@ -5,6 +5,7 @@
       });
 
       var sessionListView;
+      var courseInstanceId;
 
       var CourseView = Backbone.View.extend({
         tagName: "li",
@@ -34,6 +35,7 @@
             $(this.el).addClass('course-selected');
             $(".searchbox").css("display","block");
             $("#takeaway-container").html("");
+
             var course=this.model.id;
             var takeawayList = new TakeawayList();
 
@@ -46,6 +48,11 @@
             _.each(ratings,function(rating){
                 ratingsMap[rating["takeaway"]]=rating["rating_value"];
             });
+
+            var favoritesList = new Favorites();
+            courseInstanceId = that.model.get('id');
+            favoritesList.fetch({data:{user:$.cookie('userid'), courseInstance: that.model.get('id')} ,success:function(favList, response){
+                
                 takeawayList.fetch({data: {courseInstance: that.model.get('id'),ordering:'session_dt'},
 
                     success: function(collection, response){
@@ -60,6 +67,20 @@
                                 else{
                                     takeaway.alreadyRated=false;
                                     }
+
+                                    if(favList.attributes.results.length > 0){
+
+                                        var takeawayFavObj = _.find(favList.attributes.results,function(favItem){
+                                          return favItem.takeaway == takeaway.id  ;
+                                        });
+                                        if( takeawayFavObj === undefined){
+                                            takeaway.favObj = null;
+                                        }else{
+                                            takeaway.favObj = takeawayFavObj;    
+                                        }
+                                        
+
+                                    }
                                 });
                             
                             });
@@ -67,7 +88,18 @@
                     $("#takeaway-container").append(sessionListView.render().el);
                     $('div.rateit, span.rateit').rateit();
                     $("[name='my-checkbox']").bootstrapSwitch();
-                }});
+                }});                                
+
+
+
+
+            }});
+
+
+
+
+
+
         }});
         }
 

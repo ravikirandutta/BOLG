@@ -465,6 +465,14 @@ class TakeAwayProfileViewSet(viewsets.ModelViewSet):
         filter_fields = ('id','user',)
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
+
+class FavoriteViewSet(viewsets.ModelViewSet):
+        queryset = Favorite.objects.all()
+        serializer_class = FavoriteSerializer
+        filter_backends = (filters.DjangoFilterBackend,)
+        filter_fields = ('user','courseInstance')
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
 from django.core.mail import send_mail
 def ContactUs(request):
     # Get the context from the request.
@@ -485,6 +493,7 @@ def ContactUs(request):
             cc_myself = form.cleaned_data['cc_myself']
 
             recipients = ['Support@mbatakeaways.com']
+
             if cc_myself:
                 recipients.append(sender)
 
@@ -526,6 +535,7 @@ def ContactUsLogin(request):
             cc_myself = form.cleaned_data['cc_myself']
 
             recipients = ['support@mbatakeaways.com']
+
             if cc_myself:
                 recipients.append(sender)
 
