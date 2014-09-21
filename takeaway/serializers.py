@@ -33,16 +33,17 @@ class TakeAwaySerializer(serializers.ModelSerializer):
     username = serializers.Field(source='user.username')
     class Meta:
         model = TakeAway
-        fields = ('id','notes', 'user','courseInstance','session','is_public','username', 'tags','created_dt','average_rating','total_raters')
+        fields = ('id','notes', 'user','courseInstance','session','is_public','username', 'tags','created_dt','average_rating','total_raters','comment_set')
         #depth = 1
 
 
 class TakeAwayFullSerializer(serializers.ModelSerializer):
     username = serializers.Field(source='user.username')
     created_dt = serializers.DateTimeField(format='%m/%d/%y %H:%M')
+    comment_count = serializers.Field(source='comment_set.count')
     class Meta:
         model = TakeAway
-        fields = ('id','notes', 'user','courseInstance','session','is_public','username', 'tags','created_dt','average_rating','total_raters')
+        fields = ('id','notes', 'user','courseInstance','session','is_public','username', 'tags','created_dt','average_rating','total_raters','comment_set','comment_count')
         depth = 1
 
 class SessionSerializer(serializers.ModelSerializer):
@@ -93,17 +94,29 @@ class NotificationSerializer(serializers.ModelSerializer):
             actor = None
 
         if actor:
-            return actor.username
+            if actor.first_name :
+                return actor.first_name
+            else :
+                return actor.username
         return None    
 
 class CourseInstanceSerializer(serializers.ModelSerializer):
     school_id = serializers.RelatedField(source='course.school.id')
     students = serializers.RelatedField(many=True)
+    section = serializers.PrimaryKeyRelatedField()    
+    section_name = serializers.Field(source='section.name')
 
     class Meta:
         model = CourseInstance
-        fields = ('id','course','section','batch','program','year','status','school_id','students',)
+        fields = ('id','course','section','section_name','batch','program','year','status','school_id','students',)
         depth = 1
+
+class CourseInstanceCreateSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = CourseInstance
+        fields = ('id','course','section','batch','program','year','status',)
+        
 
 class ProgramSerializer(serializers.ModelSerializer):
     class Meta:
@@ -127,6 +140,10 @@ class TermSerializer(serializers.ModelSerializer):
 class TakeAwayProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model=TakeAwayProfile
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Comment
 
 
 

@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User,Group
 from rest_framework import viewsets
 from takeaway.serializers import *
-from takeaway.models import Course,Session,TakeAway,School,Enrollment,Vote,CourseInstance,Program,Term,Status,Section,TakeAwayProfile
+from takeaway.models import Course,Session,TakeAway,School,Enrollment,Vote,CourseInstance,Program,Term,Status,Section,TakeAwayProfile,Comment
 from rest_framework import permissions
 from rest_framework import generics
 from rest_framework import filters
@@ -471,6 +471,13 @@ class FavoriteViewSet(viewsets.ModelViewSet):
         serializer_class = FavoriteSerializer
         filter_backends = (filters.DjangoFilterBackend,)
         filter_fields = ('user','courseInstance')
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
+class CommentViewSet(viewsets.ModelViewSet):
+        queryset = Comment.objects.all()
+        serializer_class = CommentSerializer
+        filter_backends = (filters.DjangoFilterBackend,)
+        filter_fields = ('takeaway','user')
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
 from django.core.mail import send_mail
