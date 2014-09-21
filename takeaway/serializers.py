@@ -39,7 +39,7 @@ class TakeAwaySerializer(serializers.ModelSerializer):
 
 class TakeAwayFullSerializer(serializers.ModelSerializer):
     username = serializers.Field(source='user.username')
-    created_dt = serializers.DateTimeField(format='%m/%d/%y %H:%M')
+    created_dt = serializers.DateTimeField(format='%Y-%m-%d %H:%MZ')
     class Meta:
         model = TakeAway
         fields = ('id','notes', 'user','courseInstance','session','is_public','username', 'tags','created_dt','average_rating','total_raters')
@@ -54,12 +54,12 @@ class SessionSerializer(serializers.ModelSerializer):
         depth = 1
 
 class SessionDetailSerializer(serializers.ModelSerializer):
-    
+
 
     class Meta:
         model = Session
         fields = ('id','session_name', 'session_dt')
-        
+
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
@@ -94,7 +94,7 @@ class NotificationSerializer(serializers.ModelSerializer):
 
         if actor:
             return actor.username
-        return None    
+        return None
 
 class CourseInstanceSerializer(serializers.ModelSerializer):
     school_id = serializers.RelatedField(source='course.school.id')

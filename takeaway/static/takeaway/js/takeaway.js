@@ -162,7 +162,7 @@ var InPlaceView = Backbone.View.extend({
               this.$("#myfav").removeClass("glyphicon glyphicon-heart-empty");
               this.$("#myfav").addClass("glyphicon glyphicon-heart");
             }
-            
+
 
             return this;
         },
@@ -299,6 +299,7 @@ var InPlaceView = Backbone.View.extend({
         render: function(){
             this.$el.html("");
 
+            //modifying the created date
             this.collection.forEach(this.addOne,this);
             //$("[name='my-checkbox']").bootstrapSwitch();
             return this;
@@ -310,6 +311,10 @@ var InPlaceView = Backbone.View.extend({
 
                 var takeawayObject = new Takeaway();
               takeawayObject.set(takeaway);
+
+              // the below will localize the time instead of displaying it in UTC
+              var localizedTime = $.localtime.toLocalTime(takeawayObject.get('created_dt'),'MM/dd/yy HH:mm');
+            takeawayObject.set({created_dt:localizedTime});
 
                var userid = $.cookie('userid');
                  if (takeaway.user.id == userid)  {
