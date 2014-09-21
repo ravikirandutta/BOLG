@@ -66,108 +66,6 @@
     <!-- jQuery UI -->
     <script src="/static/takeaway/js/lib/custom.js"></script>
 
-    <style type="text/css">
-
-    .availablecourses li {
-    position:relative;
-    display:list-item;
-    float:left;
-    width: 30%;
-    padding-top: 5px;
-    font-size: 16px;
-    line-height: 4;
-    text-align: center;
-    background-color: #f9f9f9;
-    border:  1px solid #1A0B0B;
-
-    }
-
-
-    .courselist{
-
-    list-style:none;
-    }
-    .courselist li:hover {
-    color: #fff;
-    background-color: #3b5998;
-    }
-
-    .registered{
-    position:relative;
-    color: #fff ;
-    background-color: #3b5998 !important;
-    }
-
-
-#section{
-    font-size: 12px;
-    text-decoration: underline;
-    position:absolute;
-    bottom:3px;
-    right:0px;
-    line-height:1;
-}
-
-#tick{
-    position:absolute;
-    top:0px;
-    right:5px;
-    line-height:1
-}
-@media 
-only screen and (max-width: 760px),
-(min-device-width: 768px) and (max-device-width: 1024px)  {
-
-    .availablecourses li {
-    position:relative;
-    display:list-item;
-    float:left;
-    width: inherit;
-    padding-top: 5px;
-    font-size: 16px;
-    line-height: 4;
-    text-align: center;
-    background-color: #f9f9f9;
-    border:  1px solid #1A0B0B;
-
-    }
-
-
-    .courselist{
-
-    list-style:none;
-    }
-    .courselist li:hover {
-    color: #fff;
-    background-color: #3b5998;
-    }
-
-    .registered{
-    position:relative;
-    color: #fff ;
-    background-color: #3b5998 !important;
-    }
-
-
-#section{
-    font-size: 12px;
-    text-decoration: underline;
-    position:absolute;
-    bottom:3px;
-    right:0px;
-    line-height:1;
-}
-
-#tick{
-    position:absolute;
-    top:0px;
-    right:5px;
-    line-height:1
-}
-}
-
-    </style>
-
 
 
     <!-- Favicon -->
@@ -389,7 +287,7 @@ $.ajaxSetup({
                         <div class="clearfix"></div>
                         <div class="col-lg-offset-4">
                         <div id="select-course-complete"class="btn btn-primary"><a style="color:white" href="/takeaways/index">I'm done selecting courses</a></div>
-                        <div id="add-new-course"class="btn"><a style="color:white" ng-click="addingCourse=true"><i class="fa fa-plus-circle"></i> Create new Course</a></div>
+                        <div id="add-new-course"class="btn"><a style="color:white" ng-click="addingCourse=true"><i class="fa fa-plus-circle fa-lg"></i> Create new Class</a></div>
                         </div>
                 </div>
                 <!-- Breadcrumb -->
