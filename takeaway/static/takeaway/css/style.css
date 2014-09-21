@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600');
 
 *{
-	border-radius: 0 !important;
+	
 	box-shadow: none !important;
 	filter: progid:DXImageTransform.Microsoft.gradient(enabled = false) !important;
 	text-shadow: none !important;
@@ -1662,4 +1662,15 @@ border:1px solid #eee;
 }
 
 
+#add-new-course{
+	background: #1fa67a;
+	margin-top: 80px;
+}
+#back-to-courses{
+	background: #1fa67a;
+	border-radius: 20px 5px 5px 20px;
+}
 
+#submit-course{
+	margin-top: 30px;
+}
