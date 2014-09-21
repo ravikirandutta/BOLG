@@ -132,6 +132,17 @@ class TakeAway(models.Model):
         else:
             self.is_public = True
 
+class Comment(models.Model):
+    takeaway = models.ForeignKey(TakeAway)
+    notes = models.TextField()
+    created_dt = models.DateTimeField(auto_now_add=True,auto_now=False)
+    updated_dt = models.DateTimeField(auto_now_add=False,auto_now=True)
+    user = models.ForeignKey(User)
+    vote_count = models.IntegerField(default=0)
+    average_rating = models.FloatField(default=0)
+    total_raters = models.IntegerField(default=0)
+
+    tags = models.ManyToManyField(Tag)
 
 class Rating(models.Model):
 
@@ -212,7 +223,7 @@ class Favorite(models.Model):
     takeaway = models.ForeignKey(TakeAway)
     user = models.ForeignKey(User)
     courseInstance = models.ForeignKey(CourseInstance)
-    
+
     
 
     def __unicode__(self):
