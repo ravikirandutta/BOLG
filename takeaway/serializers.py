@@ -128,5 +128,9 @@ class TakeAwayProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model=TakeAwayProfile
 
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Comment
+
 
 
