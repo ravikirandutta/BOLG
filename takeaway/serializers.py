@@ -102,7 +102,7 @@ class CourseInstanceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CourseInstance
-        fields = ('id','course','section','batch','program','year','status','school_id','students',)
+        fields = ('id','course','section','batch','program','year','status','term','school_id','students',)
         depth = 1
 
 class ProgramSerializer(serializers.ModelSerializer):
@@ -131,6 +131,10 @@ class TakeAwayProfileSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model=Comment
+
+class ContactUsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactUs
 
 
 
