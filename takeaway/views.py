@@ -276,16 +276,18 @@ class CourseViewSet(viewsets.ModelViewSet):
         Set the object's owner, based on the incoming request.
         """
         obj.created_by = self.request.user.username
-
+    
     def post_save(self, obj, created=False):
         """
         Set the object's owner, based on the incoming request.
         """
         if created :
             profile_list = TakeAwayProfile.objects.filter(user=self.request.user)
+
             if profile_list.count() == 1 :
                 profile = profile_list[0]
                 # Create a new course_instance using the newly created course
+
                 course_instance = CourseInstance(course=obj,
                                                                 section=Section.objects.get(name='Wednesday'),
                                                                 program=profile.program,
@@ -480,6 +482,26 @@ class CommentViewSet(viewsets.ModelViewSet):
         filter_fields = ('takeaway','user')
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
+class ContactUsViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = ContactUs.objects.all()
+    serializer_class = ContactUsSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
+    def post_save(self, obj, created=False):
+        """
+        Set the object's owner, based on the incoming request.
+        """
+        if created :
+            recipients = ['support@mbatakeaways.com']
+
+            if obj.cc_myself:
+                recipients.append(obj.sender)
+
+            send_mail(obj.subject, obj.message, obj.sender, recipients)
+
 from django.core.mail import send_mail
 def ContactUs(request):
     # Get the context from the request.
@@ -521,6 +543,7 @@ def ContactUs(request):
     # Render the form with error messages (if any).
 
     return render_to_response('contact_us.html', {'form': form}, context)
+
 
 
 def ContactUsLogin(request):

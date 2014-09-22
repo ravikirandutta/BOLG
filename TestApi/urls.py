@@ -28,6 +28,7 @@ router.register(r'terms', views.TermViewSet)
 router.register(r'takeawayprofiles', views.TakeAwayProfileViewSet)
 router.register(r'favorites', views.FavoriteViewSet)
 router.register(r'comments', views.CommentViewSet)
+router.register(r'contactus', views.ContactUsViewSet)
 #router.register(r'takeaways', views.TakeAwayViewSet)
 
 handler404 = 'takeaway.views.error'

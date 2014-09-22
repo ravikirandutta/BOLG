@@ -79,6 +79,7 @@ class Section(models.Model):
 
 
 
+
 class Status(models.Model):
     school = models.ForeignKey(School)
     value= models.CharField(max_length=100)
@@ -141,7 +142,6 @@ class Comment(models.Model):
     vote_count = models.IntegerField(default=0)
     average_rating = models.FloatField(default=0)
     total_raters = models.IntegerField(default=0)
-
     tags = models.ManyToManyField(Tag)
 
 class Rating(models.Model):
@@ -222,9 +222,24 @@ class Favorite(models.Model):
 
     takeaway = models.ForeignKey(TakeAway)
     user = models.ForeignKey(User)
-    courseInstance = models.ForeignKey(CourseInstance)
+    courseInstance = models.ForeignKey(CourseInstance)    
 
-    
+    def __unicode__(self):
+        return smart_unicode(self.user)
+
+class NotificationSettings(models.Model):
+
+    EmailSettings = (
+    (0, 'NoEMail'),
+    (1, 'Instant'),
+    (2, 'Daily'),
+    )
+    user = models.ForeignKey(User)
+    mail_settings = models.IntegerField(choices=EmailSettings, default=2)
+    mail_when_newuser = models.BooleanField(default=True)
+    mail_when_takeaway = models.BooleanField(default=True)
+    mail_when_rated = models.BooleanField(default=True)
+    mail_when_rated = models.BooleanField(default=True)
 
     def __unicode__(self):
         return smart_unicode(self.user)
