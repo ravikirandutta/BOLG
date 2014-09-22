@@ -132,5 +132,9 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model=Comment
 
+class ContactUsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactUs
+
 
 
