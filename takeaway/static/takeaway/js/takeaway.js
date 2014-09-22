@@ -409,12 +409,12 @@ var NewTakeaway = Backbone.View.extend({
         var tagName = event.item;
         var tag = new Tags();
         var that = this;
-        tag.fetch({data:{name:tagName},success:function(collection, response){
+        tag.fetch({data:{name:tagName.toLowerCase()},success:function(collection, response){
 
 
               var existingTagId = response.results[0];
               if(!existingTagId){
-                tag.set({name:tagName});
+                tag.set({name:tagName.toLowerCase()});
                 tag.save(null,{success:function(model, response){
                     var tagIds = that.tagIds;
                     if(!tagIds){
@@ -560,12 +560,12 @@ var NewTakeaway = Backbone.View.extend({
         var tagName = event.item;
         var tag = new Tags();
         var that = this;
-        tag.fetch({data:{name:tagName},success:function(collection, response){
+        tag.fetch({data:{name:tagName.toLowerCase()},success:function(collection, response){
 
 
               var existingTagId = response.results[0];
               if(!existingTagId){
-                tag.set({name:tagName});
+                tag.set({name:tagName.toLowerCase()});
                 tag.save(null,{success:function(model, response){
                     var tagIds = that.model.get('tags');
                     if(tagIds.indexOf(response) == -1){
