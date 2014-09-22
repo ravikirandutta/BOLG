@@ -176,7 +176,29 @@ only screen and (max-width: 760px),
 
 <body>
 
-
+<div id="bugModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+            <button id="modalCloseButton" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="myModalLabel">Report a Bug</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                        <p><label class="control-label col-lg-3" for="id_email">E-mail:</label><input id="id_sender" name="sender" type="email"></p>
+                </div>
+                <div class="form-group">
+                    <p><label class="control-label col-lg-3" for="id_message">Bug:</label>
+                        <textarea name="message" id="bug" rows="8" cols="40"></textarea></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="reportBug" data-dismiss="modal" class="btn btn-primary">Report</button>
+        </div>
+    </div>
+  </div>
+</div>
 
 
 <script>
@@ -271,6 +293,8 @@ $.ajaxSetup({
                         </ul>
                     </li>
                     <li><a href="/contact/"> Contact Us</a>
+                            </li>
+                    <li><a href="#" data-toggle="modal" data-target="#bugModal"> Report a Bug</a>
                             </li>
                     <!-- Members button with number of latest members count -->
                     <li class="dropdown dropdown-big" style="display:none">

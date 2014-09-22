@@ -13,6 +13,14 @@ $('input').on('itemRemoved',function(event){
         refreshSessionlistView();
 });
 
+$('#reportBug').click(function()
+{
+    $.ajax({
+  type: "POST",
+  url: "/contactus/",
+  data: {"subject":"bug","message":$('#bug').val(),"sender":"varrekeerthi@gmail.com"}
+});
+});
 
 
 });
