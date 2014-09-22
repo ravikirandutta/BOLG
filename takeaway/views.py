@@ -508,6 +508,19 @@ class ContactUsViewSet(viewsets.ModelViewSet):
     serializer_class = ContactUsSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
+    def post_save(self, obj, created=False):
+        """
+        Set the object's owner, based on the incoming request.
+        """
+        if created :
+            recipients = ['support@mbatakeaways.com']
+
+            if obj.cc_myself:
+                recipients.append(obj.sender)
+
+            send_mail(obj.subject, obj.message, 'support@mbatakeaways.com', recipients)
+
+
     
 from django.core.mail import send_mail
 def ContactUs(request):
