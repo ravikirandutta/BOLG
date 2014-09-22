@@ -381,18 +381,73 @@ var NewTakeaway = Backbone.View.extend({
          },
          afterRender : function(){
             this.$el.find("#create-checkbox").bootstrapSwitch();
+            this.$el.find("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput();
          },
 
-     selectedTags : new Array(),
+
      render: function(){
         var template = _.template($('#new-takeaway-template').html(),this.model.toJSON());
         this.$el.append(template);
-
-        this.$('#tags-list').append(tagsListView.render().el);
+        this.tagIds = [];
         return this;
      },
      events: {"click .btn-primary":"createTakeaway",
-              "click a":"toggleTag"},
+              "itemAdded input":"tagAdded",
+              "itemRemoved input":"tagRemoved"},
+
+    tagRemoved: function(event){
+        var tagName = event.item;
+        var existingTags = this.tagIds;
+        _.each(existingTags, function(tag){
+            if(tag.name == tagName){
+              var index = existingTags.indexOf(tag);
+              existingTags.splice(index,1);
+            }
+        });
+    },
+    tagAdded: function(event){
+        var tagName = event.item;
+        var tag = new Tags();
+        var that = this;
+        tag.fetch({data:{name:tagName},success:function(collection, response){
+
+
+              var existingTagId = response.results[0];
+              if(!existingTagId){
+                tag.set({name:tagName});
+                tag.save(null,{success:function(model, response){
+                    var tagIds = that.tagIds;
+                    if(!tagIds){
+                       tagIds = [];
+                    }
+                    if(tagIds.indexOf(response) == -1){
+                      tagIds.push(response);
+                    }
+
+
+                }, error: function(){
+                   event.cancel;
+                }
+              });
+              }else{
+                var tagIds = that.tagIds;
+                if(!tagIds){
+                       tagIds = [];
+                    }
+                var returnedResponse = response.results[0];
+                var found = _.find(tagIds, function(tag){
+                  return tag.name == returnedResponse.name;
+                });
+                 if(!found){
+                    tagIds.push(response.results[0]);
+
+                    }
+              }
+
+
+        }});
+
+    },
 
      createTakeaway: function(){
         this.model;
@@ -401,8 +456,12 @@ var NewTakeaway = Backbone.View.extend({
         object.user = $.cookie("userid");
         object.courseInstance = this.model.get('courseInstance').id;
         object.session = this.model.get('id');
-        object.tags= this.selectedTags;
 
+
+        var tagsToBeSent = _.map(this.tagIds, function(tag){
+              return tag.id;
+        });
+        object.tags= tagsToBeSent;
         var takeaway = new Takeaway();
 
         takeaway.on("error", function(model, error){
@@ -424,20 +483,6 @@ var NewTakeaway = Backbone.View.extend({
         $(courseid).click();
 
      },
-     toggleTag : function(event){
-            var tagClicked = event.currentTarget.name;
-            if(this.selectedTags.indexOf(tagClicked) >= 0){
-                event.currentTarget.parentElement.className="label label-warning";
-                for(var i = this.selectedTags.length-1; i--;){
-                    if (this.selectedTags[i] === tagClicked) this.selectedTags.splice(i, 1);
-                }
-            }else{
-                this.selectedTags.push(tagClicked);
-                event.currentTarget.parentElement.className="label label-success";
-            }
-
-
-     }
 });
 
  var EditableTakeaway = Backbone.View.extend({
@@ -458,60 +503,94 @@ var NewTakeaway = Backbone.View.extend({
          },
          afterRender : function(){
             this.$el.find("#edit-checkbox").bootstrapSwitch();
+            this.$el.find("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput();
+
          },
 
 
     render : function(){
          var template = _.template($('#edit-takeaway-template').html(),this.model.toJSON());
          this.$el.append(template);
+
+
          var currentTags = this.model.get('tags');
            var tags = new Tags();
-           var tagsListView = null;
+
            var that = this;
-    tags.fetch({success:function(coll, response){
-        var tagsList = new TagsList(coll.attributes.results);
-        var callback = function(id){
+
+     tags.fetch({success:function(coll, response){
+        var tagsList = coll.attributes.results;
             var tags = that.model.get('tags');
-            if(tags ){
-                var foundTag = _.find(tags,function(tag){
-                    return tag.id == id;
-                });
-                if(foundTag){
-                    var index = tags.indexOf(foundTag);
-                tags.splice(index,1);
-                }else{
-                    var tagToBeAdded = _.find(tagsList.models, function(tag){
-                    return tag.attributes.id == id;
-                });
-                var tagModelToBeAdded = new Tags();
-                tagModelToBeAdded.set(tagToBeAdded);
-                tags.push(tagModelToBeAdded.toJSON());
-                }
 
-            }else{
-                    tags = [];
-                var tagToBeAdded = _.find(tagsList.models, function(tag){
-                    return tag.attributes.id == id;
-                });
-                var tagModelToBeAdded = new Tags();
-                tagModelToBeAdded.set(tagToBeAdded);
-                tags.push(tagModelToBeAdded.toJSON());
-            }
-            that.model.set({'tags':tags});
-        };
-        tagsListView = new TagsListView({collection:tagsList, currentTags:currentTags,callback:callback});
+            _.each(tags, function(tag){
 
-        that.$('#tags-list').append(tagsListView.render().el);
-        that.tagsListView = tagsListView;
-    }});
+                _.each(tagsList, function(tagObject){
+                  if(tagObject.id == tag.id){
+                      that.$el.find('input[data-role=tagsinput], select[multiple][data-role=tagsinput]').tagsinput('add',  tagObject.name);
+
+                  }
+                });
+            });
+        }
+    });
 
 
          return this;
     },
 
-    events: {"click .btn-primary":"updateTakeaway"
+    events: {"click .btn-primary":"updateTakeaway",
+              "itemAdded input":"tagAdded",
+              "itemRemoved input":"tagRemoved",
               },
 
+    tagRemoved: function(event){
+        var tagName = event.item;
+        var existingTags = this.model.get('tags');
+        _.each(existingTags, function(tag){
+            if(tag.name == tagName){
+              var index = existingTags.indexOf(tag);
+              existingTags.splice(index,1);
+            }
+        });
+    },
+    tagAdded: function(event){
+        var tagName = event.item;
+        var tag = new Tags();
+        var that = this;
+        tag.fetch({data:{name:tagName},success:function(collection, response){
+
+
+              var existingTagId = response.results[0];
+              if(!existingTagId){
+                tag.set({name:tagName});
+                tag.save(null,{success:function(model, response){
+                    var tagIds = that.model.get('tags');
+                    if(tagIds.indexOf(response) == -1){
+                      tagIds.push(response);
+                      that.model.set({tags:tagIds});
+                    }
+
+
+                }, error: function(){
+                   event.cancel;
+                }
+              });
+              }else{
+                var tagIds = that.model.get('tags');
+                var returnedResponse = response.results[0];
+                var found = _.find(tagIds, function(tag){
+                  return tag.name == returnedResponse.name;
+                });
+                 if(!found){
+                    tagIds.push(response.results[0]);
+                      that.model.set({tags:tagIds});
+                    }
+              }
+
+
+        }});
+
+    },
      updateTakeaway: function(){
         this.model;
         var object = {};
@@ -532,8 +611,9 @@ var NewTakeaway = Backbone.View.extend({
             });
 
         takeaway.set(object);
-        tags = this.model.get('tags');
-        var tagIds = _.map(tags, function(tag){
+        var currentTags = this.model.get('tags');
+
+        var tagIds = _.map(currentTags, function(tag){
             return tag.id;
         });
         takeaway.set({'tags':tagIds});
@@ -544,7 +624,7 @@ var NewTakeaway = Backbone.View.extend({
         $("#editableTakeaway").modal('hide');
         this.model.set({"notes":object.notes});
         this.model.set({'is_public':takeaway.get('is_public')});
-        this.model.set({'tags':tags});
+        this.model.set({'tags':currentTags});
         //this is to trigger some change in the model so that the view refreshes
         var random  = this.model.get('random');
         this.model.set({'random':!random});

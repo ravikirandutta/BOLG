@@ -117,7 +117,7 @@ $.ajaxSetup({
             xhr.setRequestHeader("X-CSRFToken", csrftoken);
         }
 
-             if(settings.type == 'PUT' || settings.type == 'DELETE'){
+             if(settings.type == 'POST' || settings.type == 'PUT' || settings.type == 'DELETE'){
                 if (settings.url.substr(-1) != '/') settings.url += '/';
             }
 
@@ -414,6 +414,8 @@ $.ajaxSetup({
                                   <div class="modal-body">
                                     <textarea id="create-textarea" class="takeaway"></textarea>
                                     <div id="tags-list" ></div>
+                                    <input  type="text" id="nt-create-tag" class="search-query" data-role="tagsinput" placeholder="for ex: theory,application,example, case"/>
+
                                        <input id="create-checkbox" type="checkbox" class="switch" name="my-checkbox" data-on-text="public" data-off-text="private" checked>
                                   </div>
                                   <div class="modal-footer">
@@ -454,6 +456,7 @@ $.ajaxSetup({
                                   <div class="modal-body">
                                     <textarea id="edit-textarea" class="takeaway"><%=notes%></textarea>
                                     <div id="tags-list" ></div>
+                                    <input  type="text" id="create-tag" class="search-query" data-role="tagsinput" placeholder="for ex: theory,application,example, case"/>
                                                                          <input id="edit-checkbox" type="checkbox" class="switch" name="my-checkbox" data-on-text="public" data-off-text="private"
 
                                      <% if (is_public) { %>

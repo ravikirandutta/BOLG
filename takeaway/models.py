@@ -51,7 +51,7 @@ class Enrollment(models.Model):
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100,unique=True)
     def __unicode__(self):
         return smart_unicode(self.name)
 
@@ -224,7 +224,7 @@ class Favorite(models.Model):
     user = models.ForeignKey(User)
     courseInstance = models.ForeignKey(CourseInstance)
 
-    
+
 
     def __unicode__(self):
         return smart_unicode(self.user)
@@ -275,6 +275,12 @@ user_registered.connect(user_registered_callback)
 #         for courseInstance in courseInstances:
 #             courseInstance.students.add(user)
 
+
+@receiver(pre_save,sender=Tag)
+def convert_tag_to_lowercase(sender, **kwargs):
+    if kwargs.get('created',True):
+        tag = kwargs.get("instance")
+        tag.name = tag.name.lower()
 
 
 from notifications import notify
