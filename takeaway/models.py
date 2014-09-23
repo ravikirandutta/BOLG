@@ -192,7 +192,7 @@ class TakeAwayProfile(models.Model):
     takeaway_count = models.IntegerField(default=0)
 
     def __unicode__(self):
-        return unicode(self.user.id)
+        return unicode(self.user.username)
 
 class Vote(models.Model):
 
