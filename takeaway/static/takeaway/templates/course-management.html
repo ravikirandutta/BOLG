@@ -13,11 +13,11 @@
                              <div class="courses">
 
                                 <div id="available-course-list"  class="availablecourses">
-                                <div id="select-course-info" class="alert alert-info"><span class="glyphicon glyphicon-info-sign"></span> Lets get started! Proceed by selecting one or more courses, click on course to select</div>
-                                <div id="select-course-warning" class="alert alert-warning"><span class="glyphicon glyphicon-warning-sign"></span> Sorry! You need to select atleast one course to get started.</div>
+                                <div id="select-course-info" class="alert alert-info" ng-show="!userRegisteredCourses.length"><span class="glyphicon glyphicon-info-sign"></span> Lets get started! Proceed by selecting at least one course, click on course to select</div>
+                                <!-- <div id="select-course-warning" class="alert alert-warning"><span class="glyphicon glyphicon-warning-sign"></span> Sorry! You need to select atleast one course to get started.</div> -->
                                 <ul class="courselist" >
                                     <li ng-repeat="availableCourse in availableCourses" ng-class="{registered:isRegistered(availableCourse.id)}" ng-click="toggleCourseSelection(availableCourse.id)">
-                                         <span id="course{{avialbleCourse.id}}">{{availableCourse.course.course_name}}</span>
+                                         <span id="course{{avialableCourse.id}}">{{availableCourse.course.course_name}}</span>
                                          <span id="tick" ng-show="isRegistered(availableCourse.id)"><i class="fa fa-check-circle"></i></span>
                                          <span id="section" style="">{{availableCourse.section.name}}</span>
                                     </li>
@@ -31,7 +31,7 @@
 
                         <div class="clearfix"></div>
                         <div class="col-lg-offset-4">
-                        <div id="select-course-complete"class="btn btn-primary"><a style="color:white" href="/takeaways/index">I'm done selecting courses</a></div>
+                        <div id="select-course-complete"class="btn btn-primary" ng-show="userRegisteredCourses.length"><a style="color:white" href="/takeaways/index">I'm done selecting courses</a></div>
                         <div id="add-new-course"class="btn"><a style="color:white" ng-click="addingCourse=true"><i class="fa fa-plus-circle fa-lg"></i> Create new Class</a></div>
                         </div>
                 </div>
