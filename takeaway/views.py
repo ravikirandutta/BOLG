@@ -12,6 +12,7 @@ from rest_framework import generics
 from rest_framework import filters
 from takeaway.permissions import IsOwnerOrReadOnly
 from takeaway.forms import *
+from rest_framework.mixins import *
 
 
 # Create your views here.
@@ -322,6 +323,7 @@ class TagViewSet(viewsets.ModelViewSet):
         queryset = Tag.objects.all()
         serializer_class = TagSerializer
         filter_backends = (filters.DjangoFilterBackend,)
+        filter_fields = ('name',)
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
 class RatingViewSet(viewsets.ModelViewSet):
@@ -332,9 +334,25 @@ class RatingViewSet(viewsets.ModelViewSet):
         permission_classes = (permissions.IsAuthenticated,)
         paginate_by = 100
 
+import pdb
+class TakeAwayCreateModelMixin(CreateModelMixin):
+    # def post(self, request, *args, **kwargs):
+    #     pdb.set_trace()
 
+    #     return super(TakeAwayCreateModelMixin, self).post(request, *args, **kwargs)
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.DATA, files=request.FILES)
+        if serializer.is_valid():
+            self.pre_save(serializer.object)
+            self.object = serializer.save(force_insert=True)
+            self.post_save(self.object, created=True)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED,
+                            headers=headers)
 
-class TakeAwayList(generics.ListCreateAPIView):
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class TakeAwayList(TakeAwayCreateModelMixin,generics.ListCreateAPIView):
 
     queryset = TakeAway.objects.all()
     serializer_class = TakeAwaySerializer
@@ -500,8 +518,10 @@ class ContactUsViewSet(viewsets.ModelViewSet):
             if obj.cc_myself:
                 recipients.append(obj.sender)
 
-            send_mail(obj.subject, obj.message, obj.sender, recipients)
+            send_mail(obj.subject, obj.message, 'support@mbatakeaways.com', recipients)
 
+
+    
 from django.core.mail import send_mail
 def ContactUs(request):
     # Get the context from the request.
