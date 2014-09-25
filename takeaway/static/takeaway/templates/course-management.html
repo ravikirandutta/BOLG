@@ -1,0 +1,78 @@
+<div ng-controller="CourseController" class="mainbar" style="margin-left:230px"> 
+             <div ng-hide="addingCourse" >
+            <!-- Page heading -->
+            <div class="page-head">
+                <!-- Page heading -->
+                <h1 id="add-course-heading" class="pull-left">Select from the following courses</h1>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="matter">
+                <div class="row">
+                        <div class="col-xs-12" role="main">
+                             <div class="courses">
+
+                                <div id="available-course-list"  class="availablecourses">
+                                <div id="select-course-info" class="alert alert-info"><span class="glyphicon glyphicon-info-sign"></span> Lets get started! Proceed by selecting one or more courses, click on course to select</div>
+                                <div id="select-course-warning" class="alert alert-warning"><span class="glyphicon glyphicon-warning-sign"></span> Sorry! You need to select atleast one course to get started.</div>
+                                <ul class="courselist" >
+                                    <li ng-repeat="availableCourse in availableCourses" ng-class="{registered:isRegistered(availableCourse.id)}" ng-click="toggleCourseSelection(availableCourse.id)">
+                                         <span id="course{{avialbleCourse.id}}">{{availableCourse.course.course_name}}</span>
+                                         <span id="tick" ng-show="isRegistered(availableCourse.id)"><i class="fa fa-check-circle"></i></span>
+                                         <span id="section" style="">{{availableCourse.section.name}}</span>
+                                    </li>
+                                    
+                                </ul>
+                                 </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="clearfix"></div>
+                        <div class="col-lg-offset-4">
+                        <div id="select-course-complete"class="btn btn-primary"><a style="color:white" href="/takeaways/index">I'm done selecting courses</a></div>
+                        <div id="add-new-course"class="btn"><a style="color:white" ng-click="addingCourse=true"><i class="fa fa-plus-circle fa-lg"></i> Create new Class</a></div>
+                        </div>
+                </div>
+                <!-- Breadcrumb -->
+
+                 <div class="clearfix"></div>
+
+
+            </div>
+            </div>
+            <div ng-show="addingCourse">
+                <div class="page-head">
+                <!-- Page heading -->
+                <h1 id="choose-course-heading" class="pull-left">Adding New Course</h1>
+                <div class="clearfix"></div>
+                </div>
+                <div class="matter">
+                    <div id="back-to-courses"class="btn"><a style="color:white" ng-click="addingCourse=false"><i class="fa fa-chevron-left"></i> Back to Courses</a></div>
+                    <form name="addCoureForm" role="form" class="form form-horizontal" ng-submit="submitNewCourseForm()" >
+                        <div class="form-group">
+                            <div class="col-md-4">
+                            <label class="control-label" for="courseName">Course Name</label>
+                            <input type="text" class="form-control"  ng-model="newCourse.course_name" id="courseName" placeholder="Course Name" novalidate>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="col-md-4">
+                            <label class="control-label" for="courseDesc">Course Description</label>
+                            <input type="text" class="form-control"  ng-model="newCourse.course_desc" id="courseDesc" placeholder="Course Description" novalidate>
+                            </div>
+                        </div>
+                        <!-- <div class="formgroup">
+                            <label for="school">School</label>
+                            <input type="text" class="form-control"  ng-model="newCourse.school" id="school" placeholder="school" novalidate>
+                        </div> -->
+                        
+                        <button id="submit-course" type="submit" class="btn btn-primary">Submit</button>
+                       
+                        
+                    </form>
+                </div>
+            </div>
+
+        </div>
