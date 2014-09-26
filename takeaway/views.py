@@ -510,6 +510,13 @@ class CommentViewSet(viewsets.ModelViewSet):
         filter_fields = ('takeaway','user')
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
+class EmailSettingsViewSet(viewsets.ModelViewSet):
+        queryset = EmailSettings.objects.all()
+        serializer_class = EmailSettingsSerializer
+        filter_backends = (filters.DjangoFilterBackend,)
+        filter_fields = ('user',)
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
 class ContactUsViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.

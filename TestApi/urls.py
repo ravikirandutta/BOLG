@@ -30,7 +30,7 @@ router.register(r'takeawayprofiles', views.TakeAwayProfileViewSet)
 router.register(r'favorites', views.FavoriteViewSet)
 router.register(r'comments', views.CommentViewSet)
 router.register(r'contactus', views.ContactUsViewSet)
-#router.register(r'takeaways', views.TakeAwayViewSet)
+router.register(r'emailSettings', views.EmailSettingsViewSet)
 
 handler404 = 'takeaway.views.error'
 

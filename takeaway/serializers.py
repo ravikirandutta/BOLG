@@ -141,5 +141,7 @@ class ContactUsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactUs
 
-
+class EmailSettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmailSettings
 

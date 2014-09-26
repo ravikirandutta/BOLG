@@ -244,6 +244,25 @@ class NotificationSettings(models.Model):
     def __unicode__(self):
         return smart_unicode(self.user)
 
+class EmailSettings(models.Model):
+
+    EmailSettings = (
+    (0, 'NoEMail'),
+    (1, 'Instant'),
+    (2, 'Daily'),
+    )
+    user = models.ForeignKey(User,blank=False)
+    
+    mail_when_newuser = models.IntegerField(choices=EmailSettings, default=2)
+    mail_when_takeaway = models.IntegerField(choices=EmailSettings, default=2)
+    mail_when_rated = models.IntegerField(choices=EmailSettings, default=0)
+    mail_when_commented = models.IntegerField(choices=EmailSettings, default=0)
+    created_dt = models.DateTimeField(auto_now_add=True,auto_now=False)
+    updated_dt = models.DateTimeField(auto_now_add=False,auto_now=True)
+
+    def __unicode__(self):
+        return smart_unicode(self.user)
+
 from registration.signals import user_registered
 
 def user_registered_callback(sender, user, request, **kwargs):
