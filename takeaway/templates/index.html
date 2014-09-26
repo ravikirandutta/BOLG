@@ -184,11 +184,11 @@ $.ajaxSetup({
                     </li>
                 </ul>
                 <!-- Notifications -->
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right" id="right-nav-menu">
                     <!-- Message button with number of latest messages count-->
                     <li class="dropdown dropdown-big">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                            <i class="fa fa-envelope-o"></i> Notifications
+                            <i class="fa fa-bell"></i> Notifications
                             <span class="badge badge-important" id="inboxSize"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -256,7 +256,7 @@ $.ajaxSetup({
                     </li>
                 </ul>
 
-                  <ul class="nav navbar-nav navbar-right">
+                  <ul class="nav navbar-nav navbar-right" id="right-nav-menu">
                         <!-- Dropdown menu -->
                             <li><a href="{% url 'profile'%}"><i class="fa fa-user"></i> Profile</a>
                             </li>
@@ -267,6 +267,7 @@ $.ajaxSetup({
 
 
     <!-- Main content starts -->
+
     <div class="content">
         <!-- Sidebar -->
 
@@ -294,8 +295,7 @@ $.ajaxSetup({
 
                 <div id="available-course-list"  class="availablecourses">
 
-
-                </div>
+            </div>
             </div>
         </div>
     </div>

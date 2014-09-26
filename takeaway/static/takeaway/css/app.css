@@ -250,3 +250,40 @@ background-color:#e7edf8;
 .tt-suggestion p {
   margin: 0;
 }
+
+#right-nav-menu {
+  padding: 0px;
+    margin: 0 0 10px 0;
+    position: relative;
+}
+
+ #right-nav-menu li{
+    font-size: 50px;
+    display: block;
+}
+
+#right-nav-menu li a{
+    color: transparent;
+    display: block;
+    text-shadow: 0px 0px 5px #fff;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.9s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    -webkit-transform: scale(1, 1);
+  -webkit-transition-duration: 500ms;
+  -webkit-transition-timing-function: ease-out;
+}
+
+#right-nav-menu li a{
+    text-shadow: 0px 0px 5px #0d1a3a;
+}
+#right-nav-menu li a:hover{
+    color: #fff;
+    text-shadow: 0px 0px 1px #fff;
+    padding-left: 10px;
+    -webkit-transform: scale(1.2, 1.2); 
+  -webkit-transition-duration: 500ms;
+  -webkit-transition-timing-function: ease-out;
+}

@@ -18,7 +18,14 @@ $('#reportBug').click(function()
     $.ajax({
   type: "POST",
   url: "/contactus/",
-  data: {"subject":"bug","message":$('#bug').val(),"sender":"varrekeerthi@gmail.com"}
+  data: {"subject":"bug","message":$('#bug').val(),"sender":"varrekeerthi@gmail.com"},
+  success: function(){
+    $.gritter.add({
+                    title: 'Bug Reported',
+                    sticky: false,
+                    time: '0.0001'
+                });
+  }
 });
 });
 
@@ -34,3 +41,4 @@ function changeVisibility(id){
     takeaway.set({'id':id});
     takeaway.fetch();
 }
+
