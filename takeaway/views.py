@@ -409,6 +409,16 @@ class NotificationViewSet(viewsets.ModelViewSet):
                     user.notifications.mark_all_as_read()
 
             return queryset
+class CourseInstanceCreateViewSet(viewsets.ModelViewSet):
+        """
+        API endpoint that allows groups to be viewed or edited.
+        """
+        queryset = CourseInstance.objects.all()
+        serializer_class = CourseInstanceCreateSerializer
+        filter_backends = (filters.DjangoFilterBackend,)
+        filter_fields = ('course','program','batch','year',)
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+        paginate_by = 100
 
 
 class CourseInstanceViewSet(viewsets.ModelViewSet):

@@ -96,6 +96,11 @@ class NotificationSerializer(serializers.ModelSerializer):
             return actor.username
         return None
 
+class CourseInstanceCreateSerializer(serializers.ModelSerializer):    
+
+    class Meta:
+        model = CourseInstance
+
 class CourseInstanceSerializer(serializers.ModelSerializer):
     school_id = serializers.RelatedField(source='course.school.id')
     students = serializers.RelatedField(many=True)
