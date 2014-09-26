@@ -21,6 +21,7 @@ router.register(r'tags', views.TagViewSet)
 router.register(r'ratings', views.RatingViewSet)
 router.register(r'notifications', views.NotificationViewSet)
 router.register(r'courseInstances', views.CourseInstanceViewSet)
+router.register(r'courseInstancesCreate', views.CourseInstanceCreateViewSet)
 router.register(r'programs', views.ProgramViewSet)
 router.register(r'sections', views.SectionViewSet)
 router.register(r'status', views.StatusViewSet)
@@ -29,7 +30,7 @@ router.register(r'takeawayprofiles', views.TakeAwayProfileViewSet)
 router.register(r'favorites', views.FavoriteViewSet)
 router.register(r'comments', views.CommentViewSet)
 router.register(r'contactus', views.ContactUsViewSet)
-#router.register(r'takeaways', views.TakeAwayViewSet)
+router.register(r'emailSettings', views.EmailSettingsViewSet)
 
 handler404 = 'takeaway.views.error'
 
