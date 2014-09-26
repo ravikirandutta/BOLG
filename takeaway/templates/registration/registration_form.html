@@ -21,7 +21,8 @@
         <link href="{% static "takeaway/css/style.css"%}" rel="stylesheet">
 
         <link href="{% static "takeaway/css/app.css"%}" rel="stylesheet">
-
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+  
 
         <!-- Favicon -->
         <link rel="shortcut icon" href="#">
@@ -30,6 +31,17 @@
     <body id="registration-page">
 
         <div class="admin-form">
+          <div ng-app="" ng-init="schools=['EMORY','WHARTON']">
+  <p>Choose your school:</p>
+  <ul>
+    <button data-ng-repeat="x in schools">
+      {% verbatim %}
+      {{ x }}
+      {% endverbatim %}
+    </li>
+    
+  </ul>
+</div>
             <!-- Widget starts -->
             <div class="widget wred">
                 <div id="registration" class="widget-head" >
@@ -37,7 +49,6 @@
                 </div>
                 <div class="widget-content">
                     <div class="padd">
-
                       <form  id="registation-form" method="post" action="" class="form-horizontal">
                         <!-- Registration form starts -->
                           <!-- Name -->
