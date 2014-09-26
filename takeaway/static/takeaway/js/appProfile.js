@@ -83,6 +83,8 @@ app.config(['$resourceProvider', function ($resourceProvider) {
         }).success(function (data, status, headers, config) {
                 $scope.newCourse = {};
                 $scope.addingCourse=false; 
+                //once we make course instance addition we need to remove this redundency below
+                $scope.getAvailableCourses();
             }).error(function (data, status, headers, config) {
                 $scope.status = status;
             });

@@ -289,29 +289,6 @@ $.ajaxSetup({
     
     </div>
 
-<script type="text/template" id="course-template">
-    <span id="course<%=id%>"><%= course.course_name%>
-    </span>
-
-
-
-     <span id="tick"
-     <% if (alreadyRegistered) { %>
-        style="display:block"
-        <% } %>
-
-        <% if (!alreadyRegistered) { %>
-        style="display:none"
-        <% } %>
-
-        ><i class="fa fa-check-circle"></i></span>
-
-
-
-
-
-<span id="section" style=""><%=section.name%></span>
-</script>
 
     {% include "copyright.html"%}
 
