@@ -1723,6 +1723,11 @@ border:1px solid #eee;
     right:5px;
     line-height:1
 }
+
+.beta{
+	font-size: 8px;
+	color: brown;
+}
 @media 
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {

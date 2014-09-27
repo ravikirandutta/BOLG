@@ -32,7 +32,7 @@
                         <div class="clearfix"></div>
                         <div class="col-lg-offset-4">
                         <div id="select-course-complete"class="btn btn-primary" ng-show="userRegisteredCourses.length"><a style="color:white" href="/takeaways/index">I'm done selecting courses</a></div>
-                        <div id="add-new-course"class="btn"><a style="color:white" ng-click="addingCourse=true"><i class="fa fa-plus-circle fa-lg"></i> Create new Class</a></div>
+                        <div id="add-new-course"class="btn"><a style="color:white" ng-click="addingCourse=true"><i class="fa fa-plus-circle fa-lg"></i> Create new Class<span class="beta"> BETA</span></a></div>
                         </div>
                 </div>
                 <!-- Breadcrumb -->
@@ -51,7 +51,24 @@
                 <div class="matter">
                     <div id="back-to-courses"class="btn"><a style="color:white" ng-click="addingCourse=false"><i class="fa fa-chevron-left"></i> Back to Courses</a></div>
                     <form name="addCoureForm" role="form" class="form form-horizontal" ng-submit="submitNewCourseForm()" >
+                        
+                        <!-- <div class="formgroup">
+                            <label for="school">School</label>
+                            <input type="text" class="form-control"  ng-model="newCourse.school" id="school" placeholder="school" novalidate>
+                        </div> -->
+                        
+                        
+                       
+                        
+                    </form>
+                    <form name="addClassForm" role="form" class="form form-horizontal" ng-submit="submitNewClassForm()">
                         <div class="form-group">
+                                <div class="col-lg-4">
+                                    <label class="control-label col-lg-3" for="course">Course</label>
+                                    <select name="course" ng-model="newClass.course" ng-options="course.id as course.course_name for course in courses"></select>
+                                </div>
+                            </div>
+                        <!-- <div class="form-group">
                             <div class="col-md-4">
                             <label class="control-label" for="courseName">Course Name</label>
                             <input type="text" class="form-control"  ng-model="newCourse.course_name" id="courseName" placeholder="Course Name" novalidate>
@@ -62,15 +79,46 @@
                             <label class="control-label" for="courseDesc">Course Description</label>
                             <input type="text" class="form-control"  ng-model="newCourse.course_desc" id="courseDesc" placeholder="Course Description" novalidate>
                             </div>
-                        </div>
-                        <!-- <div class="formgroup">
-                            <label for="school">School</label>
-                            <input type="text" class="form-control"  ng-model="newCourse.school" id="school" placeholder="school" novalidate>
                         </div> -->
-                        
-                        <button id="submit-course" type="submit" class="btn btn-primary">Submit</button>
-                       
-                        
+                            <!-- <p class="course-desc">{{newClass.selectedCourse.course_desc}}</p> -->
+                            <div class="form-group">
+                                <div class="col-lg-4">
+                                    <label class="control-label col-lg-3" for="section">Section</label>
+                                    <select name="section" ng-model="newClass.section" ng-options="section.id as section.name for section in sections"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-4">
+                                    <label class="control-label col-lg-3" for="program">Program</label>
+                                    <select name="program" ng-model="newClass.program" ng-options="program.id as program.name for program in programs"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-4">
+                                    <label class="control-label col-lg-3" for="term">Term</label>
+                                    <select name="term" ng-model="newClass.term" ng-options="term.id as term.description for term in terms"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-4">
+                                    <label class="control-label col-lg-3" for="status">Status</label>
+                                    <select name="status" ng-model="newClass.status" ng-options="status.id as status.value for status in statuses"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-4">
+                                    <label class="control-label col-lg-3" for="year">Year</label>
+                                    <select name="year" ng-model="newClass.year" ng-options="year as year for year in years"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-4">
+                                    <label class="control-label col-lg-3" for="batch">Batch</label>
+                                    <select name="batch" ng-model="newClass.batch" ng-options="year as year for year in years"></select>
+                                </div>
+                            </div>
+                            <button id="submit-course" type="submit" class="btn btn-primary col-lg-3">Save</button>
+
                     </form>
                 </div>
             </div>
