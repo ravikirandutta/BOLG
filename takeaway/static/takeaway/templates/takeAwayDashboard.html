@@ -3,8 +3,8 @@
     <div class="mainbar">
       <div id="course-list" class="page-head">
         <ui class="nav nav-pills" >
-          <li class="course course-selected" ng-repeat="courseresult in availableCourses.results">
-            <a class="course-item" ng-click="loadCourses(courseresult.course.id)">
+          <li class="course" ng-repeat="courseresult in availableCourses.results" >
+            <a class="course-item" ng-click="loadCourses(courseresult.course.id)" id="{{courseresult.course.id}}_course">
                             <span id="course{{courseresult.course.id}}">
                                 <i class="fa fa-folder-open"></i> 
                                 <b>{{courseresult.course.course_name}}</b>
@@ -92,7 +92,7 @@
                                 <div class="clearfix"></div>
                               </div>
                               <div id="{{sessionsresult.id}}_{{taset.id}}_edit" style="display: none;">
-                                <textarea rows="5" cols="100" style="width: 950px;" id="{{sessionsresult.id}}_{{taset.id}}_notes"></textarea>
+                                <textarea rows="5" cols="100" style="width: 700px;" id="{{sessionsresult.id}}_{{taset.id}}_notes"></textarea>
                                 <button class="btn btn-success" ng-click="updateTakeaway(sessionsresult.id+'_'+taset.id, taset)">Update</button>
                                 <button class="btn btn-success" ng-click="cancelEdit(sessionsresult.id+'_'+taset.id, taset.notes)">Cancel</button>
                               </div>
