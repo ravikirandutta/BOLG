@@ -36,7 +36,7 @@ ng Modules required for below
 */
 
 (function() {
-  var app = angular.module('takeAwayDashboard', ['ngCookies', 'ngResource', 'ngRoute']).run(function($http, $cookies) {
+  var app = angular.module('takeAwayDashboard', ['ngCookies', 'ngResource', 'ngRoute', 'ngDialog']).run(function($http, $cookies) {
     $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
     $http.defaults.headers.put['X-CSRFToken'] = $cookies.csrftoken;
   });
@@ -52,6 +52,21 @@ ng Modules required for below
       templateUrl: '/static/takeaway/templates/takeAwayDashboard.html'
     }
   });
+
+
+  app.config(['ngDialogProvider', function (ngDialogProvider) {
+    ngDialogProvider.setDefaults({
+      className: 'ngdialog-theme-default',
+      plain: false,
+      showClose: true,
+      closeByDocument: true,
+      closeByEscape: true,
+      appendTo: false,
+      preCloseCallback: function () {
+        console.log('default pre-close callback');
+      }
+    });
+  }]);
 
   //http://www.mbatakeaways.com/courseInstances/?students=3
   //http://localhost:8000/sessions/?courseInstance=2&ordering=session_dt
@@ -101,7 +116,7 @@ ng Modules required for below
     }
   ]);
 
-  app.controller('takeawayDashboardCtrl', function($scope, $http, $cookies, $resource, CoursesFactory, SessionsFactory) {
+  app.controller('takeawayDashboardCtrl', function($scope, $http, $cookies, $resource, CoursesFactory, SessionsFactory, ngDialog) {
 
     console.log("loading takeawayDashboardCtrl");
 
@@ -198,5 +213,45 @@ ng Modules required for below
         $scope.loadCourses(defaultCourseId);
       }
     });
+
+    $scope.newTakeaway = function (sessionsresult) {
+      $scope.sessionsresult = sessionsresult;
+      //$scope.takeaway_set = sessionsresult.takeaway_set[0];
+      ngDialog.open({
+        template: 'newTakeawayTemplateId',
+        controller: 'takeawayDashboardCtrl', 
+        className: 'ngdialog-theme-plain',
+        scope: $scope,
+        data: {foo: 'some data'}
+      });
+    };
+
+    $scope.sessionNameValue = "";
+
+    $scope.editSessionName = function (sessionsresult) {
+      $scope.sessionsresult = sessionsresult;
+      //$scope.takeaway_set = sessionsresult.takeaway_set[0];
+      $scope.sessionNameValue = sessionsresult.session_name;
+      ngDialog.open({
+        template: 'editSessionNameTemplateId',
+        controller: 'takeawayDashboardCtrl', 
+        className: 'ngdialog-theme-plain',
+        scope: $scope,
+        data: {foo: 'some data'}
+      });
+    };
+
+    $scope.saveTakeaway = function(sessionsresult) {
+      //console.log(JSON.stringify($scope.takeaway_set));
+      alert(document.getElementById("notes").value);
+      ngDialog.close();
+    };
+
+    $scope.updateSessionName = function(sessionsresult) {
+      //console.log(JSON.stringify($scope.takeaway_set));
+      alert(document.getElementById("editedSessionName").value);
+      ngDialog.close();
+    };
+      
   });
 })();
