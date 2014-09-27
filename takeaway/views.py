@@ -119,125 +119,6 @@ def logoutuser(request):
     return render_to_response("login.html",RequestContext(request))
 
 
-def initload(request):
-    User.objects.create_user(username="atluri",password="abc123").save()
-    User.objects.create_user(username="ravi",password="abc123").save()
-
-    user1=User.objects.get(username="atluri")
-    user2=User.objects.get(username="ravi")
-    School(school_name="EMORY").save()
-    School(school_name="STANFORD").save()
-    School(school_name="COX").save()
-    school1= School.objects.get(school_name="EMORY")
-    school2= School.objects.get(school_name="STANFORD")
-    school3= School.objects.get(school_name="COX")
-
-    Program(name="Full Time MBA",school=school1).save()
-    Program(name="Evening MBA",school=school1).save()
-    Program(name="Part Time MBA",school=school1).save()
-
-    program1 = Program.objects.get(name='Part Time MBA')
-    program2 = Program.objects.get(name='Evening MBA')
-
-    Section(name="Monday",school=school1).save()
-    Section(name="Wednesday",school=school1).save()
-    Section(name="Weekend",school=school1).save()
-
-    section1 = Section.objects.get(name='Monday')
-    section2 = Section.objects.get(name='Wednesday')
-
-    Term(description="Ist Semester",school=school1).save()
-    Term(description="IInd Semester",school=school1).save()
-
-    term1 = Term.objects.get(description="Ist Semester")
-
-
-    Status(value="Active",school=school1).save()
-    status1 = Status.objects.get(value="Active")
-    Course(school=school1,course_name="BUS 634P Strategic Management",created_by="admin", course_desc="Today's corporate leaders must be able to account for and leverage digital technology and novel operating practices. By studying systems and processes that define the operating and information practices in firms, markets and society, Goizueta students will have the tools to manage as globalization and emerging digital technologies continue to transform the structure, form and governance of these systems and processes.").save()
-    Course(school=school1,course_name="BUS 520P Managerial Finance",created_by="admin", course_desc="This course develops a market-oriented framework for analyzing the investment decisions made by corporations. Lectures and readings will provide an introduction to iscounted cash flow techniques, capital budgeting principles and problems, financial security and project valuation, capital structure, capital market efficiency and portfolio theory.").save()
-    Course(school=school1,course_name="MARKETING",created_by="admin", course_desc="Today's corporate leaders must be able to account for and leverage digital technology and novel operating practices. By studying systems and processes that define the operating and information practices in firms, markets and society, Goizueta students will have the tools to manage as globalization and emerging digital technologies continue to transform the structure, form and governance of these systems and processes.").save()
-    course1 = Course.objects.filter(course_name__startswith="BUS 634P")[0]
-    course2 = Course.objects.filter(course_name__startswith="BUS 520P")[0]
-    course3 = Course.objects.get(course_name="MARKETING")
-
-
-    CourseInstance(course=course1,section=section1,program = program2,batch="2014",year="2014",status=status1,term= term1 ).save()
-
-    CourseInstance(course=course2,section=section2,program = program2,batch="2014",year="2014",status=status1,term= term1 ).save()
-    courseInstance1 = CourseInstance.objects.filter(program=program2,section=section1,course=course1)[0]
-    courseInstance2 = CourseInstance.objects.filter(program=program2,section=section2,course=course2)[0]
-
-
-
-    # courseInstance1.students.add(user1,user2)
-    # courseInstance2.students.add(user1,user2)
-    # courseInstance3.students.add(user1,user2)
-
-    courseInstance1.save()
-    courseInstance2.save()
-
-
-
-
-
-
-
-
-    #BUS 634P Strategic Management
-    Session(courseInstance=courseInstance1,session_name="Week 1 : Course Introduction",session_dt="2014-06-21").save()
-    Session(courseInstance=courseInstance1,session_name="Week 2 : Competitor Dynamics",session_dt="2014-06-22").save()
-    Session(courseInstance=courseInstance1,session_name="Week 3 : Industry Analysis",session_dt="2014-06-23").save()
-    Session(courseInstance=courseInstance1,session_name="Week 4 : Industry Analysis",session_dt="2014-06-24").save()
-    Session(courseInstance=courseInstance1,session_name="Week 5 : Competitive Advantage",session_dt="2014-06-25").save()
-    Session(courseInstance=courseInstance1,session_name="Week 6 : Industry Evolution and Revolution",session_dt="2014-06-26").save()
-    Session(courseInstance=courseInstance1,session_name="Week 7 : Managing Human Assets F0r Competitive Advantage",session_dt="2014-06-27").save()
-    Session(courseInstance=courseInstance1,session_name="Week 8 : Business Model Innovation",session_dt="2014-06-28").save()
-    Session(courseInstance=courseInstance1,session_name="Week 9 : Corporate-Level Strategy: Diversification & Vertical Integration",session_dt="2014-06-29").save()
-    Session(courseInstance=courseInstance1,session_name="Week 10 : Strategy Implementation",session_dt="2014-06-30").save()
-
-
-    #  BUS 520P Managerial Finance  complete session list loaded.
-    Session(courseInstance=courseInstance2,session_name="I. Financial Decision Making (week 1)",session_dt="2014-06-21").save()
-    Session(courseInstance=courseInstance2,session_name="II. Time Value of Money, Annuities and Perpetuities (week 2)",session_dt="2014-08-22").save()
-    Session(courseInstance=courseInstance2,session_name="III. Fundamentals of Capital Budgeting (week 3)",session_dt="2014-09-23").save()
-    Session(courseInstance=courseInstance2,session_name="IV. Investment Decision Rules (week 4) ",session_dt="2014-09-24").save()
-    Session(courseInstance=courseInstance2,session_name="V. Interest Rates (week 4) ",session_dt="2014-09-25").save()
-    Session(courseInstance=courseInstance2,session_name="VI. Valuing Bonds (week 5)",session_dt="2014-09-26").save()
-    Session(courseInstance=courseInstance2,session_name="VII. Valuing Stocks (weeks 6-8)",session_dt="2014-09-27").save()
-    Session(courseInstance=courseInstance2,session_name="VIII. Capital Markets and the Pricing of Risk (week 8)",session_dt="2014-09-28").save()
-    Session(courseInstance=courseInstance2,session_name="IX. Estimating the Cost of Capital ( week 8) ",session_dt="2014-09-29").save()
-    Session(courseInstance=courseInstance2,session_name="X. Capital Structure, Perfect Markets, and Corporate Taxes (week 9)",session_dt="2014-09-30").save()
-    Session(courseInstance=courseInstance2,session_name="XI. Capital Budgeting and Valuation with Leverage (week 9)",session_dt="2014-10-01").save()
-
-
-
-
-    Tag(name="theory").save()
-    Tag(name="application").save()
-    Tag(name="example").save()
-    Tag(name="case").save()
-
-
-
-    TakeAwayProfile(user=user1,email="sureshatluri@gmail.com",school=school1,batch="2014",program=program2).save()
-    TakeAwayProfile(user=user2,email="ravidutta@gmail.com",school=school1,batch="2014",program=program2).save()
-    #session1 = Session.objects.get(session_name__contains="Week 1",course=course1)
-    #session2 = Session.objects.get(session_name__contains="Week 1",course=course1)
-    #session3 = Session.objects.get(session_name="Week 3 : Mastering Strategic Planning",course=course1)
-    #session4 = Session.objects.get(session_dt="2014-06-23",course=course2)
-
-    #takeaway1 = TakeAway(course=course1,session=session1,user=user1,notes="This is a long long long long long long long long long long long long long long long long long long TAKEAWAY").save()
-    #takeaway2 = TakeAway(course=course1,session=session2,user=user1,notes="This is a long long long long long long long long long long long long long long long long long long TAKEAWAY").save()
-    #takeaway3 = TakeAway(course=course1,session=session3,user=user2,notes="This is Ravi's long long long long long long long long long long long long long long long long long long TAKEAWAY").save()
-    #takeaway4 = TakeAway(course=course2,session=session4,user=user2,notes="This is Ravi's long long long long long long long long long long long long long long long long long long TAKEAWAY").save()
-    #
-    #Enrollment(student=user1,course=course1).save()
-    #Enrollment(student=user1,course=course2).save()
-    #Enrollment(student=user2,course=course2).save()
-    #Enrollment(student=user2,course=course3).save()
-    return HttpResponse( "Successfully Loaded init data")
-
 
 ################################  APIS are defined here #####################################
 
@@ -409,6 +290,7 @@ class NotificationViewSet(viewsets.ModelViewSet):
                     user.notifications.mark_all_as_read()
 
             return queryset
+
 class CourseInstanceCreateViewSet(viewsets.ModelViewSet):
         """
         API endpoint that allows groups to be viewed or edited.
@@ -419,6 +301,15 @@ class CourseInstanceCreateViewSet(viewsets.ModelViewSet):
         filter_fields = ('course','program','batch','year',)
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
         paginate_by = 100
+
+        def post_save(self, obj, created=False):
+            if created :
+                s1 = Session(courseInstance=obj,session_name = 'Week 1',session_dt = datetime.now()).save()
+                s2 = Session(courseInstance=obj,session_name = 'Week 2',session_dt = datetime.now()+timedelta(1)).save()
+                s3 = Session(courseInstance=obj,session_name = 'Week 3',session_dt = datetime.now()+timedelta(2)).save()
+                s4 = Session(courseInstance=obj,session_name = 'Week 4',session_dt = datetime.now()+timedelta(3)).save()
+                s5 = Session(courseInstance=obj,session_name = 'Week 5',session_dt = datetime.now()+timedelta(4)).save()
+
 
 
 class CourseInstanceViewSet(viewsets.ModelViewSet):
@@ -625,3 +516,122 @@ def ContactUsLogin(request):
     return render_to_response('contact_us_login.html', {'form': form}, context)
 
 
+
+def initload(request):
+    User.objects.create_user(username="atluri",password="abc123").save()
+    User.objects.create_user(username="ravi",password="abc123").save()
+
+    user1=User.objects.get(username="atluri")
+    user2=User.objects.get(username="ravi")
+    School(school_name="EMORY").save()
+    School(school_name="STANFORD").save()
+    School(school_name="COX").save()
+    school1= School.objects.get(school_name="EMORY")
+    school2= School.objects.get(school_name="STANFORD")
+    school3= School.objects.get(school_name="COX")
+
+    Program(name="Full Time MBA",school=school1).save()
+    Program(name="Evening MBA",school=school1).save()
+    Program(name="Part Time MBA",school=school1).save()
+
+    program1 = Program.objects.get(name='Part Time MBA')
+    program2 = Program.objects.get(name='Evening MBA')
+
+    Section(name="Monday",school=school1).save()
+    Section(name="Wednesday",school=school1).save()
+    Section(name="Weekend",school=school1).save()
+
+    section1 = Section.objects.get(name='Monday')
+    section2 = Section.objects.get(name='Wednesday')
+
+    Term(description="Ist Semester",school=school1).save()
+    Term(description="IInd Semester",school=school1).save()
+
+    term1 = Term.objects.get(description="Ist Semester")
+
+
+    Status(value="Active",school=school1).save()
+    status1 = Status.objects.get(value="Active")
+    Course(school=school1,course_name="BUS 634P Strategic Management",created_by="admin", course_desc="Today's corporate leaders must be able to account for and leverage digital technology and novel operating practices. By studying systems and processes that define the operating and information practices in firms, markets and society, Goizueta students will have the tools to manage as globalization and emerging digital technologies continue to transform the structure, form and governance of these systems and processes.").save()
+    Course(school=school1,course_name="BUS 520P Managerial Finance",created_by="admin", course_desc="This course develops a market-oriented framework for analyzing the investment decisions made by corporations. Lectures and readings will provide an introduction to iscounted cash flow techniques, capital budgeting principles and problems, financial security and project valuation, capital structure, capital market efficiency and portfolio theory.").save()
+    Course(school=school1,course_name="MARKETING",created_by="admin", course_desc="Today's corporate leaders must be able to account for and leverage digital technology and novel operating practices. By studying systems and processes that define the operating and information practices in firms, markets and society, Goizueta students will have the tools to manage as globalization and emerging digital technologies continue to transform the structure, form and governance of these systems and processes.").save()
+    course1 = Course.objects.filter(course_name__startswith="BUS 634P")[0]
+    course2 = Course.objects.filter(course_name__startswith="BUS 520P")[0]
+    course3 = Course.objects.get(course_name="MARKETING")
+
+
+    CourseInstance(course=course1,section=section1,program = program2,batch="2014",year="2014",status=status1,term= term1 ).save()
+
+    CourseInstance(course=course2,section=section2,program = program2,batch="2014",year="2014",status=status1,term= term1 ).save()
+    courseInstance1 = CourseInstance.objects.filter(program=program2,section=section1,course=course1)[0]
+    courseInstance2 = CourseInstance.objects.filter(program=program2,section=section2,course=course2)[0]
+
+
+
+    # courseInstance1.students.add(user1,user2)
+    # courseInstance2.students.add(user1,user2)
+    # courseInstance3.students.add(user1,user2)
+
+    courseInstance1.save()
+    courseInstance2.save()
+
+
+
+
+
+
+
+
+    #BUS 634P Strategic Management
+    Session(courseInstance=courseInstance1,session_name="Week 1 : Course Introduction",session_dt="2014-06-21").save()
+    Session(courseInstance=courseInstance1,session_name="Week 2 : Competitor Dynamics",session_dt="2014-06-22").save()
+    Session(courseInstance=courseInstance1,session_name="Week 3 : Industry Analysis",session_dt="2014-06-23").save()
+    Session(courseInstance=courseInstance1,session_name="Week 4 : Industry Analysis",session_dt="2014-06-24").save()
+    Session(courseInstance=courseInstance1,session_name="Week 5 : Competitive Advantage",session_dt="2014-06-25").save()
+    Session(courseInstance=courseInstance1,session_name="Week 6 : Industry Evolution and Revolution",session_dt="2014-06-26").save()
+    Session(courseInstance=courseInstance1,session_name="Week 7 : Managing Human Assets F0r Competitive Advantage",session_dt="2014-06-27").save()
+    Session(courseInstance=courseInstance1,session_name="Week 8 : Business Model Innovation",session_dt="2014-06-28").save()
+    Session(courseInstance=courseInstance1,session_name="Week 9 : Corporate-Level Strategy: Diversification & Vertical Integration",session_dt="2014-06-29").save()
+    Session(courseInstance=courseInstance1,session_name="Week 10 : Strategy Implementation",session_dt="2014-06-30").save()
+
+
+    #  BUS 520P Managerial Finance  complete session list loaded.
+    Session(courseInstance=courseInstance2,session_name="I. Financial Decision Making (week 1)",session_dt="2014-06-21").save()
+    Session(courseInstance=courseInstance2,session_name="II. Time Value of Money, Annuities and Perpetuities (week 2)",session_dt="2014-08-22").save()
+    Session(courseInstance=courseInstance2,session_name="III. Fundamentals of Capital Budgeting (week 3)",session_dt="2014-09-23").save()
+    Session(courseInstance=courseInstance2,session_name="IV. Investment Decision Rules (week 4) ",session_dt="2014-09-24").save()
+    Session(courseInstance=courseInstance2,session_name="V. Interest Rates (week 4) ",session_dt="2014-09-25").save()
+    Session(courseInstance=courseInstance2,session_name="VI. Valuing Bonds (week 5)",session_dt="2014-09-26").save()
+    Session(courseInstance=courseInstance2,session_name="VII. Valuing Stocks (weeks 6-8)",session_dt="2014-09-27").save()
+    Session(courseInstance=courseInstance2,session_name="VIII. Capital Markets and the Pricing of Risk (week 8)",session_dt="2014-09-28").save()
+    Session(courseInstance=courseInstance2,session_name="IX. Estimating the Cost of Capital ( week 8) ",session_dt="2014-09-29").save()
+    Session(courseInstance=courseInstance2,session_name="X. Capital Structure, Perfect Markets, and Corporate Taxes (week 9)",session_dt="2014-09-30").save()
+    Session(courseInstance=courseInstance2,session_name="XI. Capital Budgeting and Valuation with Leverage (week 9)",session_dt="2014-10-01").save()
+
+
+
+
+    Tag(name="theory").save()
+    Tag(name="application").save()
+    Tag(name="example").save()
+    Tag(name="case").save()
+
+
+
+    TakeAwayProfile(user=user1,email="sureshatluri@gmail.com",school=school1,batch="2014",program=program2).save()
+    TakeAwayProfile(user=user2,email="ravidutta@gmail.com",school=school1,batch="2014",program=program2).save()
+    #session1 = Session.objects.get(session_name__contains="Week 1",course=course1)
+    #session2 = Session.objects.get(session_name__contains="Week 1",course=course1)
+    #session3 = Session.objects.get(session_name="Week 3 : Mastering Strategic Planning",course=course1)
+    #session4 = Session.objects.get(session_dt="2014-06-23",course=course2)
+
+    #takeaway1 = TakeAway(course=course1,session=session1,user=user1,notes="This is a long long long long long long long long long long long long long long long long long long TAKEAWAY").save()
+    #takeaway2 = TakeAway(course=course1,session=session2,user=user1,notes="This is a long long long long long long long long long long long long long long long long long long TAKEAWAY").save()
+    #takeaway3 = TakeAway(course=course1,session=session3,user=user2,notes="This is Ravi's long long long long long long long long long long long long long long long long long long TAKEAWAY").save()
+    #takeaway4 = TakeAway(course=course2,session=session4,user=user2,notes="This is Ravi's long long long long long long long long long long long long long long long long long long TAKEAWAY").save()
+    #
+    #Enrollment(student=user1,course=course1).save()
+    #Enrollment(student=user1,course=course2).save()
+    #Enrollment(student=user2,course=course2).save()
+    #Enrollment(student=user2,course=course3).save()
+    return HttpResponse( "Successfully Loaded init data")
