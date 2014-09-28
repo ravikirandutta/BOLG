@@ -3,13 +3,13 @@
     <div class="mainbar">
       <div id="course-list" class="page-head">
         <ui class="nav nav-pills" >
-          <li class="course" ng-repeat="courseresult in availableCourses.results" >
+          <li class="course {{courseresult.courseClass}}" ng-repeat="courseresult in availableCourses.results" >
             <a class="course-item" ng-click="freshLoadOfSessions(courseresult.course.id)" id="{{courseresult.course.id}}_course">
-                            <span id="course{{courseresult.course.id}}">
-                                <i class="fa fa-folder-open"></i> 
-                                <b>{{courseresult.course.course_name}}</b>
-                            </span>
-                        </a>
+                <span id="course{{courseresult.course.id}}">
+                    <i class="fa fa-folder-open"></i> 
+                    <b>{{courseresult.course.course_name}}</b>
+                </span>
+            </a>
           </li>
         </ui>
         <div class="clearfix"></div>
@@ -43,12 +43,14 @@
                           <li>
                             <div id="{{sessionsresult.id}}_{{taset.id}}_view" class="recent-content">
                               <div class="recent-meta">Posted on {{taset.created_dt}} by {{taset.username}}</div>
-                              <div id="editable-notes" ng-click="makeEditable(sessionsresult.id+'_'+taset.id, taset.notes)" title="Click to edit the takeaway" 
-                                style="cursor: pointer;">
-                                <div ng-if="taset.isOwner"> 
+                              <div ng-if="taset.isOwner">
+                                <div id="editable-notes" title="Click to edit the takeaway" style="cursor: pointer;"
+                                     ng-click="makeEditable(sessionsresult.id+'_'+taset.id, taset.notes)" >
                                   <pre id="takeaway" class="takeaway-pre takeaway-pre-owner">{{taset.notes}}</pre>
                                 </div>
-                                <div ng-if="!taset.isOwner"> 
+                              </div>
+                              <div ng-if="!taset.isOwner">
+                                <div id="editable-notes">
                                   <pre id="takeaway" class="takeaway-pre">{{taset.notes}}</pre>
                                 </div>
                               </div>
@@ -71,30 +73,21 @@
                                   </span>
                                   <span style="width:2px">&nbsp;</span>
                                 </span>
-                                <div class="rateit" data-rateit-value="{{tag.rating}}" 
-                                      data-rateit-ispreset="true" data-rateit-readonly="true" 
-                                    data-rateit-resetable="false">
-                                  <button id="rateit-reset-2" type="button" data-role="none" 
-                                          class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-2" 
-                                          style="display: none;">
-                                  </button>
-                                  <div id="rateit-range-2" class="rateit-range" tabindex="0" role="slider" aria-label="rating" 
-                                       aria-owns="rateit-reset-2" aria-valuemin="0" aria-valuemax="5" aria-valuenow="5" 
-                                       aria-readonly="true" style="width: 80px; height: 16px;">
-                                    <div class="rateit-selected rateit-preset" style="height: 16px; width: 80px;">
-                                    </div>
-                                    <div class="rateit-hover" style="height: 16px;">
-                                    </div>
-                                  </div>
-                                </div>
-                                <span class="total-raters">
-                                    (<i class="fa fa-user"></i> {{taset.total_raters}})
+
+                                <span ng-if="!taset.isOwner">{{taset.average_rating}}
+                                  <span class="total-raters">(<i class="fa fa-user"></i>{{taset.total_raters}})</span>
                                 </span>
-                                <span>
-                                  <div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-animate"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">public</span><label class="bootstrap-switch-label">&nbsp;</label><span class="bootstrap-switch-handle-off bootstrap-switch-default">private</span><input type="checkbox" class="switch" name="my-checkbox" animate="true" data-on-text="public" data-off-text="private" offcolor="danger" checked=""></div></div>
+
+                                <span ng-if="taset.isOwner">{{taset.average_rating}}
+                                  <span class="total-raters">(<i class="fa fa-user"></i>{{taset.total_raters}})</span>
+                                  <span ng-if="taset.is_public">
+                                    PUB-PRI
+                                  </span>
+                                  <span ng-if="!taset.is_public">
+                                    PUB-PRI
+                                  </span>
                                 </span>
                               </div>
-                              <span style="width:2px">&nbsp;</span>
                               <div id="favourite">
                                 <span ng-if="taset.isFavourite"> 
                                   <a>

@@ -18,7 +18,15 @@
   12. Expand and Collapse for sessions
   13. Validations in Edit Session Name and New Takeaway and Edit Takeaway
   14. On editing of takeaway, we should disable other takeaways edit-delete buttons and restore again after update/cancel
-
+  
+// Sep 28th pending might be duplicated from above
+1. On New Takeaway Page is not refreshing even data saved
+2. Tags, Rateit, Public -Private button
+3. Local box - DELETE forbidden error
+4. Rating GET - POST
+5. Tags GET-POST
+6. PUBLIC-PRIVATE POST
+// Sep 28th END
 
 ng Modules required for below
   Dialog window, Tags, RateIt and PUB-PRI button
@@ -159,9 +167,21 @@ ng Modules required for below
       }
     });
 
+    $scope.highLightSelectedCourse = function(courseid) {
+      _.each($scope.availableCourses.results,function(courseObj){
+        if(courseObj.id == courseid) {
+          courseObj["courseClass"] = "course-selected";
+        } else {
+          courseObj["courseClass"] = "course-deselected";
+        }
+      });
+
+    }
+
     $scope.freshLoadOfSessions = function(courseid){
       $scope.displaysessions = false;
       $scope.loadCourses(courseid);
+      $scope.highLightSelectedCourse(courseid);
     };
 
     // On Click of CRS, load all SNs and TAYs associated with the CRS.
@@ -196,8 +216,8 @@ ng Modules required for below
           _.each(sessionsresult.takeaway_set,function(taset){
             taset["isFavourite"]=false;
             _.each($scope.favList,function(fav){
-              console.log(JSON.stringify(fav));
-              console.log(fav.takeaway);
+              //console.log(JSON.stringify(fav));
+              //console.log(fav.takeaway);
               if(fav.takeaway == taset.id) {
                 taset["isFavourite"]=true;
               }
@@ -217,14 +237,15 @@ ng Modules required for below
         $scope.ratings = data.results;
 
         _.each($scope.ratings,function(rating){
-          ratingsMap[rating["takeaway"]]=rating["rating_value"];
+          ratingsMap[rating.takeaway]=rating.rating_value;
         });
-
+        
         _.each($scope.sessions.results,function(sessionsresult){
         _.each(sessionsresult.takeaway_set,function(taset){
             taset["alreadyRated"]=false;
             if(ratingsMap[taset.id]>-1){
               taset["rating"]=ratingsMap[taset.id];
+              taset.average_rating =ratingsMap[taset.id];
               taset["alreadyRated"]=true;
             }
           });
