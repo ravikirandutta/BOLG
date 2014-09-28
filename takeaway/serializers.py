@@ -22,10 +22,17 @@ class CourseSerializer(serializers.ModelSerializer):
         model = Course
         fields = ('id', 'course_name', 'course_desc','school')
 
+
+class EmailFormatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmailFormat
+        fields= ('format',)
+
 class SchoolSerializer(serializers.ModelSerializer):
+    emailformat_set = EmailFormatSerializer(source='emailformat_set')
     class Meta:
         model = School
-        fields = ('id', 'school_name',)
+        fields = ('id', 'school_name','emailformat_set')
 
 
 
@@ -96,7 +103,7 @@ class NotificationSerializer(serializers.ModelSerializer):
             return actor.username
         return None
 
-class CourseInstanceCreateSerializer(serializers.ModelSerializer):    
+class CourseInstanceCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CourseInstance

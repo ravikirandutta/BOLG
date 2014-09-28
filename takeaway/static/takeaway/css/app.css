@@ -283,7 +283,11 @@ background-color:#e7edf8;
     color: #fff;
     text-shadow: 0px 0px 1px #fff;
     padding-left: 10px;
-    -webkit-transform: scale(1.2, 1.2); 
+    -webkit-transform: scale(1.2, 1.2);
   -webkit-transition-duration: 500ms;
   -webkit-transition-timing-function: ease-out;
+}
+
+.emailerror{
+    display:none;
 }

@@ -159,7 +159,7 @@ class CourseViewSet(viewsets.ModelViewSet):
         Set the object's owner, based on the incoming request.
         """
         obj.created_by = self.request.user.username
-    
+
     def post_save(self, obj, created=False):
         """
         Set the object's owner, based on the incoming request.
@@ -318,7 +318,7 @@ class CourseInstanceCreateViewSet(viewsets.ModelViewSet):
                 s10 = Session(courseInstance=obj,session_name = 'Week 10',session_dt = datetime.now()+timedelta(9)).save()
                 s11 = Session(courseInstance=obj,session_name = 'Week 11',session_dt = datetime.now()+timedelta(10)).save()
                 s12 = Session(courseInstance=obj,session_name = 'Week 12',session_dt = datetime.now()+timedelta(11)).save()
-                
+
 
 
 class CourseInstanceViewSet(viewsets.ModelViewSet):
@@ -438,7 +438,7 @@ class ContactUsViewSet(viewsets.ModelViewSet):
             send_mail(obj.subject, obj.message, 'support@mbatakeaways.com', recipients)
 
 
-    
+
 from django.core.mail import send_mail
 def ContactUs(request):
     # Get the context from the request.
@@ -533,10 +533,10 @@ def initload(request):
     user1=User.objects.get(username="atluri")
     user2=User.objects.get(username="ravi")
     School(school_name="EMORY").save()
-    School(school_name="STANFORD").save()
+    School(school_name="WHARTON").save()
     School(school_name="COX").save()
     school1= School.objects.get(school_name="EMORY")
-    school2= School.objects.get(school_name="STANFORD")
+    school2= School.objects.get(school_name="WHARTON")
     school3= School.objects.get(school_name="COX")
 
     Program(name="Full Time MBA",school=school1).save()
@@ -643,4 +643,9 @@ def initload(request):
     #Enrollment(student=user1,course=course2).save()
     #Enrollment(student=user2,course=course2).save()
     #Enrollment(student=user2,course=course3).save()
+
+    EmailFormat(format="@emory.edu",school=school1).save()
+    EmailFormat(format="@wharton.edu",school=school2).save()
+    EmailFormat(format="@wharton.upenn.edu",school=school2).save()
+
     return HttpResponse( "Successfully Loaded init data")
