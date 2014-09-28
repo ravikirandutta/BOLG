@@ -152,6 +152,7 @@ class CourseViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('course_name',)
+    paginate_by = 100
 
     def pre_save(self, obj):
         """
@@ -193,6 +194,7 @@ class SessionList(generics.ListCreateAPIView):
     filter_fields = ('session_name','courseInstance',)
     ordering_fields = ('session_dt','created_dt')
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+    paginate_by = 100
 
 class SessionDetail(generics.RetrieveUpdateDestroyAPIView):
         queryset = Session.objects.all()
@@ -309,7 +311,14 @@ class CourseInstanceCreateViewSet(viewsets.ModelViewSet):
                 s3 = Session(courseInstance=obj,session_name = 'Week 3',session_dt = datetime.now()+timedelta(2)).save()
                 s4 = Session(courseInstance=obj,session_name = 'Week 4',session_dt = datetime.now()+timedelta(3)).save()
                 s5 = Session(courseInstance=obj,session_name = 'Week 5',session_dt = datetime.now()+timedelta(4)).save()
-
+                s6 = Session(courseInstance=obj,session_name = 'Week 6',session_dt = datetime.now()+timedelta(5)).save()
+                s7 = Session(courseInstance=obj,session_name = 'Week 7',session_dt = datetime.now()+timedelta(6)).save()
+                s8 = Session(courseInstance=obj,session_name = 'Week 8',session_dt = datetime.now()+timedelta(7)).save()
+                s9 = Session(courseInstance=obj,session_name = 'Week 9',session_dt = datetime.now()+timedelta(8)).save()
+                s10 = Session(courseInstance=obj,session_name = 'Week 10',session_dt = datetime.now()+timedelta(9)).save()
+                s11 = Session(courseInstance=obj,session_name = 'Week 11',session_dt = datetime.now()+timedelta(10)).save()
+                s12 = Session(courseInstance=obj,session_name = 'Week 12',session_dt = datetime.now()+timedelta(11)).save()
+                
 
 
 class CourseInstanceViewSet(viewsets.ModelViewSet):
