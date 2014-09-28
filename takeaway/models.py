@@ -13,6 +13,15 @@ class School(models.Model):
     def __unicode__(self):
         return smart_unicode(self.school_name)
 
+class EmailFormat(models.Model):
+    format = models.TextField()
+    school = models.ForeignKey(School)
+
+    def __unicode__(self):
+        return smart_unicode(self.format)
+
+
+
 class Course(models.Model):
      school = models.ForeignKey(School)
      course_name = models.CharField(max_length=400)
@@ -227,22 +236,22 @@ class Favorite(models.Model):
     def __unicode__(self):
         return smart_unicode(self.user)
 
-class NotificationSettings(models.Model):
+# class NotificationSettings(models.Model):
 
-    EmailSettings = (
-    (0, 'NoEMail'),
-    (1, 'Instant'),
-    (2, 'Daily'),
-    )
-    user = models.ForeignKey(User)
-    mail_settings = models.IntegerField(choices=EmailSettings, default=2)
-    mail_when_newuser = models.BooleanField(default=True)
-    mail_when_takeaway = models.BooleanField(default=True)
-    mail_when_rated = models.BooleanField(default=True)
-    mail_when_rated = models.BooleanField(default=True)
+#     EmailSettings = (
+#     (0, 'NoEMail'),
+#     (1, 'Instant'),
+#     (2, 'Daily'),
+#     )
+#     user = models.ForeignKey(User)
+#     mail_settings = models.IntegerField(choices=EmailSettings, default=2)
+#     mail_when_newuser = models.BooleanField(default=True)
+#     mail_when_takeaway = models.BooleanField(default=True)
+#     mail_when_rated = models.BooleanField(default=True)
+#     mail_when_rated = models.BooleanField(default=True)
 
-    def __unicode__(self):
-        return smart_unicode(self.user)
+#     def __unicode__(self):
+#         return smart_unicode(self.user)
 
 class EmailSettings(models.Model):
 
@@ -252,7 +261,7 @@ class EmailSettings(models.Model):
     (2, 'Daily'),
     )
     user = models.ForeignKey(User,blank=False)
-    
+
     mail_when_newuser = models.IntegerField(choices=EmailSettings, default=2)
     mail_when_takeaway = models.IntegerField(choices=EmailSettings, default=2)
     mail_when_rated = models.IntegerField(choices=EmailSettings, default=0)
