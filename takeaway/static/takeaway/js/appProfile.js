@@ -156,8 +156,10 @@ app.config(['$resourceProvider', function ($resourceProvider) {
             data: $scope.newCourse,
             headers: {'Content-Type': 'application/json'}
         }).success(function (data, status, headers, config) {
+                $scope.newClass.course=data.id;
                 $scope.newCourse = {};
-                $scope.addingCourse=false; 
+                $scope.creatingCourse=false;
+                $scope.submitNewClassForm(); 
                 //once we make course instance addition we need to remove this redundency below
                 $scope.getAvailableCourses();
             }).error(function (data, status, headers, config) {
@@ -166,11 +168,14 @@ app.config(['$resourceProvider', function ($resourceProvider) {
 		};
 
         $scope.submitNewClassForm = function(){
-
+            if($scope.creatingCourse){
+                $scope.submitNewCourseForm();
+            }else{
             CourseInstanceCreate.save($scope.newClass).$promise.then(function(){
                 $scope.getAvailableCourses();
                 $scope.setAddingCourse(false);
             });
+            }
 
         }
 

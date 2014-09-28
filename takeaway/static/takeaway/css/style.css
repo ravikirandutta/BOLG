@@ -1666,6 +1666,10 @@ border:1px solid #eee;
 	background: #1fa67a;
 	margin-top: 80px;
 }
+#create-course{
+	/*background: #1fa67a;*/
+	float: right;
+}
 #back-to-courses{
 	background: #1fa67a;
 	border-radius: 20px 5px 5px 20px;

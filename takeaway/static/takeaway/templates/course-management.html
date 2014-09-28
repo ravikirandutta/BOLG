@@ -50,37 +50,31 @@
                 </div>
                 <div class="matter">
                     <div id="back-to-courses"class="btn"><a style="color:white" ng-click="addingCourse=false"><i class="fa fa-chevron-left"></i> Back to Courses</a></div>
-                    <form name="addCoureForm" role="form" class="form form-horizontal" ng-submit="submitNewCourseForm()" >
-                        
-                        <!-- <div class="formgroup">
-                            <label for="school">School</label>
-                            <input type="text" class="form-control"  ng-model="newCourse.school" id="school" placeholder="school" novalidate>
-                        </div> -->
-                        
-                        
-                       
-                        
-                    </form>
                     <form name="addClassForm" role="form" class="form form-horizontal" ng-submit="submitNewClassForm()">
-                        <div class="form-group">
+                        <div class="form-group" ng-hide="creatingCourse">
                                 <div class="col-lg-4">
                                     <label class="control-label col-lg-3" for="course">Course</label>
                                     <select name="course" ng-model="newClass.course" ng-options="course.id as course.course_name for course in courses"></select>
+                                    <a id="create-course" class="col-lg-6" ng-click="creatingCourse=true"><i class="fa fa-plus-circle fa-lg"></i>Add new course <span class="beta"> BETA</span></a>
+                                    
                                 </div>
                             </div>
-                        <!-- <div class="form-group">
+                    
+
+                        <div class="form-group" ng-show="creatingCourse">
                             <div class="col-md-4">
                             <label class="control-label" for="courseName">Course Name</label>
                             <input type="text" class="form-control"  ng-model="newCourse.course_name" id="courseName" placeholder="Course Name" novalidate>
                             </div>
                         </div>
-                        <div class="form-group ">
+                        <div class="form-group " ng-show="creatingCourse">
                             <div class="col-md-4">
                             <label class="control-label" for="courseDesc">Course Description</label>
                             <input type="text" class="form-control"  ng-model="newCourse.course_desc" id="courseDesc" placeholder="Course Description" novalidate>
                             </div>
-                        </div> -->
+                        </div>
                             <!-- <p class="course-desc">{{newClass.selectedCourse.course_desc}}</p> -->
+
                             <div class="form-group">
                                 <div class="col-lg-4">
                                     <label class="control-label col-lg-3" for="section">Section</label>
