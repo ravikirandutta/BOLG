@@ -86,10 +86,13 @@ app.config(['$resourceProvider', function ($resourceProvider) {
         $scope.getAvailableCourses = function(){
             CourseSelection.query({"school":$scope.userProfile.school}).$promise.then(function(data){
                 $scope.availableCourses=data.results;
+                if($scope.availableCourses.length==0){
+                    $scope.setAddingCourse(true);
+                }
             });
         };
         $scope.getCourses = function(){
-            Courses.query({"school":"2"}).$promise.then(function(data){
+            Courses.query({"school":$scope.userProfile.school}).$promise.then(function(data){
                 $scope.courses = data.results;
                 if($scope.courses.length>0){
                  $scope.newClass.course=$scope.courses[0].id;  
@@ -164,6 +167,7 @@ app.config(['$resourceProvider', function ($resourceProvider) {
                 $scope.newCourse = {};
                 $scope.creatingCourse=false;
                 $scope.submitNewClassForm(); 
+                $scope.getCourses();
                 //once we make course instance addition we need to remove this redundency below
                 $scope.getAvailableCourses();
             }).error(function (data, status, headers, config) {
