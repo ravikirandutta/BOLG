@@ -14,30 +14,32 @@
     	var mail_when_takeaway =2;
     	var mail_when_newuser =2;
     	var mail_when_rated =2;
-
 		
         if(collection.attributes.results.length > 0){
 			var settingsObj = collection.attributes.results[0];
 			updateEmailSettings.set({'id': emailSettings.attributes.results[0].id});
-			updateEmailSettings.set({'user': emailSettings.attributes.results[0].user});
+			
 
 			if(settingsObj.mail_when_takeaway >= 0){
-				updateEmailSettings.set({'mail_when_takeaway': settingsObj.mail_when_takeaway});
 				mail_when_takeaway = settingsObj.mail_when_takeaway;
 			}
 			
 			if(settingsObj.mail_when_newuser >= 0){
-				updateEmailSettings.set({'mail_when_newuser': settingsObj.mail_when_newuser});
+				
 				mail_when_newuser = settingsObj.mail_when_newuser;	
 			}
 			
 			if(settingsObj.mail_when_rated >= 0){
-				updateEmailSettings.set({'mail_when_rated': settingsObj.mail_when_rated});
 				mail_when_rated = settingsObj.mail_when_rated;
 			}
 
 
         }
+
+		updateEmailSettings.set({'user': $.cookie('userid')});
+        updateEmailSettings.set({'mail_when_takeaway': mail_when_takeaway});
+        updateEmailSettings.set({'mail_when_newuser': mail_when_newuser});
+        updateEmailSettings.set({'mail_when_rated': mail_when_rated});
 
 		$("input[name=newTakeaway][value=" + mail_when_takeaway + "]").prop('checked', true);	
 		$("input[name=newUser][value=" + mail_when_newuser + "]").prop('checked', true);	
