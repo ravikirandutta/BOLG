@@ -1,4 +1,4 @@
-/* Comments Meta Data 
+/* Comments Meta Data
     Course - CRS, Session - SN, Takeaway - TAY, Session and TakeAway - STAY
 */
 
@@ -18,7 +18,7 @@
   12. Expand and Collapse for sessions
   13. Validations in Edit Session Name and New Takeaway and Edit Takeaway
   14. On editing of takeaway, we should disable other takeaways edit-delete buttons and restore again after update/cancel
-  
+
 // Sep 28th pending might be duplicated from above
 1. On New Takeaway Page is not refreshing even data saved
 2. Tags, Rateit, Public -Private button
@@ -30,7 +30,7 @@
 
 ng Modules required for below
   Dialog window, Tags, RateIt and PUB-PRI button
-  
+
   Open Questions:
   1. Is Session can be deleted? If yes, all TAYs associated with that session also deleted?
   2. Search required or not? If yes, on what basis? Tags/Rating/Owner/PUB-PRI/Favourite
@@ -41,9 +41,10 @@ ng Modules required for below
 */
 
 (function() {
-  var app = angular.module('takeAwayDashboard', ['ngCookies', 'ngResource', 'ngRoute', 'ngDialog']).run(function($http, $cookies) {
+  var app = angular.module('takeAwayDashboard', ['ngCookies', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput']).run(function($http, $cookies) {
     $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
     $http.defaults.headers.put['X-CSRFToken'] = $cookies.csrftoken;
+    // $http.defaults.headers.DELETE['X-CSRFToken'] = $cookies.csrftoken;
   });
   app.config(['$resourceProvider',
     function($resourceProvider) {
@@ -142,10 +143,21 @@ ng Modules required for below
     }
   ]);
 
-  
- 
-  app.controller('takeawayDashboardCtrl', 
-    function($scope, $http, $cookies, $resource, $rootScope, CoursesFactory, SessionsFactory, ngDialog, RatingFactory, FavoritesFactory) {
+app.factory('TagsFactory', ['$resource',
+    function($resource) {
+      return $resource('/tags/', {}, {
+        query: {
+          method: 'GET',
+          isArray: false
+        }
+      });
+    }
+  ]);
+
+
+
+  app.controller('takeawayDashboardCtrl',
+    function($scope, $http, $cookies, $resource, $rootScope, CoursesFactory, SessionsFactory, ngDialog, RatingFactory, FavoritesFactory, TagsFactory) {
 
     console.log("loading takeawayDashboardCtrl");
 
@@ -153,6 +165,22 @@ ng Modules required for below
     $scope.sessions = {
       "results": []
     };
+
+
+    //ngTags
+    $scope.tags = [
+
+  ];
+
+  $scope.availableTags = {};
+  // TagsFactory.query().$promise.then(function(data){
+  //     $scope.availableTags = data.results;
+  //    });
+
+  $scope.loadTags = function(query) {
+      return $http.get('/tags');
+  };
+
 
     CoursesFactory.query({
       "students": $cookies.userid
@@ -162,7 +190,7 @@ ng Modules required for below
 
       //Displaying the STAYs for first CRS
       if($scope.availableCourses.results != null && $scope.availableCourses.results.length > 0) {
-        var defaultCourseId = $scope.availableCourses.results[0].course.id;  
+        var defaultCourseId = $scope.availableCourses.results[0].course.id;
         $scope.freshLoadOfSessions(defaultCourseId);
       }
     });
@@ -198,7 +226,7 @@ ng Modules required for below
           //alert(JSON.stringify($scope.sessions.results));
           $scope.postzpulateOtherFields(courseid);
         });
-      }       
+      }
     };
 
     $scope.postzpulateOtherFields = function(courseid) {
@@ -239,7 +267,7 @@ ng Modules required for below
         _.each($scope.ratings,function(rating){
           ratingsMap[rating.takeaway]=rating.rating_value;
         });
-        
+
         _.each($scope.sessions.results,function(sessionsresult){
         _.each(sessionsresult.takeaway_set,function(taset){
             taset["alreadyRated"]=false;
@@ -255,13 +283,13 @@ ng Modules required for below
         $scope.status = status;
       });
 
-      
+
       _.each($scope.sessions.results,function(sessionsresult){
         _.each(sessionsresult.takeaway_set,function(taset){
-        
+
           var localizedTime = $.localtime.toLocalTime(taset.created_dt,'MM/dd/yy HH:mm');
           taset.created_dt =localizedTime;
-        
+
           taset["isOwner"]=false;
           if($cookies.userid == taset.user.id) {
             taset["isOwner"] = true;
@@ -352,7 +380,7 @@ ng Modules required for below
       //$scope.takeaway_set = sessionsresult.takeaway_set[0];
       ngDialog.open({
         template: 'newTakeawayTemplateId',
-        controller: 'takeawayDashboardCtrl', 
+        controller: 'takeawayDashboardCtrl',
         className: 'ngdialog-theme-plain',
         scope: $scope
       });
@@ -370,7 +398,7 @@ ng Modules required for below
         user: $cookies.userid
       };
 
-      console.log('New Takeaway JSON: '+JSON.stringify($scope.newTakeawayObj));  
+      console.log('New Takeaway JSON: '+JSON.stringify($scope.newTakeawayObj));
 
       $http({
         url: '/takeaways/',
@@ -410,7 +438,7 @@ ng Modules required for below
 
       ngDialog.open({
         template: 'editSessionNameTemplateId',
-        controller: 'takeawayDashboardCtrl', 
+        controller: 'takeawayDashboardCtrl',
         className: 'ngdialog-theme-plain',
         scope: $scope
       });
@@ -434,7 +462,7 @@ ng Modules required for below
       });
       ngDialog.close();
     };
-      
+
     /* Close the dialog for "New Takeaway" and "Edit Session Name" dialogs */
     $scope.closeDialog = function() {
       ngDialog.close();
@@ -442,7 +470,7 @@ ng Modules required for below
 
     /*POST to favourite */
     $scope.makeFavourite = function(taset) {
-      
+
       if(taset.isFavourite) {
         //DELTE
         $http({
@@ -461,7 +489,7 @@ ng Modules required for below
         //POST
         var favObj = {
           courseInstance: taset.courseInstance.id,
-          takeaway: taset.id, 
+          takeaway: taset.id,
           user: $cookies.userid
         };
 

@@ -6,7 +6,7 @@
           <li class="course {{courseresult.courseClass}}" ng-repeat="courseresult in availableCourses.results" >
             <a class="course-item" ng-click="freshLoadOfSessions(courseresult.course.id)" id="{{courseresult.course.id}}_course">
                 <span id="course{{courseresult.course.id}}">
-                    <i class="fa fa-folder-open"></i> 
+                    <i class="fa fa-folder-open"></i>
                     <b>{{courseresult.course.course_name}}</b>
                 </span>
             </a>
@@ -14,7 +14,7 @@
         </ui>
         <div class="clearfix"></div>
       </div>
-      
+
       <div class="col-md-6" id="takeaway-container">
       <div ng-show="displaysessions">
         <div ng-repeat="sessionsresult in sessions.results">
@@ -23,7 +23,7 @@
                 <div class="pull-left">
                   {{sessionsresult.session_name}}
                   <a id="edit-session-link" href="#" class="glyphicon glyphicon-edit" title="Edit Session"
-                      ng-click="editSessionName(sessionsresult)"></a> 
+                      ng-click="editSessionName(sessionsresult)"></a>
                 </div>
                 <div class="widget-icons pull-right">
                    <a href="#" class="btn btn-primary" style="background:#e1e3e4 !important;color:#000"
@@ -56,13 +56,13 @@
                               </div>
                               <div class="btn-group" style="float: right; display: block;">
                                 <div ng-if="taset.isOwner">
-                                  <button id="update" class="btn btn-xs btn-primary" title="Edit" 
+                                  <button id="update" class="btn btn-xs btn-primary" title="Edit"
                                           style="margin-left: 5px;" ng-click="makeEditable(sessionsresult.id+'_'+taset.id, taset.notes)">
-                                    <i class="fa fa-pencil-square-o fa-lg"></i> 
+                                    <i class="fa fa-pencil-square-o fa-lg"></i>
                                   </button>
-                                  <button id="delete" class="btn btn-xs btn-danger" title="Delete" 
+                                  <button id="delete" class="btn btn-xs btn-danger" title="Delete"
                                           style="margin-left: 5px;" ng-click="deleteTakeaway(sessionsresult, taset)">
-                                    <i class="fa fa-trash-o fa-lg"></i> 
+                                    <i class="fa fa-trash-o fa-lg"></i>
                                   </button>
                                 </div>
                               </div>
@@ -89,14 +89,14 @@
                                 </span>
                               </div>
                               <div id="favourite">
-                                <span ng-if="taset.isFavourite"> 
+                                <span ng-if="taset.isFavourite">
                                   <a>
                                     <span id="myfav" class="glyphicon glyphicon-heart" ng-click="makeFavourite(taset)"></span>
                                   </a>
                                 </span>
-                                <span ng-if="!taset.isFavourite"> 
+                                <span ng-if="!taset.isFavourite">
                                   <a ng-click="makeFavourite(taset)">
-                                    <span id="myfav" class="glyphicon glyphicon-heart-empty" ng-click="makeFavourite(taset)"></span> 
+                                    <span id="myfav" class="glyphicon glyphicon-heart-empty" ng-click="makeFavourite(taset)"></span>
                                   </a>
                                 </span>
                               </div>
@@ -145,9 +145,13 @@
       <div class="row1">
         <textarea rows="5" class="form-control" id="notes"></textarea>
       </div>
-      <div class="row1" style="padding-top: 20px;">
-        <input type="text" id="tag" placeholder="Type the tag name and press Enter" class="form-control" />
-      </div>
+
+
+      <tags-input ng-model="tags" display-property="name">
+      <auto-complete source="loadTags($query)"></auto-complete>
+    </tags-input>
+
+
       <div class="row1"style="padding-top: 20px;">
         <span>
           <div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-animate"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">public</span><label class="bootstrap-switch-label">&nbsp;</label><span class="bootstrap-switch-handle-off bootstrap-switch-default">private</span><input type="checkbox" class="switch" name="my-checkbox" animate="true" data-on-text="public" data-off-text="private" offcolor="danger" checked=""></div></div>
@@ -167,9 +171,9 @@
       <textarea class="form-control" id="editedSessionName" ng-model="modifiedSession.session_name"></textarea>
     </div>
     <div class="ngdialog-buttons">
-      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()" 
+      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()"
         ng-dialog-class="ngdialog-theme-default" >Close</button>
-      <button type="button" class="ngdialog-button ngdialog-button-primary" 
+      <button type="button" class="ngdialog-button ngdialog-button-primary"
         ng-click="updateSessionName(modifiedSession, sessionsresult)">Update</button>
     </div>
   </div>
