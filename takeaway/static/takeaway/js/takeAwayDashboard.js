@@ -11,9 +11,9 @@
   5. Selected CRS li tag class should be changed to "course-selected" and all others should be "course-deselected"
   6. Owner check for enabling PUB-PRI button in each TAY
   7. Owner check for enabling EDIT-DELTE buttons in each TAY
-  8. Favourite select/deselect and saving for each TAY
+  8. Favourite select/deselect and saving for each TAY  --DONE, but DELETE is forbidden in local
   9. Confirmation dialog for DELETE TAY -DONE
-  10. Color difference for owned TAY
+  10. Color difference for owned TAY  --DONE
   11. TAY style not rendering correctly
   12. Expand and Collapse for sessions
   13. Validations in Edit Session Name and New Takeaway and Edit Takeaway
@@ -112,7 +112,32 @@ ng Modules required for below
     }
   ]);
 
-  app.controller('takeawayDashboardCtrl', function($scope, $http, $cookies, $resource, $rootScope, CoursesFactory, SessionsFactory, ngDialog) {
+  app.factory('RatingFactory', ['$resource',
+    function($resource) {
+      return $resource('/ratings/', {}, {
+        query: {
+          method: 'GET',
+          isArray: false
+        }
+      });
+    }
+  ]);
+
+  app.factory('FavoritesFactory', ['$resource',
+    function($resource) {
+      return $resource('/favorites/', {}, {
+        query: {
+          method: 'GET',
+          isArray: false
+        }
+      });
+    }
+  ]);
+
+  
+ 
+  app.controller('takeawayDashboardCtrl', 
+    function($scope, $http, $cookies, $resource, $rootScope, CoursesFactory, SessionsFactory, ngDialog, RatingFactory, FavoritesFactory) {
 
     console.log("loading takeawayDashboardCtrl");
 
@@ -130,7 +155,7 @@ ng Modules required for below
       //Displaying the STAYs for first CRS
       if($scope.availableCourses.results != null && $scope.availableCourses.results.length > 0) {
         var defaultCourseId = $scope.availableCourses.results[0].course.id;  
-        $scope.loadCourses(defaultCourseId);
+        $scope.freshLoadOfSessions(defaultCourseId);
       }
     });
 
@@ -147,19 +172,85 @@ ng Modules required for below
           "ordering": "session_dt"
         }).$promise.then(function(data) {
           console.log("Load all SNs and TAYs associated with the CRS");
+          //alert("Load all SNs and TAYs associated with the CRS");
           $scope.sessions = data;
-           //Below will localize the time instead of displaying it in UTC
-          _.each($scope.sessions.results,function(sessionsresult){
-            _.each(sessionsresult.takeaway_set,function(taset){
-              var localizedTime = $.localtime.toLocalTime(taset.created_dt,'MM/dd/yy HH:mm');
-              taset.created_dt =localizedTime;
+          $scope.displaysessions = true;
+          //alert(JSON.stringify($scope.sessions.results));
+          $scope.postzpulateOtherFields(courseid);
+        });
+      }       
+    };
+
+    $scope.postzpulateOtherFields = function(courseid) {
+      var ratingsMap= {};
+
+      $scope.ratings = {};
+      $scope.favList = {};
+
+      $http({
+        url: '/favorites/?user='+$cookies.userid+'&courseInstance='+courseid,
+        method: "GET",
+      }).success(function(data, status, headers, config) {
+        $scope.favList = data.results;
+        _.each($scope.sessions.results,function(sessionsresult){
+          _.each(sessionsresult.takeaway_set,function(taset){
+            taset["isFavourite"]=false;
+            _.each($scope.favList,function(fav){
+              console.log(JSON.stringify(fav));
+              console.log(fav.takeaway);
+              if(fav.takeaway == taset.id) {
+                taset["isFavourite"]=true;
+              }
             });
           });
         });
-        $scope.displaysessions = true;
-      }
-    };
+        console.log("Getting Favorites values for all takeaways"+JSON.stringify($scope.favList));
+      }).error(function(data, status, headers, config) {
+        $scope.status = status;
+      });
 
+
+      $http({
+        url: '/ratings/?user='+$cookies.userid,
+        method: "GET",
+      }).success(function(data, status, headers, config) {
+        $scope.ratings = data.results;
+
+        _.each($scope.ratings,function(rating){
+          ratingsMap[rating["takeaway"]]=rating["rating_value"];
+        });
+
+        _.each($scope.sessions.results,function(sessionsresult){
+        _.each(sessionsresult.takeaway_set,function(taset){
+            taset["alreadyRated"]=false;
+            if(ratingsMap[taset.id]>-1){
+              taset["rating"]=ratingsMap[taset.id];
+              taset["alreadyRated"]=true;
+            }
+          });
+        });
+        console.log("Getting rating values for all takeaways"+JSON.stringify($scope.ratings));
+      }).error(function(data, status, headers, config) {
+        $scope.status = status;
+      });
+
+      
+      _.each($scope.sessions.results,function(sessionsresult){
+        _.each(sessionsresult.takeaway_set,function(taset){
+        
+          var localizedTime = $.localtime.toLocalTime(taset.created_dt,'MM/dd/yy HH:mm');
+          taset.created_dt =localizedTime;
+        
+          taset["isOwner"]=false;
+          if($cookies.userid == taset.user.id) {
+            taset["isOwner"] = true;
+          }
+        });
+      });
+
+
+      //alert("done"+$scope.sessions.results.length);
+    };
 
     $scope.makeEditable = function(divId, notes) {
       document.getElementById(divId + "_view").style.display = "none";
@@ -190,7 +281,7 @@ ng Modules required for below
       console.log(JSON.stringify(modifiedTakeawayObj));
 
       $http({
-        url: '/takeaways/' + taset.id,
+        url: '/takeaways/' + taset.id+"/",
         method: "PUT",
         data: modifiedTakeawayObj,
         headers: {
@@ -309,7 +400,7 @@ ng Modules required for below
     $scope.updateSessionName = function(modifiedSession,sessionsresult) {
       console.log(JSON.stringify(modifiedSession));
       $http({
-          url: '/sessions/'+modifiedSession.id,
+          url: '/sessions/'+modifiedSession.id+"/",
           method: "PUT",
           data: modifiedSession,
           headers: {'Content-Type': 'application/json'}
@@ -327,5 +418,46 @@ ng Modules required for below
     $scope.closeDialog = function() {
       ngDialog.close();
     }
+
+    /*POST to favourite */
+    $scope.makeFavourite = function(taset) {
+      
+      if(taset.isFavourite) {
+        //DELTE
+        $http({
+          url: '/favorites/'+taset.id,
+          method: "DELETE",
+          data: favObj,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).success(function(data, status, headers, config) {
+          taset.isFavourite = false;
+        }).error(function(data, status, headers, config) {
+          console.error('Error in makeFavourite'+status);
+        });
+      } else {
+        //POST
+        var favObj = {
+          courseInstance: taset.courseInstance.id,
+          takeaway: taset.id, 
+          user: $cookies.userid
+        };
+
+        $http({
+          url: '/favorites/',
+          method: "POST",
+          data: favObj,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).success(function(data, status, headers, config) {
+          taset.isFavourite = true;
+        }).error(function(data, status, headers, config) {
+          console.error('Error in makeFavourite'+status);
+        });
+      }
+
+    };
   });
 })();
