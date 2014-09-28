@@ -89,9 +89,13 @@ app.config(['$resourceProvider', function ($resourceProvider) {
             });
         };
         $scope.getCourses = function(){
-            Courses.query().$promise.then(function(data){
+            Courses.query({"school":"2"}).$promise.then(function(data){
                 $scope.courses = data.results;
-                $scope.newClass.course=$scope.courses[0].id;
+                if($scope.courses.length>0){
+                 $scope.newClass.course=$scope.courses[0].id;  
+                }
+                
+                $scope.creatingCourse=($scope.courses.length==0);
         })};
 
         $scope.getSections = function(){
