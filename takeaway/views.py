@@ -151,7 +151,7 @@ class CourseViewSet(viewsets.ModelViewSet):
     serializer_class = CourseSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
     filter_backends = (filters.DjangoFilterBackend,)
-    filter_fields = ('course_name',)
+    filter_fields = ('course_name','school')
     paginate_by = 100
 
     def pre_save(self, obj):
