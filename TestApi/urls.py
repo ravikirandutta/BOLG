@@ -77,6 +77,7 @@ urlpatterns = patterns('',
     url(r'^contact/', 'takeaway.views.ContactUs', name='contact_us'),
     url(r'^contact_login/','takeaway.views.ContactUsLogin',name='contact_us_login'),
     url(r'^landing/',TemplateView.as_view(template_name="landing.html")),
+    url(r'^demo/',TemplateView.as_view(template_name="demo.html")),
 
 )
 
