@@ -371,26 +371,27 @@ class TakeAwayProfileViewSet(viewsets.ModelViewSet):
         filter_fields = ('id','user',)
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
-        def pre_save(self, obj, created=False):
+        def post_save(self, obj, created=False):
             # check to see if any new courses are added. If so send the new course list in the request object
             if not created:
                 actual = TakeAwayProfile.objects.get(pk=obj.id)
                 new = obj
-                new_courses = list (set(new.courseInstances.all()) - set(actual.courseInstances.all()))
+                #new_courses = list (set(new.courseInstances.all()) - set(actual.courseInstances.all()))
                 #print 'old courses'
                 #print actual.courseInstances.all()
                 #print 'new courses'
                 #print obj.courseInstances.all()
+                course_id = self.request.QUERY_PARAMS.get('course_id', None)
 
-                for courseinstance in new_courses:
+                if course_id:
+                    courseinstance = CourseInstance.objects.get(pk=course_id)
                     recipients = courseinstance.students.all()
                     for recipient in recipients:
                         recipient_user = recipient.user
                         curr_user = obj.user
                         if recipient_user.id <> curr_user.id:
 
-                            message = 'TEST'
-                                                        #curr_user.username + ' joined ' + str(courseinstance)
+                            message = curr_user.username + ' joined ' + str(courseinstance)
                             notify.send(curr_user,recipient=recipient_user, verb='NEW_COURSEMATE',description= message)     
 
         
