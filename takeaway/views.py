@@ -151,7 +151,7 @@ class CourseViewSet(viewsets.ModelViewSet):
     serializer_class = CourseSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
     filter_backends = (filters.DjangoFilterBackend,)
-    filter_fields = ('course_name',)
+    filter_fields = ('course_name','school')
     paginate_by = 100
 
     def pre_save(self, obj):
@@ -160,30 +160,6 @@ class CourseViewSet(viewsets.ModelViewSet):
         """
         obj.created_by = self.request.user.username
 
-    def post_save(self, obj, created=False):
-        """
-        Set the object's owner, based on the incoming request.
-        """
-        if created :
-            profile_list = TakeAwayProfile.objects.filter(user=self.request.user)
-
-            if profile_list.count() == 1 :
-                profile = profile_list[0]
-                # Create a new course_instance using the newly created course
-
-                course_instance = CourseInstance(course=obj,
-                                                                section=Section.objects.get(name='Wednesday'),
-                                                                program=profile.program,
-                                                                batch=profile.batch,
-                                                                year=profile.batch,
-                                                                status=Status.objects.get(school=profile.school,value='Active'),
-                                                                term=Term.objects.get(pk=1))
-                course_instance.save()
-                s1 = Session(courseInstance=course_instance,session_name = 'Week 1',session_dt = datetime.now()).save()
-                s2 = Session(courseInstance=course_instance,session_name = 'Week 2',session_dt = datetime.now()+timedelta(1)).save()
-                s3 = Session(courseInstance=course_instance,session_name = 'Week 3',session_dt = datetime.now()+timedelta(2)).save()
-                s4 = Session(courseInstance=course_instance,session_name = 'Week 4',session_dt = datetime.now()+timedelta(3)).save()
-                s5 = Session(courseInstance=course_instance,session_name = 'Week 5',session_dt = datetime.now()+timedelta(4)).save()
 
 
 
