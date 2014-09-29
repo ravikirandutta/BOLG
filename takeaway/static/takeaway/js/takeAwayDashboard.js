@@ -60,6 +60,16 @@ ng Modules required for below
   });
 
 
+  app.directive('publicPrivate', function() {
+    return {
+      restrict: 'A',
+      require: '^ngModel',
+      scope: { taset: '=', performPost : '@', courseId: '@', sessionId: '@'},
+      templateUrl : '/static/takeaway/templates/publicPrivateButtonTemplate.html'
+    }
+  });
+
+
   app.config(['ngDialogProvider', function (ngDialogProvider) {
     ngDialogProvider.setDefaults({
       className: 'ngdialog-theme-default',
@@ -73,8 +83,6 @@ ng Modules required for below
       }
     });
   }]);
-
-  //http://localhost:8000/sessions/?courseInstance=2&ordering=session_dt
 
   app.factory('CoursesFactory', ['$resource',
     function($resource) {
@@ -510,9 +518,15 @@ app.factory('TagsFactory', ['$resource',
 
     };
 
+    
+
+  });
+
+app.controller('publicPrivateButtonCtrl',
+    function($scope, $http, $cookies, $resource, $rootScope) {
+
     /*Public private buttons method */
-    /*TODO: In UI same div tags used in 3 different places, but we can create one directive for that and use. */
-    $scope.toggleButtons = function(taset, clickedButton, postImmediately) {
+    $scope.toggleButtons = function(taset, clickedButton, postImmediately,courseId, sessionId) {
       if (clickedButton == taset.is_public) {
         taset.is_public = (clickedButton == true) ? false : true;
       } else {
@@ -520,37 +534,38 @@ app.factory('TagsFactory', ['$resource',
       }
 
       //From Edit takeaway or New Takeaway, onchange of public-private option do not make service call to update.
-      if(postImmediately == false)
-        return;
+      if(postImmediately == true || postImmediately == 'true') {
+          var tagIdArr = new Array();
+          _.each(taset.tags,function(tagId){
+              tagIdArr.push(tagId.id);
+          });
 
-      var tagIdArr = new Array();
-      _.each(taset.tags,function(tagId){
-          tagIdArr.push(tagId.id);
-      });
+          var modifiedTakeawayObj = {
+            id : taset.id,
+            notes: taset.notes,
+            user: $cookies.userid,
+            courseInstance: courseId,
+            session: sessionId,
+            is_public: taset.is_public,
+            username : $cookies.username,
+            tags: tagIdArr,
+            average_rating : taset.average_rating,
+          };
 
-      var modifiedTakeawayObj = {
-        id : taset.id,
-        notes: taset.notes,
-        user: $cookies.userid,
-        courseInstance: taset.courseInstance.id,
-        session: taset.session.id,
-        is_public: taset.is_public,
-        username : $cookies.username,
-        tags: tagIdArr,
-        average_rating : taset.average_rating,
-      };
-
-      $http({
-        url: '/takeaways/' + taset.id+"/",
-        method: "PUT",
-        data: modifiedTakeawayObj,
-        headers: {'Content-Type': 'application/json'}
-      }).success(function(data, status, headers, config) {
-        console.log("Successfully updated public flag in server");
-      }).error(function(data, status, headers, config) {
-        $scope.status = status;
-      });
+          $http({
+            url: '/takeaways/' + taset.id+"/",
+            method: "PUT",
+            data: modifiedTakeawayObj,
+            headers: {'Content-Type': 'application/json'}
+          }).success(function(data, status, headers, config) {
+            console.log("Successfully updated public flag in server");
+          }).error(function(data, status, headers, config) {
+            $scope.status = status;
+          });
+        }
     };
 
-  });
+    });  
 })();
+
+
