@@ -14,11 +14,18 @@ app.config(['$resourceProvider', function ($resourceProvider) {
                });
     }]);
 
+    app.factory('ProgramsFactory', ['$resource',function($resource){
+         return $resource('/programs/', {}, {
+                query: {method:'GET', isArray:false},
+               });
+    }]);
 
-  app.controller('SchoolController',function($scope,$http,$cookies,$resource,Schools){
+
+  app.controller('SchoolController',function($scope,$http,$cookies,$resource,Schools,ProgramsFactory){
     $scope.availableSchools={};
     $scope.currentSchool={};
     $scope.school = "emory";
+    $scope.programs = {};
 
         $scope.selectSchool = function(school_id){
           angular.forEach($scope.availableSchools,function(value){
@@ -27,8 +34,13 @@ app.config(['$resourceProvider', function ($resourceProvider) {
             }
           });
           $scope.setValidEmailFormat();
+          ProgramsFactory.query({"school":$scope.currentSchool.id}).$promise.then(function(data){
+              $scope.programs = data.results;
+          });
+
         }
 
+        $scope.test = function(){}
 
         $scope.setValidEmailFormat = function(){
             $scope.validEmailFormat = "Email should be one of the: ";

@@ -51,7 +51,7 @@
                 </div>
                 <div class="widget-content">
                     <div class="padd">
-                      <form  id="registation-form" method="post" action="" class="form-horizontal">
+                      <form  id="registation-form" method="post" action="/accounts/register/" class="form-horizontal">
                         <!-- Registration form starts -->
                           <!-- Name -->
                           {% csrf_token %}
@@ -140,7 +140,7 @@
                             {{form.program.errors}}
                             <label class="control-label col-lg-3" for="program">Program</label>
                             <div class="col-lg-9">
-                                      {{form.program}}
+                                      <select id="id_program" name="program" ng-model="selectedProgram" ng-options="program.id as program.name for program in programs"></select>
                             </div>
                           </div>
                           <!-- Select box -->
@@ -154,7 +154,7 @@
                                 <input  type="checkbox"> Accept Terms &amp; Conditions
                               </label>
                               </div>
-                              <button type="submit" id="register-btn" class="btn btn-danger" >Register</button>
+                              <button type="submit"  id="register-btn" class="btn btn-danger" >Register</button>
                               <button type="reset" id="reset-btn" class="btn btn-success">Reset</button>
                             </div>
                           </div>
