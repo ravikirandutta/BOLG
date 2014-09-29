@@ -303,6 +303,16 @@ def update_takeaway_on_rating_save(sender, **kwargs):
         takeaway.total_raters = total_raters
         takeaway.save()
 
+        profile = TakeAwayProfile.objects.get(user=takeaway.user)
+        try:
+            email_settings = EmailSettings.objects.all().get(user=takeaway.user)
+        except EmailSettings.DoesNotExist :
+            email_settings = EmailSettings.objects.create(user=takeaway.user)
+        message = rating.user.first_name + ' rated takeaway created by ' + takeaway.user.first_name 
+        
+        notify.send(rating.user,recipient=takeaway.user, verb='RATED',description= message,action_object=takeaway)
+
+
 user_registered.connect(user_registered_callback)
 
 # import pdb
