@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" ng-app="registration">
     <head>
@@ -34,15 +33,13 @@
           <div  >
             <!-- ng-init="schools=[{'name':'EMORY','mail_format':'@emory.edu'},{'name':'WHARTON','mail_format':'@wharton.edu'}] -->
   <p>Choose your school:</p>
-  <ul>
-   <li data-ng-repeat="x in availableSchools">
-    <button ng-click=selectSchool(x.id)  />
+  <div id="select-school">
+    <button id="select-school-btn" data-ng-repeat="x in availableSchools" ng-click=selectSchool(x.id)  />
       {% verbatim %}
       {{ x.school_name }}
       {% endverbatim %}
-    </li>
-
-  </ul>
+    </button>
+  </div>
 </div>
             <!-- Widget starts -->
             <div  class="widget wred" >
