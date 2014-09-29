@@ -9,6 +9,7 @@ logger = logging.getLogger(__name__)
 
 class School(models.Model):
     school_name = models.CharField(max_length=400)
+    image_url = models.URLField(default='')
 
     def __unicode__(self):
         return smart_unicode(self.school_name)
@@ -301,6 +302,16 @@ def update_takeaway_on_rating_save(sender, **kwargs):
         takeaway.average_rating = average_rating
         takeaway.total_raters = total_raters
         takeaway.save()
+
+        profile = TakeAwayProfile.objects.get(user=takeaway.user)
+        try:
+            email_settings = EmailSettings.objects.all().get(user=takeaway.user)
+        except EmailSettings.DoesNotExist :
+            email_settings = EmailSettings.objects.create(user=takeaway.user)
+        message = rating.user.first_name + ' rated takeaway created by ' + takeaway.user.first_name 
+        
+        notify.send(rating.user,recipient=takeaway.user, verb='RATED',description= message,action_object=takeaway)
+
 
 user_registered.connect(user_registered_callback)
 
