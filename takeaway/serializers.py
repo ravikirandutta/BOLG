@@ -149,6 +149,14 @@ class ContactUsSerializer(serializers.ModelSerializer):
         model = ContactUs
 
 class EmailSettingsSerializer(serializers.ModelSerializer):
+    daily_digest = serializers.SerializerMethodField('have_daily_digest')
+    
     class Meta:
         model = EmailSettings
+     
+
+    def have_daily_digest(self, obj):
+        if obj.mail_when_newuser == 2 or obj.mail_when_takeaway == 2 or obj.mail_when_rated == 2 :
+            return True
+        return False
 
