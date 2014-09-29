@@ -197,7 +197,7 @@ app.config(['$resourceProvider', function ($resourceProvider) {
             } else{
                 $scope.userRegisteredCourses.push(courseId);
                 $scope.userProfile.courseInstances=$scope.userRegisteredCourses;
-                UserProfileUpdate.save({id:$scope.userProfile.id},$scope.userProfile);
+                UserProfileUpdate.save({id:$scope.userProfile.id,"course_id":courseId},$scope.userProfile);
             }
         };
         
