@@ -9,6 +9,7 @@ logger = logging.getLogger(__name__)
 
 class School(models.Model):
     school_name = models.CharField(max_length=400)
+    image_url = models.URLField(default='')
 
     def __unicode__(self):
         return smart_unicode(self.school_name)

@@ -32,11 +32,13 @@
         <div class="admin-form">
           <div  >
             <!-- ng-init="schools=[{'name':'EMORY','mail_format':'@emory.edu'},{'name':'WHARTON','mail_format':'@wharton.edu'}] -->
-  <p>Choose your school:</p>
+  <h3>Choose your school:</h3>
   <div id="select-school">
-    <button id="select-school-btn" data-ng-repeat="x in availableSchools" ng-click=selectSchool(x.id)  />
+    <button   id="select-school-btn" data-ng-repeat="x in availableSchools" ng-click=selectSchool(x.id)   >
+
       {% verbatim %}
-      {{ x.school_name }}
+      {{x.school_name}}
+
       {% endverbatim %}
     </button>
   </div>

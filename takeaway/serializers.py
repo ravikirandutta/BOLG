@@ -32,7 +32,7 @@ class SchoolSerializer(serializers.ModelSerializer):
     emailformat_set = EmailFormatSerializer(source='emailformat_set')
     class Meta:
         model = School
-        fields = ('id', 'school_name','emailformat_set')
+        fields = ('id', 'school_name','emailformat_set','image_url')
 
 
 
