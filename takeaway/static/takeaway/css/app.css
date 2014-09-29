@@ -295,24 +295,15 @@ background-color:#e7edf8;
 #select-school-btn{
   color: #fff;
 font-size: 15px;
-padding: 18px 18px;
 margin-left: 10px;
-width:150px;
-background: #31a480;
-border-radius: 30px !important;
-
+background-color: #e9eaed;
+border:0px;
 }
 
 #select-school-btn:hover {
   color: #fff;
 font-size: 15px;
-padding: 18px 18px;
 margin-left: 10px;
-background: #31a480;
-border-radius: 30px !important;
--webkit-transform: scale(1.2, 1.2);
-  -webkit-transition-duration: 500ms;
-  -webkit-transition-timing-function: ease-out;
-  -webkit-transform:rotate(360deg);
-    transform:rotate(360deg);
+border:0px;
+background-color: #e9eaed;
 }

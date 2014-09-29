@@ -33,38 +33,6 @@
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
 
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js" type="text/javascript"></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js" type="text/javascript"></script>
-  <script src="/static/takeaway/js/lib/jquery.autosize.min.js" type="text/javascript"></script>
-  <script src="/static/takeaway/js/lib/bootstrap.min.js"></script>
-  <script src="/static/takeaway/js/lib/jquery.cookie.js" type="text/javascript"></script>
-<!--   <script src="/static/takeaway/js/lib/jquery.raty.js" type="text/javascript"></script> -->
-  <script src="/static/takeaway/js/lib/bootstrap-tagsinput.js" type="text/javascript"></script>
-
-  <script src="/static/takeaway/js/lib/bootstrap-switch.js" type="text/javascript"></script>
-
-<script src="/static/takeaway/js/jquery.gritter.min.js" type="text/javascript"></script>
-<script src="/static/takeaway/js/lib/jquery.rateit.js" type="text/javascript"></script>
-<script src="/static/takeaway/js/lib/localtime.js" type="text/javascript"></script>
-
-
-  <script src="/static/takeaway/js/session.js?1411885089" type="text/javascript"></script>
-  <script src="/static/takeaway/js/course.js?1411885089" type="text/javascript"></script>
-  <script src="/static/takeaway/js/tags.js?1411885089" type="text/javascript"></script>
-  <script src="/static/takeaway/js/app.js?1411885089" type="text/javascript"></script>
-  <script src="/static/takeaway/js/notification.js?1411885089" type="text/javascript"></script>
-
-
-    <!-- jQuery -->
-
-    <!-- Bootstrap JS -->
-
-
-    <!-- jQuery UI -->
-    <script src="/static/takeaway/js/lib/custom.js"></script>
-    <script src="/static/takeaway/js/takeaway.js?1411885089" type="text/javascript"></script>
-
-
 
     <style type="text/css">
 
@@ -103,45 +71,9 @@
 
 
 
-<script>
-      var csrftoken = $.cookie("csrftoken");
 
-function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-$.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-
-             if(settings.type == 'POST' || settings.type == 'PUT' || settings.type == 'DELETE'){
-                if (settings.url.substr(-1) != '/') settings.url += '/';
-            }
-
-    },
-    complete: function(xhr, status) {
-        if (xhr.status == 403) {
-           window.location.replace("/takeaways/index");
-        }
-    }
-
-});
-</script>
 
 <!-- google analytics tracking code -->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-54183707-2', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
 
     <div class="navbar navbar-inverse navbar-fixed-top bs-docs-nav">
         <div class="container">
@@ -282,7 +214,7 @@ $.ajaxSetup({
             -->
                 <div class="clearfix"></div>
 
-            <ul class="nav nav-pills"><li  data-step="1" data-intro="click on the course" class="course course-selected"><a class="course-item"><span id="course1"><i class="fa fa-folder-open"></i> <b>BUS 634P Strategic Management</b></span></a></li><li class="course course-deselected"><a class="course-item"><span id="course36"><i class="fa fa-folder-open"></i> <b>BUS 634P Strategic Management</b></span></a></li><li class="course course-selected course-deselected"><a class="course-item"><span id="course3"><i class="fa fa-folder-open"></i> <b>BUS 628P Investment Banking </b></span></a></li></ul></div>
+            <ul class="nav nav-pills"><li data-step="1" data-intro="click on the course" class="course course-selected"><a class="course-item"><span id="course1"><i class="fa fa-folder-open"></i> <b>BUS 634P Strategic Management</b></span></a></li><li class="course course-deselected"><a class="course-item"><span id="course36"><i class="fa fa-folder-open"></i> <b>BUS 634P Strategic Management</b></span></a></li><li class="course course-selected course-deselected"><a class="course-item"><span id="course3"><i class="fa fa-folder-open"></i> <b>BUS 628P Investment Banking </b></span></a></li></ul></div>
 
             <div style="right: -252px;">
                    <div class="row">
@@ -381,7 +313,7 @@ $.ajaxSetup({
     <li>
                                 <div class="recent-content">
                                   <div class="recent-meta">Posted on 07/09/14 08:41 by SATLURI</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Some ways to resolve prisoner's dilemma are credible pre-commitment, bonding, signing contracts, shaming, threat of retaliating the next round.                                 </pre></div>
+                                  <div id="editable-notes" data-step="3" data-intro="Edit your takeaway"><pre id="takeaway" class="takeaway-pre">Some ways to resolve prisoner's dilemma are credible pre-commitment, bonding, signing contracts, shaming, threat of retaliating the next round.                                 </pre></div>
 
                                    <div class="btn-group" style="float: right; display: none;">
 
@@ -399,7 +331,7 @@ $.ajaxSetup({
 
 
 
-                                    <div class="rateit" data-rateit-value="5" data-rateit-ispreset="true" data-rateit-readonly="true" data-rateit-resetable="false"><button id="rateit-reset-2" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-2" style="display: none;"></button><div1 id="rateit-range-2" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-2" aria-valuemin="0" aria-valuemax="5" aria-valuenow="5" style="width: 80px; height: 16px;" aria-readonly="true"><div class="rateit-selected rateit-preset" style="height: 16px; width: 80px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="5" data-rateit-ispreset="true" data-rateit-readonly="true" data-rateit-resetable="false"><button id="rateit-reset-2" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-2" style="display: none;"></button><div1 id="rateit-range-2" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-2" aria-valuemin="0" aria-valuemax="5" aria-valuenow="5" style="width: 80px; height: 16px;" aria-readonly="true"><div class="rateit-selected rateit-preset" style="height: 16px; width: 80px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 1)</span>
 
 
@@ -407,18 +339,18 @@ $.ajaxSetup({
 
                                      </div>
 
-                                     <div id="favourite">
+                                     <span id="favourite">
                                        <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
 
-                                     </div>
+                                     </span>
 
 
 
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
 </div><div>
     <li>
@@ -448,7 +380,7 @@ $.ajaxSetup({
 
 
 
-                                    <div class="rateit" data-rateit-value="3.5" data-rateit-ispreset="true" data-rateit-readonly="true" data-rateit-resetable="false"><button id="rateit-reset-3" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-3" style="display: none;"></button><div1 id="rateit-range-3" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-3" aria-valuemin="0" aria-valuemax="5" aria-valuenow="3.5" style="width: 80px; height: 16px;" aria-readonly="true"><div class="rateit-selected rateit-preset" style="height: 16px; width: 56px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="3.5" data-rateit-ispreset="true" data-rateit-readonly="true" data-rateit-resetable="false"><button id="rateit-reset-3" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-3" style="display: none;"></button><div1 id="rateit-range-3" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-3" aria-valuemin="0" aria-valuemax="5" aria-valuenow="3.5" style="width: 80px; height: 16px;" aria-readonly="true"><div class="rateit-selected rateit-preset" style="height: 16px; width: 56px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 1)</span>
 
 
@@ -466,10 +398,10 @@ $.ajaxSetup({
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
-</div><div>
+</ul></div><div>
     <li>
                                 <div class="recent-content">
                                   <div class="recent-meta">Posted on 07/09/14 08:41 by SATLURI</div>
@@ -491,7 +423,7 @@ $.ajaxSetup({
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-4" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div1 id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-4" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div1 id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -509,8 +441,8 @@ $.ajaxSetup({
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
 </div><div>
     <li>
@@ -534,7 +466,7 @@ $.ajaxSetup({
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-5" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-5" style="display: none;"></button><div1 id="rateit-range-5" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-5" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-5" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-5" style="display: none;"></button><div1 id="rateit-range-5" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-5" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -552,151 +484,30 @@ $.ajaxSetup({
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
 </div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by SATLURI</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Diagnostic reasoning is the ability to quickly see relationships between apparently unrelated pieces of data. It is the ability to leap to accurate conclusions without using a systematic, logical, step-by-step approach. This starts not with facts but with opinions (hypotheses) which we don't argue with. We test the hypotheses. This comes with "Experience" </pre></div>
+    </div>
+                              
 
-                                   <div class="btn-group" style="float: right; display: none;">
+</div>
+                              
 
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
+</div>
+                              
 
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-6" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-6" style="display: none;"></button><div1 id="rateit-range-6" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-6" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </div>
-                              </li>
-
-</div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by SATLURI</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Nash Equilibrium : A place where neither player wants to change strategy unilaterally(YY).If all players have a dominant strategy, then there can be only one Nash equilibrium - the outcome where all players choose their dominant strategy. If there is another outcome where both players have better outcome(XX), then the current outcome is 'Pareto inefficient'. An outcome is Pareto efficient if moving one player to another outcome worsens the outcome for the other player.</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-                                    <!--
-                                        <i>theory</i><button class="btn btn-xs btn-danger tag-remove" name='1' ><i class="fa fa-times"></i> </button>&nbsp; -->
-
-                                        <span class="label label-warning"><i class="fa fa-tags"></i>theory</span>
-
-
-                                    <!--
-                                        <i>application</i><button class="btn btn-xs btn-danger tag-remove" name='2' ><i class="fa fa-times"></i> </button>&nbsp; -->
-
-                                        <span class="label label-warning"><i class="fa fa-tags"></i>application</span>
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-7" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-7" style="display: none;"></button><div1 id="rateit-range-7" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-7" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </div>
-                              </li>
-
-</div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 09/27/14 22:00 by ravi</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre takeaway-pre-owner">An outcome is Pareto efficient if moving one player to another outcome worsens the outcome for the other player.</pre></div>
-
-                                   <div class="btn-group" style="float:right">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-                                    <!--
-                                        <i>pareto</i><button class="btn btn-xs btn-danger tag-remove" name='13' ><i class="fa fa-times"></i> </button>&nbsp; -->
-
-                                        <span class="label label-warning"><i class="fa fa-tags"></i>pareto</span>
-
-
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="true" data-rateit-resetable="false"><button id="rateit-reset-8" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-8" style="display: none;"></button><div1 id="rateit-range-8" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-8" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="true"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-                                     <span>
-                                     <div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-animate"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">public</span><label class="bootstrap-switch-label">&nbsp;</label><span class="bootstrap-switch-handle-off bootstrap-switch-default">private</span><input type="checkbox" class="switch" name="my-checkbox" animate="true" data-on-text="public" data-off-text="private" offcolor="danger" checked=""></div></div>
-
-                                     </span>
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </div>
-                              </li>
-
-</div></div></ul>
+</div></div>
 
                           </div>
-                        </div>
+                        
 
 
 
-                      </div>
+                      
 
 
-</div><div>
+<div>
 
 
                     <div class="widget wlightblue">
@@ -736,7 +547,7 @@ $.ajaxSetup({
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-9" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-9" style="display: none;"></button><div1 id="rateit-range-9" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-9" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-9" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-9" style="display: none;"></button><div1 id="rateit-range-9" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-9" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -754,8 +565,8 @@ $.ajaxSetup({
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
 </div><div>
     <li>
@@ -779,7 +590,7 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-10" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-10" style="display: none;"></button><div1 id="rateit-range-10" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-10" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-10" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-10" style="display: none;"></button><div1 id="rateit-range-10" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-10" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -797,10 +608,10 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
-</div><div>
+</ul></div><div>
     <li>
                                 <div class="recent-content">
                                   <div class="recent-meta">Posted on 07/09/14 08:41 by hamdan.merchant@emory.edu</div>
@@ -816,7 +627,7 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-11" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-11" style="display: none;"></button><div1 id="rateit-range-11" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-11" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-11" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-11" style="display: none;"></button><div1 id="rateit-range-11" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-11" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -834,8 +645,8 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
 </div><div>
     <li>
@@ -853,7 +664,7 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-12" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-12" style="display: none;"></button><div1 id="rateit-range-12" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-12" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-12" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-12" style="display: none;"></button><div1 id="rateit-range-12" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-12" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -871,8 +682,8 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
 </div><div>
     <li>
@@ -890,7 +701,7 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-13" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-13" style="display: none;"></button><div1 id="rateit-range-13" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-13" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-13" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-13" style="display: none;"></button><div1 id="rateit-range-13" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-13" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -908,8 +719,8 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
 </div><div>
     <li>
@@ -927,7 +738,7 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-14" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-14" style="display: none;"></button><div1 id="rateit-range-14" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-14" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-14" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-14" style="display: none;"></button><div1 id="rateit-range-14" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-14" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -945,10 +756,10 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
-</div><div>
+<div>
     <li>
                                 <div class="recent-content">
                                   <div class="recent-meta">Posted on 07/09/14 08:41 by hamdan.merchant@emory.edu</div>
@@ -964,7 +775,7 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-15" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-15" style="display: none;"></button><div1 id="rateit-range-15" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-15" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-15" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-15" style="display: none;"></button><div1 id="rateit-range-15" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-15" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -982,10 +793,10 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
-</div><div>
+<div>
     <li>
                                 <div class="recent-content">
                                   <div class="recent-meta">Posted on 07/09/14 08:41 by SATLURI</div>
@@ -1001,7 +812,7 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-16" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-16" style="display: none;"></button><div1 id="rateit-range-16" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-16" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-16" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-16" style="display: none;"></button><div1 id="rateit-range-16" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-16" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -1019,10 +830,10 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
-</div><div>
+<div>
     <li>
                                 <div class="recent-content">
                                   <div class="recent-meta">Posted on 07/09/14 08:41 by njain</div>
@@ -1041,7 +852,7 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-17" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-17" style="display: none;"></button><div1 id="rateit-range-17" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-17" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-17" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-17" style="display: none;"></button><div1 id="rateit-range-17" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-17" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -1059,10 +870,10 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
-</div><div>
+<div>
     <li>
                                 <div class="recent-content">
                                   <div class="recent-meta">Posted on 07/09/14 08:41 by njain</div>
@@ -1080,7 +891,7 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-18" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-18" style="display: none;"></button><div1 id="rateit-range-18" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-18" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-18" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-18" style="display: none;"></button><div1 id="rateit-range-18" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-18" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -1098,10 +909,10 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
-</div><div>
+<div>
     <li>
                                 <div class="recent-content">
                                   <div class="recent-meta">Posted on 07/09/14 08:41 by njain</div>
@@ -1119,7 +930,7 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-19" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-19" style="display: none;"></button><div1 id="rateit-range-19" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-19" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-19" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-19" style="display: none;"></button><div1 id="rateit-range-19" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-19" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -1137,10 +948,10 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
-</div><div>
+<div>
     <li>
                                 <div class="recent-content">
                                   <div class="recent-meta">Posted on 07/09/14 08:41 by njain</div>
@@ -1158,7 +969,7 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-20" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-20" style="display: none;"></button><div1 id="rateit-range-20" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-20" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-20" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-20" style="display: none;"></button><div1 id="rateit-range-20" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-20" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -1176,20 +987,20 @@ Blockaded Entry : Entry is blockaded if structural barriers are too high. For ex
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
-
-</div></div></ul>
-
-                          </div>
-                        </div>
+                                </li></div>
+                              
 
 
 
-                      </div>
+                          
+                        
 
 
-</div><div>
+
+                      
+
+
+<div>
 
 
                     <div class="widget wlightblue">
@@ -1271,7 +1082,7 @@ declining.
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-21" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-21" style="display: none;"></button><div1 id="rateit-range-21" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-21" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-21" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-21" style="display: none;"></button><div1 id="rateit-range-21" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-21" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -1289,8 +1100,8 @@ declining.
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
 </div><div>
     <li>
@@ -1315,7 +1126,7 @@ No network externalities</pre></div>
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-22" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-22" style="display: none;"></button><div1 id="rateit-range-22" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-22" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-22" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-22" style="display: none;"></button><div1 id="rateit-range-22" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-22" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -1333,10 +1144,10 @@ No network externalities</pre></div>
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
-</div><div>
+</ul></div><div>
     <li>
                                 <div class="recent-content">
                                   <div class="recent-meta">Posted on 07/09/14 08:41 by hamdan.merchant@emory.edu</div>
@@ -1354,7 +1165,7 @@ Structural-Inherent natural advantages that incumbents have-which prevents new e
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-23" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-23" style="display: none;"></button><div1 id="rateit-range-23" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-23" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-23" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-23" style="display: none;"></button><div1 id="rateit-range-23" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-23" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -1372,8 +1183,8 @@ Structural-Inherent natural advantages that incumbents have-which prevents new e
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
 </div><div>
     <li>
@@ -1403,7 +1214,7 @@ product.</pre></div>
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-24" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-24" style="display: none;"></button><div1 id="rateit-range-24" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-24" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-24" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-24" style="display: none;"></button><div1 id="rateit-range-24" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-24" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -1421,8 +1232,8 @@ product.</pre></div>
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
 </div><div>
     <li>
@@ -1451,7 +1262,7 @@ difficult or costly.</pre></div>
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-25" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-25" style="display: none;"></button><div1 id="rateit-range-25" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-25" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-25" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-25" style="display: none;"></button><div1 id="rateit-range-25" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-25" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -1469,8 +1280,8 @@ difficult or costly.</pre></div>
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
 </div><div>
     <li>
@@ -1496,7 +1307,7 @@ sensitive.</pre></div>
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-26" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-26" style="display: none;"></button><div1 id="rateit-range-26" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-26" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-26" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-26" style="display: none;"></button><div1 id="rateit-range-26" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-26" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -1514,20 +1325,20 @@ sensitive.</pre></div>
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
-
-</div></div></ul>
-
-                          </div>
-                        </div>
+                                </li></div>
+                              
 
 
 
-                      </div>
+                          
+                        
 
 
-</div><div>
+
+                      
+
+
+<div>
 
 
                     <div class="widget wlightblue">
@@ -1565,7 +1376,7 @@ sensitive.</pre></div>
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-27" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-27" style="display: none;"></button><div1 id="rateit-range-27" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-27" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-27" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-27" style="display: none;"></button><div1 id="rateit-range-27" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-27" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -1583,10 +1394,10 @@ sensitive.</pre></div>
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
-</div></div></ul>
+</div></ul></div>
 
                           </div>
                         </div>
@@ -1596,7 +1407,7 @@ sensitive.</pre></div>
                       </div>
 
 
-</div><div>
+<div>
 
 
                     <div class="widget wlightblue">
@@ -1638,7 +1449,7 @@ sensitive.</pre></div>
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-28" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-28" style="display: none;"></button><div1 id="rateit-range-28" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-28" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-28" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-28" style="display: none;"></button><div1 id="rateit-range-28" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-28" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -1656,10 +1467,10 @@ sensitive.</pre></div>
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
-</div></div></ul>
+</div></ul></div>
 
                           </div>
                         </div>
@@ -1669,7 +1480,7 @@ sensitive.</pre></div>
                       </div>
 
 
-</div><div>
+<div>
 
 
                     <div class="widget wlightblue">
@@ -1739,7 +1550,7 @@ sensitive.</pre></div>
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-29" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-29" style="display: none;"></button><div1 id="rateit-range-29" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-29" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-29" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-29" style="display: none;"></button><div1 id="rateit-range-29" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-29" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -1757,10 +1568,10 @@ sensitive.</pre></div>
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
-</div></div></ul>
+</div></ul></div>
 
                           </div>
                         </div>
@@ -1770,7 +1581,7 @@ sensitive.</pre></div>
                       </div>
 
 
-</div><div>
+<div>
 
 
                     <div class="widget wlightblue">
@@ -1821,7 +1632,7 @@ o   A strong position on the value chain does not guarantee a strong position el
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-30" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-30" style="display: none;"></button><div1 id="rateit-range-30" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-30" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-30" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-30" style="display: none;"></button><div1 id="rateit-range-30" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-30" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -1839,8 +1650,8 @@ o   A strong position on the value chain does not guarantee a strong position el
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
 </div><div>
     <li>
@@ -1863,7 +1674,7 @@ o   A strong position on the value chain does not guarantee a strong position el
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-31" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-31" style="display: none;"></button><div1 id="rateit-range-31" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-31" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-31" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-31" style="display: none;"></button><div1 id="rateit-range-31" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-31" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -1881,10 +1692,10 @@ o   A strong position on the value chain does not guarantee a strong position el
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
-</div><div>
+</ul></div><div>
     <li>
                                 <div class="recent-content">
                                   <div class="recent-meta">Posted on 07/09/14 08:41 by jodi.evans@emory.edu</div>
@@ -1906,7 +1717,7 @@ o   A strong position on the value chain does not guarantee a strong position el
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-32" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-32" style="display: none;"></button><div1 id="rateit-range-32" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-32" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-32" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-32" style="display: none;"></button><div1 id="rateit-range-32" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-32" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -1924,8 +1735,8 @@ o   A strong position on the value chain does not guarantee a strong position el
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
 </div><div>
     <li>
@@ -1950,7 +1761,7 @@ o   A strong position on the value chain does not guarantee a strong position el
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-33" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-33" style="display: none;"></button><div1 id="rateit-range-33" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-33" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-33" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-33" style="display: none;"></button><div1 id="rateit-range-33" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-33" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
 
 
@@ -1968,20 +1779,20 @@ o   A strong position on the value chain does not guarantee a strong position el
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </div>
-                              </li>
+                                </li></div>
+                              
 
-</div></div></ul>
+</div></div>
 
-                          </div>
-                        </div>
-
-
-
-                      </div>
+                          
+                        
 
 
-</div><div>
+
+                      
+
+
+<div>
 
 
                     <div class="widget wlightblue">
@@ -2013,10 +1824,10 @@ o   A strong position on the value chain does not guarantee a strong position el
                       </div>
 
 
-</div></div></div>
-                  </div>
+</div>
+                  
 
-                </div>
+                
 
 
             <!--/ Matter ends -->
@@ -2325,4 +2136,5 @@ o   A strong position on the value chain does not guarantee a strong position el
     </div>
   </div>
 </div><script src="http://js-agent.newrelic.com/nr-460.min.js"></script><script type="text/javascript" src="http://beacon-3.newrelic.com/1/14a83b3fa0?a=4765300&amp;pl=1411885091987&amp;v=460.9fd672a&amp;to=ZwZQMBRYDEFTWkVYDF5MdBEIWhZbXVceRQJbBlMTB0BMRFtcRkJZWQ1WAR4%3D&amp;qt=7&amp;ap=181&amp;be=1061&amp;fe=2468&amp;dc=1651&amp;f=%5B%5D&amp;perf=%7B%22timing%22:%7B%22of%22:1411885091987,%22n%22:0,%22u%22:705,%22ue%22:705,%22dl%22:798,%22di%22:2709,%22ds%22:2710,%22de%22:3116,%22dc%22:3528,%22l%22:3528,%22le%22:3550,%22r%22:0,%22re%22:426,%22f%22:426,%22dn%22:426,%22dne%22:426,%22c%22:426,%22ce%22:426,%22rq%22:442,%22rp%22:696,%22rpe%22:765%7D,%22navigation%22:%7B%22rc%22:1%7D%7D&amp;jsonp=NREUM.setToken"></script>
-<script src="/static/takeaway/js/lib/intro.js" type="text/javascript"></script></body></html>
+<script src="/static/takeaway/js/lib/intro.js" type="text/javascript"></script>
+<script src="http://js-agent.newrelic.com/nr-460.min.js"></script><script type="text/javascript" src="http://beacon-3.newrelic.com/1/14a83b3fa0?a=4765300&amp;pl=1412009400964&amp;v=460.9fd672a&amp;to=ZwZQMBRYDEFTWkVYDF5MdBEIWhZbXVceRQJbBlMTB0BMRFtcRkJZWQ1WAR4%3D&amp;qt=7&amp;ap=181&amp;f=%5B%5D&amp;perf=%7B%22timing%22:%7B%22of%22:1412009400964,%22n%22:0,%22u%22:224,%22ue%22:225,%22dl%22:233,%22di%22:392,%22ds%22:392,%22de%22:451,%22dc%22:451,%22l%22:451,%22le%22:451,%22f%22:0,%22dn%22:1,%22dne%22:1,%22c%22:1,%22ce%22:1,%22rq%22:2,%22rp%22:223,%22rpe%22:224%7D,%22navigation%22:%7B%7D%7D&amp;jsonp=NREUM.setToken"></script></body></html>
