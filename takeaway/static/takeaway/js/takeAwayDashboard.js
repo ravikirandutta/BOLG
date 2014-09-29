@@ -7,7 +7,7 @@
   1. Dialog box for editing session name  -DONE
   2. Dialog box for New Takeaway -DONE
   3. Tags handling in New / Edit take away
-  4. PUB-PRI button in New / Edit take away
+  4. PUB-PRI button in New / Edit take away  -DONE
   5. Selected CRS li tag class should be changed to "course-selected" and all others should be "course-deselected"
   6. Owner check for enabling PUB-PRI button in each TAY
   7. Owner check for enabling EDIT-DELTE buttons in each TAY
@@ -25,7 +25,7 @@
 3. Local box - DELETE forbidden error
 4. Rating GET - POST
 5. Tags GET-POST
-6. PUBLIC-PRIVATE POST
+6. PUBLIC-PRIVATE POST  -DONE
 // Sep 28th END
 
 ng Modules required for below
@@ -170,7 +170,7 @@ app.factory('TagsFactory', ['$resource',
     //ngTags
     $scope.tags = [
 
-  ];
+    ];
 
   $scope.availableTags = {};
   // TagsFactory.query().$promise.then(function(data){
@@ -377,6 +377,7 @@ app.factory('TagsFactory', ['$resource',
     /* Displaying Dialog window to create New Take Away */
     $scope.newTakeaway = function (sessionsresult) {
       $scope.sessionsresult = sessionsresult;
+      $scope.taset = {is_public : true};
       //$scope.takeaway_set = sessionsresult.takeaway_set[0];
       ngDialog.open({
         template: 'newTakeawayTemplateId',
@@ -391,7 +392,7 @@ app.factory('TagsFactory', ['$resource',
 
       $scope.newTakeawayObj = {
         courseInstance: sessionsresult.courseInstance.id,
-        is_public: true,  //defalt value is true, should come from dialog window
+        is_public: $scope.taset.is_public,
         notes: document.getElementById("notes").value,
         session: sessionsresult.id,
         tags: [1],
@@ -508,5 +509,48 @@ app.factory('TagsFactory', ['$resource',
       }
 
     };
+
+    /*Public private buttons method */
+    /*TODO: In UI same div tags used in 3 different places, but we can create one directive for that and use. */
+    $scope.toggleButtons = function(taset, clickedButton, postImmediately) {
+      if (clickedButton == taset.is_public) {
+        taset.is_public = (clickedButton == true) ? false : true;
+      } else {
+        taset.is_public = clickedButton;
+      }
+
+      //From Edit takeaway or New Takeaway, onchange of public-private option do not make service call to update.
+      if(postImmediately == false)
+        return;
+
+      var tagIdArr = new Array();
+      _.each(taset.tags,function(tagId){
+          tagIdArr.push(tagId.id);
+      });
+
+      var modifiedTakeawayObj = {
+        id : taset.id,
+        notes: taset.notes,
+        user: $cookies.userid,
+        courseInstance: taset.courseInstance.id,
+        session: taset.session.id,
+        is_public: taset.is_public,
+        username : $cookies.username,
+        tags: tagIdArr,
+        average_rating : taset.average_rating,
+      };
+
+      $http({
+        url: '/takeaways/' + taset.id+"/",
+        method: "PUT",
+        data: modifiedTakeawayObj,
+        headers: {'Content-Type': 'application/json'}
+      }).success(function(data, status, headers, config) {
+        console.log("Successfully updated public flag in server");
+      }).error(function(data, status, headers, config) {
+        $scope.status = status;
+      });
+    };
+
   });
 })();

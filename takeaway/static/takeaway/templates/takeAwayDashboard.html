@@ -1,4 +1,5 @@
 <div ng-controller="takeawayDashboardCtrl">
+  
   <div class="content">
     <div class="mainbar">
       <div id="course-list" class="page-head">
@@ -80,12 +81,16 @@
 
                                 <span ng-if="taset.isOwner">{{taset.average_rating}}
                                   <span class="total-raters">(<i class="fa fa-user"></i>{{taset.total_raters}})</span>
-                                  <span ng-if="taset.is_public">
-                                    PUB-PRI
-                                  </span>
-                                  <span ng-if="!taset.is_public">
-                                    PUB-PRI
-                                  </span>
+                                  <div class="btn-group">
+                                    <label ng-model="taset.is_public" btn-radio="true" uncheckable 
+                                          ng:class="{true:'btn btn-primary', false:'btn btn-default'}[taset.is_public==true]"
+                                          ng-click="toggleButtons(taset,true,true)" id="publicId"
+                                          style="width: 60px; height: 25px;">Public</label>
+                                    <label ng-model="taset.is_public" btn-radio="false" uncheckable 
+                                          ng:class="{true:'btn btn-primary', false:'btn btn-default'}[taset.is_public==false]"
+                                          ng-click="toggleButtons(taset, false,true)" id="privateId"
+                                          style="width: 60px; height: 25px;">Private</label>
+                                  </div>
                                 </span>
                               </div>
                               <div id="favourite">
@@ -114,13 +119,16 @@
                                 </span>
                                 <input type="text" id="tag" placeholder="Type the tag name and press Enter" class="form-control" />
                               <div>
-                              <br/>
-                              <div>
-                                <span>
-                                  <div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-animate"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">public</span><label class="bootstrap-switch-label">&nbsp;</label><span class="bootstrap-switch-handle-off bootstrap-switch-default">private</span><input type="checkbox" class="switch" name="my-checkbox" animate="true" data-on-text="public" data-off-text="private" offcolor="danger" checked=""></div></div>
-                                </span>
+                              <div class="btn-group" style="padding-top: 20px;">
+                                <label ng-model="taset.is_public" btn-radio="true" uncheckable 
+                                      ng:class="{true:'btn btn-primary', false:'btn btn-default'}[taset.is_public==true]"
+                                      ng-click="toggleButtons(taset,true,false)" id="publicId"
+                                      style="width: 60px; height: 25px;">Public</label>
+                                <label ng-model="taset.is_public" btn-radio="false" uncheckable 
+                                      ng:class="{true:'btn btn-primary', false:'btn btn-default'}[taset.is_public==false]"
+                                      ng-click="toggleButtons(taset, false,false)" id="privateId"
+                                      style="width: 60px; height: 25px;">Private</label>
                               </div>
-                              <br/>
                               <button class="btn btn-success" ng-click="updateTakeaway(sessionsresult.id+'_'+taset.id, taset)">Update</button>
                               <button class="btn btn-danger" ng-click="cancelEdit(sessionsresult.id+'_'+taset.id, taset.notes)">Cancel</button>
                               <br/>
@@ -148,15 +156,20 @@
 
 
       <tags-input ng-model="tags" display-property="name">
-      <auto-complete source="loadTags($query)"></auto-complete>
-    </tags-input>
+        <auto-complete source="loadTags($query)"></auto-complete>
+      </tags-input>
 
-
-      <div class="row1"style="padding-top: 20px;">
-        <span>
-          <div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-animate"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">public</span><label class="bootstrap-switch-label">&nbsp;</label><span class="bootstrap-switch-handle-off bootstrap-switch-default">private</span><input type="checkbox" class="switch" name="my-checkbox" animate="true" data-on-text="public" data-off-text="private" offcolor="danger" checked=""></div></div>
-        </span>
+      <div class="btn-group" style="padding-top: 20px;">
+        <label ng-model="taset.is_public" btn-radio="true" uncheckable 
+              ng:class="{true:'btn btn-primary', false:'btn btn-default'}[taset.is_public==true]"
+              ng-click="toggleButtons(taset,true,false)" id="publicId"
+              style="width: 60px; height: 25px;">Public</label>
+        <label ng-model="taset.is_public" btn-radio="false" uncheckable 
+              ng:class="{true:'btn btn-primary', false:'btn btn-default'}[taset.is_public==false]"
+              ng-click="toggleButtons(taset, false,false)" id="privateId"
+              style="width: 60px; height: 25px;">Private</label>
       </div>
+
     </div>
     <div class="ngdialog-buttons">
       <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()"
