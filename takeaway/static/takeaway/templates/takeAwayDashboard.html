@@ -47,7 +47,7 @@
                               <div ng-if="taset.isOwner">
                                 <div id="editable-notes" title="Click to edit the takeaway" style="cursor: pointer;"
                                      ng-click="makeEditable(sessionsresult.id+'_'+taset.id, taset.notes)" >
-                                  <pre id="takeaway" class="takeaway-pre takeaway-pre-owner">{{taset.notes}}</pre>
+                                  <pre id="takeaway" class="takeaway-pre takeaway-pre-owner" ><div ng-bind-html="taset.notes"></div ></pre>
                                 </div>
                               </div>
                               <div ng-if="!taset.isOwner">
@@ -160,7 +160,7 @@
     <div id="create-takeaway-container" class="ngdialog-message">
       <h5>New Takeaway for {{sessionsresult.session_name}}</h5>
       <div class="row1">
-        <textarea rows="5" class="form-control" id="notes"></textarea>
+        <textarea rows="5" data-ui-tinymce data-ng-model="newTakeawayContent" class="form-control" id="notes"></textarea>
       </div>
 
 

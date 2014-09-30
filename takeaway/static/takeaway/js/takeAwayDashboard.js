@@ -41,7 +41,7 @@ ng Modules required for below
 */
 
 (function() {
-  var app = angular.module('takeAwayDashboard', ['ngCookies', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput']).run(function($http, $cookies) {
+  var app = angular.module('takeAwayDashboard', ['ngCookies', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput','ui.tinymce','ui.bootstrap','ngSanitize']).run(function($http, $cookies) {
     $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
     $http.defaults.headers.common['Content-Type'] = "application/json";
 
@@ -190,6 +190,7 @@ app.factory('TagsFactory', ['$resource',
     $scope.tags = [
 
     ];
+
 
   $scope.availableTags = {};
   // TagsFactory.query().$promise.then(function(data){
@@ -472,7 +473,7 @@ $scope.tagAddedInEditTakeaway = function(tag){
       $scope.newTakeawayObj = {
         courseInstance: sessionsresult.courseInstance.id,
         is_public: $scope.taset.is_public,
-        notes: document.getElementById("notes").value,
+        notes: $scope.newTakeawayContent,
         session: sessionsresult.id,
         tags: tagIds,
         user: $cookies.userid
@@ -489,6 +490,7 @@ $scope.tagAddedInEditTakeaway = function(tag){
         }
       }).success(function(data, status, headers, config) {
         $scope.freshLoadOfSessions(data.courseInstance);
+        $scope.newTakeawayContent="";
         console.log("loading all courses sessions after successfull creation"+data.courseInstance);
       }).error(function(data, status, headers, config) {
         $scope.status = status;
@@ -546,6 +548,7 @@ $scope.tagAddedInEditTakeaway = function(tag){
     /* Close the dialog for "New Takeaway" and "Edit Session Name" dialogs */
     $scope.closeDialog = function() {
       ngDialog.close();
+      $scope.newTakeawayContent="";
     }
 
     /*POST to favourite */
