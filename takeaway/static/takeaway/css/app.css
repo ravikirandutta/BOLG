@@ -250,3 +250,16 @@ background-color:#e7edf8;
 .tt-suggestion p {
   margin: 0;
 }
+
+div .tags{
+  width:500px;
+}
+
+tags-input .tags .input{
+  width:inherit !important;
+}
+
+.ngdialog.ngdialog-theme-plain .ngdialog-content{
+  width: 520px !important;
+}
+
