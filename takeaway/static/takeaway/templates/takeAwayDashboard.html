@@ -89,6 +89,8 @@
                                 </span>
                               </div>
                               <div id="favourite">
+
+
                                 <span ng-if="taset.isFavourite">
                                   <a>
                                     <span id="myfav" class="glyphicon glyphicon-heart" ng-click="makeFavourite(taset)"></span>
@@ -112,7 +114,12 @@
                                   </span>
                                   <span style="width:2px">&nbsp;</span>
                                 </span>
-                                <input type="text" id="tag" placeholder="Type the tag name and press Enter" class="form-control" />
+
+                                <tags-input placeholder="Add a Tag by typing it" ng-model="taset.tags" display-property="name"
+                                on-tag-added="tagAdded($tag)">
+                                      <auto-complete source="loadTags($query)"></auto-complete>
+                                </tags-input>
+
                               <div>
                               <br/>
                               <div>
@@ -146,9 +153,8 @@
         <textarea rows="5" class="form-control" id="notes"></textarea>
       </div>
 
-
-      <tags-input ng-model="tags" display-property="name">
-      <auto-complete source="loadTags($query)"></auto-complete>
+    <tags-input placeholder="Add a Tag by typing it" ng-model="tags" display-property="name"  on-tag-added="tagAdded($tag)">
+       <auto-complete source="loadTags($query)"></auto-complete>
     </tags-input>
 
 

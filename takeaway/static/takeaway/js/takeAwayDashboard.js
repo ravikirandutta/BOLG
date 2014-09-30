@@ -42,8 +42,9 @@ ng Modules required for below
 
 (function() {
   var app = angular.module('takeAwayDashboard', ['ngCookies', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput']).run(function($http, $cookies) {
-    $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
-    $http.defaults.headers.put['X-CSRFToken'] = $cookies.csrftoken;
+    $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
+    $http.defaults.headers.common['Content-Type'] = "application/json";
+
     // $http.defaults.headers.DELETE['X-CSRFToken'] = $cookies.csrftoken;
   });
   app.config(['$resourceProvider',
@@ -138,6 +139,13 @@ ng Modules required for below
         query: {
           method: 'GET',
           isArray: false
+        },
+         save: {
+          method: 'POST'
+        },
+        remove: {
+          url: '/favorites/:id',
+          method: 'DELETE'
         }
       });
     }
@@ -149,6 +157,9 @@ app.factory('TagsFactory', ['$resource',
         query: {
           method: 'GET',
           isArray: false
+        },
+         save: {
+          method: 'POST'
         }
       });
     }
@@ -157,7 +168,7 @@ app.factory('TagsFactory', ['$resource',
 
 
   app.controller('takeawayDashboardCtrl',
-    function($scope, $http, $cookies, $resource, $rootScope, CoursesFactory, SessionsFactory, ngDialog, RatingFactory, FavoritesFactory, TagsFactory) {
+    function($scope, $http, $cookies, $q, $resource, $rootScope, CoursesFactory, SessionsFactory, ngDialog, RatingFactory, FavoritesFactory, TagsFactory) {
 
     console.log("loading takeawayDashboardCtrl");
 
@@ -177,9 +188,38 @@ app.factory('TagsFactory', ['$resource',
   //     $scope.availableTags = data.results;
   //    });
 
+
+
   $scope.loadTags = function(query) {
-      return $http.get('/tags');
+      var deferred = $q.defer();
+
+       TagsFactory.query({"starts_with":query}).$promise.then(function(data){
+          deferred.resolve(data.results);
+       });
+      return deferred.promise;
   };
+
+  $scope.tagAdded = function(tag){
+      if(!tag.id){
+        TagsFactory.query({"name":tag.name}).$promise.then(function(data){
+            if(data.count ==1){
+              var length = $scope.tags.length;
+              $scope.tags.splice(length-1,1);
+              $scope.tags.push(data.results[0]);
+            }else{
+                TagsFactory.save({"name":tag.name}).$promise.then(function(data){
+                    var length = $scope.tags.length;
+                    $scope.tags.splice(length-1,1);
+
+                    $scope.tags.push(data);
+
+                });
+            }
+        });
+      }
+  }
+
+
 
 
     CoursesFactory.query({
@@ -312,7 +352,12 @@ app.factory('TagsFactory', ['$resource',
     $scope.updateTakeaway = function(divId, taset) {
       document.getElementById(divId + "_view").style.display = "block";
       document.getElementById(divId + "_edit").style.display = "none";
-
+      var tagIds = [];
+      angular.forEach($scope.taset.tags, function(tag){
+          if(!tag.id){
+             tagIds.push(tag.id);
+          }
+      });
       var modifiedTakeawayObj = {
         id : taset.id,
         notes: document.getElementById(divId + "_notes").value,
@@ -321,7 +366,7 @@ app.factory('TagsFactory', ['$resource',
         session: taset.session.id,
         is_public: taset.is_public,
         username : $cookies.username,
-        tags: [1],
+        tags: tagIds,
         created_dt : taset.created_dt,
         average_rating : taset.average_rating,
         total_raters : taset.total_raters
@@ -388,13 +433,19 @@ app.factory('TagsFactory', ['$resource',
 
     /* Event from "Save" button from New Take Away dialog window */
     $scope.saveTakeaway = function(sessionsresult) {
+      var tagIds =[];
+      angular.forEach($scope.tags, function(tag){
+            if(tag.id){
+              tagIds.push(tag.id);
+            }
+      });
 
       $scope.newTakeawayObj = {
         courseInstance: sessionsresult.courseInstance.id,
         is_public: true,  //defalt value is true, should come from dialog window
         notes: document.getElementById("notes").value,
         session: sessionsresult.id,
-        tags: [1],
+        tags: tagIds,
         user: $cookies.userid
       };
 
@@ -473,16 +524,10 @@ app.factory('TagsFactory', ['$resource',
 
       if(taset.isFavourite) {
         //DELTE
-        $http({
-          url: '/favorites/'+taset.id,
-          method: "DELETE",
-          data: favObj,
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).success(function(data, status, headers, config) {
+        FavoritesFactory.remove({id:taset.id})
+        .$promise.then(function(data, status, headers, config) {
           taset.isFavourite = false;
-        }).error(function(data, status, headers, config) {
+        },function(data, status, headers, config) {
           console.error('Error in makeFavourite'+status);
         });
       } else {
@@ -493,16 +538,10 @@ app.factory('TagsFactory', ['$resource',
           user: $cookies.userid
         };
 
-        $http({
-          url: '/favorites/',
-          method: "POST",
-          data: favObj,
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).success(function(data, status, headers, config) {
+       FavoritesFactory.save({data: favObj}).$promise
+       .then(function(data, status, headers, config) {
           taset.isFavourite = true;
-        }).error(function(data, status, headers, config) {
+        },function(data, status, headers, config) {
           console.error('Error in makeFavourite'+status);
         });
       }

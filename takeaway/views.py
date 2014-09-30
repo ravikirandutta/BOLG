@@ -277,7 +277,7 @@ class CourseViewSet(viewsets.ModelViewSet):
         Set the object's owner, based on the incoming request.
         """
         obj.created_by = self.request.user.username
-    
+
     def post_save(self, obj, created=False):
         """
         Set the object's owner, based on the incoming request.
@@ -325,6 +325,14 @@ class TagViewSet(viewsets.ModelViewSet):
         filter_backends = (filters.DjangoFilterBackend,)
         filter_fields = ('name',)
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
+        def get_queryset(self):
+
+            queryset = Tag.objects.all()
+            starts_with  = self.request.QUERY_PARAMS.get('starts_with', None)
+            if starts_with:
+                queryset = queryset.filter(name__startswith=starts_with)
+            return queryset
 
 class RatingViewSet(viewsets.ModelViewSet):
         queryset = Rating.objects.all()
@@ -521,7 +529,7 @@ class ContactUsViewSet(viewsets.ModelViewSet):
             send_mail(obj.subject, obj.message, 'support@mbatakeaways.com', recipients)
 
 
-    
+
 from django.core.mail import send_mail
 def ContactUs(request):
     # Get the context from the request.
