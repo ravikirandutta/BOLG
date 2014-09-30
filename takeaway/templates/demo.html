@@ -139,9 +139,9 @@
                         </ul>
                     </li>
 
-                    <li><a href="/contact/"> Contact Us</a>
+                    <li><a href="#"> Contact Us</a>
                             </li>
-                     <li><a href="#" data-toggle="modal" data-target="#bugModal"> Report a Bug</a>
+                     <li><a href="#" > Report a Bug</a>
                             </li>
                     <!-- Members button with number of latest members count -->
                     <li class="dropdown dropdown-big" style="display:none">
@@ -188,7 +188,7 @@
 
                   <ul class="nav navbar-nav navbar-right">
                         <!-- Dropdown menu -->
-                            <li><a href="/profile/"><i class="fa fa-user"></i> Profile</a>
+                            <li><a href="#"><i class="fa fa-user"></i> Profile</a>
                             </li>
                 </ul>
             </nav>
@@ -214,7 +214,7 @@
             -->
                 <div class="clearfix"></div>
 
-            <ul class="nav nav-pills"><li data-step="1" data-intro="click on the course" class="course course-selected"><a class="course-item"><span id="course1"><i class="fa fa-folder-open"></i> <b>BUS 634P Strategic Management</b></span></a></li><li class="course course-deselected"><a class="course-item"><span id="course36"><i class="fa fa-folder-open"></i> <b>BUS 634P Strategic Management</b></span></a></li><li class="course course-selected course-deselected"><a class="course-item"><span id="course3"><i class="fa fa-folder-open"></i> <b>BUS 628P Investment Banking </b></span></a></li></ul></div>
+            <ul class="nav nav-pills"><li  data-step="1" data-intro="click on the course" class="course course-selected"><a class="course-item"><span id="course1"><i class="fa fa-folder-open"></i> <b>BUS 634P Strategic Management</b></span></a></li><li class="course course-deselected"><a class="course-item"><span id="course36"><i class="fa fa-folder-open"></i> <b>BUS 634P Strategic Management</b></span></a></li><li class="course course-selected course-deselected"><a class="course-item"><span id="course3"><i class="fa fa-folder-open"></i> <b>BUS 628P Investment Banking </b></span></a></li></ul></div>
 
             <div style="right: -252px;">
                    <div class="row">
@@ -253,7 +253,7 @@
 
                 <div class="tab-content" style="height:300px;overflow-y : auto;">
 
-                      <div id="tab1" class="tab-pane active"><div class="slide-data"><div class="slide-data-text">anisha.rana@emory.edu</div><div class="clearfix"></div></div><div class="slide-data"><div class="slide-data-text">atluri</div><div class="clearfix"></div></div><div class="slide-data"><div class="slide-data-text">njain</div><div class="clearfix"></div></div><div class="slide-data"><div class="slide-data-text">ravi</div><div class="clearfix"></div></div></div>
+                      <div id="tab1" class="tab-pane active"><div class="slide-data"><div class="slide-data-text">anisha.rana@emory.edu</div><div class="clearfix"></div></div><div class="slide-data"><div class="slide-data-text">atluri</div><div class="clearfix"></div></div><div class="slide-data"><div class="slide-data-text"></div><div class="clearfix"></div></div><div class="slide-data"><div class="slide-data-text">ravi</div><div class="clearfix"></div></div></div>
 
 
 
@@ -267,12 +267,12 @@
 
 </div>
 
-<div style="margin-left:500px;"> <a class="btn btn-success btn-large" style="width:200px;" onclick="javascript:introJs().start();">Start</a></div>
+<div style="margin-left:500px;"> <a class="btn btn-success btn-large" style="width:200px;" onclick="javascript:introJs().start();">Start Demo</a></div>
 
 <div class="searchbox" style="display: block; float: right; margin-right: 40px;">
 
-    <input id="allBtn" type="button" class="btn" value="All" onclick="showAllTakeaways()">
-    <input id="myBtn" type="button" class="btn" value="My" onclick="showMyTakeaways()">
+    <input data-step="7" data-intro="Shows all your takeaways"id="allBtn" type="button" class="btn" value="All" onclick="showAllTakeaways()">
+    <input data-step="8" data-intro="Shows only your takeaways"id="myBtn" type="button" class="btn" value="My" onclick="showMyTakeaways()">
     <input id="favBtn" type="button" class="btn" value="Favorites" onclick="showFavTakeaways()">
 
     <input type="text" class="search-query" data-role="tagsinput" placeholder="Filter by tag" style="display: none;"><div class="bootstrap-tagsinput"><input type="text" placeholder="Filter by tag" style="width: 13em !important;"></div>
@@ -293,11 +293,11 @@
                     <div class="widget wlightblue">
                         <!-- Widget title -->
                         <div class="widget-head">
-                          <div class="pull-left" data-step="2" data-intro="look for the session you are interested in">Week 1 Course Introduction <a id="edit-session-link" href="#" data-toggle="modal" data-target="#editSession" class="glyphicon glyphicon-edit" title="Edit Session"></a> </div>
+                          <div class="pull-left" style="color:#000" data-step="2" data-intro="look for the session you are interested in">Week 1 Course Introduction <a id="edit-session-link" href="#" data-toggle="modal" data-target="#editSession" class="glyphicon glyphicon-edit" title="Edit Session"></a> </div>
                           <div class="widget-icons pull-right">
 
 
-                            <a href="#" data-toggle="modal" data-target="#newTakeaway" class="btn btn-primary" style="background:#e1e3e4 !important;color:#000"><span class="glyphicon glyphicon-pencil"></span> New Takeaway</a>
+                            <a href="#" data-step="3" data-intro="Create your takeaway"data-toggle="modal" data-target="#newTakeaway" class="btn btn-primary" style="background:#e1e3e4 !important;color:#000"><span class="glyphicon glyphicon-pencil"></span> New Takeaway</a>
                             <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
                             <a href="#" class="wclose"><i class="fa fa-times"></i></a>
                           </div>
@@ -313,7 +313,7 @@
     <li>
                                 <div class="recent-content">
                                   <div class="recent-meta">Posted on 07/09/14 08:41 by SATLURI</div>
-                                  <div id="editable-notes" data-step="3" data-intro="Edit your takeaway"><pre id="takeaway" class="takeaway-pre">Some ways to resolve prisoner's dilemma are credible pre-commitment, bonding, signing contracts, shaming, threat of retaliating the next round.                                 </pre></div>
+                                  <div id="editable-notes" ><pre id="takeaway" class="takeaway-pre">Some ways to resolve prisoner's dilemma are credible pre-commitment, bonding, signing contracts, shaming, threat of retaliating the next round.                                 </pre></div>
 
                                    <div class="btn-group" style="float: right; display: none;">
 
@@ -327,30 +327,37 @@
                                     <!--
                                         <i>application</i><button class="btn btn-xs btn-danger tag-remove" name='2' ><i class="fa fa-times"></i> </button>&nbsp; -->
 
-                                        <span class="label label-warning"><i class="fa fa-tags"></i>application</span>
+                                        <span data-step="9" data-intro=" Tag your takeaway"class="label label-warning"><i class="fa fa-tags"></i>application</span>
 
 
 
-                                    <div class="rateit" data-rateit-value="5" data-rateit-ispreset="true" data-rateit-readonly="true" data-rateit-resetable="false"><button id="rateit-reset-2" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-2" style="display: none;"></button><div1 id="rateit-range-2" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-2" aria-valuemin="0" aria-valuemax="5" aria-valuenow="5" style="width: 80px; height: 16px;" aria-readonly="true"><div class="rateit-selected rateit-preset" style="height: 16px; width: 80px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
+                                    <div data-step="10" data-intro=" Rate the takeaway" class="rateit" data-rateit-value="5" data-rateit-ispreset="true" data-rateit-readonly="true" data-rateit-resetable="false"><button id="rateit-reset-2" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-2" style="display: none;"></button><div1 id="rateit-range-2" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-2" aria-valuemin="0" aria-valuemax="5" aria-valuenow="5" style="width: 80px; height: 16px;" aria-readonly="true"><div class="rateit-selected rateit-preset" style="height: 16px; width: 80px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 1)</span>
+
+                                        <div data-step="5" data-intro="Visibility of your takeaway"class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-off bootstrap-switch-animate" style="height:25px"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">public</span><label class="bootstrap-switch-label">&nbsp;</label><span class="bootstrap-switch-handle-off bootstrap-switch-default">private</span><input type="checkbox" class="switch" name="my-checkbox" animate="true" data-on-text="public" data-off-text="private" offcolor="danger"></div></div>
 
 
 
 
                                      </div>
 
-                                     <span id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
+                                     <div id="favourite">
+                                       <a> <span  data-step="6" data-intro="Add to your favourites" id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
 
-                                     </span>
+                                     </div>
+                                     <div data-step="4" data-intro="Edit and delete your takeaways"class="btn-group" style="float:right">
+
+                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
+                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
+                                </div>
 
 
 
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </li></div>
-                              
+                                </div>
+                              </li>
 
 </div><div>
     <li>
@@ -380,8 +387,10 @@
 
 
 
-                                    <div class="rateit" data-rateit-value="3.5" data-rateit-ispreset="true" data-rateit-readonly="true" data-rateit-resetable="false"><button id="rateit-reset-3" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-3" style="display: none;"></button><div1 id="rateit-range-3" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-3" aria-valuemin="0" aria-valuemax="5" aria-valuenow="3.5" style="width: 80px; height: 16px;" aria-readonly="true"><div class="rateit-selected rateit-preset" style="height: 16px; width: 56px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
+                                    <div class="rateit" data-rateit-value="3.5" data-rateit-ispreset="true" data-rateit-readonly="true" data-rateit-resetable="false"><button id="rateit-reset-3" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-3" style="display: none;"></button><div1 id="rateit-range-3" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-3" aria-valuemin="0" aria-valuemax="5" aria-valuenow="3.5" style="width: 80px; height: 16px;" aria-readonly="true"><div class="rateit-selected rateit-preset" style="height: 16px; width: 56px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 1)</span>
+
+                                        <div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-animate" style="height:25px"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">public</span><label class="bootstrap-switch-label">&nbsp;</label><span class="bootstrap-switch-handle-off bootstrap-switch-default">private</span><input type="checkbox" class="switch" name="my-checkbox" animate="true" data-on-text="public" data-off-text="private" offcolor="danger" checked=""></div></div>
 
 
 
@@ -393,16 +402,22 @@
 
                                      </div>
 
+                                     <div class="btn-group" style="float:right">
+
+                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
+                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
+                                </div>
+
 
 
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </li></div>
-                              
+                                </div>
+                              </li>
 
-</ul></div><div>
-    <li>
+</div><div>
+    <li style="list-style-type:none">
                                 <div class="recent-content">
                                   <div class="recent-meta">Posted on 07/09/14 08:41 by SATLURI</div>
                                   <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Tit-for-tat works well in 2 player prisoner dilemma games since it never instigates, always guarantees commensurate punishment and always forgives where as it fails miserably with more than 2 players since it punishes everyone , not just the defector. </pre></div>
@@ -423,8 +438,10 @@
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-4" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div1 id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-4" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div1 id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
+                                         <div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-animate" style="height:25px"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">public</span><label class="bootstrap-switch-label">&nbsp;</label><span class="bootstrap-switch-handle-off bootstrap-switch-default">private</span><input type="checkbox" class="switch" name="my-checkbox" animate="true" data-on-text="public" data-off-text="private" offcolor="danger" checked=""></div></div>
+
 
 
 
@@ -436,16 +453,22 @@
 
                                      </div>
 
+                                     <div class="btn-group" style="float:right">
+
+                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
+                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
+                                </div>
+
 
 
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </li></div>
-                              
+                                </div>
+                              </li>
 
 </div><div>
-    <li>
+    <li style="list-style-type:none">
                                 <div class="recent-content">
                                   <div class="recent-meta">Posted on 07/09/14 08:41 by SATLURI</div>
                                   <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">An Oligopoly or cartel with evenly matched competitors is an example of Prisoner's dilemma. All are better off by jointly keeping the prices high but someone would want to cut prices and capture market share.  </pre></div>
@@ -466,8 +489,10 @@
 
 
 
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-5" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-5" style="display: none;"></button><div1 id="rateit-range-5" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-5" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
+                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-5" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-5" style="display: none;"></button><div1 id="rateit-range-5" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-5" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div></div>
                                         <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
+                                         <div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-animate" style="height:25px"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">public</span><label class="bootstrap-switch-label">&nbsp;</label><span class="bootstrap-switch-handle-off bootstrap-switch-default">private</span><input type="checkbox" class="switch" name="my-checkbox" animate="true" data-on-text="public" data-off-text="private" offcolor="danger" checked=""></div></div>
+
 
 
 
@@ -479,1375 +504,22 @@
 
                                      </div>
 
+                                      <div class="btn-group" style="float: right; display: none;">
+
+                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
+                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
+                                </div>
+
+
 
 
                                   <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
 
                                   <div class="clearfix"></div>
-                                </li></div>
-                              
-
-</div><div>
-    </div>
-                              
+                                </div>
+                              </li>
 
 </div>
-                              
-
-</div>
-                              
-
-</div></div>
-
-                          </div>
-                        
-
-
-
-                      
-
-
-<div>
-
-
-                    <div class="widget wlightblue">
-                        <!-- Widget title -->
-                        <div class="widget-head">
-                          <div class="pull-left">Week 2 : Competitor Dynamics <a id="edit-session-link" href="#" data-toggle="modal" data-target="#editSession" class="glyphicon glyphicon-edit" title="Edit Session"></a> </div>
-                          <div class="widget-icons pull-right">
-
-
-                            <a href="#" data-toggle="modal" data-target="#newTakeaway" class="btn btn-primary" style="background:#e1e3e4 !important;color:#000"><span class="glyphicon glyphicon-pencil"></span> New Takeaway</a>
-                            <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
-                            <a href="#" class="wclose"><i class="fa fa-times"></i></a>
-                          </div>
-                          <div class="clearfix"></div>
-                        </div>
-
-                        <div class="widget-content">
-                          <!-- Widget content -->
-                          <div class="padd">
-
-                            <ul id="takeaway-list" class="recent">
-                            <div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by njain</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">• Pareto efficient:
-&gt; An outcome from which improving one player’s payoff by moving to another outcome would necessarily worsen another player’s payoff
-</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-9" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-9" style="display: none;"></button><div1 id="rateit-range-9" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-9" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-</div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by SATLURI</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Entry and ExitEntrants threaten incumbents by stealing market share as well intensifying competition (price) resulting in a reduction of the overall profit pies. Exit can have the opposite effect.
-
-Summary of Entry and Exit research1. Entry will be pervasive. 2. Entrants and exiters tend to be smaller than established players3. Most entrants do not survive more than 10 years but those that do grow precipitously.4. Entry and exit rates vary by industry
-
-Structural Entry Barriers1. Control of essential resources - for production Ex De Beers in diamonds . This runs the risk of alternate production resources or legislation issues.2. Economies of scale and scope - create entry barriers by forcing the entrants to enter on a large scale or with many products to achieve unit cost parity with incumbent firms.3.  Marketing advantages of incumbents
-
-Blockaded Entry : Entry is blockaded if structural barriers are too high. For example Semiconductor fabrication businAccommodated Entry : If entry barriers are low then incumbents adapt this strategy since the cost of preventing entry is greater than the benefitsDeterred Entry: Employing entry deterring strategies Strategic Entry BarriersEntry deterring strategies1. Limit pricing : Reducing prices before entry occurs2. Predatory pricing : Setting prices low  enough to drive out other firms.Predatory and Limit usually don’t work much in theory. However uncertainty of post entry pricing is what helps these pricing strategies.3. Excess capacity - Maintain excess capacity with the intent to reduce prices if entry occurs </pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-10" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-10" style="display: none;"></button><div1 id="rateit-range-10" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-10" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-</ul></div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by hamdan.merchant@emory.edu</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Thhe conflict between the collective interest and self interest is often referred to as the prisoner's dilema.</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-11" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-11" style="display: none;"></button><div1 id="rateit-range-11" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-11" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-</div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by hamdan.merchant@emory.edu</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Economies of scale and scope create barriers for entry because they force potential entrants to enter on a large scale or with many products to achieve unit cost parity with incumbent firms.Entering at a large scale or scope is only disadvntageous to the extent that entrant cannot recover its upfront costs if it subsequently decides to exit. An entrant whose upfront cost is not sunk, can come at large scale, undercut the incumbent firms prices and exit the market and recover its entry costs if incumbent firms retaliate.This strategy is known as "bit and run entry"will leave incumbents vulnerable to entry even if economies of scale is significant. Hence Sunk costs not economies of scale are true barriers to entry.</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-12" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-12" style="display: none;"></button><div1 id="rateit-range-12" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-12" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-</div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by hamdan.merchant@emory.edu</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Game Theory- Nash Equilibrium: At a Nash Equilibrium outcome each player is doing the best it can, given the strategies of other players.</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-13" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-13" style="display: none;"></button><div1 id="rateit-range-13" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-13" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-</div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by hamdan.merchant@emory.edu</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">A profit maximizing, risk-neutral firm should enter the market if the sunk costs are less than the net present value of the expected post entry profits.</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-14" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-14" style="display: none;"></button><div1 id="rateit-range-14" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-14" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-<div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by hamdan.merchant@emory.edu</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">When a player has a dominant strategy, it follows that the strategy must also be the players nash equilibrium.</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-15" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-15" style="display: none;"></button><div1 id="rateit-range-15" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-15" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-<div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by SATLURI</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Judo Economics : If an entrant can convince the incumbent that it does not pose a long-term threat to the incumbent, the incumbent might think twice about the losses incurred to drive the entrant out of the market.     </pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-16" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-16" style="display: none;"></button><div1 id="rateit-range-16" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-16" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-<div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by njain</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">• Dominant strategy:
-&gt; A strategy that is always a player’s best choice, regardless of what strategies other players choose
-
-</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-17" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-17" style="display: none;"></button><div1 id="rateit-range-17" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-17" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-<div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by njain</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">• Prisoner’s dilemma game:
-&gt; A game where all players have a dominant strategy and the resulting Nash equilibrium is Pareto inefficient
-</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-18" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-18" style="display: none;"></button><div1 id="rateit-range-18" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-18" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-<div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by njain</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">• Nash equilibrium:
-&gt; An outcome where no player would have an incentive to change strategy unilaterally (i.e., when all other players keep their strategies the same)
-</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-19" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-19" style="display: none;"></button><div1 id="rateit-range-19" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-19" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-<div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by njain</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">• Zero-sum game:
-&gt; A game where the total payoff to all players is the same under every possible outcome (e.g., chess tournament or MLB “pennant race” for division championship in baseball)
-</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-20" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-20" style="display: none;"></button><div1 id="rateit-range-20" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-20" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-
-
-                          
-                        
-
-
-
-                      
-
-
-<div>
-
-
-                    <div class="widget wlightblue">
-                        <!-- Widget title -->
-                        <div class="widget-head">
-                          <div class="pull-left">Week 3 : Industry Analysis <a id="edit-session-link" href="#" data-toggle="modal" data-target="#editSession" class="glyphicon glyphicon-edit" title="Edit Session"></a> </div>
-                          <div class="widget-icons pull-right">
-
-
-                            <a href="#" data-toggle="modal" data-target="#newTakeaway" class="btn btn-primary" style="background:#e1e3e4 !important;color:#000"><span class="glyphicon glyphicon-pencil"></span> New Takeaway</a>
-                            <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
-                            <a href="#" class="wclose"><i class="fa fa-times"></i></a>
-                          </div>
-                          <div class="clearfix"></div>
-                        </div>
-
-                        <div class="widget-content">
-                          <!-- Widget content -->
-                          <div class="padd">
-
-                            <ul id="takeaway-list" class="recent">
-                            <div></div></ul>
-
-                          </div>
-                        </div>
-
-
-
-                      </div>
-
-
-</div><div>
-
-
-                    <div class="widget wlightblue">
-                        <!-- Widget title -->
-                        <div class="widget-head">
-                          <div class="pull-left">Week 4 : Industry Analysis <a id="edit-session-link" href="#" data-toggle="modal" data-target="#editSession" class="glyphicon glyphicon-edit" title="Edit Session"></a> </div>
-                          <div class="widget-icons pull-right">
-
-
-                            <a href="#" data-toggle="modal" data-target="#newTakeaway" class="btn btn-primary" style="background:#e1e3e4 !important;color:#000"><span class="glyphicon glyphicon-pencil"></span> New Takeaway</a>
-                            <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
-                            <a href="#" class="wclose"><i class="fa fa-times"></i></a>
-                          </div>
-                          <div class="clearfix"></div>
-                        </div>
-
-                        <div class="widget-content">
-                          <!-- Widget content -->
-                          <div class="padd">
-
-                            <ul id="takeaway-list" class="recent">
-                            <div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by hamdan.merchant@emory.edu</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Intra-industry rivalry
-is fiercest when...
- Large number of
-competitors in industry.
- Industry is stagnant or
-declining.
- Excess capacity available.
- Large % of costs are fixed.
- Exit barriers are high.
- High storage costs for product.
- Competitors’ costs differ.
- Product is undifferentiated.
- Buyers have low switching costs.</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-21" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-21" style="display: none;"></button><div1 id="rateit-range-21" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-21" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-</div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by hamdan.merchant@emory.edu</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Threat of new entrants is highest when:
-Economies of scales are low
-Product is differentiated
-Capital requirements are low
-Customers have low switching costs and lack brand loyalty
-Incumbents dont control distribution channels
-Incumbents lack proprietory knowledge or technology
-No network externalities</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-22" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-22" style="display: none;"></button><div1 id="rateit-range-22" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-22" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-</ul></div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by hamdan.merchant@emory.edu</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">There are 2 types of Entry barriers:
-Strategic- reduce pricing - reduces industry profits
-Structural-Inherent natural advantages that incumbents have-which prevents new entrants from entering- Increases profits.</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-23" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-23" style="display: none;"></button><div1 id="rateit-range-23" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-23" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-</div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by hamdan.merchant@emory.edu</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Power of buyers
-is highest when...
- Buyers are concentrated &amp; buy
-in high volumes.
- Product is undifferentiated.
- Buyers can backward integrate
-(in-source).
- Buyers know the cost structure.
- Product represents a large
-% of buyers’ total costs.
- Product has little impact on
-quality of the buyers’ final
-product.</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-24" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-24" style="display: none;"></button><div1 id="rateit-range-24" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-24" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-</div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by hamdan.merchant@emory.edu</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Power of suppliers
-is highest when...
- Suppliers are highly
-concentrated.
- Substitutes for their products
-are unavailable.
- Focal industry is small % of
-suppliers’ business.
- Suppliers’ products are highly
-differentiated.
- Switching between suppliers is
-difficult or costly.</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-25" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-25" style="display: none;"></button><div1 id="rateit-range-25" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-25" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-</div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by hamdan.merchant@emory.edu</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Threat of substitutes
-is highest when...
-Substitute product/service
-is superior (or at least
-catching up) in its
-price/performance
-relationship.
-Customers are highly price
-sensitive.</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-26" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-26" style="display: none;"></button><div1 id="rateit-range-26" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-26" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-
-
-                          
-                        
-
-
-
-                      
-
-
-<div>
-
-
-                    <div class="widget wlightblue">
-                        <!-- Widget title -->
-                        <div class="widget-head">
-                          <div class="pull-left">Week 5 : Competitive Advantage <a id="edit-session-link" href="#" data-toggle="modal" data-target="#editSession" class="glyphicon glyphicon-edit" title="Edit Session"></a> </div>
-                          <div class="widget-icons pull-right">
-
-
-                            <a href="#" data-toggle="modal" data-target="#newTakeaway" class="btn btn-primary" style="background:#e1e3e4 !important;color:#000"><span class="glyphicon glyphicon-pencil"></span> New Takeaway</a>
-                            <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
-                            <a href="#" class="wclose"><i class="fa fa-times"></i></a>
-                          </div>
-                          <div class="clearfix"></div>
-                        </div>
-
-                        <div class="widget-content">
-                          <!-- Widget content -->
-                          <div class="padd">
-
-                            <ul id="takeaway-list" class="recent">
-                            <div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by hamdan.merchant@emory.edu</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Competitive Advantage: 1) The test of inimitability- is the resource hard to copy. 2)The test of durability-How quickly does the resource depreciate. 3)The test of appropriability-who captures the value that the resource creates. 4)The test of substitutability- can a unique resouce be trumped by a different resource. 5)The test of competitive superiority-whose resource is really better. </pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-27" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-27" style="display: none;"></button><div1 id="rateit-range-27" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-27" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-</div></ul></div>
-
-                          </div>
-                        </div>
-
-
-
-                      </div>
-
-
-<div>
-
-
-                    <div class="widget wlightblue">
-                        <!-- Widget title -->
-                        <div class="widget-head">
-                          <div class="pull-left">Week 6 : Industry Evolution and Revolution <a id="edit-session-link" href="#" data-toggle="modal" data-target="#editSession" class="glyphicon glyphicon-edit" title="Edit Session"></a> </div>
-                          <div class="widget-icons pull-right">
-
-
-                            <a href="#" data-toggle="modal" data-target="#newTakeaway" class="btn btn-primary" style="background:#e1e3e4 !important;color:#000"><span class="glyphicon glyphicon-pencil"></span> New Takeaway</a>
-                            <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
-                            <a href="#" class="wclose"><i class="fa fa-times"></i></a>
-                          </div>
-                          <div class="clearfix"></div>
-                        </div>
-
-                        <div class="widget-content">
-                          <!-- Widget content -->
-                          <div class="padd">
-
-                            <ul id="takeaway-list" class="recent">
-                            <div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by hamdan.merchant@emory.edu</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Radical Innovation:
-1)Eliminate activities in value chain
-2)Low end disruptive innovation
-3) High end disruptive innovation
-4)Mass customization</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-28" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-28" style="display: none;"></button><div1 id="rateit-range-28" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-28" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-</div></ul></div>
-
-                          </div>
-                        </div>
-
-
-
-                      </div>
-
-
-<div>
-
-
-                    <div class="widget wlightblue">
-                        <!-- Widget title -->
-                        <div class="widget-head">
-                          <div class="pull-left">Week 7 : Managing Human Assets F0r Competitive Advantage <a id="edit-session-link" href="#" data-toggle="modal" data-target="#editSession" class="glyphicon glyphicon-edit" title="Edit Session"></a> </div>
-                          <div class="widget-icons pull-right">
-
-
-                            <a href="#" data-toggle="modal" data-target="#newTakeaway" class="btn btn-primary" style="background:#e1e3e4 !important;color:#000"><span class="glyphicon glyphicon-pencil"></span> New Takeaway</a>
-                            <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
-                            <a href="#" class="wclose"><i class="fa fa-times"></i></a>
-                          </div>
-                          <div class="clearfix"></div>
-                        </div>
-
-                        <div class="widget-content">
-                          <!-- Widget content -->
-                          <div class="padd">
-
-                            <ul id="takeaway-list" class="recent">
-                            <div></div></ul>
-
-                          </div>
-                        </div>
-
-
-
-                      </div>
-
-
-</div><div>
-
-
-                    <div class="widget wlightblue">
-                        <!-- Widget title -->
-                        <div class="widget-head">
-                          <div class="pull-left">Week 8 : Business Model Innovation <a id="edit-session-link" href="#" data-toggle="modal" data-target="#editSession" class="glyphicon glyphicon-edit" title="Edit Session"></a> </div>
-                          <div class="widget-icons pull-right">
-
-
-                            <a href="#" data-toggle="modal" data-target="#newTakeaway" class="btn btn-primary" style="background:#e1e3e4 !important;color:#000"><span class="glyphicon glyphicon-pencil"></span> New Takeaway</a>
-                            <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
-                            <a href="#" class="wclose"><i class="fa fa-times"></i></a>
-                          </div>
-                          <div class="clearfix"></div>
-                        </div>
-
-                        <div class="widget-content">
-                          <!-- Widget content -->
-                          <div class="padd">
-
-                            <ul id="takeaway-list" class="recent">
-                            <div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by SATLURI</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Seven aspects of Netflix's culture - 9 Values, High Performance, Freedom &amp; Responsibility, Context not Control, Highly aligned Loosely coupled, Pay top of market, Promotions &amp; Development</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-29" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-29" style="display: none;"></button><div1 id="rateit-range-29" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-29" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-</div></ul></div>
-
-                          </div>
-                        </div>
-
-
-
-                      </div>
-
-
-<div>
-
-
-                    <div class="widget wlightblue">
-                        <!-- Widget title -->
-                        <div class="widget-head">
-                          <div class="pull-left">Week 9 : Corporate-Level Strategy: Diversification &amp; Vertical Integration <a id="edit-session-link" href="#" data-toggle="modal" data-target="#editSession" class="glyphicon glyphicon-edit" title="Edit Session"></a> </div>
-                          <div class="widget-icons pull-right">
-
-
-                            <a href="#" data-toggle="modal" data-target="#newTakeaway" class="btn btn-primary" style="background:#e1e3e4 !important;color:#000"><span class="glyphicon glyphicon-pencil"></span> New Takeaway</a>
-                            <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
-                            <a href="#" class="wclose"><i class="fa fa-times"></i></a>
-                          </div>
-                          <div class="clearfix"></div>
-                        </div>
-
-                        <div class="widget-content">
-                          <!-- Widget content -->
-                          <div class="padd">
-
-                            <ul id="takeaway-list" class="recent">
-                            <div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by jodi.evans@emory.edu</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Some other pros and cons of vertical integration:
-
-Pros:
-o   Control over decisions from upstream supplier or downstream distributor
-o   Control over transaction-specific investments
-o   Control over info. flow
-o   Control over timing
-
-Cons:
-o   Lose flex. And focus
-o   Heavier capital requirement and entry costs
-o   Higher exit barriers
-o   Need to develop other tech. and mgmt. skills for new production
-o   A strong position on the value chain does not guarantee a strong position elsewhere  </pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-30" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-30" style="display: none;"></button><div1 id="rateit-range-30" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-30" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-</div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by jodi.evans@emory.edu</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">•    5 keys to executing strategy:
- 1. Accountability
-2.  Clear Goals
-3.  Accurate Measures of performance
-4.  Right Rewards
-5.  Follow-through  </pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-31" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-31" style="display: none;"></button><div1 id="rateit-range-31" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-31" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-</ul></div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by jodi.evans@emory.edu</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Questions to ask re: diversification:
-1.  Does it create economies of scale?
-2.  Can core competence be transferred?
-3.  Can you vertically integrate and cost?
-4.  Discipline/restructuring? (why does tgt. Mgmt team need you to do it for them i.e. why didn’t they figure it out?)
-5.  Acquisition competence?  (why does buyer have better info. re: fit than rest of mkt.?)
-</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-32" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-32" style="display: none;"></button><div1 id="rateit-range-32" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-32" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-</div><div>
-    <li>
-                                <div class="recent-content">
-                                  <div class="recent-meta">Posted on 07/09/14 08:41 by jodi.evans@emory.edu</div>
-                                  <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Evaluating reasons to diversify:
-1.  Reduce risk (most beneficial for mgrs., but least for shareholders)
-2.  Maintain growth
-3.  Balance cash flows
-4.  Share infrastructure
-5.  Increase mkt power
-6.  Exploit core competence (least beneficial for mgrs., but most for shareholders)
-</pre></div>
-
-                                   <div class="btn-group" style="float: right; display: none;">
-
-                                    <button id="update" class="btn btn-xs btn-primary" title="Edit" style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
-                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
-                                </div>
-
-                                <div class="btn-group-left">
-
-
-
-                                    <div class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="false" data-rateit-resetable="false"><button id="rateit-reset-33" type="button" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-33" style="display: none;"></button><div1 id="rateit-range-33" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-33" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" style="width: 80px; height: 16px;" aria-readonly="false"><div class="rateit-selected rateit-preset" style="height: 16px; width: 0px;"></div><div class="rateit-hover" style="height: 16px;"></div></div1></div></div>
-                                        <span class="total-raters">(<i class="fa fa-user"></i> 0)</span>
-
-
-
-
-                                     </div>
-
-                                     <div id="favourite">
-                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
-
-                                     </div>
-
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  <div class="clearfix"></div>
-                                </li></div>
-                              
-
-</div></div>
-
-                          
-                        
-
-
-
-                      
-
-
-<div>
-
-
-                    <div class="widget wlightblue">
-                        <!-- Widget title -->
-                        <div class="widget-head">
-                          <div class="pull-left">Week 10 : Strategy Implementation <a id="edit-session-link" href="#" data-toggle="modal" data-target="#editSession" class="glyphicon glyphicon-edit" title="Edit Session"></a> </div>
-                          <div class="widget-icons pull-right">
-
-
-                            <a href="#" data-toggle="modal" data-target="#newTakeaway" class="btn btn-primary" style="background:#e1e3e4 !important;color:#000"><span class="glyphicon glyphicon-pencil"></span> New Takeaway</a>
-                            <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
-                            <a href="#" class="wclose"><i class="fa fa-times"></i></a>
-                          </div>
-                          <div class="clearfix"></div>
-                        </div>
-
-                        <div class="widget-content">
-                          <!-- Widget content -->
-                          <div class="padd">
-
-                            <ul id="takeaway-list" class="recent">
-                            <div></div></ul>
-
-                          </div>
-                        </div>
-
-
-
-                      </div>
-
-
-</div>
-                  
-
-                
-
-
-            <!--/ Matter ends -->
-
-        <!--/ Mainbar ends -->
-        <div class="clearfix"></div>
-
-    <!--/ Content ends -->
-
-
-
-
-
-    <!-- Scroll to top -->
-    <span class="totop"><a href="#"><i class="fa fa-chevron-up"></i></a>
-    </span>
-
-
-
-
 
 
 <script>
@@ -1968,7 +640,6 @@ o   A strong position on the value chain does not guarantee a strong position el
 <script type="text/template" id="takeaway-template">
     <li>
                                 <div class="recent-content">
-                                  <div class="recent-meta">Posted on <%=created_dt%> by <%= username%></div>
                                   <div id="editable-notes"></div>
 
                                    <div class="btn-group" style="float:right">
@@ -2136,5 +807,4 @@ o   A strong position on the value chain does not guarantee a strong position el
     </div>
   </div>
 </div><script src="http://js-agent.newrelic.com/nr-460.min.js"></script><script type="text/javascript" src="http://beacon-3.newrelic.com/1/14a83b3fa0?a=4765300&amp;pl=1411885091987&amp;v=460.9fd672a&amp;to=ZwZQMBRYDEFTWkVYDF5MdBEIWhZbXVceRQJbBlMTB0BMRFtcRkJZWQ1WAR4%3D&amp;qt=7&amp;ap=181&amp;be=1061&amp;fe=2468&amp;dc=1651&amp;f=%5B%5D&amp;perf=%7B%22timing%22:%7B%22of%22:1411885091987,%22n%22:0,%22u%22:705,%22ue%22:705,%22dl%22:798,%22di%22:2709,%22ds%22:2710,%22de%22:3116,%22dc%22:3528,%22l%22:3528,%22le%22:3550,%22r%22:0,%22re%22:426,%22f%22:426,%22dn%22:426,%22dne%22:426,%22c%22:426,%22ce%22:426,%22rq%22:442,%22rp%22:696,%22rpe%22:765%7D,%22navigation%22:%7B%22rc%22:1%7D%7D&amp;jsonp=NREUM.setToken"></script>
-<script src="/static/takeaway/js/lib/intro.js" type="text/javascript"></script>
-<script src="http://js-agent.newrelic.com/nr-460.min.js"></script><script type="text/javascript" src="http://beacon-3.newrelic.com/1/14a83b3fa0?a=4765300&amp;pl=1412009400964&amp;v=460.9fd672a&amp;to=ZwZQMBRYDEFTWkVYDF5MdBEIWhZbXVceRQJbBlMTB0BMRFtcRkJZWQ1WAR4%3D&amp;qt=7&amp;ap=181&amp;f=%5B%5D&amp;perf=%7B%22timing%22:%7B%22of%22:1412009400964,%22n%22:0,%22u%22:224,%22ue%22:225,%22dl%22:233,%22di%22:392,%22ds%22:392,%22de%22:451,%22dc%22:451,%22l%22:451,%22le%22:451,%22f%22:0,%22dn%22:1,%22dne%22:1,%22c%22:1,%22ce%22:1,%22rq%22:2,%22rp%22:223,%22rpe%22:224%7D,%22navigation%22:%7B%7D%7D&amp;jsonp=NREUM.setToken"></script></body></html>
+<script src="/static/takeaway/js/lib/intro.js" type="text/javascript"></script></body></html>
