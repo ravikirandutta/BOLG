@@ -228,6 +228,26 @@ app.factory('TagsFactory', ['$resource',
   }
 
 
+$scope.tagAddedInEditTakeaway = function(tag){
+      if(!tag.id){
+        TagsFactory.query({"name":tag.name}).$promise.then(function(data){
+            if(data.count ==1){
+              var length = $scope.tags.length;
+              $scope.taset.tags.splice(length-1,1);
+              $scope.taset.tags.push(data.results[0]);
+            }else{
+                TagsFactory.save({"name":tag.name}).$promise.then(function(data){
+                    var length = $scope.tags.length;
+                    $scope.taset.tags.splice(length-1,1);
+
+                    $scope.taset.tags.push(data);
+
+                });
+            }
+        });
+      }
+  }
+
 
 
     CoursesFactory.query({
@@ -361,8 +381,8 @@ app.factory('TagsFactory', ['$resource',
       document.getElementById(divId + "_view").style.display = "block";
       document.getElementById(divId + "_edit").style.display = "none";
       var tagIds = [];
-      angular.forEach($scope.taset.tags, function(tag){
-          if(!tag.id){
+      angular.forEach(taset.tags, function(tag){
+          if(tag.id){
              tagIds.push(tag.id);
           }
       });
@@ -557,7 +577,7 @@ app.factory('TagsFactory', ['$resource',
 
     };
 
-    
+
 
   });
 
@@ -604,7 +624,7 @@ app.controller('publicPrivateButtonCtrl',
         }
     };
 
-    });  
+    });
 })();
 
 
