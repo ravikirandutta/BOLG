@@ -1,4 +1,5 @@
 <div ng-controller="takeawayDashboardCtrl">
+
   <div class="content">
     <div class="mainbar">
       <div id="course-list" class="page-head">
@@ -14,7 +15,6 @@
         </ui>
         <div class="clearfix"></div>
       </div>
-
       <div class="col-md-6" id="takeaway-container">
       <div ng-show="displaysessions">
         <div ng-repeat="sessionsresult in sessions.results">
@@ -37,6 +37,7 @@
               </div>
               <div class="widget-content">
                   <div class="padd">
+
                     <ul id="takeaway-list" class="recent">
                       <div>
                         <div ng-repeat="taset in sessionsresult.takeaway_set">
@@ -74,18 +75,23 @@
                                   <span style="width:2px">&nbsp;</span>
                                 </span>
 
-                                <span ng-if="!taset.isOwner">{{taset.average_rating}}
+                                <span ng-if="!taset.isOwner">
+                                  {{taset.average_rating}}
+                                  <div class="rateit" data-rateit-value={{taset.average_rating}} data-rateit-ispreset="true" data-rateit-readonly={{taset.alreadyRated}} data-rateit-resetable="false"></div>
                                   <span class="total-raters">(<i class="fa fa-user"></i>{{taset.total_raters}})</span>
                                 </span>
 
-                                <span ng-if="taset.isOwner">{{taset.average_rating}}
+                                <span ng-if="taset.isOwner">
+                                  {{taset.average_rating}}
+                                  <div class="rateit" data-rateit-value={{taset.average_rating}} data-rateit-ispreset="true" data-rateit-readonly="true" data-rateit-resetable="false"></div>
+
                                   <span class="total-raters">(<i class="fa fa-user"></i>{{taset.total_raters}})</span>
-                                  <span ng-if="taset.is_public">
-                                    PUB-PRI
-                                  </span>
-                                  <span ng-if="!taset.is_public">
-                                    PUB-PRI
-                                  </span>
+
+                                  <span public-private taset="taset"
+                                       course-id={{sessionsresult.courseInstance.id}}
+                                       session-id={{sessionsresult.id}}
+                                       perform-post=true></span>
+
                                 </span>
                               </div>
                               <div id="favourite">
@@ -121,13 +127,12 @@
                                 </tags-input>
 
                               <div>
-                              <br/>
-                              <div>
-                                <span>
-                                  <div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-animate"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">public</span><label class="bootstrap-switch-label">&nbsp;</label><span class="bootstrap-switch-handle-off bootstrap-switch-default">private</span><input type="checkbox" class="switch" name="my-checkbox" animate="true" data-on-text="public" data-off-text="private" offcolor="danger" checked=""></div></div>
-                                </span>
-                              </div>
-                              <br/>
+
+                              <span public-private taset="taset"
+                                   course-id={{sessionsresult.courseInstance.id}}
+                                   session-id={{sessionsresult.id}}
+                                   perform-post=false></span>
+
                               <button class="btn btn-success" ng-click="updateTakeaway(sessionsresult.id+'_'+taset.id, taset)">Update</button>
                               <button class="btn btn-danger" ng-click="cancelEdit(sessionsresult.id+'_'+taset.id, taset.notes)">Cancel</button>
                               <br/>
@@ -153,16 +158,17 @@
         <textarea rows="5" class="form-control" id="notes"></textarea>
       </div>
 
+
     <tags-input placeholder="Add a Tag by typing it" ng-model="tags" display-property="name"  on-tag-added="tagAdded($tag)">
        <auto-complete source="loadTags($query)"></auto-complete>
     </tags-input>
 
 
-      <div class="row1"style="padding-top: 20px;">
-        <span>
-          <div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-animate"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">public</span><label class="bootstrap-switch-label">&nbsp;</label><span class="bootstrap-switch-handle-off bootstrap-switch-default">private</span><input type="checkbox" class="switch" name="my-checkbox" animate="true" data-on-text="public" data-off-text="private" offcolor="danger" checked=""></div></div>
-        </span>
-      </div>
+      <span public-private taset="taset"
+           course-id={{sessionsresult.courseInstance.id}}
+           session-id={{sessionsresult.id}}
+           perform-post=false></span>
+
     </div>
     <div class="ngdialog-buttons">
       <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()"
