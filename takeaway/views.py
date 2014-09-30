@@ -16,8 +16,26 @@ from rest_framework.mixins import *
 
 
 # Create your views here.
+from rest_framework.decorators import api_view
+@api_view(['GET'])
+def can_user_post(request):
 
+    minimum_rating_pct = 0.25
+    can_post = True
+    course_id = request.QUERY_PARAMS.get('course_id', None)
+    if not course_id:
+        return Response({"detail": "Course not passed."});
+    #user = User.objects.get(pk=3)
+    user = request.user
+    ci = CourseInstance.objects.get(pk=course_id)
+    takeaways = TakeAway.objects.filter(courseInstance=ci).filter(is_public=True).exclude(user=user)
+    takeaway_count = takeaways.count()
+    rating_count = Rating.objects.filter(takeaway = takeaways).filter(user=user).count()
+    if takeaway_count > 0 :
+        if rating_count/takeaway_count < 0.25  and not takeaway_count > 3 :
+            can_post = False
 
+    return Response({"user":user.id,"takeaway_count": takeaway_count, "rating_count": rating_count , "can_post" : can_post})
 
 import logging
 logger = logging.getLogger(__name__)
