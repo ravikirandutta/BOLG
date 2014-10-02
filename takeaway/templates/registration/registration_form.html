@@ -137,7 +137,8 @@
                             {{form.program.errors}}
                             <label class="control-label col-lg-3" for="program">Program</label>
                             <div class="col-lg-9">
-                                      <select id="id_program" name="program" ng-model="selectedProgram" ng-options="program.id as program.name for program in programs"></select>
+                                      <select  id="id_program" name="value" ng-model="selectedProgram"
+                                      ng-options=" program.name for program in programs track by program.id"></select>
                             </div>
                           </div>
                           <!-- Select box -->
