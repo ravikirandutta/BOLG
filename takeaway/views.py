@@ -195,6 +195,12 @@ class SessionDetail(generics.RetrieveUpdateDestroyAPIView):
         serializer_class = SessionDetailSerializer
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly)
 
+        def post_save(self, obj, created=False):
+            if not created :
+                event = PointEvent.objects.get(event='CREATED_SESSION')
+                UserEventLog(user=self.request.user,course_instance=obj.courseInstance,session=obj,event=event,points=event.points).save()
+
+
 
 class TagViewSet(viewsets.ModelViewSet):
         queryset = Tag.objects.all()
@@ -255,6 +261,7 @@ class TakeAwayDetail(generics.RetrieveUpdateDestroyAPIView):
 		queryset = TakeAway.objects.all()
 		serializer_class = TakeAwaySerializer
 		permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
 
 
 from registration.backends.default.views import RegistrationView
