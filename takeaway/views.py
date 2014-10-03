@@ -126,7 +126,7 @@ def handlelogin(request):
             # the authentication system was unable to verify the username and password
             message =  "The username/password is incorrect."
             #message=""
-            return render_to_response("login.html",{ 'error_message': message },RequestContext(request))
+            return render_to_response("landing.html",{ 'error_message': message },RequestContext(request))
 
 
     #return HttpResponse( request.POST.get('Mode'))
