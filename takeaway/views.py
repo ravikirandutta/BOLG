@@ -15,6 +15,18 @@ from takeaway.forms import *
 from rest_framework.mixins import *
 
 
+# test dynamic HTML
+def test(request):
+    l = ['ravi posted on c1','tluri posted on c1']
+
+    print '<table>'
+    for sublist in l:
+        print '  <tr><td>'
+        print '    </td><td>'  + sublist
+        print '  </td></tr>'
+    print '</table>'
+    return HttpResponse( "Successfully Loaded init data")
+
 # Create your views here.
 from rest_framework.decorators import api_view
 @api_view(['GET'])
