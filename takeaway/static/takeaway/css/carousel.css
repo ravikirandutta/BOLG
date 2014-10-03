@@ -31,7 +31,12 @@ body {
   padding-left: 15px;
 }
 .navbar-wrapper .navbar .container {
-  width: auto;
+  max-width: 1140px;
+padding-left: 12px;
+padding-right: 12px;
+margin-left: auto;
+margin-right: auto;
+background-color: #fff;
 }
 
 
@@ -51,7 +56,7 @@ body {
 /* Declare heights because of positioning of img element */
 .carousel .item {
   height: 500px;
-  background-color: #777;
+  background-color: #e9eaec;
 }
 .carousel-inner > .item > img {
   position: absolute;
@@ -103,7 +108,7 @@ body {
 
   /* Navbar positioning foo */
   .navbar-wrapper {
-    margin-top: 20px;
+    background-color: #fff
   }
   .navbar-wrapper .container {
     padding-right: 15px;
@@ -130,9 +135,42 @@ body {
     font-size: 50px;
   }
 }
+#nav-menu{
+  border-color:#fff !important;
+}
+#nav-menu li a{
+  
+    display: block;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    -webkit-transform: scale(1, 1);
+  -webkit-transition-duration: 500ms;
+  -webkit-transition-timing-function: ease-out;
+}
+
+#nav-menu li:hover{
+    color: #000 !important;
+    padding-left: 10px;
+    -webkit-transform: scale(1.2, 1.2);
+  -webkit-transition-duration: 500ms;
+  -webkit-transition-timing-function: ease-out;
+  }
+
+#caption{
+  color:#000;
+  font-family:"helvetica neue",aktiv-grotesk-std,helvetica,arial,freesans,"liberation sans","numbus sans l",sans-serif;
+}
+
+.nav-right{
+  margin-top:10px;
+  float:right;
+  border-radius: 4px;
+}
 
 @media (min-width: 992px) {
   .featurette-heading {
     margin-top: 120px;
   }
 }
+
+
