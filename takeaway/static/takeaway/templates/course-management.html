@@ -1,4 +1,4 @@
-<div ng-controller="CourseController" class="mainbar" style="margin-left:230px"> 
+<div ng-controller="CourseController" class="mainbar" style="margin-left:230px">
              <div ng-hide="addingCourse" >
             <!-- Page heading -->
             <div class="page-head">
@@ -21,7 +21,7 @@
                                          <span id="tick" ng-show="isRegistered(availableCourse.id)"><i class="fa fa-check-circle"></i></span>
                                          <span id="section" style="">{{availableCourse.section.name}}</span>
                                     </li>
-                                    
+
                                 </ul>
                                  </div>
 
@@ -56,11 +56,13 @@
                                 <div class="col-lg-4">
                                     <label class="control-label col-lg-3" for="course">Course</label>
                                     <select name="course" ng-model="newClass.course" ng-options="course.id as course.course_name for course in courses"></select>
-                                    <a id="create-course" class="col-lg-6" ng-click="creatingCourse=true"><i class="fa fa-plus-circle fa-lg"></i>Add new course <span class="beta"> BETA</span></a>
-                                    
                                 </div>
+                                <div>
+                                     <a id="create-course" class="col-lg-6" ng-click="creatingCourse=true"><i class="fa fa-plus-circle fa-lg"></i>Didn't find your course,Add it <span class="beta"> BETA</span></a>
+
+                                   </div>
                             </div>
-                    
+
 
                         <div class="form-group" ng-show="creatingCourse">
                             <div class="col-md-4">
