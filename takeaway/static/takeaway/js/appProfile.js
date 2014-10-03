@@ -1,4 +1,4 @@
-(function(){ 
+(function(){
 	var app=angular.module('selectCourses',['ngCookies','ngResource']).run(function($http, $cookies) {
     $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
     $http.defaults.headers.put['X-CSRFToken'] = $cookies.csrftoken;
@@ -84,7 +84,7 @@ app.config(['$resourceProvider', function ($resourceProvider) {
 
 
         $scope.getAvailableCourses = function(){
-            CourseSelection.query({"school":$scope.userProfile.school}).$promise.then(function(data){
+            CourseSelection.query({"school_id":$scope.userProfile.school}).$promise.then(function(data){
                 $scope.availableCourses=data.results;
                 if($scope.availableCourses.length==0){
                     $scope.setAddingCourse(true);
@@ -95,9 +95,9 @@ app.config(['$resourceProvider', function ($resourceProvider) {
             Courses.query({"school":$scope.userProfile.school}).$promise.then(function(data){
                 $scope.courses = data.results;
                 if($scope.courses.length>0){
-                 $scope.newClass.course=$scope.courses[0].id;  
+                 $scope.newClass.course=$scope.courses[0].id;
                 }
-                
+
                 $scope.creatingCourse=($scope.courses.length==0);
         })};
 
@@ -144,7 +144,7 @@ app.config(['$resourceProvider', function ($resourceProvider) {
             }
             return false;
         }
-        
+
 
 		$scope.setAddingCourse=function(value){
 			if(value){
@@ -156,7 +156,7 @@ app.config(['$resourceProvider', function ($resourceProvider) {
 
 		};
 		$scope.submitNewCourseForm = function(){
-		$scope.newCourse.school=$scope.userProfile.school	
+		$scope.newCourse.school=$scope.userProfile.school
 		$http({
             url: '/courses/',
             method: "POST",
@@ -166,7 +166,7 @@ app.config(['$resourceProvider', function ($resourceProvider) {
                 $scope.newClass.course=data.id;
                 $scope.newCourse = {};
                 $scope.creatingCourse=false;
-                $scope.submitNewClassForm(); 
+                $scope.submitNewClassForm();
                 $scope.getCourses();
                 //once we make course instance addition we need to remove this redundency below
                 $scope.getAvailableCourses();
@@ -192,15 +192,15 @@ app.config(['$resourceProvider', function ($resourceProvider) {
                 $scope.userRegisteredCourses.splice($scope.userRegisteredCourses.indexOf(courseId),1);
                 $scope.userProfile.courseInstances=$scope.userRegisteredCourses;
                 UserProfileUpdate.save({id:$scope.userProfile.id},$scope.userProfile);
-            
-                
+
+
             } else{
                 $scope.userRegisteredCourses.push(courseId);
                 $scope.userProfile.courseInstances=$scope.userRegisteredCourses;
                 UserProfileUpdate.save({id:$scope.userProfile.id,"course_id":courseId},$scope.userProfile);
             }
         };
-        
+
 
 	});
 
