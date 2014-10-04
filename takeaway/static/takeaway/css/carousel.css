@@ -31,7 +31,12 @@ body {
   padding-left: 15px;
 }
 .navbar-wrapper .navbar .container {
-  width: auto;
+  max-width: 1140px;
+padding-left: 12px;
+padding-right: 12px;
+margin-left: auto;
+margin-right: auto;
+background-color: #fff;
 }
 
 
@@ -51,7 +56,9 @@ body {
 /* Declare heights because of positioning of img element */
 .carousel .item {
   height: 500px;
-  background-color: #777;
+  background-color: #e9eaec;
+  margin-left:60px;
+  margin-right: 60px;
 }
 .carousel-inner > .item > img {
   position: absolute;
@@ -103,7 +110,7 @@ body {
 
   /* Navbar positioning foo */
   .navbar-wrapper {
-    margin-top: 20px;
+    background-color: #fff
   }
   .navbar-wrapper .container {
     padding-right: 15px;
@@ -116,7 +123,7 @@ body {
 
   /* The navbar becomes detached from the top, so we round the corners */
   .navbar-wrapper .navbar {
-    border-radius: 4px;
+    border-color:#fff;
   }
 
   /* Bump up size of carousel content */
@@ -130,9 +137,71 @@ body {
     font-size: 50px;
   }
 }
+#nav-menu{
+  border-color:#fff !important;
+}
+#nav-menu li a{
+    color:#999;
+    display: block;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    -webkit-transform: scale(1, 1);
+  -webkit-transition-duration: 500ms;
+  -webkit-transition-timing-function: ease-out;
+}
+
+#nav-menu li:hover{
+    color: #000 !important;
+    padding-left: 10px;
+    -webkit-transform: scale(1.2, 1.2);
+  -webkit-transition-duration: 500ms;
+  -webkit-transition-timing-function: ease-out;
+  }
+
+#caption{
+  color:#333;
+  font-family:"helvetica neue",aktiv-grotesk-std,helvetica,arial,freesans,"liberation sans","numbus sans l",sans-serif;
+  text-shadow: 0 0 0 rgba(0,0,0,0); 
+}
+
+.nav-right{
+  margin-top:10px;
+  float:right;
+  border-radius: 4px;
+}
+ol#indicator li{
+  background-color: #3b5998 !important;
+  color:blue !important;
+}
+
+#row{
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+#divider{
+  border-top: 1px solid #bfbcbc;
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+#content{
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+#show{
+  width:120px;
+  color:#fff;
+  background-color:#3b5998;
+  margin-left:100px;
+  margin-bottom:10px;
+}
 
 @media (min-width: 992px) {
   .featurette-heading {
     margin-top: 120px;
   }
 }
+
+

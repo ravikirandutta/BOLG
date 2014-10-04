@@ -12,6 +12,7 @@
     <title>MBA Takeaway</title>
 
     <!-- Bootstrap core CSS -->
+    <link href="{% static "takeaway/css/app.css"%}" rel="stylesheet">
     <link href="{% static "takeaway/css/bootstrap.min.css"%}" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -28,6 +29,14 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static "takeaway/css/carousel.css"%}" rel="stylesheet">
+    <script src="{% static "takeaway/js/lib/jquery.js"%}"></script>
+        <!-- Bootstrap JS -->
+      <script src="{% static "takeaway/js/lib/bootstrap.min.js"%}"></script>
+
+       <script src="{% static "takeaway/js/lib/respond.min.js"%}"></script> <!-- Respond JS for IE8 -->
+
+        <!-- HTML5 Support for IE -->
+       <script src="{% static "takeaway/js/lib/html5shiv.js"%}"></script>
 
   </head>
 <!-- NAVBAR
@@ -36,7 +45,7 @@
     <div class="navbar-wrapper">
       <div class="container">
 
-        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="navbar navbar-inverse navbar-static-top" id="navbar-inverse" role="navigation">
           <div class="container">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -45,48 +54,59 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">MBA Takeaway</a>
+              <a class="navbar-brand" href="#" style="font-size:20px">MBA Takeaway</a>
+              <span class="beta" style=" color: #fff;
+     position: absolute;top: 30px;left: 180px;font-size: 9px;
+">BETA</span>
             </div>
             <div class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
+              <ul class="nav navbar-nav" id="nav-menu">
+                <li ><a href="#">Home</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li class="dropdown-header">Nav header</li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </li>
+                <li><a href="/contact">Contact us</a></li>
               </ul>
+              <div class="nav-right">
+                 
+                <form action="{% url 'handlelogin'  %}" class="form-horizontal" method="post" name="login_form" id="login_form"> {% csrf_token %}
+                  <label for="inputEmail"></label>
+                  <input type="text" name="Username" placeholder="username">
+                <label for="inputPassword"></label>
+                <input type="password" name="Password" placeholder="password">
+                <input type="hidden" name="Mode" value="login" >
+                <label><input type="checkbox"></label>
+                <button type="submit" class="btn">Sign in</button>
+                <a class="button" href="/accounts/register">Register</a>
+              </form>
+                {% if error_message %} <p class="wdiget-content" style="color:red">{{ error_message }}</p> {% endif %} 
+          </div>
+
             </div>
           </div>
         </div>
+        <div style="margin-left:400px; margin-top:10px"> <a class="btn btn-large" id="show" href="/demo/">Show Me How</a></div>
+
 
       </div>
+            <div class="reportBug">
+                  <a class="bugReport" href="#" data-toggle="modal" data-target="#bugModal"> Report a Bug</a>
+            </div>
     </div>
 
 
     <!-- Carousel
     ================================================== -->
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
       <!-- Indicators -->
-      <ol class="carousel-indicators">
+      <ol class="carousel-indicators" id="indicator">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
         <li data-target="#myCarousel" data-slide-to="2"></li>
       </ol>
       <div class="carousel-inner">
         <div class="item active">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
           <div class="container">
-            <div class="carousel-caption">
+            <div class="carousel-caption" id="caption">
               <h1>BUS 628P Investment Banking</h1>
               <p>Growth is not always good. For growth to be beneficial it has to be at least be equal to Weighted Average Cost of Capital (WACC).
                 <br/>
@@ -96,9 +116,8 @@
           </div>
         </div>
         <div class="item">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAGZmZgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
           <div class="container">
-            <div class="carousel-caption">
+            <div class="carousel-caption" id="caption">
               <h1>BUS 661P Applied Entrepreneurship</h1>
               <p>TMake an "Irrational" Offer to STAND OUT from the crowd. This is more true for start-ups. Examples of such offers are
 1. Zappos - 365 day return policy , no questions asked
@@ -110,9 +129,8 @@
           </div>
         </div>
         <div class="item">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAFVVVQAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
           <div class="container">
-            <div class="carousel-caption">
+            <div class="carousel-caption" id="caption">
               <h1>BUS 651P Strategic Decision Analysis</h1>
               <p>Companies hedge non-core items ( global firms hedging currency) and take risks in core operations. Individual are risk averse, insurance companies are risk-neutral
 First-mover advantage comes from the ability to commit oneself to an advantageous position and to force the other players to adapt to it. Second-mover advantage comes from the flexibility to adapt oneself to the other's choices.
@@ -121,133 +139,22 @@ First-mover advantage comes from the ability to commit oneself to an advantageou
           </div>
         </div>
       </div>
-      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
     </div><!-- /.carousel -->
 
 
-     <hr class="featurette-divider">
-
-      <div class="row featurette">
+     <hr class="featurette-divider" id="divider">
+      <div class="row featurette" id="row">
         <div class="col-md-7">
           <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
         </div>
         <div class="col-md-5">
-          <img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+          <img class="featurette-image img-responsive" src="http://www.mbaconsult.ru/ru/masters-or-mba-4.jpg" style="width:400px;height:400px;">
         </div>
       </div>
-
-
-<hr class="featurette-divider">
-    <!-- Marketing messaging and featurettes
-    ================================================== -->
-    <!-- Wrap the rest of the page in another container to center all the content. -->
-
-    <div class="container marketing">
-
-      <!-- Three columns of text below the carousel -->
-      <div class="row">
-        <div class="col-lg-4">
-          <img class="img-circle" src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/8/005/03a/218/25c9bc9.jpg" alt="Generic placeholder image" style="width: 140px; height: 140px;">
-          <h2>Chakravarthy U</h2>
-          <h4>Dir of Engineering, ChatBoost</h4>
-          <h4>Wharton Executive MBA, class of 2016</h4>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div><!-- /.col-lg-4 -->
-        <div class="col-lg-4">
-          <img class="img-circle" src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/6/000/2d0/095/07c98b3.jpg" alt="Generic placeholder image" style="width: 140px; height: 140px;">
-          <h2>Hamdan Merchant</h2>
-           <h4>Senior Lean Program Specialist, MSc Industrial Supply Co</h4>
-          <h4>Emory MBA, class of 2016</h4>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div><!-- /.col-lg-4 -->
-        <div class="col-lg-4">
-          <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" style="width: 140px; height: 140px;">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div><!-- /.col-lg-4 -->
-      </div><!-- /.row -->
-
-<hr class="featurette-divider">
-      <!-- START THE FEATURETTES -->
-
-
-       <div id="myCarousel1" class="carousel slide" data-ride="carousel">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li data-target="#myCarousel1" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel1" data-slide-to="1"></li>
-        <li data-target="#myCarousel1" data-slide-to="2"></li>
-      </ol>
-      <div class="carousel-inner">
-        <div class="item active">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>Example headline.</h1>
-              <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAGZmZgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>Another example headline.</h1>
-              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAFVVVQAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>One more for good measure.</h1>
-              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-    </div><!-- /.carousel -->
-
-
-
-
-      <hr class="featurette-divider">
-
-      <div class="row featurette">
-        <div class="col-md-5">
-          <img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-        </div>
-        <div class="col-md-7">
-          <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-        </div>
-      </div>
-
-      <hr class="featurette-divider">
-
-      <div class="row featurette">
-        <div class="col-md-7">
-          <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-        </div>
-        <div class="col-md-5">
-          <img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-        </div>
-      </div>
-
-      <li>
-                                <div class="recent-content">
+    
+      
+                                <div class="recent-content" id="content">
                                   <div class="recent-meta">Posted on 07/09/14 08:41 by SATLURI</div>
                                   <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Some ways to resolve prisoner's dilemma are credible pre-commitment, bonding, signing contracts, shaming, threat of retaliating the next round.                                 </pre></div>
 
@@ -288,7 +195,108 @@ First-mover advantage comes from the ability to commit oneself to an advantageou
                                 </div>
                               </li>
 
-      <hr class="featurette-divider">
+
+<hr class="featurette-divider" id="divider">
+  <div class="row featurette" id="row">
+        <div class="col-md-7">
+          <h2 class="featurette-heading" >And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
+          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive" src="http://images.bwbx.io/cms/2012-10-25/1025_classsize_630x420.jpg" style="width:400px;height:400px;">
+        </div>
+      </div>
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    
+<hr class="featurette-divider" id="divider">
+      <!-- START THE FEATURETTES -->
+
+
+       <div id="myCarousel1" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators" id="indicators">
+        <li data-target="#myCarousel1" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel1" data-slide-to="1"></li>
+        <li data-target="#myCarousel1" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="item active">
+          <div class="container">
+            <div class="carousel-caption" style="color:#000">
+              <h1>Example headline.</h1>
+              <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="container">
+            <div class="carousel-caption" style="color:#000">
+              <h1>Another example headline.</h1>
+              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="container">
+            <div class="carousel-caption" style="color:#000">
+              <h1>One more for good measure.</h1>
+              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /.carousel -->
+
+
+
+
+      <hr class="featurette-divider" id="divider">
+
+      <div class="row featurette" id="row">
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive" src="http://www.invvest.org/blog/wp-content/uploads/2009/05/du-classroom.jpg" style="width:400px;height:400px;">
+        </div>
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
+          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        </div>
+      </div>
+
+      <hr class="featurette-divider" id="divider">
+       <div class="container marketing">
+
+      <!-- Three columns of text below the carousel -->
+      <div class="row">
+        <div class="col-lg-4">
+          <img class="img-circle" src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/8/005/03a/218/25c9bc9.jpg" alt="Generic placeholder image" style="width: 140px; height: 140px;">
+          <h2>Chakravarthy U</h2>
+          <h4>Dir of Engineering, ChatBoost</h4>
+          <h4>Wharton Executive MBA, class of 2016</h4>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <img class="img-circle" src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/6/000/2d0/095/07c98b3.jpg" alt="Generic placeholder image" style="width: 140px; height: 140px;">
+          <h2>Hamdan Merchant</h2>
+           <h4>Senior Lean Program Specialist, MSc Industrial Supply Co</h4>
+          <h4>Emory MBA, class of 2016</h4>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" style="width: 140px; height: 140px;">
+          <h2>Heading</h2>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
+      <hr class="featurette-divider" id="divider">
 
       <!-- /END THE FEATURETTES -->
 
