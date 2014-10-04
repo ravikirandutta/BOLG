@@ -1,0 +1,653 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <!-- Title here -->
+    <title>MBATakeaways</title>
+    <!-- Description, Keywords and Author -->
+    <meta name="description" content="Your description">
+    <meta name="keywords" content="Your,Keywords">
+    <meta name="author" content="ResponsiveWebInc">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Styles -->
+    <!-- Bootstrap CSS -->
+    <link href="/static/takeaway/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/takeaway/css/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="/static/takeaway/css/bootstrap-switch.css?{% now "U" %}" rel="stylesheet">
+    <link href="/static/takeaway/css/style.css" rel="stylesheet">
+    <!-- Widgets stylesheet -->
+    <link href="/static/takeaway/css/widgets.css" rel="stylesheet">
+
+<link href="/static/takeaway/css/font-awesome.min.css" rel="stylesheet">
+<!-- <link href="/static/takeaway/css/jquery.raty.css" rel="stylesheet"> -->
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+
+
+
+
+<link href="/static/takeaway/css/app.css?{% now "U" %}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/static/takeaway/css/jquery.gritter.css" />
+<link rel="stylesheet" type="text/css" href="/static/takeaway/css/rateit.css" />
+
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js" type="text/javascript"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js" type="text/javascript"></script>
+  <script src="/static/takeaway/js/lib/jquery.autosize.min.js" type="text/javascript"></script>
+  <script src="/static/takeaway/js/lib/bootstrap.min.js"></script>
+  <script src="/static/takeaway/js/lib/jquery.cookie.js" type="text/javascript"></script>
+<!--   <script src="/static/takeaway/js/lib/jquery.raty.js" type="text/javascript"></script> -->
+  <script src="/static/takeaway/js/lib/bootstrap-tagsinput.js" type="text/javascript"></script>
+
+  <script src="/static/takeaway/js/lib/bootstrap-switch.js" type="text/javascript"></script>
+
+<script src="/static/takeaway/js/jquery.gritter.min.js" type="text/javascript"></script>
+<script src="/static/takeaway/js/lib/jquery.rateit.js" type="text/javascript"></script>
+<script src="/static/takeaway/js/lib/localtime.js" type="text/javascript"></script>
+
+
+  <script src="/static/takeaway/js/session.js?{% now "U" %}" type="text/javascript"></script>
+  <script src="/static/takeaway/js/course.js?{% now "U" %}" type="text/javascript"></script>
+  <script src="/static/takeaway/js/tags.js?{% now "U" %}" type="text/javascript"></script>
+  <script src="/static/takeaway/js/app.js?{% now "U" %}" type="text/javascript"></script>
+  <script src="/static/takeaway/js/notification.js?{% now "U" %}" type="text/javascript"></script>
+    <!-- jQuery -->
+
+    <!-- Bootstrap JS -->
+
+
+    <!-- jQuery UI -->
+    <script src="/static/takeaway/js/lib/custom.js"></script>
+    <script src="/static/takeaway/js/takeaway.js?{% now "U" %}" type="text/javascript"></script>
+
+
+
+    <style type="text/css">
+
+    .availablecourses li {
+    display:list-item;
+    float: left;
+    width: 25%;
+    height: 100px;
+    padding: 0px;
+    font-size: 20px;
+    line-height: 5;
+    text-align: center;
+    background-color: #f9f9f9;
+
+    }
+
+    .courselist1{
+
+    list-style:none;
+    }
+    .courselist1 li:hover {
+    color: #fff;
+    background-color: #563d7c;
+    }
+
+    </style>
+
+
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/static/takeaway/img/icons/pen-icon.png">
+</head>
+
+<body>
+
+
+
+
+<script>
+      var csrftoken = $.cookie("csrftoken");
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+
+             if(settings.type == 'POST' || settings.type == 'PUT' || settings.type == 'DELETE'){
+                if (settings.url.substr(-1) != '/') settings.url += '/';
+            }
+
+    },
+    complete: function(xhr, status) {
+        if (xhr.status == 403) {
+           window.location.replace("/takeaways/index");
+        }
+    }
+
+});
+</script>
+
+<!-- google analytics tracking code -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-54183707-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+    <div class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" >
+        <div class="container">
+            <!-- Menu button for smallar screens -->
+            <div class="navbar-header">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="{% url 'play'%}" class="navbar-brand" id="heading">MBA Takeaways</a>
+                <span class="beta" style=" color: #fff;
+     position: absolute;top: 30px;left: 180px;font-size: 9px;
+">BETA</span>
+            </div>
+            <!-- Site name for smallar screens -->
+            <!-- Navigation starts -->
+            <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                <!-- Links -->
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <!--<img src="/static/takeaway/img/user.jpg" alt="" class="nav-user-pic img-responsive" />-->
+                            {%if user.first_name%} {{user.first_name}}
+                            {%elif user.username %}{{user.username}}{%endif%}<b class="caret"></b>
+                        </a>
+                        <!-- Dropdown menu -->
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'profile'%}"><i class="fa fa-user"></i> Profile</a>
+                            </li>
+
+
+                            <li><a href="{% url 'logoutuser'%}"><i class="fa fa-power-off"></i> Logout</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                </ul>
+                <!-- Notifications -->
+                <ul class="nav navbar-nav navbar-right" id="right-nav-menu">
+                    <!-- Message button with number of latest messages count-->
+                    <li class="dropdown dropdown-big">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                            <i class="fa fa-bell"></i> Notifications
+                            <span class="badge badge-important" id="inboxSize"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <!-- Heading - h5 -->
+                                <h5><i class="fa fa-envelope-o"></i> New Takeaways</h5>
+
+                                <!-- Use hr tag to add border -->
+                                <hr />
+                            </li>
+
+                            <div id="notifications-list" style="height:300px;overflow-y : auto"> </div>
+                            <!-- <li>
+                                <div class="drop-foot">
+                                    <a href="#">View All</a>
+                                </div>
+                            </li> -->
+                        </ul>
+                    </li>
+
+                    <li><a href="/contact/"> Contact Us</a>
+                            </li>
+                     <li><a href="#" data-toggle="modal" data-target="#bugModal"> Report a Bug</a>
+                            </li>
+                    <!-- Members button with number of latest members count -->
+                    <li class="dropdown dropdown-big" style="display:none">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                            <i class="fa fa-user"></i> Classmates
+                            <span class="badge badge-success">6</span>
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li>
+                                <!-- Heading - h5 -->
+                                <h5><i class="fa fa-user"></i> Classmates</h5>
+                                <!-- Use hr tag to add border -->
+                                <hr />
+                            </li>
+                            <li>
+                                <!-- List item heading h6-->
+                                <a href="#">Ravi Kumar</a>
+                                <span class="label label-warning pull-right">Finance</span>
+                                <div class="clearfix"></div>
+                                <hr />
+                            </li>
+                            <li>
+                                <a href="#">Balaji</a>
+                                <span class="label label-important pull-right">Marketing</span>
+                                <div class="clearfix"></div>
+                                <hr />
+                            </li>
+                            <li>
+                                <a href="#">Kumarasamy</a>
+                                <span class="label label-warning pull-right">Good in Everything</span>
+                                <div class="clearfix"></div>
+                                <hr />
+                            </li>
+
+                            <li>
+                                <div class="drop-foot">
+                                    <a href="#">View All</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                  <ul class="nav navbar-nav navbar-right" id="right-nav-menu">
+                        <!-- Dropdown menu -->
+                            <li><a href="{% url 'profile'%}"><i class="fa fa-user"></i> Profile</a>
+                            </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+
+    <!-- Main content starts -->
+
+    <div class="content">
+        <!-- Sidebar -->
+
+        <!-- Main bar -->
+        <div class="mainbar">
+
+            <!-- Page heading -->
+             <div id="course-list" class="page-head">
+                <!-- Page heading -->
+                <!-- Breadcrumb -->
+              <!--  <div >
+                    <a href="#" class="course"><i class="fa fa-bars"></i> BUS 520P Managerial Finance</a>
+                    <a href="#" class="course"><i class="fa fa-bars"></i> BUS 634P Strategic Management</a>
+                </div>
+            -->
+                <div class="clearfix"></div>
+            </div>
+
+            <div >
+                   <div class="row">
+        <div class="col-xs-4" role="main">
+
+
+            <div class="courses">
+
+                <div id="available-course-list"  class="availablecourses">
+
+            </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="slide-box" style="display:none">
+            <!-- Notification box head -->
+            <div class="slide-box-head bred">
+              <!-- Title -->
+              <div class="pull-left">Coursemates</div>
+              <!-- Icon -->
+              <div class="slide-icons pull-right">
+                <a class="sminimize" href="#"><i class="fa fa-chevron-down"></i></a>
+                <a class="sclose" href="#"><i class="fa fa-times"></i></a>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="slide-content" style="display: block;">
+
+              <!-- It is default bootstrap nav tabs. See official bootstrap doc for doubts -->
+
+
+                <!-- Tab content -->
+
+                <div class="tab-content" style="height:300px;overflow-y : auto;">
+
+                      <div id="tab1" class="tab-pane active">
+
+
+                      </div>
+
+
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+</div>
+
+
+<div class="searchbox" style="display:none; float:right; margin-right:40px;">
+
+    <input id="allBtn" type="button" class="btn" value="All" onclick="showAllTakeaways()">
+    <input id="myBtn" type="button" class="btn" value="My" onclick="showMyTakeaways()">
+    <input id="favBtn" type="button" class="btn" value="Favorites" onclick="showFavTakeaways()">
+
+    <input  type="text" class="search-query" data-role="tagsinput" placeholder="Filter by tag">
+        <button id="search-by-tag" type="submit" class="btn"><i class="fa fa-search"></i></button>
+    <div id="results-indicator"></div>
+</div>
+            <!--/ Page heading ends -->
+            <!-- Matter -->
+
+
+
+            <!-- session stuff-->
+
+<!-- takeaway stuff-->
+        <div class="col-md-6" id="takeaway-container">
+                      <!-- Widget -->
+
+
+                    </div>
+                  </div>
+
+                </div>
+                  </div>
+
+            <!--/ Matter ends -->
+        </div>
+        <!--/ Mainbar ends -->
+        <div class="clearfix"></div>
+    </div>
+    <!--/ Content ends -->
+
+
+
+
+
+    <!-- Scroll to top -->
+    <span class="totop"><a href="#"><i class="fa fa-chevron-up"></i></a>
+    </span>
+
+
+
+
+
+
+<script>
+
+</script>
+
+
+
+
+<div id="newTakeaway" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+</div>
+
+<div id="editSession" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+
+</div>
+<div id="editableTakeaway" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: none;">
+
+</div>
+<div id="bugModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+            <button id="modalCloseButton" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="myModalLabel">Report a Bug</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                        <p><label class="control-label col-lg-3" for="id_email">E-mail:</label><input id="id_sender" name="sender" type="email"></p>
+                </div>
+                <div class="form-group">
+                    <p><label class="control-label col-lg-3" for="id_message">Bug:</label>
+                        <textarea name="message" id="bug" rows="8" cols="40"></textarea></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="reportBug" data-dismiss="modal" class="btn btn-primary">Report</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/template" id="new-takeaway-template">
+   <div id="takeawayModal" class="modal-dialog">
+                                  <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button id="modalCloseButton" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">New Takeaway for <%=session_name%></h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <textarea id="create-textarea" class="takeaway"></textarea>
+                                    <div id="tags-list" ></div>
+                                    <input  type="text" id="nt-create-tag" class="search-query" data-role="tagsinput" placeholder="for ex: theory,application,example, case"/>
+
+                                       <input id="create-checkbox" type="checkbox" class="switch" name="my-checkbox" data-on-text="public" data-off-text="private" checked>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                    <button type="button" class="btn btn-primary">Save</button>
+                                  </div>
+                                </div>
+                                </div>
+</script>
+
+<script type="text/template" id="edit-session-template">
+   <div id="editSessionModal" class="modal-dialog">
+                                  <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button id="editSessionmodalCloseButton" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">Editing Session "<%=session_name%> "</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <textarea id="edit-session-textarea" class="session_name_edit"><%=session_name%></textarea>
+
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                    <button type="button" class="btn btn-primary">Save</button>
+                                  </div>
+                                </div>
+                                </div>
+</script>
+
+
+<script type="text/template" id="edit-takeaway-template">
+   <div id="editTakeawayModal" class="modal-dialog">
+                                  <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button id="modalCloseButton" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">New Takeaway for <%=session.session_name%></h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <textarea id="edit-textarea" class="takeaway"><%=notes%></textarea>
+                                    <div id="tags-list" ></div>
+
+                                    <input  type="text" id="create-tag" class="search-query" data-role="tagsinput" placeholder="for ex: theory,application,example, case"/>
+                                                                         <input id="edit-checkbox" type="checkbox" class="switch" name="my-checkbox" data-on-text="public" data-off-text="private"
+                                     <% if (is_public) { %>
+                                            checked
+                                        <% } %>
+                                     >
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                                    <button type="button" class="btn btn-primary">Save</button>
+                                  </div>
+                                </div>
+                                </div>
+</script>
+
+<script type="text/template" id="session-template">
+
+
+                    <div class="widget wlightblue">
+                        <!-- Widget title -->
+                        <div class="widget-head">
+                          <div class="pull-left"><%=session_name %> <a id="edit-session-link" href="#" data-toggle="modal" data-target="#editSession" class="glyphicon glyphicon-edit" title="Edit Session"></a> </div>
+                          <div class="widget-icons pull-right">
+
+
+                            <a href="#" data-toggle="modal" data-target="#newTakeaway" class="btn btn-primary" style="background:#e1e3e4 !important;color:#000" ><span class="glyphicon glyphicon-pencil"></span> New Takeaway</a>
+                            <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
+                            <a href="#" class="wclose"><i class="fa fa-times"></i></a>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
+                        <div class="widget-content">
+                          <!-- Widget content -->
+                          <div class="padd">
+
+                            <ul id="takeaway-list" class="recent">
+                            </ul>
+
+                          </div>
+                        </div>
+
+
+
+                      </div>
+
+
+</script>
+
+<script type="text/template" id="takeaway-template">
+    <li>
+                                <div class="recent-content">
+                                  <div class="recent-meta">Posted on <%=created_dt%> by <%= username%></div>
+                                  <div id="editable-notes"></div>
+
+                                   <div class="btn-group" style="float:right">
+
+                                    <button id="update" class="btn btn-xs btn-primary" title="Edit"  style="margin-left: 5px;" data-toggle="modal" data-target="#editableTakeaway"><i class="fa fa-pencil-square-o fa-lg"></i> </button>
+                                    <button id="delete" class="btn btn-xs btn-danger" title="Delete" style="margin-left: 5px;"><i class="fa fa-trash-o fa-lg"></i> </button>
+                                </div>
+
+                                <div class="btn-group-left">
+
+                                    <% _.each(tags, function(tag) { %>
+                                    <!--
+                                        <i><%=tag.name%></i><button class="btn btn-xs btn-danger tag-remove" name='<%=tag.id%>' ><i class="fa fa-times"></i> </button>&nbsp; -->
+
+                                        <span class="label label-warning"><i class="fa fa-tags"></i><%=tag.name%></span>
+
+                                    <% }); %>
+                                     <% if (!isOwner) {%>
+                                    <div class="rateit" data-rateit-value=<%=average_rating%> data-rateit-ispreset="true" data-rateit-readonly=<%=alreadyRated%> data-rateit-resetable="false"></div>
+                                        <span class="total-raters">(<i class="fa fa-user"></i> <%=total_raters%>)</span>
+                                    <%}%>
+
+                                     <% if (isOwner) {%>
+                                    <div class="rateit" data-rateit-value=<%=average_rating%> data-rateit-ispreset="true" data-rateit-readonly="true" data-rateit-resetable="false"></div>
+                                        <span class="total-raters">(<i class="fa fa-user"></i> <%=total_raters%>)</span>
+                                     <span>
+                                     <input type="checkbox" class="switch" name="my-checkbox" animate="true" data-on-text="public" data-off-text="private" offColor='danger'
+
+                                     <% if (is_public) { %>
+                                            checked
+                                        <% } %>
+                                     >
+                                     <%}%>
+                                     </span>
+                                     </div>
+
+                                     <div id="favourite">
+                                       <a> <span id="myfav" class="glyphicon glyphicon-heart-empty"></span> </a>
+
+                                     </div>
+
+
+
+                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
+
+                                  <div class="clearfix"></div>
+                                </div>
+                              </li>
+
+</script>
+
+<!--  the below includes the edit options and -->
+<script type="text/template" id="editable-takeaway-template">
+
+</script>
+<script type="text/template" id="rating-template">
+<%if(alreadyRated==false){%>
+ <span class="star-rating">
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+<%} else{%>
+    rating successful
+    <%}%>
+</script>
+
+<script type="text/template" id="notes-template">
+    <div id="edit-in-place">
+    </div>
+</script>
+
+<script type="text/template" id="average-rating-template">
+
+</script>
+
+
+ <div id="raty">
+    </div>
+    {% include "copyright.html"%}
+
+    <!-- Javascript files -->
+
+
+
+<script type="text/javascript">
+
+    function showFavTakeaways(){
+        isFavView = true;
+        isPrivateView = false;
+        var courseid = "#course"+courseInstanceId;
+        $(courseid).click();
+    }
+
+    function showMyTakeaways(){
+        isPrivateView = true;
+        isFavView = false;
+        var courseid = "#course"+courseInstanceId;
+        $(courseid).click();
+    }
+
+    function showAllTakeaways(){
+        isPrivateView = false;
+        isFavView = false;
+        var courseid = "#course"+courseInstanceId;
+        $(courseid).click();
+
+    }
+
+
+</script>
+
+</body>
+
+</html>
