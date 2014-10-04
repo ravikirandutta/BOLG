@@ -12,6 +12,7 @@
     <title>MBA Takeaway</title>
 
     <!-- Bootstrap core CSS -->
+    <link href="{% static "takeaway/css/app.css"%}" rel="stylesheet">
     <link href="{% static "takeaway/css/bootstrap.min.css"%}" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -58,24 +59,11 @@
      position: absolute;top: 30px;left: 180px;font-size: 9px;
 ">BETA</span>
             </div>
-            <div class="navbar-collapse collapse" id="nav-menu">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav" id="nav-menu">
+                <li ><a href="#">Home</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li class="dropdown">
-
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li class="dropdown-header">Nav header</li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </li>
+                <li><a href="/contact">Contact us</a></li>
               </ul>
               <div class="nav-right">
                  
@@ -95,18 +83,22 @@
             </div>
           </div>
         </div>
-        <div style="margin-left:400px; margin-top:10px"> <a class="btn btn-large" style="width:100px;color:#fff;background-color:#000;margin-left:100px;" href="/demo/">Start Demo</a></div>
+        <div style="margin-left:400px; margin-top:10px"> <a class="btn btn-large" id="show" href="/demo/">Show Me How</a></div>
 
 
       </div>
+            <div class="reportBug">
+                  <a class="bugReport" href="#" data-toggle="modal" data-target="#bugModal"> Report a Bug</a>
+            </div>
     </div>
 
 
     <!-- Carousel
     ================================================== -->
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
       <!-- Indicators -->
-      <ol class="carousel-indicators">
+      <ol class="carousel-indicators" id="indicator">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
         <li data-target="#myCarousel" data-slide-to="2"></li>
@@ -150,19 +142,19 @@ First-mover advantage comes from the ability to commit oneself to an advantageou
     </div><!-- /.carousel -->
 
 
-     <hr class="featurette-divider">
-      <div class="row featurette">
+     <hr class="featurette-divider" id="divider">
+      <div class="row featurette" id="row">
         <div class="col-md-7">
           <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
         </div>
         <div class="col-md-5">
-          <img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+          <img class="featurette-image img-responsive" src="http://www.mbaconsult.ru/ru/masters-or-mba-4.jpg" style="width:400px;height:400px;">
         </div>
       </div>
     
-      <li>
-                                <div class="recent-content">
+      
+                                <div class="recent-content" id="content">
                                   <div class="recent-meta">Posted on 07/09/14 08:41 by SATLURI</div>
                                   <div id="editable-notes"><pre id="takeaway" class="takeaway-pre">Some ways to resolve prisoner's dilemma are credible pre-commitment, bonding, signing contracts, shaming, threat of retaliating the next round.                                 </pre></div>
 
@@ -204,14 +196,14 @@ First-mover advantage comes from the ability to commit oneself to an advantageou
                               </li>
 
 
-<hr class="featurette-divider">
-  <div class="row featurette">
+<hr class="featurette-divider" id="divider">
+  <div class="row featurette" id="row">
         <div class="col-md-7">
-          <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
+          <h2 class="featurette-heading" >And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
         </div>
         <div class="col-md-5">
-          <img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+          <img class="featurette-image img-responsive" src="http://images.bwbx.io/cms/2012-10-25/1025_classsize_630x420.jpg" style="width:400px;height:400px;">
         </div>
       </div>
 
@@ -219,13 +211,13 @@ First-mover advantage comes from the ability to commit oneself to an advantageou
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
     
-<hr class="featurette-divider">
+<hr class="featurette-divider" id="divider">
       <!-- START THE FEATURETTES -->
 
 
        <div id="myCarousel1" class="carousel slide" data-ride="carousel">
       <!-- Indicators -->
-      <ol class="carousel-indicators">
+      <ol class="carousel-indicators" id="indicators">
         <li data-target="#myCarousel1" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel1" data-slide-to="1"></li>
         <li data-target="#myCarousel1" data-slide-to="2"></li>
@@ -264,11 +256,11 @@ First-mover advantage comes from the ability to commit oneself to an advantageou
 
 
 
-      <hr class="featurette-divider">
+      <hr class="featurette-divider" id="divider">
 
-      <div class="row featurette">
+      <div class="row featurette" id="row">
         <div class="col-md-5">
-          <img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+          <img class="featurette-image img-responsive" src="http://www.invvest.org/blog/wp-content/uploads/2009/05/du-classroom.jpg" style="width:400px;height:400px;">
         </div>
         <div class="col-md-7">
           <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
@@ -276,7 +268,7 @@ First-mover advantage comes from the ability to commit oneself to an advantageou
         </div>
       </div>
 
-      <hr class="featurette-divider">
+      <hr class="featurette-divider" id="divider">
        <div class="container marketing">
 
       <!-- Three columns of text below the carousel -->
@@ -304,7 +296,7 @@ First-mover advantage comes from the ability to commit oneself to an advantageou
           <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
       </div><!-- /.row -->
-      <hr class="featurette-divider">
+      <hr class="featurette-divider" id="divider">
 
       <!-- /END THE FEATURETTES -->
 
