@@ -383,7 +383,7 @@ def convert_tag_to_lowercase(sender, **kwargs):
         tag = kwargs.get("instance")
         tag.name = tag.name.lower()
 
-
+from django.core.mail import send_mail
 from notifications import notify
 @receiver(post_save,sender=TakeAway)
 def create_notifications_on_takeaway(sender, **kwargs):
@@ -407,8 +407,17 @@ def create_notifications_on_takeaway(sender, **kwargs):
                 curr_user = takeaway.user
                 if recipient_user.id <> curr_user.id:
 
+
                     message =  str(takeaway.courseInstance )
                     notify.send(takeaway.user,recipient=recipient_user, verb='NEW_TAKEAWAY',description= message)
+                    try:
+                        email_settings = EmailSettings.objects.get(user=takeaway.user)
+                    except EmailSettings.DoesNotExist :
+                        email_settings = EmailSettings.objects.create(user=takeaway.user)
+                    if email_settings.mail_when_takeaway == 1 :
+                        recipients = [recipient_user.email]
+                        message = 'A new public takeaway is posted in course ' + takeaway.courseInstance.course.course_name + ' by one of your classmate.View this takeaway by logging into www.mbatakeaways.com and rate it.'
+                        send_mail('New TakeAway posted', message, 'support@mbatakeaways.com', recipients)
                     #pdb.set_trace()
         else:
             logger.info("private takeaway created by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)

@@ -70,7 +70,7 @@ urlpatterns = patterns('',
         name = 'registration_register'),
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^passwordchange/', include('django.contrib.auth.urls')),
-    url(r'^load_courses/',  'takeaway.custom_course_creation_script.load_courses', name='load_courses'),
+    url(r'^load_courses/',  'takeaway.custom_school_data_load.load_isb_data', name='load_courses'),
 
     # url(r'^contact/thankyou/', 'takeaway.views.thankyou'),
     # url(r'^contact/', 'takeaway.views.contactview'),
@@ -79,6 +79,7 @@ urlpatterns = patterns('',
     url(r'^landing/',TemplateView.as_view(template_name="landing.html")),
     url(r'^demo/',TemplateView.as_view(template_name="demo.html")),
     url(r'^can_user_post/','takeaway.views.can_user_post',),
+    url(r'^test/','takeaway.views.test',),
 
 )
 
