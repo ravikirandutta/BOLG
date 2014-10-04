@@ -15,9 +15,39 @@ from takeaway.forms import *
 from rest_framework.mixins import *
 
 
+# test dynamic HTML
+def test(request):
+    l = ['ravi posted on c1','tluri posted on c1']
+
+    print '<table>'
+    for sublist in l:
+        print '  <tr><td>'
+        print '    </td><td>'  + sublist
+        print '  </td></tr>'
+    print '</table>'
+    return HttpResponse( "Successfully Loaded init data")
+
 # Create your views here.
+from rest_framework.decorators import api_view
+@api_view(['GET'])
+def can_user_post(request):
 
+    minimum_rating_pct = 0.25
+    can_post = True
+    course_id = request.QUERY_PARAMS.get('course_id', None)
+    if not course_id:
+        return Response({"detail": "Course not passed."});
+    #user = User.objects.get(pk=3)
+    user = request.user
+    ci = CourseInstance.objects.get(pk=course_id)
+    takeaways = TakeAway.objects.filter(courseInstance=ci).filter(is_public=True).exclude(user=user)
+    takeaway_count = takeaways.count()
+    rating_count = Rating.objects.filter(takeaway = takeaways).filter(user=user).count()
+    if takeaway_count > 0 :
+        if rating_count/takeaway_count < 0.25  and not takeaway_count > 3 :
+            can_post = False
 
+    return Response({"user":user.id,"takeaway_count": takeaway_count, "rating_count": rating_count , "can_post" : can_post})
 
 import logging
 logger = logging.getLogger(__name__)
@@ -108,7 +138,7 @@ def handlelogin(request):
             # the authentication system was unable to verify the username and password
             message =  "The username/password is incorrect."
             #message=""
-            return render_to_response("login.html",{ 'error_message': message },RequestContext(request))
+            return render_to_response("landing.html",{ 'error_message': message },RequestContext(request))
 
 
     #return HttpResponse( request.POST.get('Mode'))
@@ -177,6 +207,12 @@ class SessionDetail(generics.RetrieveUpdateDestroyAPIView):
         serializer_class = SessionDetailSerializer
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly)
 
+        def post_save(self, obj, created=False):
+            if not created :
+                event = PointEvent.objects.get(event='CREATED_SESSION')
+                UserEventLog(user=self.request.user,course_instance=obj.courseInstance,session=obj,event=event,points=event.points).save()
+
+
 
 class TagViewSet(viewsets.ModelViewSet):
         queryset = Tag.objects.all()
@@ -237,6 +273,7 @@ class TakeAwayDetail(generics.RetrieveUpdateDestroyAPIView):
 		queryset = TakeAway.objects.all()
 		serializer_class = TakeAwaySerializer
 		permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
 
 
 from registration.backends.default.views import RegistrationView
@@ -371,26 +408,27 @@ class TakeAwayProfileViewSet(viewsets.ModelViewSet):
         filter_fields = ('id','user',)
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
-        def pre_save(self, obj, created=False):
+        def post_save(self, obj, created=False):
             # check to see if any new courses are added. If so send the new course list in the request object
             if not created:
                 actual = TakeAwayProfile.objects.get(pk=obj.id)
                 new = obj
-                new_courses = list (set(new.courseInstances.all()) - set(actual.courseInstances.all()))
+                #new_courses = list (set(new.courseInstances.all()) - set(actual.courseInstances.all()))
                 #print 'old courses'
                 #print actual.courseInstances.all()
                 #print 'new courses'
                 #print obj.courseInstances.all()
+                course_id = self.request.QUERY_PARAMS.get('course_id', None)
 
-                for courseinstance in new_courses:
+                if course_id:
+                    courseinstance = CourseInstance.objects.get(pk=course_id)
                     recipients = courseinstance.students.all()
                     for recipient in recipients:
                         recipient_user = recipient.user
                         curr_user = obj.user
                         if recipient_user.id <> curr_user.id:
 
-                            message = 'TEST'
-                                                        #curr_user.username + ' joined ' + str(courseinstance)
+                            message = curr_user.username + ' joined ' + str(courseinstance)
                             notify.send(curr_user,recipient=recipient_user, verb='NEW_COURSEMATE',description= message)     
 
         

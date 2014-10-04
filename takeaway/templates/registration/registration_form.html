@@ -30,15 +30,13 @@
     <body  id="registration-page" ng-controller="SchoolController">
 
         <div class="admin-form">
-          <div  >
+          <div >
             <!-- ng-init="schools=[{'name':'EMORY','mail_format':'@emory.edu'},{'name':'WHARTON','mail_format':'@wharton.edu'}] -->
-  <h3>Choose your school:</h3>
+  <h4>Choose your school:</h4>
   <div id="select-school">
-    <button   id="select-school-btn" data-ng-repeat="x in availableSchools" ng-click=selectSchool(x.id)   >
-
+    <button id="select-school-btn" data-ng-repeat="x in availableSchools" ng-click=selectSchool(x.id)>
       {% verbatim %}
-      {{x.school_name}}
-
+      <img src="{{x.image_url}}">
       {% endverbatim %}
     </button>
   </div>
@@ -75,8 +73,8 @@
 
 
                             <div class="form-group" id="email">
-                              <div  >
-                                <ul ng-class="{emailerror:isEmailValid}" id='email_error'  class='errolist'><li>
+                              <div id="error-email" >
+                                <ul ng-class="{emailerror:isEmailValid}" id="email_error" class='errolist'><li>
                   {% verbatim %}
                     {{ validEmailFormat }}
                   {% endverbatim %}
@@ -140,7 +138,8 @@
                             {{form.program.errors}}
                             <label class="control-label col-lg-3" for="program">Program</label>
                             <div class="col-lg-9">
-                                      <select id="id_program" name="program" ng-model="selectedProgram" ng-options="program.id as program.name for program in programs"></select>
+                                      <select  id="id_program" name="program" ng-model="selectedProgram"
+                                      ng-options=" program.name for program in programs track by program.id"></select>
                             </div>
                           </div>
                           <!-- Select box -->

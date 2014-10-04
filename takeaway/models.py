@@ -120,6 +120,13 @@ class Session(models.Model):
     def __unicode__(self):
         return smart_unicode(self.session_name)
 
+    # def save(self,*args,**kwargs):
+
+    #     super(models.Model,self).save(*args,**kwargs)
+    #     #kwargs.set('request') = self.request
+    #     kwargs[ 'request' ] = self.request
+
+
 
 class TakeAway(models.Model):
     courseInstance = models.ForeignKey(CourseInstance)
@@ -273,6 +280,29 @@ class EmailSettings(models.Model):
     def __unicode__(self):
         return smart_unicode(self.user)
 
+class PointEvent(models.Model):
+    event = models.CharField(max_length=100,blank= False)
+    points = models.IntegerField(default = 5)
+
+    def __unicode__(self):
+        return smart_unicode(self.event)
+
+class UserEventLog(models.Model):
+    user = models.ForeignKey(User,blank=True)
+    event = models.ForeignKey(PointEvent,blank=True)
+    points = models.IntegerField(default = 5)
+    course_instance = models.ForeignKey(CourseInstance,blank=False)
+    session = models.ForeignKey(Session,blank=False)
+    course_instance = models.ForeignKey(CourseInstance,blank=False)
+    created_dt = models.DateTimeField(auto_now_add=True,auto_now=False)
+    updated_dt = models.DateTimeField(auto_now_add=False,auto_now=True)
+
+    def __unicode__(self):
+        return smart_unicode(self.event)
+
+
+
+
 from registration.signals import user_registered
 
 def user_registered_callback(sender, user, request, **kwargs):
@@ -286,7 +316,7 @@ def user_registered_callback(sender, user, request, **kwargs):
     user.last_name = request.POST["lastname"]
     user.save()
     profile.save()
-    logger.info("Takeaway profile successfully created for user: "+user.email)
+    logger.info("Takeaway profile successfully created for user: " + user.email)
 
 from django.dispatch import receiver
 from django.db.models.signals import post_save,pre_save
@@ -311,6 +341,23 @@ def update_takeaway_on_rating_save(sender, **kwargs):
         message = rating.user.first_name + ' rated takeaway created by ' + takeaway.user.first_name 
         
         notify.send(rating.user,recipient=takeaway.user, verb='RATED',description= message,action_object=takeaway)
+        # Giving points to user who rated
+        event = PointEvent.objects.get(event='GOT_RATING')        
+        UserEventLog(user=takeaway.user,course_instance=takeaway.courseInstance,session=takeaway.session,event=event,points=event.points).save()
+        # Giving points to user whose takeaway rated
+        event = PointEvent.objects.get(event='GAVE_RATING')
+        UserEventLog(user=rating.user,course_instance=takeaway.courseInstance,session=takeaway.session,event=event,points=event.points).save()
+
+
+# @receiver(post_save,sender=Session)
+# def givepoints_on_session_save(sender, **kwargs):
+#     if not kwargs.get('created',False):
+#         session = kwargs.get("instance")
+
+#         request = kwargs.get('request')
+#         event = PointEvent.objects.get(event='CREATED_SESSION')
+#         UserEventLog(user=request.user,course_instance=session.courseInstance,session=session,event=event,points=event.points).save()
+
 
 
 user_registered.connect(user_registered_callback)
@@ -336,7 +383,7 @@ def convert_tag_to_lowercase(sender, **kwargs):
         tag = kwargs.get("instance")
         tag.name = tag.name.lower()
 
-
+from django.core.mail import send_mail
 from notifications import notify
 @receiver(post_save,sender=TakeAway)
 def create_notifications_on_takeaway(sender, **kwargs):
@@ -345,6 +392,10 @@ def create_notifications_on_takeaway(sender, **kwargs):
     takeaway = kwargs.get("instance")
     #pdb.set_trace()
     if kwargs.get('created',False):
+
+        event = PointEvent.objects.get(event='NEW_TAKEAWAY')
+        UserEventLog(user=takeaway.user,course_instance=takeaway.courseInstance,session=takeaway.session,event=event,points=event.points).save()
+
         if takeaway.is_public == True :
             logger.info("public takeaway created by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)
             recipients = takeaway.courseInstance.students.all()
@@ -356,8 +407,17 @@ def create_notifications_on_takeaway(sender, **kwargs):
                 curr_user = takeaway.user
                 if recipient_user.id <> curr_user.id:
 
+
                     message =  str(takeaway.courseInstance )
                     notify.send(takeaway.user,recipient=recipient_user, verb='NEW_TAKEAWAY',description= message)
+                    try:
+                        email_settings = EmailSettings.objects.get(user=takeaway.user)
+                    except EmailSettings.DoesNotExist :
+                        email_settings = EmailSettings.objects.create(user=takeaway.user)
+                    if email_settings.mail_when_takeaway == 1 :
+                        recipients = [recipient_user.email]
+                        message = 'A new public takeaway is posted in course ' + takeaway.courseInstance.course.course_name + ' by one of your classmate.View this takeaway by logging into www.mbatakeaways.com and rate it.'
+                        send_mail('New TakeAway posted', message, 'support@mbatakeaways.com', recipients)
                     #pdb.set_trace()
         else:
             logger.info("private takeaway created by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)
