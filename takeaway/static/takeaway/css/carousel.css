@@ -57,6 +57,8 @@ background-color: #fff;
 .carousel .item {
   height: 500px;
   background-color: #e9eaec;
+  margin-left:60px;
+  margin-right: 60px;
 }
 .carousel-inner > .item > img {
   position: absolute;
@@ -121,7 +123,7 @@ background-color: #fff;
 
   /* The navbar becomes detached from the top, so we round the corners */
   .navbar-wrapper .navbar {
-    border-radius: 4px;
+    border-color:#fff;
   }
 
   /* Bump up size of carousel content */
@@ -139,7 +141,7 @@ background-color: #fff;
   border-color:#fff !important;
 }
 #nav-menu li a{
-  
+    color:#999;
     display: block;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
@@ -157,14 +159,43 @@ background-color: #fff;
   }
 
 #caption{
-  color:#000;
+  color:#333;
   font-family:"helvetica neue",aktiv-grotesk-std,helvetica,arial,freesans,"liberation sans","numbus sans l",sans-serif;
+  text-shadow: 0 0 0 rgba(0,0,0,0); 
 }
 
 .nav-right{
   margin-top:10px;
   float:right;
   border-radius: 4px;
+}
+ol#indicator li{
+  background-color: #3b5998 !important;
+  color:blue !important;
+}
+
+#row{
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+#divider{
+  border-top: 1px solid #bfbcbc;
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+#content{
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+#show{
+  width:120px;
+  color:#fff;
+  background-color:#3b5998;
+  margin-left:100px;
+  margin-bottom:10px;
 }
 
 @media (min-width: 992px) {
