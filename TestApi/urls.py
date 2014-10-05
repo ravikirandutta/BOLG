@@ -83,6 +83,7 @@ urlpatterns = patterns('',
     url(r'^play/','takeaway.views.play',name="play"),
     url(r'^load_demo/','takeaway.demo.create_play_ground', name='load_demo'),
     url(r'^test/','takeaway.views.test',),
+    url(r'^chat/','takeaway.views.Chat',name='chat'),
 
 )
 

@@ -707,7 +707,6 @@ def initload(request):
 from random import randrange
 
 def play(request):
-
     if request.user.is_authenticated():
         return render_to_response("play.html",RequestContext(request))
 
@@ -729,4 +728,8 @@ def play(request):
     request.session['userid'] = user.id
     request.session['play'] = True
     return response
+
+@login_required
+def Chat(request):
+    return render_to_response('chat.html',RequestContext(request))
 
