@@ -78,9 +78,13 @@ urlpatterns = patterns('',
     url(r'^contact_login/','takeaway.views.ContactUsLogin',name='contact_us_login'),
     url(r'^landing/',TemplateView.as_view(template_name="landing.html")),
     url(r'^demo/',TemplateView.as_view(template_name="demo.html")),
+    url(r'^rating/',TemplateView.as_view(template_name="rating.html")),
     url(r'^can_user_post/','takeaway.views.can_user_post',),
+    url(r'^play/','takeaway.views.play',name="play"),
+    url(r'^load_demo/','takeaway.demo.create_play_ground', name='load_demo'),
     url(r'^test/','takeaway.views.test',),
     url(r'^get_leader_board/','takeaway.views.get_leader_board',),
+    url(r'^chat/','takeaway.views.Chat',name='chat'),
 
 
 )
