@@ -57,7 +57,9 @@
                             <div class="col-lg-9">
 
 
-                               <input  id="id_firstname" ng-model="user.firstname" name="firstname" type="text" min="2" required />
+                               <input  id="id_firstname" ng-model="user.firstname" name="firstname" type="text"  required />
+                               <span style="color:red" ng-show="regForm.firstname.$dirty && regForm.firstname.$invalid">* Firstname required</span>  
+
 
                             </div>
                           </div>
@@ -66,7 +68,10 @@
                             <div class="col-lg-9">
 
 
-                              {{form.lastname}}
+                              <input  id="id_lastname" ng-model="user.lastname" name="lastname" type="text" required />
+                              <span style="color:red" ng-show="regForm.lastname.$dirty && regForm.lastname.$invalid">* Lastname required</span>  
+
+
                             </div>
                             </div>
 
@@ -83,7 +88,8 @@
                             {{form.email.errors}}
                             <label class="control-label col-lg-3" for="email">Email</label>
                              <div class="col-lg-9">
-                                      <input  id="id_email" name="email" type="text" ng-model="email" ng-blur="validateEmail()" />
+                                      <input  id="id_email" name="email" type="text" ng-model="email" ng-blur="validateEmail()" required/>
+
                             </div>
 
                           </div>
@@ -92,7 +98,10 @@
                               {{form.username.errors}}
                             <label class="control-label col-lg-3" for="username">Username</label>
                             <div class="col-lg-9">
-                              {{form.username}}
+                              <input  id="username" ng-model="user.username" name="username"  type="text"  required />
+                        
+                              <span style="color:red" ng-show="regForm.username.$dirty && regForm.username.$invalid">* Username required</span> 
+
                             </div>
                           </div>
 
@@ -100,9 +109,11 @@
                                <div class="form-group">
                             <label class="control-label col-lg-3" for="id_password1">Password</label>
                             <div class="col-lg-9">
+                                <input  id="id_password1" ng-model="user.password1" name="password1" type="password"  required />
+                                <span style="color:red" ng-show="regForm.password1.$dirty && regForm.password1.$invalid">* Password required</span>  
+                              
 
-
-                              {{form.password1}}
+                              
                             </div>
                           </div>
 
@@ -110,9 +121,13 @@
 
 
                            <div class="form-group">
-                            <label class="control-label col-lg-3" for="id_password2">Password again</label>
+                            <label class="control-label col-lg-3" for="id_password2"> Confirm Password </label>
                             <div class="col-lg-9">
-                                      {{form.password2}}
+                                      <input  id="id_password2" ng-model="user.password2" name="password2" type="password" data-match="user.password1" required /> 
+                                      <span  style="color:red" ng-show="regForm.password2.$error.match">Passwords do not match! </span>
+
+                              
+
                             </div>
                           </div>
 
@@ -139,7 +154,8 @@
                             <label class="control-label col-lg-3" for="program">Program</label>
                             <div class="col-lg-9">
                                       <select  id="id_program" name="program" ng-model="selectedProgram"
-                                      ng-options=" program.name for program in programs track by program.id"></select>
+                                      ng-options=" program.name for program in programs track by program.id" required></select>
+                                      
                             </div>
                           </div>
                           <!-- Select box -->
