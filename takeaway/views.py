@@ -13,6 +13,8 @@ from rest_framework import filters
 from takeaway.permissions import IsOwnerOrReadOnly
 from takeaway.forms import *
 from rest_framework.mixins import *
+from rest_framework.permissions import IsAuthenticated
+from django.db.models import Sum
 
 
 # test dynamic HTML
@@ -28,7 +30,7 @@ def test(request):
     return HttpResponse( "Successfully Loaded init data")
 
 # Create your views here.
-from rest_framework.decorators import api_view
+from rest_framework.decorators import *
 @api_view(['GET'])
 def can_user_post(request):
 
@@ -576,6 +578,35 @@ def ContactUsLogin(request):
 
     return render_to_response('contact_us_login.html', {'form': form}, context)
 
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def get_leader_board(request):
+
+    
+    user_id = request.QUERY_PARAMS.get('user_id', None)
+    course_id = request.QUERY_PARAMS.get('course_id', None)
+    
+    if not course_id and not user_id :
+        return Response({"detail": "Course not passed."});
+    #user = User.objects.get(pk=3)
+    if user_id:
+        
+        try:
+            user = User.objects.get(pk=user_id)
+            points = UserEventLog.objects.filter(user=user)
+            leader_board = points.values('user').annotate(score=Sum('points'))
+
+            return Response({"points": leader_board})
+        except User.DoesNotExist :
+            return Response({"detail": "No user with id : " + str(user_id)});
+    #user = request.user
+    ci = CourseInstance.objects.get(pk=course_id)
+    points = UserEventLog.objects.filter(course_instance=ci)
+    leader_board = points.values('user').annotate(score=Sum('points'))
+
+    
+
+    return Response({"points": leader_board})
 
 
 def initload(request):

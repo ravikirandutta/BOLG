@@ -80,6 +80,8 @@ urlpatterns = patterns('',
     url(r'^demo/',TemplateView.as_view(template_name="demo.html")),
     url(r'^can_user_post/','takeaway.views.can_user_post',),
     url(r'^test/','takeaway.views.test',),
+    url(r'^get_leader_board/','takeaway.views.get_leader_board',),
+
 
 )
 
