@@ -26,11 +26,14 @@ app.config(['$resourceProvider', function ($resourceProvider) {
     $scope.currentSchool={};
     $scope.school = "emory";
     $scope.programs = {};
+    $scope.schoolSelected=false;
 
         $scope.selectSchool = function(school_id){
           angular.forEach($scope.availableSchools,function(value){
             if(value.id === school_id){
               $scope.currentSchool = value;
+              $scope.schoolSelected=true;
+
             }
           });
           $scope.setValidEmailFormat();
