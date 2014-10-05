@@ -58,7 +58,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.2/angular-cookies.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.2/angular-resource.min.js"></script>
 
-  
+
   <script src="/static/takeaway/js/appProfile.js"></script>
     <!-- jQuery -->
 
@@ -174,7 +174,7 @@ $.ajaxSetup({
                             <i class="fa fa-bell"></i> Notifications
                             <span class="badge badge-important" id="inboxSize"></span>
                         </a>
-                        
+
                         <ul class="dropdown-menu">
                             <li>
                                 <!-- Heading - h5 -->
@@ -273,8 +273,8 @@ $.ajaxSetup({
                         </li>
 
 <!-- commed the Settings until the back end supports sending email alerts -->
-                    <!-- <li class=" " id="change-settings"><a class="ourblue" href="#" onclick="displaySettings()"><i class="glyphicon glyphicon-cog"></i>Settings</a>
-                        </li>                         -->
+                     <li class=" " id="change-settings"><a class="ourblue" href="#" onclick="displaySettings()"><i class="glyphicon glyphicon-cog"></i>Settings</a>
+                        </li>
 
                 </ul>
                 <!--/ Sidebar navigation -->
@@ -285,7 +285,7 @@ $.ajaxSetup({
         </div>
         <div class="clear"></div>
 
-        <div  style="display:none" id="settingsDiv"> 
+        <div  style="display:none" id="settingsDiv">
             <div class="mainbar" style="margin-left:230px">
                 <div class="matter">
                     <div class="container">
@@ -304,34 +304,34 @@ $.ajaxSetup({
                                     <td><input type="radio" name="newTakeaway" value="0" onclick="changeNewTakeawaySettings(this)"></td>
                                     <td><input type="radio" name="newTakeaway" value="1" onclick="changeNewTakeawaySettings(this)"></td>
                                     <td><input type="radio" name="newTakeaway" value="2" onclick="changeNewTakeawaySettings(this)"></td>
-                                </tr> 
+                                </tr>
                                 <tr>
                                     <td>When new user is registered</td>
                                     <td><input type="radio" name="newUser" value="0" onclick="changeNewUserSettings(this)"></td>
                                     <td><input type="radio" name="newUser" value="1" onclick="changeNewUserSettings(this)"></td>
                                     <td><input type="radio" name="newUser" value="2" onclick="changeNewUserSettings(this)"></td>
-                                </tr> 
+                                </tr>
                                 <tr>
                                     <td>When my takeaway is rated</td>
                                     <td><input type="radio" name="ratedTakeaway" value="0" onclick="changeRatedSettings(this)"></td>
                                     <td><input type="radio" name="ratedTakeaway" value="1" onclick="changeRatedSettings(this)"></td>
                                     <td><input type="radio" name="ratedTakeaway" value="2" onclick="changeRatedSettings(this)"></td>
-                                </tr> 
+                                </tr>
                                 </tbody>
                             </table>
-                        </div>                
+                        </div>
                     </div>
                 </div>
             </div>
 
-        </div>  
+        </div>
 
 
 
         <div id="coursesDiv">
             <!-- Sidebar ends -->
             <div ng-app="selectCourses">
-           
+
             <!-- Main bar -->
             <course-management></course-management>
         </div>
@@ -355,7 +355,7 @@ $.ajaxSetup({
         $("#settingsDiv").hide();
     }
 
-</script> 
+</script>
 
 
 </body>

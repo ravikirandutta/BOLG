@@ -145,6 +145,8 @@ def handlelogin(request):
     #return render_to_response("coursedetail.html",{'course':course_obj,'course_sessions_list':course_sessions_list},RequestContext(request))
 
 def logoutuser(request):
+    if request.session.get('play',False):
+        request.user.delete()
     logout(request)
     return render_to_response("login.html",RequestContext(request))
 
@@ -429,13 +431,13 @@ class TakeAwayProfileViewSet(viewsets.ModelViewSet):
                         if recipient_user.id <> curr_user.id:
 
                             message = curr_user.username + ' joined ' + str(courseinstance)
-                            notify.send(curr_user,recipient=recipient_user, verb='NEW_COURSEMATE',description= message)     
+                            notify.send(curr_user,recipient=recipient_user, verb='NEW_COURSEMATE',description= message)
 
-        
+
         # def post_save(self, obj, created=False):
         #     # check to see if any new courses are added. If so send the new course list in the request object
         #     if not created:
-        #         new_courses = self.request.get('new_courses')   
+        #         new_courses = self.request.get('new_courses')
         #         for courseinstance in new_courses:
         #             recipients = courseinstance.students.all()
         #             for recipient in recipients:
@@ -444,7 +446,7 @@ class TakeAwayProfileViewSet(viewsets.ModelViewSet):
         #                 if recipient_user.id <> curr_user.id:
 
         #                     message =  curr_user.username + ' joined ' + str(courseinstance)
-        #                     notify.send(curr_user,recipient=recipient_user, verb='NEW_COURSEMATE',description= message)     
+        #                     notify.send(curr_user,recipient=recipient_user, verb='NEW_COURSEMATE',description= message)
 
 
 
@@ -701,3 +703,33 @@ def initload(request):
     EmailFormat(format="@wharton.upenn.edu",school=school2).save()
 
     return HttpResponse( "Successfully Loaded init data")
+
+from random import randrange
+
+def play(request):
+    if request.user.is_authenticated():
+        return render_to_response("play.html",RequestContext(request))
+
+    rand = randrange(10000)
+    username = "demouser"+str(rand)
+    User.objects.create_user(username=username,password="abc123").save()
+    user =authenticate(username=username, password="abc123")
+
+    login(request,user)
+    school1= School.objects.get(school_name="Demo")
+    program1 = Program.objects.get(name='Part Time MBA',school=school1)
+    tp = TakeAwayProfile(user=user,email="demo_takeaways"+str(rand)+"@gmail.com",school=school1,batch="2014",program=program1).save()
+    course1 = Course.objects.filter(course_name__startswith="Demo Course")[0]
+    courseInstance1 = CourseInstance.objects.filter(course=course1)[0]
+    tp = TakeAwayProfile.objects.get(user=user)
+    tp.courseInstances.add(courseInstance1)
+    response = render_to_response("play.html",{},RequestContext(request))
+    response.set_cookie(key='userid',value=user.id)
+    request.session['userid'] = user.id
+    request.session['play'] = True
+    return response
+
+@login_required
+def Chat(request):
+    return render_to_response('chat.html',RequestContext(request))
+
