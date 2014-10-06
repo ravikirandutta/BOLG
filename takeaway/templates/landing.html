@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
     {% load staticfiles %}
-    <title>MBA Takeaway</title>
+    <title>MBA Takeaways</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static "takeaway/css/app.css"%}" rel="stylesheet">
@@ -41,6 +41,8 @@
 <!-- NAVBAR
 ================================================== -->
   <body>
+    <div class="hupso-share-buttons"><a class="hupso_float" href="http://www.hupso.com/share/"></a><script type="text/javascript">var hupso_services_f=new Array("Twitter","Facebook","Google Plus","Pinterest","Linkedin","Tumblr","StumbleUpon");var hupso_icon_type_f = "icons";var hupso_background_f="#EAF4FF";var hupso_border_f="#66CCFF";var hupso_float_left_f=true;</script><script type="text/javascript" src="http://static.hupso.com/share/js/float.js"></script></div><!-- Hupso Share Buttons -->
+
     <div class="navbar-wrapper">
       <div class="container">
 
@@ -54,17 +56,19 @@
                 <span class="icon-bar"></span>
               </button>
 
+
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav" id="nav-menu">
-                <li ><a href="#testimonials">Testimonials</a></li>
+                <li ><a href="#testimonials">TESTIMONIALS</a></li>
                 <li class="contact">
-                      <a class="contactUs" href="#" data-toggle="modal" data-target="#contactModal"> contact us</a>
+                      <a class="contactUs" href="#" data-toggle="modal" data-target="#contactModal"> CONTACT US</a>
                  </li>
               </ul>
               <div class="nav-right">
 
                 <form action="{% url 'handlelogin'  %}" class="form-horizontal" method="post" name="login_form" id="login_form"> {% csrf_token %}
+                  <span>LOGIN:</span>
                   <label for="inputEmail"></label>
                   <input type="text" name="Username" placeholder="username">
                 <label for="inputPassword"></label>
@@ -146,7 +150,7 @@ $.ajaxSetup({
     <!-- Carousel
     ================================================== --><!-- /.carousel -->
 
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <div id="background" class="carousel slide" data-ride="carousel">
 
       <!-- Indicators -->
 

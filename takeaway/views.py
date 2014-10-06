@@ -56,7 +56,7 @@ def home(request):
     #course = Course.objects.create(course_name="MARKETING" , created_by="ravid")
     #course_instance_list = Course.objects.filter(students=request.user)
 
-    return render_to_response("login.html",RequestContext(request))
+    return render_to_response("landing.html",RequestContext(request))
 
 
 def error(request):
@@ -148,7 +148,7 @@ def logoutuser(request):
     if request.session.get('play',False):
         request.user.delete()
     logout(request)
-    return render_to_response("login.html",RequestContext(request))
+    return render_to_response("landing.html",RequestContext(request))
 
 
 
