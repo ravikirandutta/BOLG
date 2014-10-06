@@ -510,9 +510,10 @@ def ContactUs(request):
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
             sender = form.cleaned_data['sender']
+
             cc_myself = form.cleaned_data['cc_myself']
 
-            recipients = ['Support@mbatakeaways.com']
+            recipients = ['support@mbatakeaways.com']
 
             if cc_myself:
                 recipients.append(sender)
@@ -556,11 +557,20 @@ def ContactUsLogin(request):
             cc_myself = form.cleaned_data['cc_myself']
 
             recipients = ['support@mbatakeaways.com']
+            recipients.append('ravik.227@gmail.com')
 
             if cc_myself:
                 recipients.append(sender)
 
-            send_mail(subject, message, sender, recipients)
+            prefix_message = "This message is sent by " + sender
+            #sender = 'support@mbatakeaways.com'
+
+
+
+            send_mail(subject, prefix_message + '\n' + message, 'support@mbatakeaways.com', recipients)
+
+            response_message = 'Hi' + '\n' + 'Thanks for your interest in our application' + '\n' + 'Our team will get back to you soon with an update.' + '\n' + ' Have a good day' + '\n' + 'Takeaway Team :)'
+            send_mail('MBATakeaways : Thanks for your feedback', response_message, 'support@mbatakeaways.com', [sender])
 
             # Now call the index() view.
             # The user will be shown the homepage.
