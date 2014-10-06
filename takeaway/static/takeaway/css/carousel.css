@@ -162,6 +162,7 @@ background-color: #fff;
   color:#333;
   font-family:"helvetica neue",aktiv-grotesk-std,helvetica,arial,freesans,"liberation sans","numbus sans l",sans-serif;
   text-shadow: 0 0 0 rgba(0,0,0,0); 
+  margin-top:90px;
 }
 
 .nav-right{
@@ -191,13 +192,36 @@ ol#indicator li{
 }
 
 #show{
-  width:120px;
+  width:inherit;
+  height:inherit;
   color:#fff;
   background-color:#3b5998;
-  margin-left:100px;
+  margin-left:400px;
   margin-bottom:10px;
 }
 
+#nav-heading{
+  font-size:20px;
+  color:#999;
+  -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    -webkit-transform: scale(1, 1);
+  -webkit-transition-duration: 500ms;
+  -webkit-transition-timing-function: ease-out;
+}
+#nav-heading:hover{
+  font-size:20px;
+  color:#999;
+  -webkit-transform: scale(1.1, 1.1);
+  -webkit-transition-duration: 500ms;
+  -webkit-transition-timing-function: ease-out;
+}
+
+#testimonial{
+  font-size:13px;
+  line-height: 1.7;
+  text-align: left;
+}
 @media (min-width: 992px) {
   .featurette-heading {
     margin-top: 120px;

@@ -30,7 +30,28 @@ $('#reportBug').click(function()
 });
 
 
+$('#contactUs').click(function()
+{
+    $.ajax({
+  type: "POST",
+  url: "/contact_login/",
+  data: {"subject":"contact","message":$('#contact').val(),"sender":"varrekeerthi@gmail.com"},
+  success: function(){
+    $.gritter.add({
+                    title: 'Contact us',
+                    sticky: false,
+                    time: '0.0001'
+                });
+  }
 });
+});
+
+
+
+});
+
+
+
 
 function refreshSessionlistView(){
     $("#takeaway-container").append(sessionListView.render().el);
