@@ -55,7 +55,7 @@ background-color: #fff;
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-  height: 500px;
+  height: 400px;
   background-color: #e9eaec;
   margin-left:60px;
   margin-right: 60px;
@@ -142,7 +142,9 @@ background-color: #fff;
 }
 #nav-menu li a{
     color:#999;
+    font-size: 13px;
     display: block;
+    font-family: "kulturista-web";
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
     -webkit-transform: scale(1, 1);
@@ -153,6 +155,7 @@ background-color: #fff;
 #nav-menu li:hover{
     color: #000 !important;
     padding-left: 10px;
+    font-family: "kulturista-web";
     -webkit-transform: scale(1.2, 1.2);
   -webkit-transition-duration: 500ms;
   -webkit-transition-timing-function: ease-out;
@@ -221,6 +224,11 @@ ol#indicator li{
   font-size:13px;
   line-height: 1.7;
   text-align: left;
+}
+
+#background{
+  margin-right: 60px;
+  margin-left: 60px;
 }
 @media (min-width: 992px) {
   .featurette-heading {
