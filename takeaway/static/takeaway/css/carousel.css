@@ -161,7 +161,7 @@ background-color: #fff;
 #caption{
   color:#333;
   font-family:"helvetica neue",aktiv-grotesk-std,helvetica,arial,freesans,"liberation sans","numbus sans l",sans-serif;
-  text-shadow: 0 0 0 rgba(0,0,0,0); 
+  text-shadow: 0 0 0 rgba(0,0,0,0);
   margin-top:90px;
 }
 
@@ -193,11 +193,12 @@ ol#indicator li{
 
 #show{
   width:inherit;
-  height:inherit;
+  height:50px;
   color:#fff;
   background-color:#3b5998;
-  margin-left:400px;
+  margin-left:10px;
   margin-bottom:10px;
+  font-size: 20px;
 }
 
 #nav-heading{
