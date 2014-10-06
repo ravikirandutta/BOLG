@@ -18,7 +18,7 @@ $('#reportBug').click(function()
     $.ajax({
   type: "POST",
   url: "/contactus/",
-  data: {"subject":"bug","message":$('#bug').val(),"sender":"varrekeerthi@gmail.com"},
+  data: {"subject":"bug","message":$('#bug').val(),"sender":$('#id_sender').val()},
   success: function(){
     $.gritter.add({
                     title: 'Bug Reported',
@@ -35,7 +35,7 @@ $('#contactUs').click(function()
     $.ajax({
   type: "POST",
   url: "/contact_login/",
-  data: {"subject":"contact","message":$('#contact').val(),"sender":"varrekeerthi@gmail.com"},
+  data: {"subject":$('#id_subject').val(),"message":$('#contact').val(),"sender":$('#id_sender').val()},
   success: function(){
     $.gritter.add({
                     title: 'Contact us',
