@@ -338,11 +338,11 @@ def update_takeaway_on_rating_save(sender, **kwargs):
             email_settings = EmailSettings.objects.all().get(user=takeaway.user)
         except EmailSettings.DoesNotExist :
             email_settings = EmailSettings.objects.create(user=takeaway.user)
-        message = rating.user.first_name + ' rated takeaway created by ' + takeaway.user.first_name 
-        
+        message = rating.user.first_name + ' rated takeaway created by ' + takeaway.user.first_name
+
         notify.send(rating.user,recipient=takeaway.user, verb='RATED',description= message,action_object=takeaway)
         # Giving points to user who rated
-        event = PointEvent.objects.get(event='GOT_RATING')        
+        event = PointEvent.objects.get(event='GOT_RATING')
         UserEventLog(user=takeaway.user,course_instance=takeaway.courseInstance,session=takeaway.session,event=event,points=event.points).save()
         # Giving points to user whose takeaway rated
         event = PointEvent.objects.get(event='GAVE_RATING')
@@ -417,7 +417,7 @@ def create_notifications_on_takeaway(sender, **kwargs):
                     if email_settings.mail_when_takeaway == 1 :
                         recipients = [recipient_user.email]
                         message = 'A new public takeaway is posted in course ' + takeaway.courseInstance.course.course_name + ' by one of your classmate.View this takeaway by logging into www.mbatakeaways.com and rate it.'
-                        send_mail('New TakeAway posted', message, 'support@mbatakeaways.com', recipients)
+                        #send_mail('New TakeAway posted', message, 'support@mbatakeaways.com', recipients)
                     #pdb.set_trace()
         else:
             logger.info("private takeaway created by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)
