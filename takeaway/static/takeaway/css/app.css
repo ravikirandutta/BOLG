@@ -326,6 +326,12 @@ background-color: #e9eaed;
     width: 22px;
 }
 
+#header{
+  font-family:serif;
+  color:#2D2C2C;
+  font-weight:bold;
+  margin-top: 60px;
+}
 #firechat-wrapper{
     height: 475px;
   max-width: 325px;

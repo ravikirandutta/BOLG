@@ -55,7 +55,7 @@ background-color: #fff;
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-  height: 400px;
+  height: 430px;
   background-color: #e9eaec;
   margin-left:60px;
   margin-right: 60px;
@@ -227,6 +227,15 @@ ol#indicator li{
 
 #nav-inverse{
   background-color: #fff;
+}
+
+#testimonial-divider{
+  border-top: 2px solid #BC7549;
+  margin-left: 300px;
+  margin-right: 300px;
+}
+.heading-divider{
+  margin-top: 40px;
 }
 @media (max-width: 992px) {
   .featurette-heading {
