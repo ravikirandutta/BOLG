@@ -102,28 +102,28 @@ app.config(['$resourceProvider', function ($resourceProvider) {
         })};
 
         $scope.getSections = function(){
-            Sections.query().$promise.then(function(data){
+            Sections.query({"school":$scope.userProfile.school}).$promise.then(function(data){
                 $scope.sections = data.results;
                 $scope.newClass.section = $scope.sections[0].id;
             });
 
         };
         $scope.getProgrmas = function(){
-            Programs.query().$promise.then(function(data){
+            Programs.query({"school":$scope.userProfile.school}).$promise.then(function(data){
                 $scope.programs = data.results;
                 $scope.newClass.program = $scope.programs[0].id;
             });
 
         };
         $scope.getTerms = function(){
-            Terms.query().$promise.then(function(data){
+            Terms.query({"school":$scope.userProfile.school}).$promise.then(function(data){
                 $scope.terms = data.results;
                 $scope.newClass.term = $scope.terms[0].id;
             });
 
         };
         $scope.getStatuses = function(){
-            Status.query().$promise.then(function(data){
+            Status.query({"school":$scope.userProfile.school}).$promise.then(function(data){
                 $scope.statuses = data.results;
                 $scope.newClass.status = $scope.statuses[0].id;
             });
