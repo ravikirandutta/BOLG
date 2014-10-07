@@ -13,6 +13,8 @@ from rest_framework import filters
 from takeaway.permissions import IsOwnerOrReadOnly
 from takeaway.forms import *
 from rest_framework.mixins import *
+from rest_framework.permissions import IsAuthenticated
+from django.db.models import Sum
 
 
 # test dynamic HTML
@@ -28,7 +30,7 @@ def test(request):
     return HttpResponse( "Successfully Loaded init data")
 
 # Create your views here.
-from rest_framework.decorators import api_view
+from rest_framework.decorators import *
 @api_view(['GET'])
 def can_user_post(request):
 
@@ -489,7 +491,14 @@ class ContactUsViewSet(viewsets.ModelViewSet):
             if obj.cc_myself:
                 recipients.append(obj.sender)
 
-            send_mail(obj.subject, obj.message, 'support@mbatakeaways.com', recipients)
+            
+            prefix_message = "This message is sent by " + obj.sender           
+            send_mail(obj.subject, prefix_message + '\n' + obj.message, 'support@mbatakeaways.com', recipients)
+
+            # Response to the one who submitted the feedback.
+            response_message = 'Hi' + '\n' + 'Thanks for your interest in our application' + '\n' + 'Our team will get back to you soon with an update.' + '\n' + ' Have a good day' + '\n' + 'Takeaway Team :)'
+            send_mail('MBATakeaways : Thanks for your feedback', response_message, 'support@mbatakeaways.com', [obj.sender])
+
 
 
 
@@ -518,7 +527,13 @@ def ContactUs(request):
             if cc_myself:
                 recipients.append(sender)
 
-            send_mail(subject, message, sender, recipients)
+            prefix_message = "This message is sent by " + sender           
+            send_mail(subject, prefix_message + '\n' + message, 'support@mbatakeaways.com', recipients)
+
+            # Response to the one who submitted the feedback.
+            response_message = 'Hi' + '\n' + 'Thanks for your interest in our application' + '\n' + 'Our team will get back to you soon with an update.' + '\n' + ' Have a good day' + '\n' + 'Takeaway Team :)'
+            send_mail('MBATakeaways : Thanks for your feedback', response_message, 'support@mbatakeaways.com', [sender])
+
 
             # Now call the index() view.
             # The user will be shown the homepage.
@@ -588,6 +603,35 @@ def ContactUsLogin(request):
 
     return render_to_response('contact_us_login.html', {'form': form}, context)
 
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def get_leader_board(request):
+
+    
+    user_id = request.QUERY_PARAMS.get('user_id', None)
+    course_id = request.QUERY_PARAMS.get('course_id', None)
+    
+    if not course_id and not user_id :
+        return Response({"detail": "Course not passed."});
+    #user = User.objects.get(pk=3)
+    if user_id:
+        
+        try:
+            user = User.objects.get(pk=user_id)
+            points = UserEventLog.objects.filter(user=user)
+            leader_board = points.values('user').annotate(score=Sum('points'))
+
+            return Response({"points": leader_board})
+        except User.DoesNotExist :
+            return Response({"detail": "No user with id : " + str(user_id)});
+    #user = request.user
+    ci = CourseInstance.objects.get(pk=course_id)
+    points = UserEventLog.objects.filter(course_instance=ci)
+    leader_board = points.values('user').annotate(score=Sum('points'))
+
+    
+
+    return Response({"points": leader_board})
 
 
 def initload(request):

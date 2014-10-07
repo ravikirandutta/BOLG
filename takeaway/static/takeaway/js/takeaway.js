@@ -547,7 +547,7 @@ var NewTakeaway = Backbone.View.extend({
               },
 
     tagRemoved: function(event){
-        var tagName = event.item;
+        var tagName = event.item.trim();
         var existingTags = this.model.get('tags');
         _.each(existingTags, function(tag){
             if(tag.name == tagName){
@@ -557,7 +557,7 @@ var NewTakeaway = Backbone.View.extend({
         });
     },
     tagAdded: function(event){
-        var tagName = event.item;
+        var tagName = event.item.trim();
         var tag = new Tags();
         var that = this;
         tag.fetch({data:{name:tagName.toLowerCase()},success:function(collection, response){
