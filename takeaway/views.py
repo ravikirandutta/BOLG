@@ -491,7 +491,14 @@ class ContactUsViewSet(viewsets.ModelViewSet):
             if obj.cc_myself:
                 recipients.append(obj.sender)
 
-            send_mail(obj.subject, obj.message, 'support@mbatakeaways.com', recipients)
+            
+            prefix_message = "This message is sent by " + obj.sender           
+            send_mail(obj.subject, prefix_message + '\n' + obj.message, 'support@mbatakeaways.com', recipients)
+
+            # Response to the one who submitted the feedback.
+            response_message = 'Hi' + '\n' + 'Thanks for your interest in our application' + '\n' + 'Our team will get back to you soon with an update.' + '\n' + ' Have a good day' + '\n' + 'Takeaway Team :)'
+            send_mail('MBATakeaways : Thanks for your feedback', response_message, 'support@mbatakeaways.com', [obj.sender])
+
 
 
 
@@ -520,7 +527,13 @@ def ContactUs(request):
             if cc_myself:
                 recipients.append(sender)
 
-            send_mail(subject, message, sender, recipients)
+            prefix_message = "This message is sent by " + sender           
+            send_mail(subject, prefix_message + '\n' + message, 'support@mbatakeaways.com', recipients)
+
+            # Response to the one who submitted the feedback.
+            response_message = 'Hi' + '\n' + 'Thanks for your interest in our application' + '\n' + 'Our team will get back to you soon with an update.' + '\n' + ' Have a good day' + '\n' + 'Takeaway Team :)'
+            send_mail('MBATakeaways : Thanks for your feedback', response_message, 'support@mbatakeaways.com', [sender])
+
 
             # Now call the index() view.
             # The user will be shown the homepage.
