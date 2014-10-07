@@ -71,6 +71,7 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^passwordchange/', include('django.contrib.auth.urls')),
     url(r'^load_courses/',  'takeaway.custom_school_data_load.load_isb_data', name='load_courses'),
+    url(r'^load_wharton_courses/',  'takeaway.custom_school_data_load.load_wharton_data', ),
 
     # url(r'^contact/thankyou/', 'takeaway.views.thankyou'),
     # url(r'^contact/', 'takeaway.views.contactview'),
