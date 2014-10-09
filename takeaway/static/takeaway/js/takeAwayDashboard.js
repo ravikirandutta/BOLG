@@ -198,6 +198,22 @@ app.factory('TagsFactory', ['$resource',
   //    });
 
 
+   $scope.ratingStates = [
+    {stateOn: 'glyphicon-ok-sign', stateOff: 'glyphicon-ok-circle'},
+    {stateOn: 'glyphicon-star', stateOff: 'glyphicon-star-empty'},
+    {stateOn: 'glyphicon-heart', stateOff: 'glyphicon-ban-circle'},
+    {stateOn: 'glyphicon-heart'},
+    {stateOff: 'glyphicon-off'}
+  ];
+
+
+$scope.rated = function(id, rating, alreadyRated){
+  if(!alreadyRated)
+{
+       RatingFactory.save({takeaway:id,rating_value:rating,user:$cookies.userid});
+}
+}
+
 
   $scope.loadTags = function(query) {
       var deferred = $q.defer();
@@ -574,7 +590,7 @@ $scope.tagAddedInEditTakeaway = function(tag){
           user: $cookies.userid
         };
 
-       FavoritesFactory.save({data: favObj}).$promise
+       FavoritesFactory.save( favObj).$promise
        .then(function(data, status, headers, config) {
           taset.isFavourite = true;
         },function(data, status, headers, config) {
