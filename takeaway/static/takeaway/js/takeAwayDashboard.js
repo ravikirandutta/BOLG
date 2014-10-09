@@ -41,7 +41,7 @@ ng Modules required for below
 */
 
 (function() {
-  var app = angular.module('takeAwayDashboard', ['ngCookies', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput','ui.tinymce','ui.bootstrap','ngSanitize']).run(function($http, $cookies) {
+  var app = angular.module('takeAwayDashboard', ['ngCookies', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput','ui.tinymce','ui.bootstrap']).run(function($http, $cookies) {
     $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
     $http.defaults.headers.common['Content-Type'] = "application/json";
 
@@ -176,7 +176,7 @@ app.factory('TagsFactory', ['$resource',
 
 
   app.controller('takeawayDashboardCtrl',
-    function($scope, $http, $cookies, $q, $resource, $rootScope, CoursesFactory, SessionsFactory, ngDialog, RatingFactory, FavoritesFactory, TagsFactory) {
+    function($scope, $http, $cookies, $q, $resource, $sce, $rootScope, CoursesFactory, SessionsFactory, ngDialog, RatingFactory, FavoritesFactory, TagsFactory) {
 
     console.log("loading takeawayDashboardCtrl");
 
@@ -207,7 +207,11 @@ app.factory('TagsFactory', ['$resource',
        });
       return deferred.promise;
   };
+  $scope.getSafe = function(unsafeHtml){
 
+    return $sce.trustAsHtml(unsafeHtml);
+
+  };
   $scope.tagAdded = function(tag){
       if(!tag.id){
         TagsFactory.query({"name":tag.name}).$promise.then(function(data){

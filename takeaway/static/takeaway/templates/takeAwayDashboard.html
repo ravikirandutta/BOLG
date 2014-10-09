@@ -47,12 +47,12 @@
                               <div ng-if="taset.isOwner">
                                 <div id="editable-notes" title="Click to edit the takeaway" style="cursor: pointer;"
                                      ng-click="makeEditable(sessionsresult.id+'_'+taset.id, taset.notes)" >
-                                  <pre id="takeaway" class="takeaway-pre takeaway-pre-owner" ><div ng-bind-html="taset.notes"></div ></pre>
+                                  <pre id="takeaway" class="takeaway-pre takeaway-pre-owner" ><div ng-bind-html="getSafe(taset.notes)"></div ></pre>
                                 </div>
                               </div>
                               <div ng-if="!taset.isOwner">
                                 <div id="editable-notes">
-                                  <pre id="takeaway" class="takeaway-pre">{{taset.notes}}</pre>
+                                  <pre id="takeaway" class="takeaway-pre" ng-bind-html="getSafe(taset.notes)"></pre>
                                 </div>
                               </div>
                               <div class="btn-group" style="float: right; display: block;">
