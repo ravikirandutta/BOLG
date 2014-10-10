@@ -185,7 +185,7 @@ app.factory('TagsFactory', ['$resource',
       "results": []
     };
 
-
+    $scope.currentlyEditingTakeaway="";
     //ngTags
     $scope.tags = [
 
@@ -209,7 +209,7 @@ app.factory('TagsFactory', ['$resource',
   };
   $scope.getSafe = function(unsafeHtml){
 
-    return $sce.trustAsHtml(unsafeHtml);
+    return $sce.trustAsHtml(unsafeHtml);    
 
   };
   $scope.tagAdded = function(tag){
@@ -307,6 +307,7 @@ $scope.tagAddedInEditTakeaway = function(tag){
 
       $scope.ratings = {};
       $scope.favList = {};
+      
 
       $http({
         url: '/favorites/?user='+$cookies.userid+'&courseInstance='+courseid,
@@ -377,7 +378,8 @@ $scope.tagAddedInEditTakeaway = function(tag){
     $scope.makeEditable = function(divId, notes) {
       document.getElementById(divId + "_view").style.display = "none";
       document.getElementById(divId + "_edit").style.display = "block";
-      document.getElementById(divId + "_notes").value = notes;
+      //document.getElementById(divId + "_notes").value = notes;
+      $scope.currentlyEditingTakeaway=notes;
     }
 
     /* Update/Edit the takeaway and reload the page / refresh the takeaway part */
