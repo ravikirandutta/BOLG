@@ -75,16 +75,20 @@
                                   <span style="width:2px">&nbsp;</span>
                                 </span>
 
-                                <span ng-if="!taset.isOwner">
-                                  {{taset.average_rating}}
-                                  <div class="rateit" data-rateit-value={{taset.average_rating}} data-rateit-ispreset="true" data-rateit-readonly={{taset.alreadyRated}} data-rateit-resetable="false"></div>
+                                   <span  ng-if="!taset.isOwner">
+
+                                  <span  ng-click="rated(taset.id,taset.average_rating,taset.alreadyRated)">
+
+                                    <rating ng-model="taset.average_rating"   readonly="taset.alreadyRated" max="5" >
+                                    </rating>
+                                  </span>
+
                                   <span class="total-raters">(<i class="fa fa-user"></i>{{taset.total_raters}})</span>
                                 </span>
 
                                 <span ng-if="taset.isOwner">
-                                  {{taset.average_rating}}
-                                  <div class="rateit" data-rateit-value={{taset.average_rating}} data-rateit-ispreset="true" data-rateit-readonly="true" data-rateit-resetable="false"></div>
 
+                                  <rating ng-model="taset.average_rating" ng-click="test()" readonly="true" max="5" ></rating>
                                   <span class="total-raters">(<i class="fa fa-user"></i>{{taset.total_raters}})</span>
 
                                   <span public-private taset="taset"
@@ -93,6 +97,7 @@
                                        perform-post=true></span>
 
                                 </span>
+
                               </div>
                               <div id="favourite">
 
