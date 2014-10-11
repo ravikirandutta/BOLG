@@ -347,3 +347,15 @@ background-color: #e9eaed;
      -moz-box-shadow: 0 5px 25px #666;
           box-shadow: 0 5px 25px #666;
 }
+
+div .tags{
+  width:500px;
+}
+
+tags-input .tags .input{
+  width:inherit !important;
+}
+
+.ngdialog.ngdialog-theme-plain .ngdialog-content{
+  width: 520px !important;
+}

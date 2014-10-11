@@ -342,11 +342,11 @@ def update_takeaway_on_rating_save(sender, **kwargs):
 
         notify.send(rating.user,recipient=takeaway.user, verb='RATED',description= message,action_object=takeaway)
         # Giving points to user who rated
-        event = PointEvent.objects.get(event='GOT_RATING')
-        UserEventLog(user=takeaway.user,course_instance=takeaway.courseInstance,session=takeaway.session,event=event,points=event.points).save()
+        event = PointEvent.objects.get_or_create(event='GOT_RATING',points=5)
+        UserEventLog(user=takeaway.user,course_instance=takeaway.courseInstance,session=takeaway.session,event=event[0],points=event[0].points).save()
         # Giving points to user whose takeaway rated
-        event = PointEvent.objects.get(event='GAVE_RATING')
-        UserEventLog(user=rating.user,course_instance=takeaway.courseInstance,session=takeaway.session,event=event,points=event.points).save()
+        event = PointEvent.objects.get_or_create(event='GAVE_RATING', points = 5)
+        UserEventLog(user=rating.user,course_instance=takeaway.courseInstance,session=takeaway.session,event=event[0],points=event[0].points).save()
 
 
 # @receiver(post_save,sender=Session)

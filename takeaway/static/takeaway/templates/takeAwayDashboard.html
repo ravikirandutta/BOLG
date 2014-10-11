@@ -41,7 +41,10 @@
                     <ul id="takeaway-list" class="recent">
                       <div>
                         <div  ng-repeat="taset in sessionsresult.takeaway_set">
-                          <li>
+
+
+
+                          <li ng-if='taset.isOwner || taset.is_public' >
                             <div id="{{sessionsresult.id}}_{{taset.id}}_view" class="recent-content">
                               <div class="recent-meta">Posted on {{taset.created_dt}} by {{taset.username}}</div>
                               <div ng-if="taset.isOwner">
@@ -152,6 +155,9 @@
                               <br/>
                             </div>
                           </li>
+
+
+
                         </div>
                       </div>
                     </ul>
