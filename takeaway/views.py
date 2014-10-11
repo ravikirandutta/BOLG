@@ -32,6 +32,7 @@ def test(request):
 # Create your views here.
 from rest_framework.decorators import *
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 def can_user_post(request):
 
     minimum_rating_pct = 0.25
