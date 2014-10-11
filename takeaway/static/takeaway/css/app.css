@@ -4,7 +4,8 @@ div .mainbar {
 
 #takeaway-container{
    /* padding:40px;*/
-    width:100%;
+    width:80%;
+    left: 10%;
 }
 
  .course{
