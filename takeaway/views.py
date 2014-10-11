@@ -224,6 +224,13 @@ class TagViewSet(viewsets.ModelViewSet):
         filter_backends = (filters.DjangoFilterBackend,)
         filter_fields = ('name',)
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+        def get_queryset(self):
+
+            queryset = Tag.objects.all()
+            starts_with  = self.request.QUERY_PARAMS.get('starts_with', None)
+            if starts_with:
+                queryset = queryset.filter(name__startswith=starts_with)
+            return queryset
 
 class RatingViewSet(viewsets.ModelViewSet):
         queryset = Rating.objects.all()
@@ -491,8 +498,8 @@ class ContactUsViewSet(viewsets.ModelViewSet):
             if obj.cc_myself:
                 recipients.append(obj.sender)
 
-            
-            prefix_message = "This message is sent by " + obj.sender           
+
+            prefix_message = "This message is sent by " + obj.sender
             send_mail(obj.subject, prefix_message + '\n' + obj.message, 'support@mbatakeaways.com', recipients)
 
             # Response to the one who submitted the feedback.
@@ -527,7 +534,7 @@ def ContactUs(request):
             if cc_myself:
                 recipients.append(sender)
 
-            prefix_message = "This message is sent by " + sender           
+            prefix_message = "This message is sent by " + sender
             send_mail(subject, prefix_message + '\n' + message, 'support@mbatakeaways.com', recipients)
 
             # Response to the one who submitted the feedback.
@@ -607,15 +614,15 @@ def ContactUsLogin(request):
 @permission_classes((IsAuthenticated, ))
 def get_leader_board(request):
 
-    
+
     user_id = request.QUERY_PARAMS.get('user_id', None)
     course_id = request.QUERY_PARAMS.get('course_id', None)
-    
+
     if not course_id and not user_id :
         return Response({"detail": "Course not passed."});
     #user = User.objects.get(pk=3)
     if user_id:
-        
+
         try:
             user = User.objects.get(pk=user_id)
             points = UserEventLog.objects.filter(user=user)
@@ -629,7 +636,7 @@ def get_leader_board(request):
     points = UserEventLog.objects.filter(course_instance=ci)
     leader_board = points.values('user').annotate(score=Sum('points'))
 
-    
+
 
     return Response({"points": leader_board})
 
@@ -785,5 +792,9 @@ def play(request):
 
 @login_required
 def Chat(request):
-    return render_to_response('chat.html',RequestContext(request))
+    user = request.user
+    takeAwayProfile = TakeAwayProfile.objects.filter(user=user)[0];
+    school = takeAwayProfile.school.school_name
+    batch = takeAwayProfile.batch
+    return render_to_response('chat.html',RequestContext(request),{school:school, batch:batch})
 

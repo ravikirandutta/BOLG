@@ -1,0 +1,10 @@
+<div class="btn-group" ng-controller="publicPrivateButtonCtrl">
+  <label ng-model="taset.is_public" btn-radio="true" uncheckable
+        ng:class="{true:'btn btn-primary', false:'btn btn-default'}[taset.is_public==true]"
+        ng-click="toggleButtons(taset,true,performPost,courseId, sessionId)" id="publicId"
+        style="width: 60px; height: 32px;font-size:13px!important">Public</label>
+  <label ng-model="taset.is_public" btn-radio="false" uncheckable
+        ng:class="{true:'btn btn-primary', false:'btn btn-default'}[taset.is_public==false]"
+        ng-click="toggleButtons(taset,false,performPost,courseId, sessionId)" id="privateId"
+        style="width: 60px; height: 32px; font-size:13px!important">Private</label>
+</div>

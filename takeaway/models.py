@@ -393,8 +393,8 @@ def create_notifications_on_takeaway(sender, **kwargs):
     #pdb.set_trace()
     if kwargs.get('created',False):
 
-        event = PointEvent.objects.get(event='NEW_TAKEAWAY')
-        UserEventLog(user=takeaway.user,course_instance=takeaway.courseInstance,session=takeaway.session,event=event,points=event.points).save()
+        event = PointEvent.objects.get_or_create(event='NEW_TAKEAWAY', points=5)
+        UserEventLog(user=takeaway.user,course_instance=takeaway.courseInstance,session=takeaway.session,event=event[0],points=event[0].points).save()
 
         if takeaway.is_public == True :
             logger.info("public takeaway created by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)
