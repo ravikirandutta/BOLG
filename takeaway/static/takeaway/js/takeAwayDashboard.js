@@ -554,6 +554,7 @@ $scope.tagAddedInEditTakeaway = function(tag){
         template: 'editSessionNameTemplateId',
         controller: 'takeawayDashboardCtrl',
         className: 'ngdialog-theme-plain',
+        closeByDocument: false,
         scope: $scope
       });
     };
