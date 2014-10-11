@@ -213,8 +213,8 @@ class SessionDetail(generics.RetrieveUpdateDestroyAPIView):
 
         def post_save(self, obj, created=False):
             if not created :
-                event = PointEvent.objects.get(event='CREATED_SESSION')
-                UserEventLog(user=self.request.user,course_instance=obj.courseInstance,session=obj,event=event,points=event.points).save()
+                event = PointEvent.objects.get_or_create(event='CREATED_SESSION',points=5)
+                UserEventLog(user=self.request.user,course_instance=obj.courseInstance,session=obj,event=event[0],points=event[0].points).save()
 
 
 
