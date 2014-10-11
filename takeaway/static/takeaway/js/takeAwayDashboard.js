@@ -1,44 +1,3 @@
-/* Comments Meta Data
-    Course - CRS, Session - SN, Takeaway - TAY, Session and TakeAway - STAY
-*/
-
-/*
-  Pending:
-  1. Dialog box for editing session name  -DONE
-  2. Dialog box for New Takeaway -DONE
-  3. Tags handling in New / Edit take away
-  4. PUB-PRI button in New / Edit take away  -DONE
-  5. Selected CRS li tag class should be changed to "course-selected" and all others should be "course-deselected"
-  6. Owner check for enabling PUB-PRI button in each TAY
-  7. Owner check for enabling EDIT-DELTE buttons in each TAY
-  8. Favourite select/deselect and saving for each TAY  --DONE, but DELETE is forbidden in local
-  9. Confirmation dialog for DELETE TAY -DONE
-  10. Color difference for owned TAY  --DONE
-  11. TAY style not rendering correctly
-  12. Expand and Collapse for sessions
-  13. Validations in Edit Session Name and New Takeaway and Edit Takeaway
-  14. On editing of takeaway, we should disable other takeaways edit-delete buttons and restore again after update/cancel
-
-// Sep 28th pending might be duplicated from above
-1. On New Takeaway Page is not refreshing even data saved
-2. Tags, Rateit, Public -Private button
-3. Local box - DELETE forbidden error
-4. Rating GET - POST
-5. Tags GET-POST
-6. PUBLIC-PRIVATE POST  -DONE
-// Sep 28th END
-
-ng Modules required for below
-  Dialog window, Tags, RateIt and PUB-PRI button
-
-  Open Questions:
-  1. Is Session can be deleted? If yes, all TAYs associated with that session also deleted?
-  2. Search required or not? If yes, on what basis? Tags/Rating/Owner/PUB-PRI/Favourite
-  3. Is user rated once, does he can't rate it again?
-  4. If user is owner for TAY, he can't rate it? But he can see it?
-  5. Is there any specific reason to code menu bar tags in this page?
-
-*/
 
 (function() {
   var app = angular.module('takeAwayDashboard', ['ngCookies', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput','ui.tinymce','ui.bootstrap']).run(function($http, $cookies) {
@@ -236,12 +195,7 @@ app.controller('RatingDemoCtrl', function ($scope) {
 
 
     //ngTags
-    $scope.tags = [
 
-    ];
-
-
-  $scope.availableTags = {};
   // TagsFactory.query().$promise.then(function(data){
   //     $scope.availableTags = data.results;
   //    });
@@ -268,59 +222,12 @@ $scope.rated = function(id, rating, alreadyRated){
 };
 
 
-  $scope.loadTags = function(query) {
-      var deferred = $q.defer();
-
-       TagsFactory.query({"starts_with":query}).$promise.then(function(data){
-          deferred.resolve(data.results);
-       });
-      return deferred.promise;
-  };
   $scope.getSafe = function(unsafeHtml){
 
     return $sce.trustAsHtml(unsafeHtml);
 
   };
-  $scope.tagAdded = function(tag){
-      if(!tag.id){
-        TagsFactory.query({"name":tag.name}).$promise.then(function(data){
-            if(data.count ==1){
-              var length = $scope.tags.length;
-              $scope.tags.splice(length-1,1);
-              $scope.tags.push(data.results[0]);
-            }else{
-                TagsFactory.save({"name":tag.name}).$promise.then(function(data){
-                    var length = $scope.tags.length;
-                    $scope.tags.splice(length-1,1);
 
-                    $scope.tags.push(data);
-
-                });
-            }
-        });
-      }
-  };
-
-
-$scope.tagAddedInEditTakeaway = function(tag){
-      if(!tag.id){
-        TagsFactory.query({"name":tag.name}).$promise.then(function(data){
-            if(data.count ==1){
-              var length = $scope.tags.length;
-              $scope.taset.tags.splice(length-1,1);
-              $scope.taset.tags.push(data.results[0]);
-            }else{
-                TagsFactory.save({"name":tag.name}).$promise.then(function(data){
-                    var length = $scope.tags.length;
-                    $scope.taset.tags.splice(length-1,1);
-
-                    $scope.taset.tags.push(data);
-
-                });
-            }
-        });
-      }
-  }
 
 
 
@@ -614,7 +521,7 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
     /* Event from "Save" button from New Take Away dialog window */
     $scope.saveTakeaway = function(sessionsresult) {
       var tagIds =[];
-      angular.forEach($scope.tags, function(tag){
+      angular.forEach($scope.taset.tags, function(tag){
             if(tag.id){
               tagIds.push(tag.id);
             }
@@ -761,6 +668,70 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
 //  $scope.dup = $scope.session;
 //   }]);
 
+app.controller('TagController', function ($scope,$q, TagsFactory) {
+
+   $scope.tags = [];
+  $scope.availableTags = {};
+
+   $scope.loadTags = function(query) {
+      var deferred = $q.defer();
+
+       TagsFactory.query({"starts_with":query}).$promise.then(function(data){
+          deferred.resolve(data.results);
+       });
+      return deferred.promise;
+  };
+
+  $scope.tagAdded = function(tag){
+
+      if(!tag.id){
+        TagsFactory.query({"name":tag.name}).$promise.then(function(data){
+            if(data.count ==1){
+              var length = $scope.tags.length;
+              $scope.tags.splice(length-1,1);
+              $scope.tags.push(data.results[0]);
+            }else{
+                TagsFactory.save({"name":tag.name}).$promise.then(function(data){
+                    var length = $scope.tags.length;
+                    $scope.tags.splice(length-1,1);
+                    $scope.tags.push(data);
+
+                });
+            }
+        });
+      }
+    $scope.taset.tags = $scope.tags;
+  };
+
+
+$scope.tagAddedInEditTakeaway = function(tag){
+      if(!tag.id){
+        TagsFactory.query({"name":tag.name}).$promise.then(function(data){
+            if(data.count ==1){
+              var length = $scope.tags.length;
+              $scope.taset.tags.splice(length-1,1);
+              $scope.taset.tags.push(data.results[0]);
+            }else{
+                TagsFactory.save({"name":tag.name}).$promise.then(function(data){
+                    var length = $scope.tags.length;
+                    $scope.taset.tags.splice(length-1,1);
+
+                    $scope.taset.tags.push(data);
+
+                });
+            }
+        });
+      }
+  };
+
+
+
+
+});
+
+app.controller('RatingDemoCtrl', function ($scope) {
+
+});
 
 
 app.controller('publicPrivateButtonCtrl',

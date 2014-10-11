@@ -137,7 +137,7 @@
                               <button class="btn btn-success" ng-click="updateTakeaway(sessionsresult.id+'_'+taset.id, taset)">Update</button>
                               <button class="btn btn-danger" ng-click="cancelEdit(sessionsresult.id+'_'+taset.id, taset.notes)">Cancel</button>
                             </div>
-                              <div class="btn-group-left" >
+                              <div class="btn-group-left" ng-controller="TagController">
                                <!-- <span ng-repeat="tag in taset.tags">
                                   <span class="label label-warning">
                                     <i class="fa fa-tags"></i>{{tag.name}}
@@ -178,11 +178,11 @@
         <textarea rows="5" data-ui-tinymce data-ng-model="newTakeawayContent" class="form-control" id="notes"></textarea>
       </div>
 
-
-    <tags-input placeholder="Add a Tag by typing it" ng-model="tags" display-property="name"  on-tag-added="tagAdded($tag)">
+     <div ng-controller="TagController">
+    <tags-input  placeholder="Add a Tag by typing it" ng-model="tags" display-property="name"  on-tag-added="tagAdded($tag)">
        <auto-complete source="loadTags($query)"></auto-complete>
     </tags-input>
-
+    </div>
 
       <span public-private taset="taset"
            course-id={{sessionsresult.courseInstance.id}}
