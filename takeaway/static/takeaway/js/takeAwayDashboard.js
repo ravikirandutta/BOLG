@@ -470,15 +470,6 @@ $scope.tagAddedInEditTakeaway = function(tag){
       }
     };
 
-    $rootScope.$on('ngDialog.closed', function (e, $dialog) {
-        //console.log('ngDialog closed: ' + $dialog.attr('id'));
-        if($rootScope.reloadPage) {
-          $scope.freshLoadOfSessions($rootScope.courseIdToReload);
-          $rootScope.reloadPage= false;
-        }
-        
-    });
-
     /* Displaying Dialog window to create New Take Away */
     $scope.newTakeaway = function (sessionsresult) {
       $scope.sessionsresult = sessionsresult;
@@ -488,7 +479,6 @@ $scope.tagAddedInEditTakeaway = function(tag){
         template: 'newTakeawayTemplateId',
         controller: 'takeawayDashboardCtrl',
         className: 'ngdialog-theme-plain',
-        closeByDocument: false,
         scope: $scope
       });
     };
@@ -521,9 +511,9 @@ $scope.tagAddedInEditTakeaway = function(tag){
           'Content-Type': 'application/json'
         }
       }).success(function(data, status, headers, config) {
+        $scope.freshLoadOfSessions(data.courseInstance);
         $scope.newTakeawayContent="";
-        $rootScope.reloadPage = true;
-        $rootScope.courseIdToReload=data.courseInstance;
+        console.log("loading all courses sessions after successfull creation"+data.courseInstance);
       }).error(function(data, status, headers, config) {
         $scope.status = status;
         console.error('Error in saveTakeaway'+status);
