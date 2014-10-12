@@ -74,6 +74,18 @@
                                 </span>
                               </div>
 
+
+                              <div ng-controller="CollapseDemoCtrl">
+                                <button class="btn btn-default" ng-click="displayComments(taset)">Comments</button>
+                                
+                                <div collapse="isCollapsed">
+                                  <hr>
+                                  <div class="well well-lg" ng-repeat="x in comments">{{ x.notes }} </div> 
+                                  
+                                  <input type="textarea" ng-model="myComment" >
+                                  <button class="btn btn-default" ng-click="saveComment(taset)">Add comment</button>
+                                </div>
+                              </div> 
                               <div class="clearfix"></div>
 
                             </div>

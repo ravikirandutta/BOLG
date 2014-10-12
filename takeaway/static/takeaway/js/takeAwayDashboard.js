@@ -87,6 +87,25 @@ app.directive('session', function() {
     }
   });
 
+  app.factory('Comments', ['$resource',
+    function($resource) {
+      return $resource('/comments/', {}, {
+        query: {
+          method: 'GET',
+          isArray: false
+        },
+        save: {
+          method: 'POST'
+        },
+        edit: {
+          url: '/comments/:id/',
+          method: 'PUT'
+        }
+      });
+    }
+  ]);
+
+
   app.factory('CoursesFactory', ['$resource',
     function($resource) {
       return $resource('/courseInstances/', {}, {
@@ -315,7 +334,6 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
       }
 
     };
-
    $scope.updateTakeaway = function(divId, taset) {
       document.getElementById(divId + "_view").style.display = "block";
       document.getElementById(divId + "_edit").style.display = "none";
@@ -725,6 +743,45 @@ app.controller('publicPrivateButtonCtrl',
     };
 
     });
+
+
+  app.controller('CollapseDemoCtrl', function ($scope,$cookies,Comments) {
+  $scope.isCollapsed = true;
+
+    $scope.displayComments = function(taset) {
+
+      if($scope.isCollapsed){
+        $scope.loadComments(taset, false);
+      }else{
+        $scope.isCollapsed = !$scope.isCollapsed;
+      }
+    };
+
+    $scope.loadComments = function(taset, isRefresh) {
+      
+        Comments.query({
+          "takeaway": taset.id
+        }).$promise.then(function(data) {
+          console.log(data);
+          $scope.comments = data.results;
+          if(!isRefresh){
+            $scope.isCollapsed = !$scope.isCollapsed;
+          }
+          
+        });
+      
+    };
+
+    $scope.saveComment = function(taset) {
+      Comments.save({takeaway:taset.id,notes:$scope.myComment,user:$cookies.userid,tags:[1],vote_count:0,average_rating:0,total_raters:0})
+              .$promise.then(function(data) {
+                  $scope.myComment = null;
+                  $scope.loadComments(taset, true);
+            });
+
+    };
+
+  });
 
 
 })();
