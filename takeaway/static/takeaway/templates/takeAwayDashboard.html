@@ -56,6 +56,19 @@
     </div>
 </script>
 
+<script type="text/ng-template" id="cantCreateTakeawayTemplateId">
+    <div class="ngdialog-message">
+      <h5>You need to rate atleast {{userPermisssionDetail.remaining_rating_count_till_create}} more Takeaways to be able to create New Takeaway</h5>
+
+    </div>
+    <div class="ngdialog-buttons">
+      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()"
+      ng-dialog-class="ngdialog-theme-default" >Close</button>
+    </div>
+</script>
+
+
+
 <script type="text/ng-template" id="editSessionNameTemplateId">
     <div class="ngdialog-message">
       <h5>Editing Session "{{session_name_current}}"</h5>
