@@ -782,7 +782,7 @@ app.controller('publicPrivateButtonCtrl',
     });
 
 
-  app.controller('CollapseDemoCtrl', function ($scope,$cookies,Comments) {
+  app.controller('CollapseCommentsCtrl', function ($scope,$cookies,Comments) {
   $scope.isCollapsed = true;
 
     $scope.displayComments = function(taset) {
