@@ -457,7 +457,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
 
       ngDialog.open({
         template: 'courseLeaderBoardTemplateId',
-        controller: 'takeawayDashboardCtrl',
+        controller: 'CourseController',
         className: 'ngdialog-theme-plain',
         scope: $scope
       });
