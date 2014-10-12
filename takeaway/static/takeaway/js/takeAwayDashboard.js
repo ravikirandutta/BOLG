@@ -191,7 +191,11 @@ app.factory('UserPermission',['$resource',function($resource){
             query: {method:'GET',isArray:false},
         })
     }]);
-
+app.factory('LeaderboardFactory',['$resource',function($resource){
+        return $resource('/get_leader_board/',{},{
+          query: {method:'GET',isArray:false},
+        })
+}]);
 
 
  app.controller('SessionController', function ($scope,ngDialog) {
@@ -225,16 +229,28 @@ app.factory('UserPermission',['$resource',function($resource){
       $scope.sessionsresult = sessionsresult;
       $scope.taset = {is_public : true};
       //$scope.takeaway_set = sessionsresult.takeaway_set[0];
+      if($scope.userCanPost){
       ngDialog.open({
         template: 'newTakeawayTemplateId',
         controller: 'takeawayDashboardCtrl',
         className: 'ngdialog-theme-plain',
         scope: $scope
       });
+    }else{
+      ngDialog.open({
+        template: 'cantCreateTakeawayTemplateId',
+        controller: 'takeawayDashboardCtrl',
+        className: 'ngdialog-theme-plain',
+        scope: $scope
+      });
+    }
+
     };
 
 
  });
+
+
 
  app.controller('TakeAwayController', function ($scope,$sce,$cookies, TakeAwayFactory, RatingFactory,FavoritesFactory,TakeAwayConverter, ngDialog) {
 
@@ -345,6 +361,7 @@ app.factory('UserPermission',['$resource',function($resource){
     $scope.sessions = {
       "results": []
     };
+    $scope.userPermisssionDetail={};
     $scope.userCanPost = false;
 
 
@@ -389,6 +406,7 @@ app.factory('UserPermission',['$resource',function($resource){
     $scope.getUserPermission = function(courseId){
       UserPermission.query({'course_id':courseId},function(data){
         $scope.userCanPost=data.can_post;
+        $scope.userPermisssionDetail=data;
       })
     }
 
