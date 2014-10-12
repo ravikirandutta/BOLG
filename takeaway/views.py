@@ -644,9 +644,21 @@ def get_leader_board(request):
     points = UserEventLog.objects.filter(course_instance=ci)
     leader_board = points.values('user').annotate(score=Sum('points'))
 
+    leader_dict ={}
+    leader_records = []
+
+    for leader in leader_board :
+        user = User.objects.get(pk=leader['user'])
+        user_name = user.username
+        first_name = user.first_name
+        user_email = user.email
+        record = {"user_id":leader['user'], "user_name":user_name,"first_name":first_name,"user_email":user_email,"score":leader['score']}
+        leader_records.append(record)
 
 
-    return Response({"points": leader_board})
+
+
+    return Response({"points": leader_records})
 
 
 def initload(request):

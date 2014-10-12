@@ -217,6 +217,45 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
 }]);
 
 
+app.factory('TakeAwayDataFactory',function(){
+
+});
+
+app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
+
+
+      $scope.highLightSelectedCourse = function(courseid) {
+      _.each($scope.availableCourses.results,function(courseObj){
+        if(courseObj.id == courseid) {
+          courseObj["courseClass"] = "course-selected";
+        } else {
+          courseObj["courseClass"] = "course-deselected";
+        }
+      });
+
+    };
+
+    $scope.getUserPermission = function(courseId){
+      UserPermission.query({'course_id':courseId}).$promise.then(
+        function(data){
+        $scope.userCanPost=data.can_post;
+        $scope.userPermisssionDetail=data;
+      }, function(data){
+
+      });
+    };
+
+    $scope.freshLoadOfSessions = function(){
+      //$scope.displaysessions = false;
+      var courseid = $scope.courseInstance.course.id;
+      $scope.loadCourses(courseid);
+      $scope.highLightSelectedCourse(courseid);
+      $scope.getUserPermission(courseid);
+      $scope.getLeaderBoard(courseid);
+    };
+
+});
+
  app.controller('SessionController', function ($scope,ngDialog) {
 
   $scope.editSessionName = function (sessionsresult) {
@@ -248,7 +287,7 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
       $scope.sessionsresult = sessionsresult;
       $scope.taset = {is_public : true};
       //$scope.takeaway_set = sessionsresult.takeaway_set[0];
-      if($scope.userCanPost){
+      if(true){//$scope.userCanPost
       ngDialog.open({
         template: 'newTakeawayTemplateId',
         controller: 'takeawayDashboardCtrl',
@@ -258,6 +297,7 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
     }else{
       ngDialog.open({
         template: 'cantCreateTakeawayTemplateId',
+        //need to switch the below controller to CourseController instead of takeawayDashboard
         controller: 'takeawayDashboardCtrl',
         className: 'ngdialog-theme-plain',
         scope: $scope
@@ -379,9 +419,11 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
     $scope.sessions = {
       "results": []
     };
+
     $scope.userPermisssionDetail={};
     $scope.userCanPost = false;
     $scope.leaderBoard = {};
+
 
 
   $scope.ratingStates = [
@@ -405,10 +447,10 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
       $scope.availableCourses = data;
 
       //Displaying the STAYs for first CRS
-      if($scope.availableCourses.results != null && $scope.availableCourses.results.length > 0) {
-        var defaultCourseId = $scope.availableCourses.results[0].course.id;
-        $scope.freshLoadOfSessions(defaultCourseId);
-      }
+      // if($scope.availableCourses.results != null && $scope.availableCourses.results.length > 0) {
+      //   var defaultCourseId = $scope.availableCourses.results[0].course.id;
+      //   $scope.freshLoadOfSessions(defaultCourseId);
+      // }
     });
 
     $scope.getLeaderBoard = function(courseId){
@@ -428,18 +470,12 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
 
     };
 
-    $scope.getUserPermission = function(courseId){
-      UserPermission.query({'course_id':courseId},function(data){
-        $scope.userCanPost=data.can_post;
-        $scope.userPermisssionDetail=data;
-      })
-    };
 
     $scope.showLeaderBoard = function () {
-      
+
       ngDialog.open({
         template: 'courseLeaderBoardTemplateId',
-        controller: 'takeawayDashboardCtrl',
+        controller: 'CourseController',
         className: 'ngdialog-theme-plain',
         scope: $scope
       });
@@ -451,12 +487,13 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
       $scope.loadCourses(courseid);
       $scope.highLightSelectedCourse(courseid);
       $scope.getUserPermission(courseid);
-      $scope.getLeaderBoard(courseid);
+
     };
+
 
     // On Click of CRS, load all SNs and TAYs associated with the CRS.
     $scope.loadCourses = function(courseid) {
-      if($scope.displaysessions != true) {
+     // if($scope.displaysessions != true) {
         SessionsFactory.query({
           "courseInstance": courseid,
           "ordering": "session_dt"
@@ -468,7 +505,7 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
           //alert(JSON.stringify($scope.sessions.results));
           $scope.postzpulateOtherFields(courseid);
         });
-      }
+      //}
     };
 
     $scope.postzpulateOtherFields = function(courseid) {
