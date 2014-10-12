@@ -6,18 +6,18 @@
       <div id="course-list" class="page-head">
         <ui class="nav nav-pills" >
       <!-- course display -->
-          <li class="course {{courseresult.courseClass}}" ng-repeat="courseresult in availableCourses.results" >
-            <a class="course-item" ng-click="freshLoadOfSessions(courseresult.course.id)" id="{{courseresult.course.id}}_course">
-                <span id="course{{courseresult.course.id}}">
+          <li class="course {{course.courseClass}}" ng-repeat="courseInstance in availableCourses.results" >
+            <a ng-controller="CourseController" class="course-item" ng-click="freshLoadOfSessions()" id="{{courseInstance.course.id}}_course">
+                <span id="course{{courseInstance.course.id}}">
                     <i class="fa fa-folder-open"></i>
-                    <b>{{courseresult.course.course_name}}</b>
+                    <b>{{courseInstance.course.course_name}}</b>
                 </span>
             </a>
           </li>
         </ui>
         <div class="clearfix"></div>
       </div>
-      <div class="col-md-6" id="takeaway-container">
+      <div class="col-md-6"  id="takeaway-container">
 
         <!-- session display -->
       <div ng-show="displaysessions">
