@@ -231,7 +231,7 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
       //$scope.takeaway_set = sessionsresult.takeaway_set[0];
       if($scope.userCanPost){
       ngDialog.open({
-        template: 'newTakeawayTemplateId',
+        template: 'courseLeaderBoardTemplateId',
         controller: 'takeawayDashboardCtrl',
         className: 'ngdialog-theme-plain',
         scope: $scope
@@ -353,7 +353,7 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
 
 
   app.controller('takeawayDashboardCtrl',
-    function($scope, $http, $cookies, $q, $resource, $sce, $rootScope, UserPermission, CoursesFactory, SessionsFactory, ngDialog,TakeAwayFactory, RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter) {
+    function($scope, $http, $cookies, $q, $resource, $sce, $rootScope, LeaderboardFactory, UserPermission, CoursesFactory, SessionsFactory, ngDialog,TakeAwayFactory, RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter) {
 
     console.log("loading takeawayDashboardCtrl");
     $scope.rate = 7;
@@ -363,6 +363,7 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
     };
     $scope.userPermisssionDetail={};
     $scope.userCanPost = false;
+    $scope.leaderBoard = {};
 
 
   $scope.ratingStates = [
@@ -392,6 +393,12 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
       }
     });
 
+    $scope.getLeaderBoard = function(courseId){
+      LeaderboardFactory.query({'course_id':courseId},function(data){
+        $scope.leaderBoard = data.points;
+      })
+    };
+
     $scope.highLightSelectedCourse = function(courseid) {
       _.each($scope.availableCourses.results,function(courseObj){
         if(courseObj.id == courseid) {
@@ -415,6 +422,7 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
       $scope.loadCourses(courseid);
       $scope.highLightSelectedCourse(courseid);
       $scope.getUserPermission(courseid);
+      $scope.getLeaderBoard(courseid);
     };
 
     // On Click of CRS, load all SNs and TAYs associated with the CRS.

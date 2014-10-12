@@ -62,7 +62,21 @@
 
     </div>
     <div class="ngdialog-buttons">
-      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()"
+      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="ngDialog.close();"
+      ng-dialog-class="ngdialog-theme-default" >Close</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="courseLeaderBoardTemplateId">
+    <div class="ngdialog-message">
+      <h5>Leader Board for</h5>
+      <ul>
+        <li ng-repeat="leader in leaderBoard">{{leader.user}}:{{leader.score}} Points</li>
+      </ul> 
+
+    </div>
+    <div class="ngdialog-buttons">
+      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="ngDialog.close();"
       ng-dialog-class="ngdialog-theme-default" >Close</button>
     </div>
 </script>
