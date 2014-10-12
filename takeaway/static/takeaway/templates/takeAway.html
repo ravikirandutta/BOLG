@@ -1,0 +1,113 @@
+
+
+                          <li ng-controller = "TakeAwayController" ng-if='taset.isOwner || taset.is_public' >
+                            <div id="{{sessionsresult.id}}_{{taset.id}}_view" class="recent-content">
+                              <div class="recent-meta">Posted on {{taset.created_dt}} by {{taset.username}}</div>
+                              <div ng-if="taset.isOwner">
+                                <div id="editable-notes" title="Click to edit the takeaway" style="cursor: pointer;"
+                                     ng-click="makeEditable(sessionsresult.id+'_'+taset.id, taset.notes)" >
+                                  <pre id="takeaway" class="takeaway-pre takeaway-pre-owner" ><div ng-bind-html="getSafe(taset.notes)"></div ></pre>
+                                </div>
+                              </div>
+                              <div ng-if="!taset.isOwner">
+                                <div id="editable-notes">
+                                  <pre id="takeaway" class="takeaway-pre" ng-bind-html="getSafe(taset.notes)"></pre>
+                                </div>
+                              </div>
+                              <div class="btn-group" style="float: right; display: block;">
+                                <div ng-if="taset.isOwner">
+                                  <button id="update" class="btn btn-xs btn-primary" title="Edit"
+                                          style="margin-left: 5px;" ng-click="makeEditable(sessionsresult.id+'_'+taset.id, taset.notes)">
+                                    <i class="fa fa-pencil-square-o fa-lg"></i>
+                                  </button>
+                                  <button id="delete" class="btn btn-xs btn-danger" title="Delete"
+                                          style="margin-left: 5px;" ng-click="deleteTakeaway(sessionsresult, taset)">
+                                    <i class="fa fa-trash-o fa-lg"></i>
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="btn-group-left">
+                                <span ng-repeat="tag in taset.tags">
+                                  <span class="label label-warning">
+                                    <i class="fa fa-tags"></i>{{tag.name}}
+                                  </span>
+                                  <span style="width:2px">&nbsp;</span>
+                                </span>
+
+                                   <span  ng-if="!taset.isOwner">
+
+
+                                  <span  ng-click="rated(taset.id,taset.average_rating,taset.alreadyRated)">
+
+                                    <rating ng-model="taset.average_rating"   readonly="taset.alreadyRated" max="5" >
+                                    </rating>
+                                  </span>
+
+                                  <span class="total-raters">(<i class="fa fa-user"></i>{{taset.total_raters}})</span>
+                                </span>
+
+                                <span ng-if="taset.isOwner">
+
+                                  <rating ng-model="taset.average_rating" ng-click="test()" readonly="true" max="5" ></rating>
+                                  <span class="total-raters">(<i class="fa fa-user"></i>{{taset.total_raters}})</span>
+
+                                  <span public-private taset="taset"
+                                       course-id={{sessionsresult.courseInstance.id}}
+                                       session-id={{sessionsresult.id}}
+                                       perform-post=true></span>
+
+                                </span>
+
+                              </div>
+                              <div id="favourite">
+
+
+                                <span ng-if="taset.isFavourite">
+                                  <a>
+                                    <span id="myfav" class="btn-lg glyphicon glyphicon-heart" ng-click="makeFavourite(taset)"></span>
+                                  </a>
+                                </span>
+                                <span ng-if="!taset.isFavourite">
+                                  <a >
+                                    <span id="myfav" class="btn-lg glyphicon glyphicon-heart-empty" ng-click="makeFavourite(taset)"></span>
+                                  </a>
+                                </span>
+                              </div>
+
+                              <div class="clearfix"></div>
+
+                            </div>
+
+
+                            <div id="{{sessionsresult.id}}_{{taset.id}}_edit" style="display: none;height:210px;">
+                              <textarea rows="5" class="form-control" id="{{sessionsresult.id}}_{{taset.id}}_notes"></textarea>
+                              <br/>
+
+
+                               <div style="float:right">
+                              <span public-private taset="taset"
+                                   course-id={{sessionsresult.courseInstance.id}}
+                                   session-id={{sessionsresult.id}}
+                                   perform-post=false></span>
+
+                              <button class="btn btn-success" ng-click="updateTakeaway(sessionsresult.id+'_'+taset.id, taset)">Update</button>
+                              <button class="btn btn-danger" ng-click="cancelEdit(sessionsresult.id+'_'+taset.id, taset.notes)">Cancel</button>
+                            </div>
+                              <div class="btn-group-left" ng-controller="TagController">
+                               <!-- <span ng-repeat="tag in taset.tags">
+                                  <span class="label label-warning">
+                                    <i class="fa fa-tags"></i>{{tag.name}}
+                                  </span>
+                                  <span style="width:2px">&nbsp;</span>
+                                </span>
+                -->
+                                <tags-input  placeholder="Add a Tag by typing it" ng-model="taset.tags" display-property="name"
+                                on-tag-added="tagAddedInEditTakeaway($tag)">
+                                      <auto-complete source="loadTags($query)"></auto-complete>
+                                </tags-input>
+
+                              <div>
+
+                              <br/>
+                            </div>
+                          </li>

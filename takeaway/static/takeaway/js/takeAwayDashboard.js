@@ -20,6 +20,20 @@
     }
   });
 
+  app.directive('takeAway', function() {
+    return {
+      restrict: 'E',
+      templateUrl: '/static/takeaway/templates/takeAway.html'
+    }
+  });
+
+app.directive('session', function() {
+    return {
+      restrict: 'E',
+      templateUrl: '/static/takeaway/templates/session.html'
+    }
+  });
+
 
   app.directive('publicPrivate', function() {
     return {
@@ -176,15 +190,151 @@ app.factory('TagsFactory', ['$resource',
 
 
 
-app.controller('RatingDemoCtrl', function ($scope) {
+ app.controller('SessionController', function ($scope,ngDialog) {
 
-});
+  $scope.editSessionName = function (sessionsresult) {
+
+      $scope.session_name_current = sessionsresult.session_name;
+      $scope.courseInstanceId = sessionsresult.courseInstance.id;
+      $scope.modifiedSession = {
+        id:0,
+        session_name : "",
+        session_dt : ""
+      };
+
+      $scope.modifiedSession.id = sessionsresult.id;
+      $scope.modifiedSession.session_name = sessionsresult.session_name;
+      $scope.modifiedSession.session_dt = sessionsresult.session_dt;
+
+      $scope.sessionsresult = sessionsresult;
+
+      ngDialog.open({
+        template: 'editSessionNameTemplateId',
+        controller: 'takeawayDashboardCtrl',
+        className: 'ngdialog-theme-plain',
+        scope: $scope
+      });
+    };
 
 
+    $scope.newTakeaway = function (sessionsresult) {
+      $scope.sessionsresult = sessionsresult;
+      $scope.taset = {is_public : true};
+      //$scope.takeaway_set = sessionsresult.takeaway_set[0];
+      ngDialog.open({
+        template: 'newTakeawayTemplateId',
+        controller: 'takeawayDashboardCtrl',
+        className: 'ngdialog-theme-plain',
+        scope: $scope
+      });
+    };
+
+
+ });
+
+ app.controller('TakeAwayController', function ($scope,$sce,$cookies, TakeAwayFactory, RatingFactory,FavoritesFactory,TakeAwayConverter, ngDialog) {
+
+  $scope.makeEditable = function(divId, notes) {
+      document.getElementById(divId + "_view").style.display = "none";
+      document.getElementById(divId + "_edit").style.display = "block";
+      document.getElementById(divId + "_notes").value = notes;
+    };
+
+   $scope.deleteTakeaway = function(sessionsresult, taset) {
+      var msg = "Are you sure you want to delete the take away notes?"
+      if(window.confirm(msg)) {
+
+        TakeAwayFactory.remove({id:taset.id}).$promise.then(
+            function(data, status, headers, config) {
+          console.log('Takeaway Successfully deleted, now refresh the page');
+          $scope.freshLoadOfSessions(taset.courseInstance.id);
+        },
+        function(data, status, headers, config) {
+          $scope.status = status;
+          console.error('Error in deleteTakeaway'+status);
+        });
+      }
+    };
+
+   $scope.rated = function(id, rating, alreadyRated){
+      if(!alreadyRated)
+        {
+           RatingFactory.save({takeaway:id,rating_value:rating,user:$cookies.userid});
+        }
+  };
+
+
+  $scope.getSafe = function(unsafeHtml){
+
+    return $sce.trustAsHtml(unsafeHtml);
+
+  };
+
+ $scope.makeFavourite = function(taset) {
+
+      if(taset.isFavourite) {
+        //DELTE
+        FavoritesFactory.remove({id:taset.id})
+        .$promise.then(function(data, status, headers, config) {
+          taset.isFavourite = false;
+        },function(data, status, headers, config) {
+          console.error('Error in makeFavourite'+status);
+        });
+      } else {
+        var favObj = {
+          courseInstance: taset.courseInstance.id,
+          takeaway: taset.id,
+          user: $cookies.userid
+        };
+
+       FavoritesFactory.save(favObj).$promise.then(function(data, status, headers, config) {
+          taset.isFavourite = true;
+        },function(data, status, headers, config) {
+          console.error('Error in makeFavourite'+status);
+        });
+      }
+
+    };
+
+   $scope.updateTakeaway = function(divId, taset) {
+      document.getElementById(divId + "_view").style.display = "block";
+      document.getElementById(divId + "_edit").style.display = "none";
+      var tagIds = [];
+      angular.forEach(taset.tags, function(tag){
+          if(tag.id){
+             tagIds.push(tag.id);
+          }
+      });
+
+
+      var modifiedTakeawayObj = TakeAwayConverter.convert(taset);
+       modifiedTakeawayObj.notes = document.getElementById(divId + "_notes").value;
+
+      console.log(JSON.stringify(modifiedTakeawayObj));
+
+          TakeAwayFactory.update({id:taset.id},modifiedTakeawayObj).$promise
+          .then(function(data, status, headers, config) {
+        //We need refresh only updated takeaway instead of loading all courses sessions
+        $scope.freshLoadOfSessions(taset.courseInstance.id);
+        console.log("loading all courses sessions after successfull edit");
+      },function(data, status, headers, config) {
+        $scope.status = status;
+      });
+  };
+
+   $scope.cancelEdit = function(divId) {
+      document.getElementById(divId + "_view").style.display = "block";
+      document.getElementById(divId + "_edit").style.display = "none";
+      document.getElementById(divId + "_notes").value = "";
+    };
+
+
+ });
 
 
   app.controller('takeawayDashboardCtrl',
-    function($scope, $http, $cookies, $q, $resource, $sce, $rootScope, CoursesFactory, SessionsFactory, ngDialog,TakeAwayFactory, RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter) {
+    function($scope, $http, $cookies, $q, $resource, $sce, $rootScope,
+     CoursesFactory, SessionsFactory, ngDialog,TakeAwayFactory, RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter) {
 
     console.log("loading takeawayDashboardCtrl");
     $scope.rate = 7;
@@ -192,15 +342,6 @@ app.controller('RatingDemoCtrl', function ($scope) {
     $scope.sessions = {
       "results": []
     };
-
-
-    //ngTags
-
-  // TagsFactory.query().$promise.then(function(data){
-  //     $scope.availableTags = data.results;
-  //    });
-
-//  rating widget
 
 
 
@@ -214,19 +355,6 @@ app.controller('RatingDemoCtrl', function ($scope) {
   ];
 
 
-$scope.rated = function(id, rating, alreadyRated){
-  if(!alreadyRated)
-{
-       RatingFactory.save({takeaway:id,rating_value:rating,user:$cookies.userid});
-}
-};
-
-
-  $scope.getSafe = function(unsafeHtml){
-
-    return $sce.trustAsHtml(unsafeHtml);
-
-  };
 
 
 
@@ -305,30 +433,6 @@ $scope.rated = function(id, rating, alreadyRated){
         $scope.status = status;
       });
 
-      /*
-      $http({
-        url: '/favorites/?user='+$cookies.userid+'&courseInstance='+courseid,
-        method: "GET",
-      }).success(function(data, status, headers, config) {
-        $scope.favList = data.results;
-        _.each($scope.sessions.results,function(sessionsresult){
-          _.each(sessionsresult.takeaway_set,function(taset){
-            taset["isFavourite"]=false;
-            _.each($scope.favList,function(fav){
-              //console.log(JSON.stringify(fav));
-              //console.log(fav.takeaway);
-              if(fav.takeaway == taset.id) {
-                taset["isFavourite"]=true;
-              }
-            });
-          });
-        });
-        console.log("Getting Favorites values for all takeaways"+JSON.stringify($scope.favList));
-      }).error(function(data, status, headers, config) {
-        $scope.status = status;
-      });
-
-*/
 
 RatingFactory.get({user:$cookies.userid}).$promise.then(
     function(data, status, headers, config) {
@@ -355,32 +459,6 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
         $scope.status = status;
       }
   );
-/*
-      $http({
-        url: '/ratings/?user='+$cookies.userid,
-        method: "GET",
-      }).success(function(data, status, headers, config) {
-        $scope.ratings = data.results;
-
-        _.each($scope.ratings,function(rating){
-          ratingsMap[rating.takeaway]=rating.rating_value;
-        });
-
-        _.each($scope.sessions.results,function(sessionsresult){
-        _.each(sessionsresult.takeaway_set,function(taset){
-            taset["alreadyRated"]=false;
-            if(ratingsMap[taset.id]>-1){
-              taset["rating"]=ratingsMap[taset.id];
-              taset.average_rating =ratingsMap[taset.id];
-              taset["alreadyRated"]=true;
-            }
-          });
-        });
-        console.log("Getting rating values for all takeaways"+JSON.stringify($scope.ratings));
-      }).error(function(data, status, headers, config) {
-        $scope.status = status;
-      });
-*/
 
       _.each($scope.sessions.results,function(sessionsresult){
         _.each(sessionsresult.takeaway_set,function(taset){
@@ -399,124 +477,18 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
       //alert("done"+$scope.sessions.results.length);
     }
 
-    $scope.makeEditable = function(divId, notes) {
-      document.getElementById(divId + "_view").style.display = "none";
-      document.getElementById(divId + "_edit").style.display = "block";
-      document.getElementById(divId + "_notes").value = notes;
-    }
+
 
     /* Update/Edit the takeaway and reload the page / refresh the takeaway part */
     /* PUT: /takeaways/:takeawayID/ */
-    $scope.updateTakeaway = function(divId, taset) {
-      document.getElementById(divId + "_view").style.display = "block";
-      document.getElementById(divId + "_edit").style.display = "none";
-      var tagIds = [];
-      angular.forEach(taset.tags, function(tag){
-          if(tag.id){
-             tagIds.push(tag.id);
-          }
-      });
-
-
-      var modifiedTakeawayObj = TakeAwayConverter.convert(taset);
-      // {
-      //   id : taset.id,
-      //   notes: document.getElementById(divId + "_notes").value,
-      //   user: $cookies.userid,
-      //   courseInstance: taset.courseInstance.id,
-      //   session: taset.session.id,
-      //   is_public: taset.is_public,
-      //   username : $cookies.username,
-      //   tags: tagIds,
-      //   created_dt : taset.created_dt,
-      //   average_rating : taset.average_rating,
-      //   total_raters : taset.total_raters
-      // };
-       modifiedTakeawayObj.notes = document.getElementById(divId + "_notes").value;
-
-      console.log(JSON.stringify(modifiedTakeawayObj));
-
-          TakeAwayFactory.update({id:taset.id},modifiedTakeawayObj).$promise
-          .then(function(data, status, headers, config) {
-        //We need refresh only updated takeaway instead of loading all courses sessions
-        $scope.freshLoadOfSessions(taset.courseInstance.id);
-        console.log("loading all courses sessions after successfull edit");
-      },function(data, status, headers, config) {
-        $scope.status = status;
-      });
-  }
-/*
-      $http({
-        url: '/takeaways/' + taset.id+"/",
-        method: "PUT",
-        data: modifiedTakeawayObj,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).success(function(data, status, headers, config) {
-        //We need refresh only updated takeaway instead of loading all courses sessions
-        $scope.freshLoadOfSessions(taset.courseInstance.id);
-        console.log("loading all courses sessions after successfull edit");
-      }).error(function(data, status, headers, config) {
-        $scope.status = status;
-      });
-    };
-
-*/
-    $scope.cancelEdit = function(divId) {
-      document.getElementById(divId + "_view").style.display = "block";
-      document.getElementById(divId + "_edit").style.display = "none";
-      document.getElementById(divId + "_notes").value = "";
-    };
 
     /*Deleting selected TAY by passing the ID */
     /*TODO: confirmation dialog before delete */
     /*DELETE: /takeaways/:id/ */
-    $scope.deleteTakeaway = function(sessionsresult, taset) {
-      var msg = "Are you sure you want to delete the take away notes?"
-      if(window.confirm(msg)) {
 
-        TakeAwayFactory.remove({id:taset.id}).$promise.then(
-            function(data, status, headers, config) {
-          console.log('Takeaway Successfully deleted, now refresh the page');
-          $scope.freshLoadOfSessions(taset.courseInstance.id);
-        },
-        function(data, status, headers, config) {
-          $scope.status = status;
-          console.error('Error in deleteTakeaway'+status);
-        });
-
-
-        /*
-        $http({
-        url: '/takeaways/' + taset.id,
-        method: "DELETE",
-        headers: {
-          'Content-Type': 'application/json'
-        }
-        }).success(function(data, status, headers, config) {
-          console.log('Takeaway Successfully deleted, now refresh the page');
-          $scope.freshLoadOfSessions(taset.courseInstance.id);
-        }).error(function(data, status, headers, config) {
-          $scope.status = status;
-          console.error('Error in deleteTakeaway'+status);
-        });
-        */
-      }
-    };
 
     /* Displaying Dialog window to create New Take Away */
-    $scope.newTakeaway = function (sessionsresult) {
-      $scope.sessionsresult = sessionsresult;
-      $scope.taset = {is_public : true};
-      //$scope.takeaway_set = sessionsresult.takeaway_set[0];
-      ngDialog.open({
-        template: 'newTakeawayTemplateId',
-        controller: 'takeawayDashboardCtrl',
-        className: 'ngdialog-theme-plain',
-        scope: $scope
-      });
-    };
+
 
     /* Event from "Save" button from New Take Away dialog window */
     $scope.saveTakeaway = function(sessionsresult) {
@@ -549,51 +521,11 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
         console.error('Error in saveTakeaway'+status);
       });
 
-/*
-      $http({
-        url: '/takeaways/',
-        method: "POST",
-        data: $scope.newTakeawayObj,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).success(function(data, status, headers, config) {
-        $scope.freshLoadOfSessions(data.courseInstance);
-        $scope.newTakeawayContent="";
-        console.log("loading all courses sessions after successfull creation"+data.courseInstance);
-      }).error(function(data, status, headers, config) {
-        $scope.status = status;
-        console.error('Error in saveTakeaway'+status);
-      });
-*/
       ngDialog.close();
     };
 
 
     /* Displaying Dialog window to update the session name */
-    $scope.editSessionName = function (sessionsresult) {
-
-      $scope.session_name_current = sessionsresult.session_name;
-      $scope.courseInstanceId = sessionsresult.courseInstance.id;
-      $scope.modifiedSession = {
-        id:0,
-        session_name : "",
-        session_dt : ""
-      };
-
-      $scope.modifiedSession.id = sessionsresult.id;
-      $scope.modifiedSession.session_name = sessionsresult.session_name;
-      $scope.modifiedSession.session_dt = sessionsresult.session_dt;
-
-      $scope.sessionsresult = sessionsresult;
-
-      ngDialog.open({
-        template: 'editSessionNameTemplateId',
-        controller: 'takeawayDashboardCtrl',
-        className: 'ngdialog-theme-plain',
-        scope: $scope
-      });
-    };
 
     /* Event from "Update" button from editSessionName dialog window */
     /* PUT: /sessions/:sessionId */
@@ -609,20 +541,6 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
           console.error('Error in updateSessionName'+status);
       });
       ngDialog.close();
-      /*
-      $http({
-          url: '/sessions/'+modifiedSession.id+"/",
-          method: "PUT",
-          data: modifiedSession,
-          headers: {'Content-Type': 'application/json'}
-        }).success(function (data, status, headers, config) {
-          //$scope.freshLoadOfSessions($scope.courseInstanceId);
-          console.log("Successfully updated session name");
-          sessionsresult.session_name = modifiedSession.session_name;
-        }).error(function (data, status, headers, config) {
-          console.error('Error in updateSessionName'+status);
-      });
-      */
     };
 
     /* Close the dialog for "New Takeaway" and "Edit Session Name" dialogs */
@@ -632,41 +550,13 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
     };
 
     /*POST to favourite */
-    $scope.makeFavourite = function(taset) {
-
-      if(taset.isFavourite) {
-        //DELTE
-        FavoritesFactory.remove({id:taset.id})
-        .$promise.then(function(data, status, headers, config) {
-          taset.isFavourite = false;
-        },function(data, status, headers, config) {
-          console.error('Error in makeFavourite'+status);
-        });
-      } else {
-        var favObj = {
-          courseInstance: taset.courseInstance.id,
-          takeaway: taset.id,
-          user: $cookies.userid
-        };
-
-       FavoritesFactory.save(favObj).$promise.then(function(data, status, headers, config) {
-          taset.isFavourite = true;
-        },function(data, status, headers, config) {
-          console.error('Error in makeFavourite'+status);
-        });
-      }
-
-    };
 
 
 
-  }) ;
+
+  });
 
 
-// app.controller("TakeawayController", ['$scope','TakeAwayFactory', function($scope,myFactory){
-
-//  $scope.dup = $scope.session;
-//   }]);
 
 app.controller('TagController', function ($scope,$q, TagsFactory) {
 
@@ -721,9 +611,17 @@ $scope.tagAddedInEditTakeaway = function(tag){
                 });
             }
         });
+      }else{
+              var length = $scope.tags.length;
+              if($scope.taset.tags){
+                $scope.taset.tags.splice(length-1,1);
+              }else{
+                $scope.taset.tags = [];
+              }
+              $scope.taset.tags.push(tag);
       }
+      //$scope.taset.tags = $scope.tags;
   };
-
 
 
 
@@ -767,18 +665,6 @@ app.controller('publicPrivateButtonCtrl',
           });
 
           var modifiedTakeawayObj = TakeAwayConverter.convert(taset);
-          // var modifiedTakeawayObj = {
-          //    id : taset.id,
-          //    notes: taset.notes,
-          //   user: $cookies.userid,
-          //   courseInstance: courseId,
-          //   session: sessionId,
-          //    is_public: taset.is_public,
-          //    tags: tagIdArr,
-          //    average_rating : taset.average_rating,
-          //    total_raters: taset.total_raters
-          // };
-
 
 
           TakeAwayFactory.update({id:taset.id},modifiedTakeawayObj).$promise
@@ -788,18 +674,6 @@ app.controller('publicPrivateButtonCtrl',
             $scope.status = status;
         });
 
-          /*
-          $http({
-            url: '/takeaways/' + taset.id+"/",
-            method: "PUT",
-            data: modifiedTakeawayObj,
-            headers: {'Content-Type': 'application/json'}
-          }).success(function(data, status, headers, config) {
-            console.log("Successfully updated public flag in server");
-          }).error(function(data, status, headers, config) {
-            $scope.status = status;
-          });
-          */
         }
     };
 
