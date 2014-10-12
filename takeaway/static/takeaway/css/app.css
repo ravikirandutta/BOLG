@@ -5,13 +5,26 @@ div .mainbar {
 #takeaway-container{
    /* padding:40px;*/
     width:80%;
-    left: 10%;
+    /*left: 10%;*/
 }
 
  .course{
     font-size:20px;
     margin-left:30px;
     margin-right:30px;
+}
+
+.points{
+  font-size: 30px;
+}
+
+.leaderBoardButton{
+  margin-top: 10px;
+}
+
+.courseLeaderBoardHeading{
+  background-color: #1fa67a;
+  margin: 10px;
 }
 
 .course-item{

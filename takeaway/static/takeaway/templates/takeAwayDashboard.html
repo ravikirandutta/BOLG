@@ -17,7 +17,8 @@
         </ui>
         <div class="clearfix"></div>
       </div>
-      <div class="col-md-6"  id="takeaway-container">
+      <a href="#" class="btn btn-primary leaderBoardButton" style="float:left;margin-top:10px" ng-click="showLeaderBoard()" ><span class="fa fa-list-ol"></span> Leader Board</a>
+      <div class="col-md-6" id="takeaway-container">
 
         <!-- session display -->
       <div ng-show="displaysessions">
@@ -62,7 +63,21 @@
 
     </div>
     <div class="ngdialog-buttons">
-      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()"
+      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="ngDialog.close();"
+      ng-dialog-class="ngdialog-theme-default" >Close</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="courseLeaderBoardTemplateId">
+    <div class="ngdialog-message">
+      <h5 class="courseLeaderBoardHeading">Champions in this course:</h5>
+      <ol>
+        <li ng-repeat="leader in leaderBoard">User <i>{{leader.user}}</i> : <span class="points">{{leader.score}}</span> Points</li>
+      </ol>
+
+    </div>
+    <div class="ngdialog-buttons">
+      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="ngDialog.close();"
       ng-dialog-class="ngdialog-theme-default" >Close</button>
     </div>
 </script>

@@ -224,7 +224,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
       }, function(data){
 
       });
-    }
+    };
 
     $scope.freshLoadOfSessions = function(){
       //$scope.displaysessions = false;
@@ -232,28 +232,28 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
       $scope.loadCourses(courseid);
       $scope.highLightSelectedCourse(courseid);
       $scope.getUserPermission(courseid);
+      $scope.getLeaderBoard(courseid);
     };
 
 });
 
  app.controller('SessionController', function ($scope,ngDialog) {
 
+  $scope.editSessionName = function (sessionsresult) {
 
-  $scope.editSessionName = function () {
-
-      $scope.session_name_current = $scope.sessionsresult.session_name;
-      $scope.courseInstanceId = $scope.sessionsresult.courseInstance.id;
+      $scope.session_name_current = sessionsresult.session_name;
+      $scope.courseInstanceId = sessionsresult.courseInstance.id;
       $scope.modifiedSession = {
         id:0,
         session_name : "",
         session_dt : ""
       };
 
-      $scope.modifiedSession.id = $scope.sessionsresult.id;
-      $scope.modifiedSession.session_name = $scope.sessionsresult.session_name;
-      $scope.modifiedSession.session_dt = $scope.sessionsresult.session_dt;
+      $scope.modifiedSession.id = sessionsresult.id;
+      $scope.modifiedSession.session_name = sessionsresult.session_name;
+      $scope.modifiedSession.session_dt = sessionsresult.session_dt;
 
-      //$scope.sessionsresult = sessionsresult;
+      $scope.sessionsresult = sessionsresult;
 
       ngDialog.open({
         template: 'editSessionNameTemplateId',
@@ -264,8 +264,8 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
     };
 
 
-    $scope.newTakeaway = function () {
-      //$scope.sessionsresult = sessionsresult;
+    $scope.newTakeaway = function (sessionsresult) {
+      $scope.sessionsresult = sessionsresult;
       $scope.taset = {is_public : true};
       //$scope.takeaway_set = sessionsresult.takeaway_set[0];
       if(true){//$scope.userCanPost
@@ -393,7 +393,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
 
 
   app.controller('takeawayDashboardCtrl',
-    function($scope, $http, $cookies, $q, $resource, $sce, $rootScope, UserPermission, CoursesFactory, SessionsFactory, ngDialog,TakeAwayFactory, RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter) {
+    function($scope, $http, $cookies, $q, $resource, $sce, $rootScope, LeaderboardFactory, UserPermission, CoursesFactory, SessionsFactory, ngDialog,TakeAwayFactory, RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter) {
 
     console.log("loading takeawayDashboardCtrl");
     $scope.rate = 7;
@@ -401,8 +401,11 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
     $scope.sessions = {
       "results": []
     };
-    // $scope.userPermisssionDetail={};
-    // $scope.userCanPost = false;
+
+    $scope.userPermisssionDetail={};
+    $scope.userCanPost = false;
+    $scope.leaderBoard = {};
+
 
 
   $scope.ratingStates = [
@@ -432,8 +435,42 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
       // }
     });
 
+    $scope.getLeaderBoard = function(courseId){
+      LeaderboardFactory.query({'course_id':courseId},function(data){
+        $scope.leaderBoard = data.points;
+      })
+    };
+
+    $scope.highLightSelectedCourse = function(courseid) {
+      _.each($scope.availableCourses.results,function(courseObj){
+        if(courseObj.id == courseid) {
+          courseObj["courseClass"] = "course-selected";
+        } else {
+          courseObj["courseClass"] = "course-deselected";
+        }
+      });
+
+    };
 
 
+    $scope.showLeaderBoard = function () {
+
+      ngDialog.open({
+        template: 'courseLeaderBoardTemplateId',
+        controller: 'takeawayDashboardCtrl',
+        className: 'ngdialog-theme-plain',
+        scope: $scope
+      });
+
+    };
+
+    $scope.freshLoadOfSessions = function(courseid){
+      $scope.displaysessions = false;
+      $scope.loadCourses(courseid);
+      $scope.highLightSelectedCourse(courseid);
+      $scope.getUserPermission(courseid);
+
+    };
 
 
     // On Click of CRS, load all SNs and TAYs associated with the CRS.
