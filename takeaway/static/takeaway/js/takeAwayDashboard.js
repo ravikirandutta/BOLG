@@ -186,7 +186,11 @@ app.factory('TagsFactory', ['$resource',
       });
     }
   ]);
-
+app.factory('UserPermission',['$resource',function($resource){
+        return $resource('/can_user_post/',{},{
+            query: {method:'GET',isArray:false},
+        })
+    }]);
 
 
 
@@ -333,8 +337,7 @@ app.factory('TagsFactory', ['$resource',
 
 
   app.controller('takeawayDashboardCtrl',
-    function($scope, $http, $cookies, $q, $resource, $sce, $rootScope,
-     CoursesFactory, SessionsFactory, ngDialog,TakeAwayFactory, RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter) {
+    function($scope, $http, $cookies, $q, $resource, $sce, $rootScope, UserPermission, CoursesFactory, SessionsFactory, ngDialog,TakeAwayFactory, RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter) {
 
     console.log("loading takeawayDashboardCtrl");
     $scope.rate = 7;
@@ -342,7 +345,7 @@ app.factory('TagsFactory', ['$resource',
     $scope.sessions = {
       "results": []
     };
-
+    $scope.userCanPost = false;
 
 
   $scope.ratingStates = [
@@ -381,12 +384,19 @@ app.factory('TagsFactory', ['$resource',
         }
       });
 
+    };
+
+    $scope.getUserPermission = function(courseId){
+      UserPermission.query({'course_id':courseId},function(data){
+        $scope.userCanPost=data.can_post;
+      })
     }
 
     $scope.freshLoadOfSessions = function(courseid){
       $scope.displaysessions = false;
       $scope.loadCourses(courseid);
       $scope.highLightSelectedCourse(courseid);
+      $scope.getUserPermission(courseid);
     };
 
     // On Click of CRS, load all SNs and TAYs associated with the CRS.
