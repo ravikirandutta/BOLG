@@ -43,11 +43,13 @@ def can_user_post(request):
     #user = User.objects.get(pk=3)
     user = request.user
     ci = CourseInstance.objects.get(pk=course_id)
-    takeaways = TakeAway.objects.filter(courseInstance=ci).filter(is_public=True).exclude(user=user)
-    takeaway_count = takeaways.count()
-    rating_count = Rating.objects.filter(takeaway = takeaways).filter(user=user).count()
+    entire_takeaways = TakeAway.objects.filter(courseInstance=ci).filter(is_public=True)
+    exclude_takeaways_from_user = entire_takeaways.exclude(user=user)
+    other_takeaway_count = exclude_takeaways_from_user.count()
+    takeaway_count = entire_takeaways.count()
+    rating_count = Rating.objects.filter(takeaway = exclude_takeaways_from_user).filter(user=user).count()
     if takeaway_count > 0 :
-        if rating_count/takeaway_count < 0.25  and not takeaway_count > 3 :
+        if rating_count/other_takeaway_count < 0.25  and not takeaway_count > 3 :
             can_post = False
 
     return Response({"user":user.id,"takeaway_count": takeaway_count, "rating_count": rating_count , "can_post" : can_post})
