@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600');
 
 *{
-	
+
 	box-shadow: none !important;
 	filter: progid:DXImageTransform.Microsoft.gradient(enabled = false) !important;
 	text-shadow: none !important;
@@ -1654,7 +1654,7 @@ border:1px solid #eee;
 #select-course-info, #select-course-warning{ font-size: 18px;}
 
 #select-course-complete {margin-top: 80px;}
- 
+
 
 
 .total-raters{
@@ -1721,6 +1721,26 @@ border:1px solid #eee;
     line-height:1;
 }
 
+#term{
+    font-size: 12px;
+    text-decoration: underline;
+    position:absolute;
+    bottom:3px;
+
+    line-height:1;
+}
+
+
+
+#year{
+    font-size: 12px;
+    text-decoration: underline;
+    position:absolute;
+    left:10px;
+    bottom:3px;
+    line-height:1;
+}
+
 #tick{
     position:absolute;
     top:0px;
@@ -1732,7 +1752,7 @@ border:1px solid #eee;
 	font-size: 8px;
 	color: brown;
 }
-@media 
+@media
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {
 
