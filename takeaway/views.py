@@ -15,6 +15,8 @@ from takeaway.forms import *
 from rest_framework.mixins import *
 from rest_framework.permissions import IsAuthenticated
 from django.db.models import Sum
+import pdb
+from settings import *
 
 
 # test dynamic HTML
@@ -30,7 +32,9 @@ def test(request):
     return HttpResponse( "Successfully Loaded init data")
 
 # Create your views here.
+
 from rest_framework.decorators import *
+from decimal import *
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
 def can_user_post(request):
@@ -44,15 +48,17 @@ def can_user_post(request):
     user = request.user
     ci = CourseInstance.objects.get(pk=course_id)
     entire_takeaways = TakeAway.objects.filter(courseInstance=ci).filter(is_public=True)
+
     exclude_takeaways_from_user = entire_takeaways.exclude(user=user)
     other_takeaway_count = exclude_takeaways_from_user.count()
     takeaway_count = entire_takeaways.count()
-    rating_count = Rating.objects.filter(takeaway = exclude_takeaways_from_user).filter(user=user).count()
-    if takeaway_count > 0 :
-        if rating_count/other_takeaway_count < 0.25  and not takeaway_count > 3 :
-            can_post = False
+    rating_count = Rating.objects.filter(takeaway = entire_takeaways).filter(user=user).count()
 
-    return Response({"user":user.id,"takeaway_count": takeaway_count, "rating_count": rating_count , "can_post" : can_post})
+    if takeaway_count > 3 or other_takeaway_count > 0 :
+        if Decimal(rating_count)/Decimal(other_takeaway_count) < RATING_THRESHOLD_FOR_CREATE :
+            can_post = False
+    remaining_rating_count = (other_takeaway_count*0.25)-rating_count
+    return Response({"user":user.id,"takeaway_count": takeaway_count,"remaining_rating_count_till_create":remaining_rating_count, "rating_count": rating_count , "can_post" : can_post,"other_takeaway_count":other_takeaway_count})
 
 import logging
 logger = logging.getLogger(__name__)
@@ -243,7 +249,6 @@ class RatingViewSet(viewsets.ModelViewSet):
         permission_classes = (permissions.IsAuthenticated,)
         paginate_by = 100
 
-import pdb
 class TakeAwayCreateModelMixin(CreateModelMixin):
     # def post(self, request, *args, **kwargs):
     #     pdb.set_trace()

@@ -153,3 +153,5 @@ if DEBUG:
     MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(__file__)),"static","media")
     STATICFILE_DIRS = os.path.join(os.path.dirname(os.path.dirname(__file__)),"static","static")
 
+RATING_THRESHOLD_FOR_CREATE = .25
+
