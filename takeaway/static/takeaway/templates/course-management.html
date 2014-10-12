@@ -19,7 +19,10 @@
                                     <li ng-repeat="availableCourse in availableCourses" ng-class="{registered:isRegistered(availableCourse.id)}" ng-click="toggleCourseSelection(availableCourse.id)">
                                          <span id="course{{avialableCourse.id}}">{{availableCourse.course.course_name}}</span>
                                          <span id="tick" ng-show="isRegistered(availableCourse.id)"><i class="fa fa-check-circle"></i></span>
-                                         <span id="section" style="">{{availableCourse.section.name}}</span>
+                                         <div><span id="section" style="">{{availableCourse.section.name}}</span>
+                                            <span id="term" style="">{{availableCourse.term.description}}</span>
+                                            <span id="year" style="">{{availableCourse.year}}</span>
+                                        </div>
                                     </li>
 
                                 </ul>
