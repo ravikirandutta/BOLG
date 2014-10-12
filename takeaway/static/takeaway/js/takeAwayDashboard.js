@@ -196,21 +196,22 @@ app.factory('UserPermission',['$resource',function($resource){
 
  app.controller('SessionController', function ($scope,ngDialog) {
 
-  $scope.editSessionName = function (sessionsresult) {
 
-      $scope.session_name_current = sessionsresult.session_name;
-      $scope.courseInstanceId = sessionsresult.courseInstance.id;
+  $scope.editSessionName = function () {
+
+      $scope.session_name_current = $scope.sessionsresult.session_name;
+      $scope.courseInstanceId = $scope.sessionsresult.courseInstance.id;
       $scope.modifiedSession = {
         id:0,
         session_name : "",
         session_dt : ""
       };
 
-      $scope.modifiedSession.id = sessionsresult.id;
-      $scope.modifiedSession.session_name = sessionsresult.session_name;
-      $scope.modifiedSession.session_dt = sessionsresult.session_dt;
+      $scope.modifiedSession.id = $scope.sessionsresult.id;
+      $scope.modifiedSession.session_name = $scope.sessionsresult.session_name;
+      $scope.modifiedSession.session_dt = $scope.sessionsresult.session_dt;
 
-      $scope.sessionsresult = sessionsresult;
+      //$scope.sessionsresult = sessionsresult;
 
       ngDialog.open({
         template: 'editSessionNameTemplateId',
@@ -221,8 +222,8 @@ app.factory('UserPermission',['$resource',function($resource){
     };
 
 
-    $scope.newTakeaway = function (sessionsresult) {
-      $scope.sessionsresult = sessionsresult;
+    $scope.newTakeaway = function () {
+      //$scope.sessionsresult = sessionsresult;
       $scope.taset = {is_public : true};
       //$scope.takeaway_set = sessionsresult.takeaway_set[0];
       ngDialog.open({
