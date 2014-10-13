@@ -160,3 +160,11 @@ class EmailSettingsSerializer(serializers.ModelSerializer):
             return True
         return False
 
+
+class ClosedGroupSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = ClosedGroup
+     
+
+
