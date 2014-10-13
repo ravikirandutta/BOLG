@@ -22,12 +22,19 @@
 
       <!-- <div id="course-list" class="page-head">
         <ui class="nav nav-pills" >
+<<<<<<< HEAD
       
           <li class="course {{courseresult.courseClass}}" ng-repeat="courseresult in availableCourses.results" >
             <a class="course-item" ng-click="freshLoadOfSessions(courseresult.course.id)" id="{{courseresult.course.id}}_course">
                 <span id="course{{courseresult.course.id}}">
+=======
+      <!-- course display -->
+          <li class="course {{course.courseClass}}" ng-repeat="courseInstance in availableCourses.results" >
+            <a ng-controller="CourseController" class="course-item" ng-click="freshLoadOfSessions()" id="{{courseInstance.course.id}}_course">
+                <span id="course{{courseInstance.course.id}}">
+>>>>>>> 8ab6abda4b218f3f66ce1f5b1e91c8834c627b34
                     <i class="fa fa-folder-open"></i>
-                    <b>{{courseresult.course.course_name}}</b>
+                    <b>{{courseInstance.course.course_name}}</b>
                 </span>
             </a>
           </li>
@@ -88,9 +95,22 @@
 <script type="text/ng-template" id="courseLeaderBoardTemplateId">
     <div class="ngdialog-message">
       <h5 class="courseLeaderBoardHeading">Champions in this course:</h5>
-      <ol>
-        <li ng-repeat="leader in leaderBoard">User <i>{{leader.user}}</i> : <span class="points">{{leader.score}}</span> Points</li>
-      </ol> 
+
+      <table class="table table-bordered">
+      <thead>
+      <tr>
+      <th>User</th>
+      <th>Points</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="leader in leaderBoard">
+        <td>{{leader.user_name}}</td>
+        <td>{{leader.score}}</td>
+      </tr>
+      </tbody>
+      </table>
+
 
     </div>
     <div class="ngdialog-buttons">

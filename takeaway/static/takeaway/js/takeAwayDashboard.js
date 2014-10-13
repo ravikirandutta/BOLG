@@ -87,6 +87,25 @@ app.directive('session', function() {
     }
   });
 
+  app.factory('Comments', ['$resource',
+    function($resource) {
+      return $resource('/comments/', {}, {
+        query: {
+          method: 'GET',
+          isArray: false
+        },
+        save: {
+          method: 'POST'
+        },
+        edit: {
+          url: '/comments/:id/',
+          method: 'PUT'
+        }
+      });
+    }
+  ]);
+
+
   app.factory('CoursesFactory', ['$resource',
     function($resource) {
       return $resource('/courseInstances/', {}, {
@@ -198,23 +217,94 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
 }]);
 
 
+app.factory('TakeAwayDataFactory',function(){
+
+});
+
+app.controller('FavoriteController',function($scope, FavoritesFactory){
+  $scope.makeFavourite = function(taset) {
+
+      if(taset.isFavourite) {
+        //DELTE
+        FavoritesFactory.remove({id:taset.favoriteId})
+        .$promise.then(function(data, status, headers, config) {
+          taset.isFavourite = false;
+        },function(data, status, headers, config) {
+          console.error('Error in makeFavourite'+status);
+        });
+      } else {
+        var favObj = {
+          courseInstance: taset.courseInstance.id,
+          takeaway: taset.id,
+          user: taset.user.id
+        };
+
+       FavoritesFactory.save(favObj).$promise.then(function(data, status, headers, config) {
+          taset.isFavourite = true;
+          taset.favoriteId = data.id;
+
+        },function(data, status, headers, config) {
+          console.error('Error in makeFavourite'+status);
+        });
+      }
+
+    };
+
+});
+
+
+app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
+
+
+      $scope.highLightSelectedCourse = function(courseid) {
+      _.each($scope.availableCourses.results,function(courseObj){
+        if(courseObj.id == courseid) {
+          courseObj["courseClass"] = "course-selected";
+        } else {
+          courseObj["courseClass"] = "course-deselected";
+        }
+      });
+
+    };
+
+    $scope.getUserPermission = function(courseId){
+      UserPermission.query({'course_id':courseId}).$promise.then(
+        function(data){
+        $scope.userCanPost=data.can_post;
+        $scope.userPermisssionDetail=data;
+      }, function(data){
+
+      });
+    };
+
+    $scope.freshLoadOfSessions = function(){
+      //$scope.displaysessions = false;
+      var courseid = $scope.courseInstance.course.id;
+      $scope.loadCourses(courseid);
+      $scope.highLightSelectedCourse(courseid);
+      $scope.getUserPermission(courseid);
+      $scope.getLeaderBoard(courseid);
+    };
+
+});
+
  app.controller('SessionController', function ($scope,ngDialog) {
 
   $scope.editSessionName = function (sessionsresult) {
 
-      $scope.session_name_current = sessionsresult.session_name;
-      $scope.courseInstanceId = sessionsresult.courseInstance.id;
+      $scope.session_name_current = $scope.sessionsresult.session_name;
+      $scope.courseInstanceId = $scope.sessionsresult.courseInstance.id;
       $scope.modifiedSession = {
         id:0,
         session_name : "",
         session_dt : ""
       };
 
-      $scope.modifiedSession.id = sessionsresult.id;
-      $scope.modifiedSession.session_name = sessionsresult.session_name;
-      $scope.modifiedSession.session_dt = sessionsresult.session_dt;
+      $scope.modifiedSession.id = $scope.sessionsresult.id;
+      $scope.modifiedSession.session_name = $scope.sessionsresult.session_name;
+      $scope.modifiedSession.session_dt = $scope.sessionsresult.session_dt;
 
-      $scope.sessionsresult = sessionsresult;
+
 
       ngDialog.open({
         template: 'editSessionNameTemplateId',
@@ -229,7 +319,7 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
       $scope.sessionsresult = sessionsresult;
       $scope.taset = {is_public : true};
       //$scope.takeaway_set = sessionsresult.takeaway_set[0];
-      if($scope.userCanPost){
+      if(true){//$scope.userCanPost
       ngDialog.open({
         template: 'newTakeawayTemplateId',
         controller: 'takeawayDashboardCtrl',
@@ -239,6 +329,7 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
     }else{
       ngDialog.open({
         template: 'cantCreateTakeawayTemplateId',
+        //need to switch the below controller to CourseController instead of takeawayDashboard
         controller: 'takeawayDashboardCtrl',
         className: 'ngdialog-theme-plain',
         scope: $scope
@@ -290,32 +381,6 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
 
   };
 
- $scope.makeFavourite = function(taset) {
-
-      if(taset.isFavourite) {
-        //DELTE
-        FavoritesFactory.remove({id:taset.id})
-        .$promise.then(function(data, status, headers, config) {
-          taset.isFavourite = false;
-        },function(data, status, headers, config) {
-          console.error('Error in makeFavourite'+status);
-        });
-      } else {
-        var favObj = {
-          courseInstance: taset.courseInstance.id,
-          takeaway: taset.id,
-          user: $cookies.userid
-        };
-
-       FavoritesFactory.save(favObj).$promise.then(function(data, status, headers, config) {
-          taset.isFavourite = true;
-        },function(data, status, headers, config) {
-          console.error('Error in makeFavourite'+status);
-        });
-      }
-
-    };
-
    $scope.updateTakeaway = function(divId, taset) {
       document.getElementById(divId + "_view").style.display = "block";
       document.getElementById(divId + "_edit").style.display = "none";
@@ -361,9 +426,11 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
     $scope.sessions = {
       "results": []
     };
+
     $scope.userPermisssionDetail={};
     $scope.userCanPost = false;
     $scope.leaderBoard = {};
+
 
 
   $scope.ratingStates = [
@@ -387,10 +454,10 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
       $scope.availableCourses = data;
 
       //Displaying the STAYs for first CRS
-      if($scope.availableCourses.results != null && $scope.availableCourses.results.length > 0) {
-        var defaultCourseId = $scope.availableCourses.results[0].course.id;
-        $scope.freshLoadOfSessions(defaultCourseId);
-      }
+      // if($scope.availableCourses.results != null && $scope.availableCourses.results.length > 0) {
+      //   var defaultCourseId = $scope.availableCourses.results[0].course.id;
+      //   $scope.freshLoadOfSessions(defaultCourseId);
+      // }
     });
 
     $scope.getLeaderBoard = function(courseId){
@@ -410,18 +477,12 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
 
     };
 
-    $scope.getUserPermission = function(courseId){
-      UserPermission.query({'course_id':courseId},function(data){
-        $scope.userCanPost=data.can_post;
-        $scope.userPermisssionDetail=data;
-      })
-    };
 
     $scope.showLeaderBoard = function () {
-      
+
       ngDialog.open({
         template: 'courseLeaderBoardTemplateId',
-        controller: 'takeawayDashboardCtrl',
+        controller: 'CourseController',
         className: 'ngdialog-theme-plain',
         scope: $scope
       });
@@ -433,12 +494,13 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
       $scope.loadCourses(courseid);
       $scope.highLightSelectedCourse(courseid);
       $scope.getUserPermission(courseid);
-      $scope.getLeaderBoard(courseid);
+
     };
+
 
     // On Click of CRS, load all SNs and TAYs associated with the CRS.
     $scope.loadCourses = function(courseid) {
-      if($scope.displaysessions != true) {
+     // if($scope.displaysessions != true) {
         SessionsFactory.query({
           "courseInstance": courseid,
           "ordering": "session_dt"
@@ -450,7 +512,7 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
           //alert(JSON.stringify($scope.sessions.results));
           $scope.postzpulateOtherFields(courseid);
         });
-      }
+      //}
     };
 
     $scope.postzpulateOtherFields = function(courseid) {
@@ -470,6 +532,7 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
               //console.log(fav.takeaway);
               if(fav.takeaway == taset.id) {
                 taset["isFavourite"]=true;
+                taset["favoriteId"] = fav.id;
               }
             });
           });
@@ -725,6 +788,45 @@ app.controller('publicPrivateButtonCtrl',
     };
 
     });
+
+
+  app.controller('CollapseCommentsCtrl', function ($scope,$cookies,Comments) {
+  $scope.isCollapsed = true;
+
+    $scope.displayComments = function(taset) {
+
+      if($scope.isCollapsed){
+        $scope.loadComments(taset, false);
+      }else{
+        $scope.isCollapsed = !$scope.isCollapsed;
+      }
+    };
+
+    $scope.loadComments = function(taset, isRefresh) {
+
+        Comments.query({
+          "takeaway": taset.id
+        }).$promise.then(function(data) {
+          console.log(data);
+          $scope.comments = data.results;
+          if(!isRefresh){
+            $scope.isCollapsed = !$scope.isCollapsed;
+          }
+
+        });
+
+    };
+
+    $scope.saveComment = function(taset) {
+      Comments.save({takeaway:taset.id,notes:$scope.myComment,user:$cookies.userid,tags:[1],vote_count:0,average_rating:0,total_raters:0})
+              .$promise.then(function(data) {
+                  $scope.myComment = null;
+                  $scope.loadComments(taset, true);
+            });
+
+    };
+
+  });
 
 
 })();
