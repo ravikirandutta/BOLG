@@ -547,7 +547,7 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
       });
 
       $scope.newTakeawayObj = {
-        courseInstance: sessionsresult.courseInstance.id,
+        courseInstance: $scope.sessionsresult.courseInstance.id,
         is_public: $scope.taset.is_public,
         notes: $scope.newTakeawayContent,
         session: sessionsresult.id,
