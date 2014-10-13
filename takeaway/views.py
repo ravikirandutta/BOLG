@@ -642,7 +642,7 @@ def get_leader_board(request):
     #user = request.user
     ci = CourseInstance.objects.get(pk=course_id)
     points = UserEventLog.objects.filter(course_instance=ci)
-    leader_board = points.values('user').annotate(score=Sum('points'))
+    leader_board = points.values('user').annotate(score=Sum('points')).order_by('-score')
 
     leader_dict ={}
     leader_records = []

@@ -1,14 +1,38 @@
 <div ng-controller="takeawayDashboardCtrl">
 
   <div class="content">
+    <div class="sidebar mainsidebar">
+            <div class="sidebar-dropdown"><a href="#">Navigation</a>
+            </div>
+            <div class="sidebar-inner">
+            
+                <ul class="navi">
+                    <li class="ourblue current" id="selcet-classes" ng-repeat="courseresult in availableCourses.results" ng-click="freshLoadOfSessions(courseresult.course.id)"><a  class="ourblue" href="#" ><i class="fa fa-book"></i> <b>{{courseresult.course.course_name}}</b></a>
+                    </li>
+
+                </ul>
+                <!--/ Sidebar navigation -->
+
+
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
     <div class="mainbar">
 
-      <div id="course-list" class="page-head">
+      <!-- <div id="course-list" class="page-head">
         <ui class="nav nav-pills" >
+<<<<<<< HEAD
+      
+          <li class="course {{courseresult.courseClass}}" ng-repeat="courseresult in availableCourses.results" >
+            <a class="course-item" ng-click="freshLoadOfSessions(courseresult.course.id)" id="{{courseresult.course.id}}_course">
+                <span id="course{{courseresult.course.id}}">
+=======
       <!-- course display -->
           <li class="course {{course.courseClass}}" ng-repeat="courseInstance in availableCourses.results" >
             <a ng-controller="CourseController" class="course-item" ng-click="freshLoadOfSessions()" id="{{courseInstance.course.id}}_course">
                 <span id="course{{courseInstance.course.id}}">
+>>>>>>> 8ab6abda4b218f3f66ce1f5b1e91c8834c627b34
                     <i class="fa fa-folder-open"></i>
                     <b>{{courseInstance.course.course_name}}</b>
                 </span>
@@ -16,8 +40,8 @@
           </li>
         </ui>
         <div class="clearfix"></div>
-      </div>
-      <a href="#" class="btn btn-primary leaderBoardButton" style="float:left;margin-top:10px" ng-click="showLeaderBoard()" ><span class="fa fa-list-ol"></span> Leader Board</a>
+      </div> -->
+      <!-- <a href="#" class="btn btn-primary leaderBoardButton" style="float:left;margin-top:10px" ng-click="showLeaderBoard()" ><span class="fa fa-list-ol"></span> Leader Board</a> -->
       <div class="col-md-6" id="takeaway-container">
 
         <!-- session display -->
