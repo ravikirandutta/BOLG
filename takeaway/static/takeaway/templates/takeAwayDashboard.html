@@ -5,9 +5,9 @@
             <div class="sidebar-dropdown"><a href="#">Navigation</a>
             </div>
             <div class="sidebar-inner">
-            
+
                 <ul id="side-course-list" class="navi">
-                    <li class="ourblue current" id="selcet-classes" ng-repeat="courseresult in availableCourses.results" ng-class="selected" ng-click="freshLoadOfSessions(courseresult.course.id)"><a  ng-class="selected" class="ourblue" href="#" ><i class="fa fa-book"></i> <b>{{courseresult.course.course_name}}</b></a>
+                    <li class="ourblue current" id="selcet-classes" ng-repeat="courseInstance in availableCourses.results" ng-class="selected" ng-controller="CourseController" ng-click="freshLoadOfSessions(courseresult.course.id)"><a  ng-class="selected" class="ourblue" href="#" ><i class="fa fa-book"></i> <b>{{courseInstance.course.course_name}}</b></a>
                     </li>
 
                 </ul>
@@ -22,7 +22,7 @@
 
       <!-- <div id="course-list" class="page-head">
         <ui class="nav nav-pills" >
-      
+
           <li class="course {{courseresult.courseClass}}" ng-repeat="courseresult in availableCourses.results" >
             <a class="course-item" ng-click="freshLoadOfSessions(courseresult.course.id)" id="{{courseresult.course.id}}_course">
                 <span id="course{{courseresult.course.id}}">

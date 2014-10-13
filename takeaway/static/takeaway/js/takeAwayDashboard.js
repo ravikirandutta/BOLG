@@ -220,6 +220,40 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
 
 app.factory('CourseDataFactory',function(){
 
+  var data = [];
+  var currentCourse ;
+ var service = {};
+   service.setCurrentCourse = function(course){
+       currentCourse = course;
+  };
+
+   service.setUserCanPost= function(course, userCanPost){
+         if (!data[course]){
+            data[course] = {};
+         }
+         data[course].userCanPost=userCanPost;
+      };
+    service.setUserPermissionDetail = function(course, userPermissionDetail){
+         if (!data[course]){
+            data[course] = {};
+         }
+         data[course].userPermisssionDetail = userPermissionDetail;
+      };
+
+
+
+  service.getCurrentCourse = function(){
+      return currentCourse;
+  };
+      service.findIfUserCanPost= function(currentCourse){
+        return data[currentCourse].userCanPost;
+      };
+      service.findUserPermissionDetail = function(currentCourse){
+        return data[currentCourse].userPermisssionDetail;
+      };
+
+ return service;
+
 });
 
 app.controller('FavoriteController',function($scope, FavoritesFactory){
@@ -319,6 +353,10 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
     $scope.newTakeaway = function () {
 
       $scope.taset = {is_public : true};
+      var currentCourse = CourseDataFactory.getCurrentCourse();
+      var userCanPost = CourseDataFactory.findIfUserCanPost(currentCourse);
+      var userPermisssionDetail = CourseDataFactory.findUserPermissionDetail(currentCourse);
+
       //$scope.takeaway_set = sessionsresult.takeaway_set[0];
       if(true){//$scope.userCanPost
       ngDialog.open({
