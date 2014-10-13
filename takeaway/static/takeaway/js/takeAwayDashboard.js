@@ -221,6 +221,38 @@ app.factory('TakeAwayDataFactory',function(){
 
 });
 
+app.controller('FavoriteController',function($scope, FavoritesFactory){
+  $scope.makeFavourite = function(taset) {
+
+      if(taset.isFavourite) {
+        //DELTE
+        FavoritesFactory.remove({id:taset.favoriteId})
+        .$promise.then(function(data, status, headers, config) {
+          taset.isFavourite = false;
+        },function(data, status, headers, config) {
+          console.error('Error in makeFavourite'+status);
+        });
+      } else {
+        var favObj = {
+          courseInstance: taset.courseInstance.id,
+          takeaway: taset.id,
+          user: taset.user.id
+        };
+
+       FavoritesFactory.save(favObj).$promise.then(function(data, status, headers, config) {
+          taset.isFavourite = true;
+          taset.favoriteId = data.id;
+
+        },function(data, status, headers, config) {
+          console.error('Error in makeFavourite'+status);
+        });
+      }
+
+    };
+
+});
+
+
 app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
 
 
@@ -349,31 +381,6 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
 
   };
 
- $scope.makeFavourite = function(taset) {
-
-      if(taset.isFavourite) {
-        //DELTE
-        FavoritesFactory.remove({id:taset.id})
-        .$promise.then(function(data, status, headers, config) {
-          taset.isFavourite = false;
-        },function(data, status, headers, config) {
-          console.error('Error in makeFavourite'+status);
-        });
-      } else {
-        var favObj = {
-          courseInstance: taset.courseInstance.id,
-          takeaway: taset.id,
-          user: $cookies.userid
-        };
-
-       FavoritesFactory.save(favObj).$promise.then(function(data, status, headers, config) {
-          taset.isFavourite = true;
-        },function(data, status, headers, config) {
-          console.error('Error in makeFavourite'+status);
-        });
-      }
-
-    };
    $scope.updateTakeaway = function(divId, taset) {
       document.getElementById(divId + "_view").style.display = "block";
       document.getElementById(divId + "_edit").style.display = "none";
@@ -525,6 +532,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
               //console.log(fav.takeaway);
               if(fav.takeaway == taset.id) {
                 taset["isFavourite"]=true;
+                taset["favoriteId"] = fav.id;
               }
             });
           });
@@ -795,7 +803,7 @@ app.controller('publicPrivateButtonCtrl',
     };
 
     $scope.loadComments = function(taset, isRefresh) {
-      
+
         Comments.query({
           "takeaway": taset.id
         }).$promise.then(function(data) {
@@ -804,9 +812,9 @@ app.controller('publicPrivateButtonCtrl',
           if(!isRefresh){
             $scope.isCollapsed = !$scope.isCollapsed;
           }
-          
+
         });
-      
+
     };
 
     $scope.saveComment = function(taset) {
