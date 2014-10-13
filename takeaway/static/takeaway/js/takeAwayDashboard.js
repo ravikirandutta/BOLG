@@ -217,7 +217,8 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
 }]);
 
 
-app.factory('TakeAwayDataFactory',function(){
+
+app.factory('CourseDataFactory',function(){
 
 });
 
@@ -315,8 +316,8 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
     };
 
 
-    $scope.newTakeaway = function (sessionsresult) {
-      $scope.sessionsresult = sessionsresult;
+    $scope.newTakeaway = function () {
+
       $scope.taset = {is_public : true};
       //$scope.takeaway_set = sessionsresult.takeaway_set[0];
       if(true){//$scope.userCanPost
@@ -489,13 +490,6 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
 
     };
 
-    $scope.freshLoadOfSessions = function(courseid){
-      $scope.displaysessions = false;
-      $scope.loadCourses(courseid);
-      $scope.highLightSelectedCourse(courseid);
-      $scope.getUserPermission(courseid);
-
-    };
 
 
     // On Click of CRS, load all SNs and TAYs associated with the CRS.
@@ -601,7 +595,7 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
 
 
     /* Event from "Save" button from New Take Away dialog window */
-    $scope.saveTakeaway = function(sessionsresult) {
+    $scope.saveTakeaway = function() {
       var tagIds =[];
       angular.forEach($scope.taset.tags, function(tag){
             if(tag.id){
@@ -610,10 +604,10 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
       });
 
       $scope.newTakeawayObj = {
-        courseInstance: sessionsresult.courseInstance.id,
+        courseInstance: $scope.sessionsresult.courseInstance.id,
         is_public: $scope.taset.is_public,
         notes: $scope.newTakeawayContent,
-        session: sessionsresult.id,
+        session: $scope.sessionsresult.id,
         tags: tagIds,
         user: $cookies.userid
       };
