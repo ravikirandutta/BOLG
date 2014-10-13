@@ -17,6 +17,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.db.models import Sum
 import pdb
 from settings import *
+import math
 
 
 # test dynamic HTML
@@ -57,7 +58,7 @@ def can_user_post(request):
     if takeaway_count > 3 or other_takeaway_count > 0 :
         if Decimal(rating_count)/Decimal(other_takeaway_count) < RATING_THRESHOLD_FOR_CREATE :
             can_post = False
-    remaining_rating_count = (other_takeaway_count*0.25)-rating_count
+    remaining_rating_count = math.ceil((other_takeaway_count*0.25)-rating_count)
     return Response({"user":user.id,"takeaway_count": takeaway_count,"remaining_rating_count_till_create":remaining_rating_count, "rating_count": rating_count , "can_post" : can_post,"other_takeaway_count":other_takeaway_count})
 
 import logging
