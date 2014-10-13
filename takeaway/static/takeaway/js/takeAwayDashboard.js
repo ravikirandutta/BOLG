@@ -292,19 +292,19 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
 
   $scope.editSessionName = function (sessionsresult) {
 
-      $scope.session_name_current = sessionsresult.session_name;
-      $scope.courseInstanceId = sessionsresult.courseInstance.id;
+      $scope.session_name_current = $scope.sessionsresult.session_name;
+      $scope.courseInstanceId = $scope.sessionsresult.courseInstance.id;
       $scope.modifiedSession = {
         id:0,
         session_name : "",
         session_dt : ""
       };
 
-      $scope.modifiedSession.id = sessionsresult.id;
-      $scope.modifiedSession.session_name = sessionsresult.session_name;
-      $scope.modifiedSession.session_dt = sessionsresult.session_dt;
+      $scope.modifiedSession.id = $scope.sessionsresult.id;
+      $scope.modifiedSession.session_name = $scope.sessionsresult.session_name;
+      $scope.modifiedSession.session_dt = $scope.sessionsresult.session_dt;
 
-      $scope.sessionsresult = sessionsresult;
+
 
       ngDialog.open({
         template: 'editSessionNameTemplateId',
