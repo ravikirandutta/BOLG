@@ -165,6 +165,11 @@ class ClosedGroupSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = ClosedGroup
+
+class SharedTakeawaySerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = SharedTakeaway
      
 
 

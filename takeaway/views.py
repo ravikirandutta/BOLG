@@ -495,6 +495,13 @@ class ClosedGroupViewSet(viewsets.ModelViewSet):
         filter_fields = ('members','course_instance')
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
+class SharedTakeawayViewSet(viewsets.ModelViewSet):
+        queryset = SharedTakeaway.objects.all()
+        serializer_class = SharedTakeawaySerializer
+        filter_backends = (filters.DjangoFilterBackend,)
+        filter_fields = ('takeaway','shared_type','group','shared_by')
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
 class ContactUsViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.

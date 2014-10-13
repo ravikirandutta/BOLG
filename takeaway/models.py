@@ -332,6 +332,7 @@ class SharedTakeaway(models.Model):
     ('SELF', 'Self'),
     ('INDIVIDUAL', 'Individual'),
     ('GROUP' ,'Group'),
+    ('PUBLIC' ,'Public'),
     )
     when = models.DateTimeField(auto_now_add=True,auto_now=True)
     takeaway = models.ForeignKey(TakeAway,blank=False,related_name ='shared_info')
