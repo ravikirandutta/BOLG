@@ -1,344 +1,296 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
-    {% load staticfiles %}
-    <title>MBA Takeaways</title>
+    <title>MBA TAKEAWAYS</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="../static/design/css/header/design.css">
+    <link rel="stylesheet" href="../static/design/css/header/modo.css">
+    <link rel="stylesheet" href="../static/design/css/flat-ui/css/demo.css">
+    <link rel="stylesheet" href="../static/design/css/flat-ui/css/flat-ui.css">
+    <link rel="stylesheet" href="../static/design/css/flat-ui/css/docs.css">
+    <link rel="stylesheet" href="../static/design/css/common-files/animations.css">
+    <link rel="stylesheet" href="../static/design/css/common-files/icon-font.css">
+    <link rel="stylesheet" href="../static/design/css/flat-ui/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/design/css/flat-ui/bootstrap/css/jquery.bxslider.css">
+    <link rel="stylesheet" href="../static/design/css/flat-ui/bootstrap/css/bootstrap-docs.css">
+    <link rel="stylesheet" href="../static/design/css/project/ui-kit-styles.css">
 
-    <!-- Bootstrap core CSS -->
-    <link href="{% static "takeaway/css/app.css"%}" rel="stylesheet">
+    <link rel="stylesheet" href="../static/design/css/crew/ui-kit-styles.css">
+    <link rel="stylesheet" href="../static/design/css/footer/ui-kit-styles.css">
+    <link rel="stylesheet" href="../static/design/css/content/ui-kit-styles.css">
+
+
+    <link rel="shortcut icon" href="../../flat-ui/images/favicon.ico">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-    <link href="{% static "takeaway/css/bootstrap.min.css"%}" rel="stylesheet">
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-
-     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- Custom styles for this template -->
-    <link href="{% static "takeaway/css/carousel.css"%}" rel="stylesheet">
-    <script src="{% static "takeaway/js/lib/jquery.js"%}"></script>
- <script src="/static/takeaway/js/app.js?{% now "U" %}" type="text/javascript"></script>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-<script src="/static/takeaway/js/lib/jquery.cookie.js" type="text/javascript"></script>
-
-    <script src="/static/takeaway/js/jquery.gritter.min.js" type="text/javascript"></script>
-        <!-- Bootstrap JS -->
-      <script src="{% static "takeaway/js/lib/bootstrap.min.js"%}"></script>
-
-
+    
+    <!-- Using only with Flat-UI (free)-->
   </head>
-<!-- NAVBAR
-================================================== -->
   <body>
-    <div class="hupso-share-buttons"><a class="hupso_float" href="http://www.hupso.com/share/"></a><script type="text/javascript">var hupso_services_f=new Array("Twitter","Facebook","Google Plus","Pinterest","Linkedin","Tumblr","StumbleUpon");var hupso_icon_type_f = "icons";var hupso_background_f="#EAF4FF";var hupso_border_f="#66CCFF";var hupso_float_left_f=true;</script><script type="text/javascript" src="http://static.hupso.com/share/js/float.js"></script></div><!-- Hupso Share Buttons -->
-
-    <div class="navbar-wrapper">
-      <div class="container">
-
-        <div class="navbar navbar-inverse navbar-static-top" id="nav-inverse" role="navigation">
-          <div class="container">
-            <div class="navbar-header" style="margin-top:15px">
-              <span class="glyphicon glyphicon-pencil" style="color:#B72610"></span>
-              <b><span class="header" id="nav-heading">MBA TAKEAWAYS</span></b>
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-
-
-            </div>
-            <div class="navbar-collapse collapse">
-              <ul class="nav navbar-nav" id="nav-menu">
-                <li ><a href="#trending">TRENDING TAKEAWAYS</a></li>
-                <li ><a href="#testimonials">TESTIMONIALS</a></li>
-                <li class="contact">
-                      <a class="contactUs" href="#" data-toggle="modal" data-target="#contactModal"> CONTACT US</a>
-                 </li>
-
-              </ul>
-              <div class="nav-right">
-
-                <form action="{% url 'handlelogin'  %}" class="form-horizontal" method="post" name="login_form" id="login_form"> {% csrf_token %}
-                  
-                  <label for="inputEmail"></label>
-                  <input type="text" name="Username" placeholder="username">
-                <label for="inputPassword"></label>
-                <input type="password" name="Password" placeholder="password">
-                <input type="hidden" name="Mode" value="login" >
-                <label><input type="checkbox"></label>
-                <button type="submit" class="btn">Sign in</button>
-                <a class="button" href="/accounts/register">Register</a>
-              </form>
-                {% if error_message %} <p class="wdiget-content" style="color:red">{{ error_message }}</p> {% endif %}
-          </div>
-
-            </div>
+      <!-- header-2 -->
+      <header class="header-2">
+        <div class="container">
+          <div class="row">
+            <nav class="navbar col-sm-12" role="navigation">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle"></button>
+                <span class="glyphicon glyphicon-pencil" style="color:#f88529"></span>
+              <b><span style="color:#fff">MBA TAKEAWAYS</span></b>                 
+              </div>
+              <div class="collapse navbar-collapse">
+                <ul class="nav pull-right">
+                  <li><a href="#">Home</a>
+                  </li>
+                  <li><a href="#">TRENDING TAKEAWAYS</a>
+                  </li>
+                  <li><a href="#">TESTIMONIALS</a>
+                  </li>
+                  <li><a href="/contact/">CONTACT</a>
+                  </li>
+                </ul>
+                <ul class="subnav">
+                  <li><a href="#">Privacy</a>
+                  </li>
+                  <li><a href="#">Terms</a>
+                  </li>
+                  <li><a href="#">Advertise</a>
+                  </li>
+                  <li><a href="#">Affiliates</a>
+                  </li>
+                  <li><a href="#">Newsletter</a>
+                  </li>
+                  <li><a href="#">About</a>
+                  </li>
+                  <li><a href="#">Contact Us</a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
           </div>
         </div>
-        <div style="margin-left:60px"> <a class="btn btn-large" id="show" href="/demo/">Feature Sneak Peek</a>
-        <a class="btn btn-large" id="show" href="/play/">Try it</a></div>
-
-
-      </div>
-
-    </div>
-   <div id="contactModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                   <div class="modal-content">
-                      <div class="modal-header">
-                      <button id="modalCloseButton" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                      <h4 class="modal-title" id="myModalLabel">Contact us</h4>
-                      </div>
-                      <div class="form-group">
-                                  <p><label class="control-label col-lg-3" for="id_email">E-mail:</label><input id="id_sender" name="sender" type="email"></p>
-                          </div>
-                    <div class="form-group" >
-                          <p><label class="control-label col-lg-3" for="id_subject" >Subject:</label>
-                          <input id="id_subject" name="subject" type="text"></p>
-                     </div>
-
-                    <div class="form-group">
-                              <p><label class="control-label col-lg-3" for="id_message">Message:</label>
-                                  <textarea name="message" id="contact" rows="8" cols="40"></textarea></p>
-                          </div>
-                          <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" id="contactUs" data-dismiss="modal" class="btn btn-primary">Send       </button>
-                      </div>
-                  </div>
-
+      </header>
+      <section class="header-2-sub bg-midnight-blue">
+        <div class="background">&nbsp;</div>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+              <div class="hero-unit">
+                <h1>We have created the product that will help<br/>
+                        your startup to look even better</h1>
+              </div>
+              <div class="btns">
+                <a class="btn btn-inverse" href="/demo/">Feature Sneak Peek</a>
+                <a class="btn btn-danger" href="/play/">Try It</a>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-      <script>
-     var csrftoken = $.cookie("csrftoken");
-
-function csrfSafeMethod(method) {
-   // these HTTP methods do not require CSRF protection
-   return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-$.ajaxSetup({
-   beforeSend: function(xhr, settings) {
-       if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-           xhr.setRequestHeader("X-CSRFToken", csrftoken);
-       }
-
-            if(settings.type == 'POST' || settings.type == 'PUT' || settings.type == 'DELETE'){
-               if (settings.url.substr(-1) != '/') settings.url += '/';
-           }
-
-   },
-   complete: function(xhr, status) {
-       if (xhr.status == 403) {
-          window.location.replace("/takeaways/index");
-       }
-   }
-
-});
-</script>
-
-    <!-- Carousel
-    ================================================== --><!-- /.carousel -->
-     <div class="container marketing">
-    <div id="background" class="carousel slide" data-ride="carousel">
-
-      <!-- Indicators -->
-
-            <img class="img" src="/static/takeaway/img/background.png" style="width:100%;height:115%;margin-top:150px;">
-
-     </div>
-     <hr class="featurette-divider" id="divider"style="margin-top:250px">
-    
-
-      <!-- Three columns of text below the carousel -->
-      <div id="testimonials" class="row">
-        <h1 style="text-align:center;color:#000"> TESTIMONIALS</h1>
-        <hr class="heading-divider" id="testimonial-divider">        <!--<div class="col-lg-4">
-          <img class="img-circle" src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/8/005/03a/218/25c9bc9.jpg" alt="Generic placeholder image" style="width: 140px; height: 140px;">
-          <h2>Chakravarthy U</h2>
-          <h4>Dir of Engineering, ChatBoost</h4>
-          <h4 id="testimonial">Wharton Executive MBA, class of 2016</h4>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div><! /.col-lg-4 -->
-        <div class="col-lg-6">
-          <img class="img-circle" src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/6/000/2d0/095/07c98b3.jpg" alt="Generic placeholder image" style="width: 140px; height: 140px;">
-          <h2>Hamdan Merchant</h2>
-           <h4>Senior Lean Program Specialist, MSc Industrial Supply Co</h4>
-           <h4>Emory, class of 2016</h4>
-          <p id="testimonial">I have used “MBA takeaways” for the last 5 months, and the benefits of a collaborative learning environment were evident immediately. In particular, it was most beneficial for my preparations for the finals in Strategic management in August 2014, where inlieu of reading all the chapters again , I went through the summarized points contributed not only by me but my classmates as well. This is definitely a new and improved way of learning and I’m confident that it will be a good reference tool for years to come.</p>
-
-        </div><!-- /.col-lg-4 -->
-        <div class="col-lg-6">
-          <img class="img-circle" src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/3/005/046/31f/36e907c.jpg" style="width: 140px; height: 140px;">
-          <h2>Sreejayanth Kidambi</h2>
-          <h4>Principal Engineer at Integrated Device Technology</h4>
-          <h4>Emory, class of 2012</h4>
-          <p id="testimonial">As a recent MBA, I have been looking for a way to store key takeaways from the courses I took in school so that I can quickly browse through them when necessary without having to open my course material. mbatakeaways.com is a great way to achieve that. I wish I had something like this available during my stay in business school to help me revise key points quickly before an exam or an assignment. I can see this coming in handy even while preparing for an interview where using a timely example from a case study while pursuing a line of thought can go a long way in impressing the interviewer.
-</p>
-
-        </div><!-- /.col-lg-4 -->
-      </div>
-
-      <hr id="trending" class="featurette-divider" id="divider">
-      <!-- START THE FEATURETTES -->
-      <h1 style="text-align:center;color:#000"> TRENDING TAKEAWAYS</h1>
-        <hr class="heading-divider" id="testimonial-divider"> 
-
-
-       <div id="myCarousel" class="carousel slide" data-ride="carousel">
-
-      <!-- Indicators -->
-      <ol class="carousel-indicators" id="indicator">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-        <li data-target="#myCarousel" data-slide-to="3"></li>
-        <li data-target="#myCarousel" data-slide-to="4"></li>
-        <li data-target="#myCarousel" data-slide-to="5"></li>
-      </ol>
-      <div class="carousel-inner">
-        <div class="item active">
-          <div class="container">
-            <div class="carousel-caption" id="caption">
-              <h1>BUS 628P Investment Banking</h1>
-              <br/><br/>
-              <p>Growth is not always good. For growth to be beneficial it has to be at least be equal to Weighted Average Cost of Capital (WACC).
-              </p>
+    <section class="content-4">
+        <div class="container">
+          <h3>We love what we do. This is features of our products</h3>
+          <div class="row features">
+            <div class="col-sm-4">
+              <img src="../static/design/images/icons/retina-ready-s@2x.png" alt="" width="117" height="104">
+              <h6>Block Model</h6>
+              <p>You can easily combine any components in a variety of design projects. It’s easy!</p>
+            </div>
+            <div class="col-sm-4">
+              <img src="../static/design/images/icons/clock@2x.png" alt="" width="104" height="104">
+              <h6>Multi-components</h6>
+              <p>There are a lot of different blocks that will help you to make a perfect project.</p>
+            </div>
+            <div class="col-sm-4">
+              <img src="../static/design/images/icons/rocket-big-grey-bg@2x.png" alt="" width="101" height="101">
+              <h6>Save Your Time</h6>
+              <p>Use your time for generating new ideas for your startup. Take a break from the routine.</p>
             </div>
           </div>
         </div>
-        <div class="item">
-          <div class="container">
-            <div class="carousel-caption" id="caption">
-              <h1>BUS 661P Applied Entrepreneurship</h1>
-              <p>
+      </section>
 
-                76% of consumers do not believe advertising to be truthful. 99% of the ads seen by a consumer are forgotten within the first hour. Given these odds, marketing messaging needs to stand out !
-                 
+      <section class="content-8">
+        <div>
+          <div class="container">
+            <div class="img">
+              <img src="../static/design/images/content/img-1@2x.png" alt="">
+            </div>
+            <h3>Take a look to our amazing Kit</h3>
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <p>We have a great surprise for Designmodo fans – our first free HTML user interface kit. Flat UI Free is made on the basis of Twitter Bootstrap in a stunning flat-style.
                 </p>
-
+                <a class="btn btn-large btn-clear" href="#">TRY IT NOW</a>
+              </div>
             </div>
           </div>
         </div>
-        <div class="item">
-          <div class="container">
-            <div class="carousel-caption" id="caption">
-              <h1 style="text-align:left" >BUS 661P Applied Entrepreneurship</h1>
-              <p style="text-align:left" >
+      </section>
 
-                  Make an "Irrational" Offer to STAND OUT from the crowd. This is more true for start-ups. 
-                  Examples of such offers are
-                </p>
-                <p style="text-align:left">1. Zappos - 365 day return policy , no questions asked </p>
-                  <p style="text-align:left">
-                  2. Nordstrom - No questions asked return policy , once they took back snow chains which they don't even sell.
-                  </p>
-                  <p style="text-align:left">
-                  3. Sunglasses for kids - Break it or lose it, we will send you another one for free if you register on our site.
-
-                  </p>
-
+    <section class="projects-4">
+        <div class="container">
+          <h3>We love what we do. <br> This is features of our products</h3>
+          <div class="projects row">
+            <div class="project-wrapper col-sm-3">
+              <div class="project">
+                <div class="photo-wrapper bg-alizarin">
+                  <div class="photo"></div>
+                  <a href="#" class="overlay"><span class="fui-eye"></span></a>
+                </div>
+                <div class="info">
+                  <a href="#" class="name color-pomegranate">Polaris UI</a>
+2012
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="container">
-            <div class="carousel-caption" id="caption">
-              <h1>BUS 661P Applied Entrepreneurship</h1>
-              <p >
-
-                The hardest thing in trying to become an entrepreneur is 'taking the leap'. Building a team comes next.
-                </p>
-
+            <div class="project-wrapper col-sm-3">
+              <div class="project">
+                <div class="photo-wrapper bg-sun-flower">
+                  <div class="photo"></div>
+                  <a href="#" class="overlay"><span class="fui-mic"></span></a>
+                </div>
+                <div class="info">
+                  <a href="#" class="name color-orange">Linecons</a>
+2012
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="container">
-            <div class="carousel-caption" id="caption">
-              <h1>BUS 651P Strategic Decision Analysis</h1>
-              <p>Companies hedge non-core items ( global firms hedging currency) and take risks in core operations. Individual are risk averse, insurance companies are risk-neutral 
-              </p>
+            <div class="project-wrapper col-sm-3">
+              <div class="project">
+                <div class="photo-wrapper bg-peter-river">
+                  <div class="photo"></div>
+                  <a href="#" class="overlay"><span class="fui-cmd"></span></a>
+                </div>
+                <div class="info">
+                  <a href="#" class="name color-belize-hole">Flat UI Pro</a>
+2012
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="container">
-            <div class="carousel-caption" id="caption">
-              <h1>BUS 651P Strategic Decision Analysis</h1>
-              <p>
-              First-mover advantage comes from the ability to commit oneself to an advantageous position and to force the other players to adapt to it. Second-mover advantage comes from the flexibility to adapt oneself to the other's choices.
-              </p>
+            <div class="project-wrapper col-sm-3">
+              <div class="project">
+                <div class="photo-wrapper bg-turquoise">
+                  <div class="photo"></div>
+                  <a href="#" class="overlay"><span class="fui-user"></span></a>
+                </div>
+                <div class="info">
+                  <a href="#" class="name color-green-sea">Startup Kit</a href="#">
+                        2012
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-      
-
-    <!-- Marketing messaging and featurettes
-    ================================================== -->
-    <!-- Wrap the rest of the page in another container to center all the content. -->
-
-<!-- /.carousel -->
-
-
-      <hr class="featurette-divider" id="divider">
-      <div class="row featurette" id="row">
-        <div class="col-md-7">
-          <h2 class="featurette-heading">THINK WITH YOUR CLASS</h2>
-          <p class="lead">Collaborate better with your classmates using the app. Accelerate your learning powered by the different perspectives of your class.</p>
+    <!--/.container-->
+</section>
+ <section class="crew-4">
+        <div class="container">
+          <h3>Startup Framework<br/>
+            The Second Sneak-Peek of Startup Framework</h3>
+          <div class="members">
+            <div class="member-wrapper">
+              <div class="member">
+                <div class="photo-wrapper">
+                  <div class="photo">
+                    <img src="../../common-files/img/crew/vladimir-k.png" alt="">
+                  </div>
+                  <div class="overlay">
+                    <a href="#"><span class="fui-vimeo"></span></a>
+                    <a href="#"><span class="fui-facebook"></span></a>
+                    <a href="#"><span class="fui-twitter"></span></a>
+                  </div>
+                </div>
+                <div class="info">
+                  <div class="name">Vladimir Kudinov</div>
+                  <b>Designer</b> who makes easy to change and easy to create new elements.
+                  <div class="contacts">
+                    <a href="#">http://vladimirkudinov.com</a>
+                    <br>
+                    <a href="#">@stSilent</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="member-wrapper">
+              <div class="member">
+                <div class="photo-wrapper">
+                  <div class="photo">
+                    <img src="../../common-files/img/crew/sergey-s.png" alt="">
+                  </div>
+                  <div class="overlay">
+                    <a href="#"><span class="fui-vimeo"></span></a>
+                    <a href="#"><span class="fui-facebook"></span></a>
+                    <a href="#"><span class="fui-twitter"></span></a>
+                  </div>
+                </div>
+                <div class="info">
+                  <div class="name">Sergey Shmidt</div>
+                  <b>Designer</b> who makes easy to change and easy to create new elements.
+                  <div class="contacts">
+                    <a href="#">http://vladimirkudinov.com</a>
+                    <br>
+                    <a href="#">@stSilent</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="member-wrapper">
+              <div class="member">
+                <div class="photo-wrapper">
+                  <div class="photo">
+                    <img src="../../common-files/img/crew/adrian-v.png" alt="">
+                  </div>
+                  <div class="overlay">
+                    <a href="#"><span class="fui-vimeo"></span></a>
+                    <a href="#"><span class="fui-facebook"></span></a>
+                    <a href="#"><span class="fui-twitter"></span></a>
+                  </div>
+                </div>
+                <div class="info">
+                  <div class="name">Adrian Valeanu</div>
+                  <b>Designer</b> who makes easy to change and easy to create new elements.
+                  <div class="contacts">
+                    <a href="#">http://vladimirkudinov.com</a>
+                    <br>
+                    <a href="#">@stSilent</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-md-5">
-          <img class="featurette-image img-responsive" src="http://ww2.hdnux.com/photos/10/44/13/2245341/5/628x471.jpg" style="width:900px;height:400px;">
+        <!--/.container-->
+      </section>
+
+      <footer class="footer-5 bg-wet-asphalt">
+        <div class="container">
+          <a class="brand" href="#">
+            <span class="glyphicon glyphicon-pencil" style="color:#f88529;width="35"; height="35""></span> 
+          </a>
+          <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+              <div class="text">Startup Framework will help you to find an awesome form for your
+                <br/>startup project in a short time</div>
+            </div>
+          </div>
+          <a class="btn btn-small" href="#"><span class="fui-twitter"> </span> Follow @Designmodo</a>
         </div>
-      </div>
-
-
-                                  <!--<button class="btn btn-xs btn-danger pull-right">Spam</button>-->
-
-                                  
-       <!-- /.row -->
-      <hr class="featurette-divider" id="divider">
-
-      <!-- /END THE FEATURETTES -->
-
-
-      <!-- FOOTER -->
-      <footer>
-        <p style="text-align:center">copyright © 2014 Takeaway Pro </p>
       </footer>
+      <div class="delimiter-big"></div>
 
-    </div><!-- /.container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-
-
-     <script src="{% static "takeaway/js/bootstrap.min.js"%}"></script>
-         <script src="{% static "takeaway/js/lib/docs.min.js"%}"></script>
-
+    <script src="../static/design/js/common-files/jquery-1.10.2.min.js">
+    </script>
+    <script src="../static/design/js/flat-ui/bootstrap.min.js"></script>
+    <script src="../static/design/js/common-files/modernizr.custom.js"></script>
+    <script src="../static/design/js/common-files/page-transitions.js"></script>
+    <script src="../static/design/js/common-files/jquery.scrollTo-1.4.3.1-min.js"></script>
+    <script src="../static/design/js/common-files/jquery.parallax.min.js"></script>
+    <script src="../static/design/js/common-files/easing.min.js"></script>
+    <script src="../static/design/js/common-files/jquery.svg.js"></script>
+    <script src="../static/design/js/common-files/jquery.svganim.js"></script>
+    <script src="../static/design/js/common-files/startup-kit.js"></script>
   </body>
-</html>
-
-
-
-
+  </html>
