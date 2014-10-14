@@ -256,7 +256,7 @@ app.factory('CourseDataFactory',function(){
 
 });
 
-app.controller('FavoriteController',function($scope, FavoritesFactory){
+app.controller('FavoriteController',function($scope,$cookies, FavoritesFactory){
   $scope.makeFavourite = function(taset) {
 
       if(taset.isFavourite) {
@@ -271,7 +271,7 @@ app.controller('FavoriteController',function($scope, FavoritesFactory){
         var favObj = {
           courseInstance: taset.courseInstance.id,
           takeaway: taset.id,
-          user: taset.user.id
+          user: $cookies.userid
         };
 
        FavoritesFactory.save(favObj).$promise.then(function(data, status, headers, config) {
@@ -288,7 +288,7 @@ app.controller('FavoriteController',function($scope, FavoritesFactory){
 });
 
 
-app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
+app.controller('CourseController', function ($scope,ngDialog, UserPermission,CourseDataFactory) {
 
 
       $scope.highLightSelectedCourse = function(courseid) {
@@ -305,6 +305,8 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
     $scope.getUserPermission = function(courseId){
       UserPermission.query({'course_id':courseId}).$promise.then(
         function(data){
+        CourseDataFactory.setUserCanPost(courseId,data.can_post);
+        CourseDataFactory.setUserPermissionDetail(courseId, data);
         $scope.userCanPost=data.can_post;
         $scope.userPermisssionDetail=data;
       }, function(data){
@@ -323,7 +325,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
 
 });
 
- app.controller('SessionController', function ($scope,ngDialog) {
+ app.controller('SessionController', function ($scope,ngDialog,CourseDataFactory) {
 
   $scope.editSessionName = function (sessionsresult) {
 
@@ -355,10 +357,9 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
       $scope.taset = {is_public : true};
       var currentCourse = CourseDataFactory.getCurrentCourse();
       var userCanPost = CourseDataFactory.findIfUserCanPost(currentCourse);
-      var userPermisssionDetail = CourseDataFactory.findUserPermissionDetail(currentCourse);
-
+      $scope.userPermissionDetail = CourseDataFactory.findUserPermissionDetail(currentCourse);
       //$scope.takeaway_set = sessionsresult.takeaway_set[0];
-      if(true){//$scope.userCanPost
+      if(userCanPost){//
       ngDialog.open({
         template: 'newTakeawayTemplateId',
         controller: 'takeawayDashboardCtrl',
@@ -457,7 +458,9 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
 
 
   app.controller('takeawayDashboardCtrl',
-    function($scope, $http, $cookies, $q, $resource, $sce, $rootScope, LeaderboardFactory, UserPermission, CoursesFactory, SessionsFactory, ngDialog,TakeAwayFactory, RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter) {
+    function($scope, $http, $cookies, $q, $resource, $sce, $rootScope,
+     LeaderboardFactory, UserPermission, CoursesFactory, SessionsFactory, ngDialog,TakeAwayFactory,
+      RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter, CourseDataFactory) {
 
     console.log("loading takeawayDashboardCtrl");
     $scope.rate = 7;
@@ -491,6 +494,8 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
     }).$promise.then(function(data) {
       console.log("First load of the page load the all available CRS");
       $scope.availableCourses = data;
+
+      $scope.courseInstance = data[0];
 
       //Displaying the STAYs for first CRS
       // if($scope.availableCourses.results != null && $scope.availableCourses.results.length > 0) {
@@ -532,6 +537,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
 
     // On Click of CRS, load all SNs and TAYs associated with the CRS.
     $scope.loadCourses = function(courseid) {
+      CourseDataFactory.setCurrentCourse(courseid);
      // if($scope.displaysessions != true) {
         SessionsFactory.query({
           "courseInstance": courseid,
