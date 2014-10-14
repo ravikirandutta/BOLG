@@ -839,7 +839,6 @@ app.controller('publicPrivateButtonCtrl',
         Comments.query({
           "takeaway": taset.id
         }).$promise.then(function(data) {
-          console.log(data);
           $scope.comments = data.results;
           if(!isRefresh){
             $scope.isCollapsed = !$scope.isCollapsed;
