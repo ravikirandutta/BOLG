@@ -38,18 +38,20 @@ class SchoolSerializer(serializers.ModelSerializer):
 
 class TakeAwaySerializer(serializers.ModelSerializer):
     username = serializers.Field(source='user.username')
+    comment_count = serializers.Field(source='comment_set.count')
     class Meta:
         model = TakeAway
-        fields = ('id','notes', 'user','courseInstance','session','is_public','username', 'tags','created_dt','average_rating','total_raters')
+        fields = ('id','notes', 'user','courseInstance','session','is_public','username', 'tags','created_dt','average_rating','total_raters','comment_count')
         #depth = 1
 
 
 class TakeAwayFullSerializer(serializers.ModelSerializer):
     username = serializers.Field(source='user.username')
     created_dt = serializers.DateTimeField(format='%Y-%m-%d %H:%MZ')
+    comment_count = serializers.Field(source='comment_set.count')
     class Meta:
         model = TakeAway
-        fields = ('id','notes', 'user','courseInstance','session','is_public','username', 'tags','created_dt','average_rating','total_raters')
+        fields = ('id','notes', 'user','courseInstance','session','is_public','username', 'tags','created_dt','average_rating','total_raters','comment_count')
         depth = 1
 
 class SessionSerializer(serializers.ModelSerializer):
@@ -141,6 +143,7 @@ class TakeAwayProfileSerializer(serializers.ModelSerializer):
         model=TakeAwayProfile
 
 class CommentSerializer(serializers.ModelSerializer):
+    username = serializers.Field(source='user.username')
     class Meta:
         model=Comment
 
