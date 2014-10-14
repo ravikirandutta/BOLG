@@ -87,6 +87,25 @@ app.directive('session', function() {
     }
   });
 
+  app.factory('Comments', ['$resource',
+    function($resource) {
+      return $resource('/comments/', {}, {
+        query: {
+          method: 'GET',
+          isArray: false
+        },
+        save: {
+          method: 'POST'
+        },
+        edit: {
+          url: '/comments/:id/',
+          method: 'PUT'
+        }
+      });
+    }
+  ]);
+
+
   app.factory('CoursesFactory', ['$resource',
     function($resource) {
       return $resource('/courseInstances/', {}, {
@@ -198,9 +217,76 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
 }]);
 
 
-app.factory('TakeAwayDataFactory',function(){
+
+app.factory('CourseDataFactory',function(){
+
+  var data = [];
+  var currentCourse ;
+ var service = {};
+   service.setCurrentCourse = function(course){
+       currentCourse = course;
+  };
+
+   service.setUserCanPost= function(course, userCanPost){
+         if (!data[course]){
+            data[course] = {};
+         }
+         data[course].userCanPost=userCanPost;
+      };
+    service.setUserPermissionDetail = function(course, userPermissionDetail){
+         if (!data[course]){
+            data[course] = {};
+         }
+         data[course].userPermisssionDetail = userPermissionDetail;
+      };
+
+
+
+  service.getCurrentCourse = function(){
+      return currentCourse;
+  };
+      service.findIfUserCanPost= function(currentCourse){
+        return data[currentCourse].userCanPost;
+      };
+      service.findUserPermissionDetail = function(currentCourse){
+        return data[currentCourse].userPermisssionDetail;
+      };
+
+ return service;
 
 });
+
+app.controller('FavoriteController',function($scope, FavoritesFactory){
+  $scope.makeFavourite = function(taset) {
+
+      if(taset.isFavourite) {
+        //DELTE
+        FavoritesFactory.remove({id:taset.favoriteId})
+        .$promise.then(function(data, status, headers, config) {
+          taset.isFavourite = false;
+        },function(data, status, headers, config) {
+          console.error('Error in makeFavourite'+status);
+        });
+      } else {
+        var favObj = {
+          courseInstance: taset.courseInstance.id,
+          takeaway: taset.id,
+          user: taset.user.id
+        };
+
+       FavoritesFactory.save(favObj).$promise.then(function(data, status, headers, config) {
+          taset.isFavourite = true;
+          taset.favoriteId = data.id;
+
+        },function(data, status, headers, config) {
+          console.error('Error in makeFavourite'+status);
+        });
+      }
+
+    };
+
+});
+
 
 app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
 
@@ -241,19 +327,19 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
 
   $scope.editSessionName = function (sessionsresult) {
 
-      $scope.session_name_current = sessionsresult.session_name;
-      $scope.courseInstanceId = sessionsresult.courseInstance.id;
+      $scope.session_name_current = $scope.sessionsresult.session_name;
+      $scope.courseInstanceId = $scope.sessionsresult.courseInstance.id;
       $scope.modifiedSession = {
         id:0,
         session_name : "",
         session_dt : ""
       };
 
-      $scope.modifiedSession.id = sessionsresult.id;
-      $scope.modifiedSession.session_name = sessionsresult.session_name;
-      $scope.modifiedSession.session_dt = sessionsresult.session_dt;
+      $scope.modifiedSession.id = $scope.sessionsresult.id;
+      $scope.modifiedSession.session_name = $scope.sessionsresult.session_name;
+      $scope.modifiedSession.session_dt = $scope.sessionsresult.session_dt;
 
-      $scope.sessionsresult = sessionsresult;
+
 
       ngDialog.open({
         template: 'editSessionNameTemplateId',
@@ -264,9 +350,13 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
     };
 
 
-    $scope.newTakeaway = function (sessionsresult) {
-      $scope.sessionsresult = sessionsresult;
+    $scope.newTakeaway = function () {
+
       $scope.taset = {is_public : true};
+      var currentCourse = CourseDataFactory.getCurrentCourse();
+      var userCanPost = CourseDataFactory.findIfUserCanPost(currentCourse);
+      var userPermisssionDetail = CourseDataFactory.findUserPermissionDetail(currentCourse);
+
       //$scope.takeaway_set = sessionsresult.takeaway_set[0];
       if(true){//$scope.userCanPost
       ngDialog.open({
@@ -329,32 +419,6 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
     return $sce.trustAsHtml(unsafeHtml);
 
   };
-
- $scope.makeFavourite = function(taset) {
-
-      if(taset.isFavourite) {
-        //DELTE
-        FavoritesFactory.remove({id:taset.id})
-        .$promise.then(function(data, status, headers, config) {
-          taset.isFavourite = false;
-        },function(data, status, headers, config) {
-          console.error('Error in makeFavourite'+status);
-        });
-      } else {
-        var favObj = {
-          courseInstance: taset.courseInstance.id,
-          takeaway: taset.id,
-          user: $cookies.userid
-        };
-
-       FavoritesFactory.save(favObj).$promise.then(function(data, status, headers, config) {
-          taset.isFavourite = true;
-        },function(data, status, headers, config) {
-          console.error('Error in makeFavourite'+status);
-        });
-      }
-
-    };
 
    $scope.updateTakeaway = function(divId, taset) {
       document.getElementById(divId + "_view").style.display = "block";
@@ -464,13 +528,6 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
 
     };
 
-    $scope.freshLoadOfSessions = function(courseid){
-      $scope.displaysessions = false;
-      $scope.loadCourses(courseid);
-      $scope.highLightSelectedCourse(courseid);
-      $scope.getUserPermission(courseid);
-
-    };
 
 
     // On Click of CRS, load all SNs and TAYs associated with the CRS.
@@ -507,6 +564,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission) {
               //console.log(fav.takeaway);
               if(fav.takeaway == taset.id) {
                 taset["isFavourite"]=true;
+                taset["favoriteId"] = fav.id;
               }
             });
           });
@@ -575,7 +633,7 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
 
 
     /* Event from "Save" button from New Take Away dialog window */
-    $scope.saveTakeaway = function(sessionsresult) {
+    $scope.saveTakeaway = function() {
       var tagIds =[];
       angular.forEach($scope.taset.tags, function(tag){
             if(tag.id){
@@ -584,10 +642,10 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
       });
 
       $scope.newTakeawayObj = {
-        courseInstance: sessionsresult.courseInstance.id,
+        courseInstance: $scope.sessionsresult.courseInstance.id,
         is_public: $scope.taset.is_public,
         notes: $scope.newTakeawayContent,
-        session: sessionsresult.id,
+        session: $scope.sessionsresult.id,
         tags: tagIds,
         user: $cookies.userid
       };
@@ -762,6 +820,44 @@ app.controller('publicPrivateButtonCtrl',
     };
 
     });
+
+
+  app.controller('CollapseCommentsCtrl', function ($scope,$cookies,Comments) {
+  $scope.isCollapsed = true;
+
+    $scope.displayComments = function(taset) {
+
+      if($scope.isCollapsed){
+        $scope.loadComments(taset, false);
+      }else{
+        $scope.isCollapsed = !$scope.isCollapsed;
+      }
+    };
+
+    $scope.loadComments = function(taset, isRefresh) {
+
+        Comments.query({
+          "takeaway": taset.id
+        }).$promise.then(function(data) {
+          $scope.comments = data.results;
+          if(!isRefresh){
+            $scope.isCollapsed = !$scope.isCollapsed;
+          }
+
+        });
+
+    };
+
+    $scope.saveComment = function(taset) {
+      Comments.save({takeaway:taset.id,notes:$scope.myComment,user:$cookies.userid,tags:[1],vote_count:0,average_rating:0,total_raters:0})
+              .$promise.then(function(data) {
+                  $scope.myComment = null;
+                  $scope.loadComments(taset, true);
+            });
+
+    };
+
+  });
 
 
 })();

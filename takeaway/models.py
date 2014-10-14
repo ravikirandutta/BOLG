@@ -301,6 +301,52 @@ class UserEventLog(models.Model):
         return smart_unicode(self.event)
 
 
+class ClosedGroup(models.Model):
+    group_name = models.CharField(max_length=1000,blank= False)
+    members = models.ManyToManyField(TakeAwayProfile,related_name='groups')
+    course_instance = models.ForeignKey(CourseInstance,blank=True)
+    created_dt = models.DateTimeField(auto_now_add=True,auto_now=False)
+    updated_dt = models.DateTimeField(auto_now_add=False,auto_now=True)
+    created_by = models.ForeignKey(User,blank=True,related_name='admin')
+    group_updated_by = models.ForeignKey(User,blank=True,related_name='last_modified_by')
+
+    def __unicode__(self):
+        return smart_unicode(self.group_name)
+
+
+# class ShareType(models.Model) :
+
+#     Types = (
+#     ('SELF', 'Self'),
+#     ('INDIVIDUAL', 'Individual'),
+#     ('GROUP' 'Group'),
+#     )
+#     name =  models.CharField(max_length=1000,blank= False,choices=Types)
+
+#     def __unicode__(self)
+#         return smart_unicode(self.name)
+
+
+class SharedTakeaway(models.Model):
+    Share_Types = (
+    ('SELF', 'Self'),
+    ('INDIVIDUAL', 'Individual'),
+    ('GROUP' ,'Group'),
+    ('PUBLIC' ,'Public'),
+    )
+    when = models.DateTimeField(auto_now_add=True,auto_now=True)
+    takeaway = models.ForeignKey(TakeAway,blank=False,related_name ='shared_info')
+    shared_type = models.CharField(choices=Share_Types,max_length=1000,)
+    group = models.ForeignKey(ClosedGroup,blank=True)
+    shared_by = models.ForeignKey(User,blank=True,)
+    created_dt = models.DateTimeField(auto_now_add=True,auto_now=False)
+    updated_dt = models.DateTimeField(auto_now_add=False,auto_now=True)
+    
+
+    def __unicode__(self):
+        return smart_unicode(str(self.takeaway.id) + '---> shared to ' + self.shared_type + '----> shared by  ' + str(self.shared_by) )
+
+
 
 
 from registration.signals import user_registered

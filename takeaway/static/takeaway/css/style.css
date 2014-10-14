@@ -586,12 +586,12 @@ form{
   color: #fff;
   text-decoration: none;
   border-bottom: 1px solid #222;
-  background-color: #111;
+  /*background-color: #111;*/
 }
 
 .sidebar .navi > li > a:hover, .sidebar .navi > li.open > a {
   border-bottom: 1px solid #222;
-  background-color: #222;
+  background-color: #52b9e9;
   color: #fff;
 }
 

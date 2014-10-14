@@ -488,6 +488,20 @@ class EmailSettingsViewSet(viewsets.ModelViewSet):
         filter_fields = ('user',)
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
+class ClosedGroupViewSet(viewsets.ModelViewSet):
+        queryset = ClosedGroup.objects.all()
+        serializer_class = ClosedGroupSerializer
+        filter_backends = (filters.DjangoFilterBackend,)
+        filter_fields = ('members','course_instance')
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
+class SharedTakeawayViewSet(viewsets.ModelViewSet):
+        queryset = SharedTakeaway.objects.all()
+        serializer_class = SharedTakeawaySerializer
+        filter_backends = (filters.DjangoFilterBackend,)
+        filter_fields = ('takeaway','shared_type','group','shared_by')
+        permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+
 class ContactUsViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
@@ -642,7 +656,7 @@ def get_leader_board(request):
     #user = request.user
     ci = CourseInstance.objects.get(pk=course_id)
     points = UserEventLog.objects.filter(course_instance=ci)
-    leader_board = points.values('user').annotate(score=Sum('points'))
+    leader_board = points.values('user').annotate(score=Sum('points')).order_by('-score')
 
     leader_dict ={}
     leader_records = []

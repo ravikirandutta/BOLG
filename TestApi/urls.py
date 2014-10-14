@@ -31,6 +31,10 @@ router.register(r'favorites', views.FavoriteViewSet)
 router.register(r'comments', views.CommentViewSet)
 router.register(r'contactus', views.ContactUsViewSet)
 router.register(r'emailSettings', views.EmailSettingsViewSet)
+router.register(r'closedGroups', views.ClosedGroupViewSet)
+router.register(r'sharedTakeaway', views.SharedTakeawayViewSet)
+
+
 
 handler404 = 'takeaway.views.error'
 

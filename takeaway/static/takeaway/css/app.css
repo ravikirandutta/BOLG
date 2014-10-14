@@ -4,8 +4,16 @@ div .mainbar {
 
 #takeaway-container{
    /* padding:40px;*/
-    width:80%;
-    /*left: 10%;*/
+    width:68%;
+    left: 16%;
+}
+
+#side-course-list ul li a:hover{
+background-color: #52b9e9;
+}
+
+.selected{
+  background-color: #52b9e9;
 }
 
  .course{
@@ -174,7 +182,7 @@ font-size:15px !important;
 }
 
 .ourblue{
-  background:#3b5998 !important;
+  background:#3b5998;
 
 }
 #edit-session-link{
