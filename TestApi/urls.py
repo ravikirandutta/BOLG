@@ -31,6 +31,10 @@ router.register(r'favorites', views.FavoriteViewSet)
 router.register(r'comments', views.CommentViewSet)
 router.register(r'contactus', views.ContactUsViewSet)
 router.register(r'emailSettings', views.EmailSettingsViewSet)
+router.register(r'closedGroups', views.ClosedGroupViewSet)
+router.register(r'sharedTakeaway', views.SharedTakeawayViewSet)
+
+
 
 handler404 = 'takeaway.views.error'
 
@@ -77,7 +81,12 @@ urlpatterns = patterns('',
     # url(r'^contact/', 'takeaway.views.contactview'),
     url(r'^contact/', 'takeaway.views.ContactUs', name='contact_us'),
     url(r'^contact_login/','takeaway.views.ContactUsLogin',name='contact_us_login'),
-    url(r'^landing/',TemplateView.as_view(template_name="landing.html")),
+    url(r'^landing/',TemplateView.as_view(template_name="newlanding.html")),
+    url(r'^1/',TemplateView.as_view(template_name="landing.html")),
+    url(r'^2/',TemplateView.as_view(template_name="landing2.html")),
+    url(r'^3/',TemplateView.as_view(template_name="landing3.html")),
+    url(r'^4/',TemplateView.as_view(template_name="landing4.html")),
+    url(r'^5/',TemplateView.as_view(template_name="landing5.html")),
     url(r'^demo/',TemplateView.as_view(template_name="demo.html")),
     url(r'^rating/',TemplateView.as_view(template_name="rating.html")),
     url(r'^can_user_post/','takeaway.views.can_user_post',),
