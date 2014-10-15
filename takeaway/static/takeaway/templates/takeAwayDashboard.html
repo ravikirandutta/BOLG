@@ -44,7 +44,24 @@
         </ui>
         <div class="clearfix"></div>
       </div> -->
-      
+
+      <div style="margin-top:10px;margin-left:400px;">
+        <input type="text" ng-model="searchTerm"/>
+
+                                <span ng-repeat="tag in selectedTags" ng-controller="TagController">
+                                  <span class="label label-warning" ng-click="removeTagFromSearchCriteria()">
+                                    <i class="fa fa-tags"></i>{{tag}}
+                                  </span>
+                                  <span style="width:2px">&nbsp;</span>
+                                </span>
+                      <span ng-controller="FavoriteController" ng-click="filterFavorites()"> My Favorites </span>
+
+        <br/>
+        <span ng-click="clearCriteria()">Clear Criteria</span>
+      </div>
+
+
+
       <div class="col-md-6" id="takeaway-container">
 
         <!-- session display -->
@@ -86,7 +103,7 @@
 
 <script type="text/ng-template" id="cantCreateTakeawayTemplateId">
     <div class="ngdialog-message">
-      <h5>You need to rate atleast {{userPermisssionDetail.remaining_rating_count_till_create}} more Takeaways to be able to create New Takeaway</h5>
+      <h5>You need to rate atleast {{userPermissionDetail.remaining_rating_count_till_create}} more Takeaways to be able to create New Takeaway</h5>
 
     </div>
     <div class="ngdialog-buttons">

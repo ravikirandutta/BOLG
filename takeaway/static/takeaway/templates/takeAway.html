@@ -27,8 +27,8 @@
                                 </div>
                               </div>
                               <div class="btn-group-left">
-                                <span ng-repeat="tag in taset.tags">
-                                  <span class="label label-warning">
+                                <span ng-repeat="tag in taset.tags" ng-controller="TagController">
+                                  <span class="label label-warning" ng-click="tagSearch()">
                                     <i class="fa fa-tags"></i>{{tag.name}}
                                   </span>
                                   <span style="width:2px">&nbsp;</span>
