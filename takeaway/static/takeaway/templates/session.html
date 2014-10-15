@@ -24,7 +24,7 @@
 
                       <!-- takeaway set display -->
                       <div>
-                        <div  ng-repeat="taset in sessionsresult.takeaway_set">
+                        <div  ng-repeat="taset in sessionsresult.takeaway_set | filter: criteriaMatch(criteria)">
                           <take-away></take-away>
                         </div>
                       </div>

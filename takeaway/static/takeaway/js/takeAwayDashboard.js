@@ -216,7 +216,37 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
         })
 }]);
 
+app.factory('CriteriaService',function(){
+          var criteria = {};
+          return {
+              getCriteria : function(){
+                  return criteria;
+              },
+              setTagSearchCriteria : function(criteriaObject){
 
+
+                   if(!criteria.tagSearch){
+                      criteria.tagSearch = [];
+                   }
+                   criteria.tagSearch.push(criteriaObject.value);
+
+                 },
+              toggleFavoriteCriteria : function(){
+                  /*if(criteriaObject.searchTerm === "textSearch")
+                    criteria.searchTerm = criteriaObject.value;
+                  */
+                  criteria.filterFavorites = !criteria.filterFavorites;
+              } ,
+
+              removeTagFromSearchCriteria : function(tagToBeRemoved){
+
+                   if(criteria.tagSearch){
+                       var index = criteria.tagSearch.indexOf(tagToBeRemoved);
+                       criteria.tagSearch.splice(index, index+1);
+                   }
+          }
+        }
+        });
 
 app.factory('CourseDataFactory',function(){
 
@@ -256,7 +286,7 @@ app.factory('CourseDataFactory',function(){
 
 });
 
-app.controller('FavoriteController',function($scope,$cookies, FavoritesFactory){
+app.controller('FavoriteController',function($scope,$cookies, FavoritesFactory, CriteriaService){
   $scope.makeFavourite = function(taset) {
 
       if(taset.isFavourite) {
@@ -284,6 +314,10 @@ app.controller('FavoriteController',function($scope,$cookies, FavoritesFactory){
       }
 
     };
+
+  $scope.filterFavorites = function(){
+      CriteriaService.toggleFavoriteCriteria();
+  };
 
 });
 
@@ -460,7 +494,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
   app.controller('takeawayDashboardCtrl',
     function($scope, $http, $cookies, $q, $resource, $sce, $rootScope,
      LeaderboardFactory, UserPermission, CoursesFactory, SessionsFactory, ngDialog,TakeAwayFactory,
-      RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter, CourseDataFactory) {
+      RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter, CourseDataFactory,CriteriaService) {
 
     console.log("loading takeawayDashboardCtrl");
     $scope.rate = 7;
@@ -484,9 +518,50 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
     {stateOff: 'glyphicon-off'}
   ];
 
+  $scope.criteria = {};
+  $scope.selectedTags = [];
+  $scope.clearCriteria = function(){
+    CriteriaService.setCriteria({});
+  };
+  $scope.criteriaMatch = function(  ) {
+    $scope.criteria = CriteriaService.getCriteria();
+    var criteria = $scope.criteria;
+
+    if(criteria.tagSearch){
+        return  function( takeaway) {
+          if(criteria.filterFavorites && !takeaway.isFavourite){
+            return false;
+          }
+          var match = false;
+          var count =0;
+          angular.forEach(takeaway.tags, function(tag){
+
+              angular.forEach(criteria.tagSearch, function(tagSearch){
+
+                if(tag.name === tagSearch){
+                count++;
+              }
+              });
+              });
+            return count === criteria.tagSearch.length;
+          };
+
+    }
 
 
+/*
+    if(criteria.searchTerm === "textSearch")
+        return  {$: criteria.value}
 
+     if(criteria.searchTerm === "favoriteSearch"){
+        return  function( takeaway) {
+            return takeaway.isFavourite;
+        };
+     }
+*/
+     return true;
+
+  };
 
 
     CoursesFactory.query({
@@ -706,7 +781,7 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
 
 
 
-app.controller('TagController', function ($scope,$q, TagsFactory) {
+app.controller('TagController', function ($scope,$q, TagsFactory,CriteriaService) {
 
    $scope.tags = [];
   $scope.availableTags = {};
@@ -741,6 +816,17 @@ app.controller('TagController', function ($scope,$q, TagsFactory) {
     $scope.taset.tags = $scope.tags;
   };
 
+
+$scope.tagSearch = function(){
+    $scope.selectedTags.push($scope.tag.name);
+     CriteriaService.setTagSearchCriteria({searchTerm:'tagSearch',value:$scope.tag.name});
+};
+
+$scope.removeTagFromSearchCriteria = function(){
+  var index = $scope.selectedTags.indexOf($scope.tag);
+  $scope.selectedTags.splice(index, index+1);
+  CriteriaService.removeTagFromSearchCriteria($scope.tag);
+};
 
 $scope.tagAddedInEditTakeaway = function(tag){
       if(!tag.id){
