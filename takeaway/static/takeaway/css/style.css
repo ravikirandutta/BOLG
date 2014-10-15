@@ -596,7 +596,7 @@ form{
 }
 
 .sidebar .navi li ul {
-	display: none;
+	/*display: none;*/
 	background: #181818;
 }
 

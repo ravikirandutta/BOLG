@@ -7,8 +7,15 @@
             <div class="sidebar-inner">
 
                 <ul id="side-course-list" class="navi">
-                    <li class="ourblue current" id="selcet-classes" ng-repeat="courseInstance in availableCourses.results" ng-class="selected" ng-controller="CourseController" ng-click="freshLoadOfSessions(courseresult.course.id)"><a  ng-class="selected" class="ourblue" href="#" ><i class="fa fa-book"></i> <b>{{courseInstance.course.course_name}}</b></a>
+                    <li class="has_submenu open ourblue current" id="selcet-classes" ng-repeat="courseInstance in availableCourses.results" ng-class="selected" ng-controller="CourseController" ng-click="freshLoadOfSessions(courseresult.course.id)"><a  ng-class="selected" class="ourblue" href="#" ><i class="fa fa-book"></i> <b>{{courseInstance.course.course_name}}</b></a>
+                    <ul>
+                      <li>
+                        <a href="#"  ng-click="showLeaderBoard()" ><span class="fa fa-list-ol"></span> Leader Board</a>
+
+                      </li>
+                    </ul>
                     </li>
+
 
                 </ul>
                 <!--/ Sidebar navigation -->
@@ -37,7 +44,7 @@
         </ui>
         <div class="clearfix"></div>
       </div> -->
-      <a href="#" class="btn btn-primary leaderBoardButton" style="float:right;margin-top:10px" ng-click="showLeaderBoard()" ><span class="fa fa-list-ol"></span> Leader Board</a>
+      
       <div class="col-md-6" id="takeaway-container">
 
         <!-- session display -->
