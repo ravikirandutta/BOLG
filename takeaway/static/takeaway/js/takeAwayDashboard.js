@@ -357,6 +357,10 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
       $scope.getLeaderBoard(courseid);
     };
 
+    $scope.getDisplayedCourse = function(){
+      return CourseDataFactory.getCurrentCourse();
+    }
+
 });
 
  app.controller('SessionController', function ($scope,ngDialog,CourseDataFactory) {
@@ -519,6 +523,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
   ];
 
   $scope.criteria = {};
+  $scope.criteria.searchText ;
   $scope.selectedTags = [];
   $scope.clearCriteria = function(){
     CriteriaService.setCriteria({});
@@ -527,14 +532,16 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
     $scope.criteria = CriteriaService.getCriteria();
     var criteria = $scope.criteria;
 
-    if(criteria.tagSearch){
+
         return  function( takeaway) {
-          if(criteria.filterFavorites && !takeaway.isFavourite){
-            return false;
+          var favorite = true, tags = true, textSearch = true;
+          if(criteria.filterFavorites){
+            var favorite = takeaway.isFavourite;
           }
-          var match = false;
+
           var count =0;
-          angular.forEach(takeaway.tags, function(tag){
+          if(criteria.tagSearch){
+            angular.forEach(takeaway.tags, function(tag){
 
               angular.forEach(criteria.tagSearch, function(tagSearch){
 
@@ -543,23 +550,15 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
               }
               });
               });
-            return count === criteria.tagSearch.length;
+            tags = (count === criteria.tagSearch.length);
           };
 
-    }
+          if(criteria.searchText){
+            textSearch = takeaway.notes.indexOf(criteria.searchText)>-1;
+          }
 
-
-/*
-    if(criteria.searchTerm === "textSearch")
-        return  {$: criteria.value}
-
-     if(criteria.searchTerm === "favoriteSearch"){
-        return  function( takeaway) {
-            return takeaway.isFavourite;
-        };
-     }
-*/
-     return true;
+     return favorite && tags && textSearch;
+   }
 
   };
 
