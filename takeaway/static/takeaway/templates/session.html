@@ -1,7 +1,7 @@
 <div ng-controller="SessionController" class="widget wlightblue">
-              <div class="widget-head">
+              <div class="widget-head" id="bluewidget">
                 <div class="pull-left">
-                  {{sessionsresult.session_name}}
+                 <b> {{sessionsresult.session_name}}</b>
                   <a id="edit-session-link" href="#" class="glyphicon glyphicon-edit" title="Edit Session"
                       ng-click="editSessionName()"></a>
                 </div>
@@ -12,8 +12,8 @@
 
                       <span class="glyphicon glyphicon-pencil"></span> New Takeaway
                     </a>
-                   <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
-                   <a href="#" class="wclose"><i class="fa fa-times"></i></a>
+                   <a href="#" class="wminimize"><i class="fa fa-chevron-up" id="up"></i></a>
+                   <a href="#" class="wclose"><i class="fa fa-times" id="close"></i></a>
                 </div>
                 <div class="clearfix"></div>
               </div>

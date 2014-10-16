@@ -186,7 +186,7 @@ font-size:15px !important;
 
 }
 #edit-session-link{
-  color:#fff;
+  color:#000;
   margin-left:6px;
 }
 
@@ -203,7 +203,7 @@ font-size:15px !important;
 .takeaway-pre-owner{
 
 color:#000;
-background-color:#e7edf8;
+background-color:#F9E1B8;
 }
 
 #registration{
@@ -380,4 +380,17 @@ tags-input .tags .input{
 
 .ngdialog.ngdialog-theme-plain .ngdialog-content{
   width: 520px !important;
+}
+
+#bluewidget{
+  background-color: #e9eaed;
+  color:#000;
+  border:1px solid #fff;
+}
+#up{
+  color:#000;
+}
+
+#close{
+  color:#000;
 }

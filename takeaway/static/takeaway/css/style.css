@@ -478,7 +478,7 @@ form{
 	/*background: #111;
 	border-bottom:1px solid #333;*/
 
-    background: #3b5998;
+    background: #2c3e50;
     border-bottom:1px solid #333;
 
 }
@@ -788,8 +788,7 @@ form{
 	margin-left: 230px;
 	margin-right: 0px;
 	width: auto;
-	/*background:#fff;*/
-    background:#e9eaed;
+	background:#fff;
 	min-height: 800px;
 }
 
