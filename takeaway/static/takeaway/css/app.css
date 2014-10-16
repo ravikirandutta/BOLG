@@ -70,6 +70,11 @@ a span{
     cursor:pointer;
 }
 
+.pointer{
+    cursor:pointer;
+}
+
+
 .takeaway-pre{
 font-family: "serif" !important;
 font-size:15px !important;

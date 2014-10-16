@@ -46,19 +46,23 @@
       </div> -->
 
       <div style="margin-top:10px;margin-left:400px;">
-        <input type="text" ng-model="searchTerm"/>
-
+        <br/>
+        <i class="fa fa-search fa-lg" ></i>
+        <input type="text" placeholder="search by text" ng-model="criteria.searchText"/>
+                                <label> Tags selected: </label>
                                 <span ng-repeat="tag in selectedTags" ng-controller="TagController">
-                                  <span class="label label-warning" ng-click="removeTagFromSearchCriteria()">
+
+                                  <span class="label label-warning pointer" ng-click="removeTagFromSearchCriteria()">
                                     <i class="fa fa-tags"></i>{{tag}}
                                   </span>
                                   <span style="width:2px">&nbsp;</span>
                                 </span>
-                      <span ng-controller="FavoriteController" ng-click="filterFavorites()"> My Favorites </span>
+                      <a  class="btn btn-default" id="btnfav" ng-controller="FavoriteController" ng-class="{btn-success:select}" ng-click="filterFavorites()">  My Favorites </a>
 
         <br/>
-        <span ng-click="clearCriteria()">Clear Criteria</span>
       </div>
+        <!-- <span ng-click="clearCriteria()">Clear Criteria</span> -->
+
 
 
 
