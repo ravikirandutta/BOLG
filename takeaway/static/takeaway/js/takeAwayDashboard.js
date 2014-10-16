@@ -357,6 +357,10 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
       $scope.getLeaderBoard(courseid);
     };
 
+    $scope.getDisplayedCourse = function(){
+      return CourseDataFactory.getCurrentCourse();
+    }
+
 });
 
  app.controller('SessionController', function ($scope,ngDialog,CourseDataFactory) {
