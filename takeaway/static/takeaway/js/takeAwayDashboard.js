@@ -286,7 +286,102 @@ app.factory('CourseDataFactory',function(){
 
 });
 
-app.controller('FavoriteController',function($scope,$cookies, FavoritesFactory, CriteriaService){
+app.factory('SessionsDataFactory',function(TagsDataFactory, TagsFactory, $cookies){
+
+  var sessionsData = {};
+
+  return {
+
+    setSessionData: function(sessions){
+        sessionData = sessions.results;
+    },
+
+    getSessionData: function(){
+        return sessionData;
+    },
+
+    addTakeAwayToSessions: function(takeaway){
+
+          TagsDataFactory.getTags();
+          TagsFactory.query().$promise.then(function(data){
+            TagsDataFactory.setTags(data.results);
+
+            var tags = [];
+          angular.forEach(takeaway.tags, function(tag){
+              tags.push(TagsDataFactory.getTagForId(tag));
+          });
+          takeaway.tags = tags;
+
+          angular.forEach(sessionData, function(session){
+              if(session.id === takeaway.session){
+                takeaway.isOwner = true;
+                takeaway.courseInstance = {};
+                takeaway.courseInstance.id = session.courseInstance.id;
+                takeaway.session = session;
+                takeaway.session.courseInstance = session.courseInstance.id;
+                takeaway.user = {};
+                takeaway.user.id = $cookies.userid;
+                var localizedTime = $.localtime.toLocalTime(takeaway.created_dt,'MM/dd/yy HH:mm');
+                takeaway.created_dt = localizedTime;
+                session.takeaway_set.push(takeaway);
+              }
+          });
+
+          },
+           function(){
+
+           });
+
+
+    },
+
+    removeTakeawayFromSessions: function(takeaway){
+          angular.forEach(sessionData, function(session){
+              if(session.id === takeaway.session.id){
+                  var index =0;
+                  angular.forEach(session.takeaway_set, function(takeawayObject){
+                      if(takeaway.id === takeawayObject.id){
+                          session.takeaway_set.splice(index, index+1);
+                      }
+                      index++;
+                  });
+              }
+          });
+    }
+
+  }
+
+});
+
+
+app.factory('TagsDataFactory', function(TagsFactory){
+      var tagsData = [];
+
+
+      return {
+
+        getTagForId : function(id){
+          var tagFound;
+          angular.forEach(tagsData, function(tag){
+              if(tag.id ===id){
+                  tagFound = tag;
+              }
+          });
+          return tagFound;
+        },
+        setTags: function(tagsData){
+            tagsData = tagsData;
+        },
+         getTags : function(){
+            TagsFactory.query().$promise.then(function(data){
+                tagsData = data.results;
+            },
+        function(){});
+         }
+      }
+});
+
+app.controller('FavoriteController',function($scope,$cookies, FavoritesFactory, CriteriaService ){
   $scope.makeFavourite = function(taset) {
 
       if(taset.isFavourite) {
@@ -388,7 +483,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
     $scope.newTakeaway = function () {
 
-      $scope.taset = {is_public : true};
+      $scope.taset = {is_public : true, tags:[]};
       var currentCourse = CourseDataFactory.getCurrentCourse();
       var userCanPost = CourseDataFactory.findIfUserCanPost(currentCourse);
       $scope.userPermissionDetail = CourseDataFactory.findUserPermissionDetail(currentCourse);
@@ -417,7 +512,8 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
 
 
- app.controller('TakeAwayController', function ($scope,$sce,$cookies, TakeAwayFactory, RatingFactory,FavoritesFactory,TakeAwayConverter, ngDialog) {
+ app.controller('TakeAwayController', function ($scope,$sce,$cookies, TakeAwayFactory, RatingFactory,
+                                                FavoritesFactory,TakeAwayConverter, ngDialog, SessionsDataFactory) {
 
   $scope.makeEditable = function(divId, notes) {
       document.getElementById(divId + "_view").style.display = "none";
@@ -431,8 +527,10 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
         TakeAwayFactory.remove({id:taset.id}).$promise.then(
             function(data, status, headers, config) {
+      SessionsDataFactory.removeTakeawayFromSessions(taset);
+
           console.log('Takeaway Successfully deleted, now refresh the page');
-          $scope.freshLoadOfSessions(taset.courseInstance.id);
+          //$scope.freshLoadOfSessions(taset.courseInstance.id);
         },
         function(data, status, headers, config) {
           $scope.status = status;
@@ -474,7 +572,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
           TakeAwayFactory.update({id:taset.id},modifiedTakeawayObj).$promise
           .then(function(data, status, headers, config) {
         //We need refresh only updated takeaway instead of loading all courses sessions
-        $scope.freshLoadOfSessions(taset.courseInstance.id);
+        //$scope.freshLoadOfSessions(taset.courseInstance.id);
         console.log("loading all courses sessions after successfull edit");
       },function(data, status, headers, config) {
         $scope.status = status;
@@ -494,7 +592,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
   app.controller('takeawayDashboardCtrl',
     function($scope, $http, $cookies, $q, $resource, $sce, $rootScope,
      LeaderboardFactory, UserPermission, CoursesFactory, SessionsFactory, ngDialog,TakeAwayFactory,
-      RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter, CourseDataFactory,CriteriaService) {
+      RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter, CourseDataFactory,CriteriaService,SessionsDataFactory) {
 
     console.log("loading takeawayDashboardCtrl");
     $scope.rate = 7;
@@ -692,7 +790,10 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
       });
 
 
+      SessionsDataFactory.setSessionData($scope.sessions);
       //alert("done"+$scope.sessions.results.length);
+
+      $scope.sessionsData = SessionsDataFactory.getSessionData();
     }
 
 
@@ -730,7 +831,7 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
 
       TakeAwayFactory.save($scope.newTakeawayObj).$promise.then(
       function(data, status, headers, config) {
-        $scope.freshLoadOfSessions(data.courseInstance);
+        SessionsDataFactory.addTakeAwayToSessions(data);
         $scope.newTakeawayContent="";
         console.log("loading all courses sessions after successfull creation"+data.courseInstance);
       },

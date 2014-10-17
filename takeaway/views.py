@@ -55,7 +55,7 @@ def can_user_post(request):
     takeaway_count = entire_takeaways.count()
     rating_count = Rating.objects.filter(takeaway = entire_takeaways).filter(user=user).count()
 
-    if takeaway_count > 3 or other_takeaway_count > 0 :
+    if  other_takeaway_count > 0 :
         if Decimal(rating_count)/Decimal(other_takeaway_count) < RATING_THRESHOLD_FOR_CREATE :
             can_post = False
     remaining_rating_count = math.ceil((other_takeaway_count*0.25)-rating_count)
