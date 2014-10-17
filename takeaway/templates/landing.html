@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="../static/design/css/flat-ui/bootstrap/css/jquery.bxslider.css">
     <link rel="stylesheet" href="../static/design/css/flat-ui/bootstrap/css/bootstrap-docs.css">
     <link rel="stylesheet" href="../static/design/css/project/ui-kit-styles.css">
-
+    <link rel="stylesheet" href="../static/design/css/contacts/ui-kit-styles.css">
     <link rel="stylesheet" href="../static/design/css/crew/ui-kit-styles.css">
     <link rel="stylesheet" href="../static/design/css/footer/ui-kit-styles.css">
     <link rel="stylesheet" href="../static/design/css/content/ui-kit-styles.css">
@@ -33,41 +33,27 @@
       <header class="header-2">
         <div class="container">
           <div class="row">
-            <nav class="navbar col-sm-12" role="navigation">
+            <div class="navbar col-sm-12" role="navigation">
               <div class="navbar-header">
                 <button type="button" class="navbar-toggle"></button>
-                <span class="glyphicon glyphicon-pencil" style="color:#f88529"></span>
-              <b><span style="color:#fff">MBA TAKEAWAYS</span></b>                 
+                <div class="brand">
+                <span class="glyphicon glyphicon-pencil" style="color:#f88529;font-size:x-large"></span>
+                  <b><span style="color:#0de6f2;font-size:25px">MBA TAKEAWAYS</span></b>
+                </div>
               </div>
-              <div class="collapse navbar-collapse">
-                <ul class="nav pull-right">
-                  <li><a href="#">Home</a>
+              <div class="collapse navbar-collapse pull-right">
+                <ul id="nav-menu" class="nav pull-left">
+                  <li><a href="#">HOME</a>
                   </li>
-                  <li><a href="#">TRENDING TAKEAWAYS</a>
+                  <li><a href="#heading">TESTMONIALS</a>
                   </li>
-                  <li><a href="#">TESTIMONIALS</a>
+                  <li><a href="#trending">TRENDING TAKEAWAYS</a>
                   </li>
-                  <li><a href="/contact/">CONTACT</a>
-                  </li>
-                </ul>
-                <ul class="subnav">
-                  <li><a href="#">Privacy</a>
-                  </li>
-                  <li><a href="#">Terms</a>
-                  </li>
-                  <li><a href="#">Advertise</a>
-                  </li>
-                  <li><a href="#">Affiliates</a>
-                  </li>
-                  <li><a href="#">Newsletter</a>
-                  </li>
-                  <li><a href="#">About</a>
-                  </li>
-                  <li><a href="#">Contact Us</a>
+                  <li><a href="#">CONTACT</a>
                   </li>
                 </ul>
               </div>
-            </nav>
+            </div>
           </div>
         </div>
       </header>
@@ -75,30 +61,29 @@
         <div class="background">&nbsp;</div>
         <div class="container">
           <div class="row">
-            <div class="col-sm-8 col-sm-offset-2">
+            <div class="col-sm-8 col-sm-offset-2" id="wide">
               <div class="hero-unit">
-                <h1>We have created the product that will help<br/>
-                        your startup to look even better</h1>
+                <span class="theme">"THINK WITH YOUR CLASS"</span>
+                <h4 id="caption">SHARE YOUR TAKEAWAY</h4>
               </div>
               <div class="btns">
-                <a class="btn btn-inverse" href="/demo/">Feature Sneak Peek</a>
-                <a class="btn btn-danger" href="/play/">Try It</a>
+                <a class="btn btn-danger" id="feature" href="/demo/">Feature Sneak Peek</a>
               </div>
             </div>
           </div>
         </div>
-                  <div class="form-group" style="margin-top:60px">
+                  <div class="form-group" style="margin-left:150px;margin-top:150px">
                     <form action="{% url 'handlelogin'  %}" class="form-horizontal" method="post" name="login_form" id="login_form"> {% csrf_token %}
                    <label for="inputEmail"></label>
                   <input type="text" name="Username" placeholder="username">
-                  <label for="inputPassword"></label>
-                  <input type="password" name="Password" placeholder="password">
-                  <input type="hidden" name="Mode" value="login">
-                  <label><input type="checkbox"></label>
-                  <button type="submit" class="btn">Sign in</button>
-                  <a class="button" href="/accounts/register">Register</a>
-                
+                <label for="inputPassword"></label>
+                <input type="password" name="Password" placeholder="password">
+                <input type="hidden" name="Mode" value="login">
+                <label><input type="checkbox"></label>
+                <button type="submit" class="btn btn-inverse">Sign in</button>
+                <a class="button" href="/accounts/register">Register</a>
               </form>
+              {% if error_message %} <p class="wdiget-content" style="color:red">{{ error_message }}</p> {% endif %}
               </div>
                 
 
@@ -106,21 +91,21 @@
 
     <section class="content-4">
         <div class="container">
-          <h3>We love what we do. This is features of our products</h3>
+          <h3>Collaborate with your class to create takeaways for each session</h3>
           <div class="row features">
             <div class="col-sm-4">
-              <img src="../static/design/images/icons/retina-ready-s@2x.png" alt="" width="117" height="104">
-              <h6>Block Model</h6>
+              <img src="../static/design/images/icons/Pensils@2x.png" alt="" width="117" height="104">
+              <h6>Do well in Tests</h6>
               <p>You can easily combine any components in a variety of design projects. It’s easy!</p>
             </div>
             <div class="col-sm-4">
-              <img src="../static/design/images/icons/clock@2x.png" alt="" width="104" height="104">
-              <h6>Multi-components</h6>
+              <img src="../static/design/images/icons/Clipboard@2x.png" alt="" width="104" height="104">
+              <h6>Interviews</h6>
               <p>There are a lot of different blocks that will help you to make a perfect project.</p>
             </div>
             <div class="col-sm-4">
-              <img src="../static/design/images/icons/rocket-big-grey-bg@2x.png" alt="" width="101" height="101">
-              <h6>Save Your Time</h6>
+              <img src="../static/design/images/icons/Pocket@2x.png" alt="" width="101" height="101">
+              <h6>Pocket Book</h6>
               <p>Use your time for generating new ideas for your startup. Take a break from the routine.</p>
             </div>
           </div>
@@ -131,14 +116,14 @@
         <div>
           <div class="container">
             <div class="img">
-              <img src="../static/design/images/content/img-1@2x.png" alt="">
+              <img src="../static/design/images/content/ps-wire-imac@2x.png" alt="">
             </div>
-            <h3>Take a look to our amazing Kit</h3>
+            <h3 style="font-family:serif">THINK WITH YOUR CLASS</h3>
             <div class="row">
               <div class="col-sm-6 col-sm-offset-3">
-                <p>We have a great surprise for Designmodo fans – our first free HTML user interface kit. Flat UI Free is made on the basis of Twitter Bootstrap in a stunning flat-style.
+                <p>Collaborate better with your classmates using the app. Accelerate your learning powered by the different perspectives of your class.
                 </p>
-                <a class="btn btn-large btn-clear" href="#">TRY IT NOW</a>
+                <a class="btn btn-large btn-clear" href="/play/">TRY IT NOW</a>
               </div>
             </div>
           </div>
@@ -147,57 +132,37 @@
 
     <section class="projects-4">
         <div class="container">
-          <h3>We love what we do. <br> This is features of our products</h3>
-          <div class="projects row">
-            <div class="project-wrapper col-sm-3">
-              <div class="project">
-                <div class="photo-wrapper bg-alizarin">
-                  <div class="photo"></div>
-                  <a href="#" class="overlay"><span class="fui-eye"></span></a>
-                </div>
-                <div class="info">
-                  <a href="#" class="name color-pomegranate">Polaris UI</a>
-2012
-                </div>
-              </div>
-            </div>
-            <div class="project-wrapper col-sm-3">
-              <div class="project">
-                <div class="photo-wrapper bg-sun-flower">
-                  <div class="photo"></div>
-                  <a href="#" class="overlay"><span class="fui-mic"></span></a>
-                </div>
-                <div class="info">
-                  <a href="#" class="name color-orange">Linecons</a>
-2012
-                </div>
-              </div>
-            </div>
-            <div class="project-wrapper col-sm-3">
-              <div class="project">
-                <div class="photo-wrapper bg-peter-river">
-                  <div class="photo"></div>
-                  <a href="#" class="overlay"><span class="fui-cmd"></span></a>
-                </div>
-                <div class="info">
-                  <a href="#" class="name color-belize-hole">Flat UI Pro</a>
-2012
-                </div>
-              </div>
-            </div>
-            <div class="project-wrapper col-sm-3">
-              <div class="project">
-                <div class="photo-wrapper bg-turquoise">
-                  <div class="photo"></div>
-                  <a href="#" class="overlay"><span class="fui-user"></span></a>
-                </div>
-                <div class="info">
-                  <a href="#" class="name color-green-sea">Startup Kit</a href="#">
-                        2012
-                    </div>
-                </div>
-            </div>
-        </div>
+          <h3 id="trending">TRENDING TAKEAWAYS</h3>
+          <div class="flip-container col-sm-4">
+  <div class="flipper">
+    <div class="front" style="background-color:#e74c3c;color:#fff">
+      <span class="course">STRATEGIC DESIGN ANALYSIS</span>
+    </div>
+    <div class="back">
+      <p>Companies hedge non-core items ( global firms hedging currency) and take risks in core operations. Individual are risk averse, insurance companies are risk-neutral</p>
+    </div>
+  </div>
+</div>
+             <div class="flip-container col-sm-4">
+  <div class="flipper">
+    <div class="front" style="background-color:#f1c40f;color:#fff">
+      <span class="course">INVESTMENT BANKING</span>
+    </div>
+    <div class="back" style="background-color:green">
+      <p>Growth is not always good. For growth to be beneficial it has to be at least be equal to Weighted Average Cost of Capital (WACC).</p>
+    </div>
+  </div>
+</div>
+             <div class="flip-container col-sm-4">
+  <div class="flipper">
+    <div class="front" style="background-color:#3498db;color:#fff">
+      <span class="course">APPLIED ENTERPRENEURSHIP</span>
+    </div>
+    <div class="back" style="background-color:#3b5998">
+      <p>76% of consumers do not believe advertising to be truthful. 99% of the ads seen by a consumer are forgotten within the first hour. Given these odds, marketing messaging needs to stand out !</p>
+    </div>
+  </div>
+</div>
     </div>
     <!--/.container-->
 </section>
@@ -279,22 +244,32 @@
         </div>
         <!--/.container-->
       </section>
-
-      <footer class="footer-5 bg-wet-asphalt">
+      <section class="contacts-4">
         <div class="container">
-          <a class="brand" href="#">
-            <span class="glyphicon glyphicon-pencil" style="color:#f88529;width="35"; height="35""></span> 
-          </a>
-          <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
-              <div class="text">Startup Framework will help you to find an awesome form for your
-                <br/>startup project in a short time</div>
+          <div class="content">
+            <div class="social-btns">
+              <a href="#">
+                <div class="fui-twitter"></div>
+                <div class="fui-twitter"></div>
+              </a>
+              <a href="#">
+                <div class="fui-facebook"></div>
+                <div class="fui-facebook"></div>
+              </a>
+              <a href="#">
+                <div class="fui-vimeo"></div>
+                <div class="fui-vimeo"></div>
+              </a>
+            </div>
+            <h3>Get in touch with us</h3>
+            <p>As a Harvard professor, he was one of the first to
+              <br class="hidden-phone">explore the relationship in equilibrium.</p>
+            <div class="links">
+              <a href="#">takeawayPro.com</a>
             </div>
           </div>
-          <a class="btn btn-small" href="#"><span class="fui-twitter"> </span> Follow @Designmodo</a>
         </div>
-      </footer>
-      <div class="delimiter-big"></div>
+      </section>
 
     <script src="../static/design/js/common-files/jquery-1.10.2.min.js">
     </script>
