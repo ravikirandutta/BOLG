@@ -1207,16 +1207,6 @@ section * {
   .header-2-sub .btns .btn + .btn {
     margin-left: 0;
   }
-  #feature{
-  font-family:serif;
-  margin-top:10px;
-  font-size:5px;
-  transition-property: background, border-radius;
-  transition-duration: 1s;
-  transition-timing-function: linear;
-  border-radius: 5px 20px 5px;
-  -webkit-transition: all 0.7s ease-in-out;
-}
 }
 .header-2-sub .btn.btn-inverse {
   background-color: #3c556e;
@@ -1308,7 +1298,6 @@ section * {
   -webkit-transition-duration: 500ms;
   -webkit-transition-timing-function: ease-out;
   }
-
   #takeaways{
     width:100%;
   }
@@ -1414,6 +1403,7 @@ section * {
 
 .back p {
   position: absolute;
+  bottom: 40px;
   left: 0;
   right: 0;
   text-align: center;
