@@ -1207,6 +1207,16 @@ section * {
   .header-2-sub .btns .btn + .btn {
     margin-left: 0;
   }
+  #feature{
+  font-family:serif;
+  margin-top:10px;
+  font-size:5px;
+  transition-property: background, border-radius;
+  transition-duration: 1s;
+  transition-timing-function: linear;
+  border-radius: 5px 20px 5px;
+  -webkit-transition: all 0.7s ease-in-out;
+}
 }
 .header-2-sub .btn.btn-inverse {
   background-color: #3c556e;
@@ -1234,7 +1244,7 @@ section * {
   font-size: 70px;
   font-family: serif;
   font-weight: bolder;
-  background: -webkit-linear-gradient(#F6B124, #08E9F1);
+  background: -webkit-linear-gradient(#3498db, #f1c40f);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -webkit-transition: all 1.0s ease-in-out;
@@ -1262,6 +1272,10 @@ section * {
   font-size: 35px;
   font-style: italic;
   font-weight: bold;
+  background: -webkit-linear-gradient(#3498db, #f1c40f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-transition: all 1.0s ease-in-out;
 }
 #trending{
   font-family: serif;
@@ -1269,6 +1283,10 @@ section * {
   font-style: italic;
   font-weight: bold;
   -webkit-transition: all 0.3s ease-in-out;
+  background: -webkit-linear-gradient(#F6B124, #08E9F1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-transition: all 1.0s ease-in-out;
 }
 #nav-menu li a{
     color:#fff;
@@ -1290,6 +1308,7 @@ section * {
   -webkit-transition-duration: 500ms;
   -webkit-transition-timing-function: ease-out;
   }
+
   #takeaways{
     width:100%;
   }
@@ -1318,7 +1337,7 @@ section * {
   text-align: center;
 }
 .flip-container, .back {
-  width: 300px;
+  width: 280px;
   height: 300px;
 }
 
@@ -1395,7 +1414,6 @@ section * {
 
 .back p {
   position: absolute;
-  bottom: 40px;
   left: 0;
   right: 0;
   text-align: center;
