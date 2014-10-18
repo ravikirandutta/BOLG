@@ -18,20 +18,34 @@ from django.db.models import Sum
 import pdb
 from settings import *
 import math
+from django.db.models import Sum,Count
+from datetime import datetime, timedelta
+from django.core.mail import send_mail
+from registration.backends.default.views import RegistrationView
+from forms import TakeawayProfileRegistrationForm
+from notifications.models import Notification
 
-
-# test dynamic HTML
 def test(request):
-    l = ['ravi posted on c1','tluri posted on c1']
+    user_list = EmailSettings.objects.all() #filter(mail_when_takeaway=2)
+    for setting in user_list:
+        user= setting.user
+        timestamp_to = datetime.now().date() - timedelta(days=6)
+        notif_list =Notification.objects.filter(recipient=user).filter(verb='NEW_TAKEAWAY') #.filter(timestamp__gte = timestamp_to)
+        agg_list = notif_list.order_by().values('description').annotate(takeaway_count= Count('id'))
+        email_subject = " MBATakeaways Digest for " + str(datetime.now().date())
+        
+        email_message = []
+        email_message .append("Hi " + user.first_name)
+        for summary in agg_list:
+            email_message .append( 'There are ' + str(summary['takeaway_count'])  + ' takeaways in the course ' + summary['description'] )
+        email_message.append(' If you want instant email when new takeaways are posted or donot wish an email at all please change your settings in your profile on www.mbatakeaways.com')
+        final_message = "\n".join(item for item in email_message)
+        print final_message
+        recipients = [user.email]
+        #send_mail(email_subject, final_message, 'support@mbatakeaways.com', recipients)
 
-    print '<table>'
-    for sublist in l:
-        print '  <tr><td>'
-        print '    </td><td>'  + sublist
-        print '  </td></tr>'
-    print '</table>'
-    return HttpResponse( "Successfully Loaded init data")
 
+    return HttpResponse( final_message )
 # Create your views here.
 
 from rest_framework.decorators import *
