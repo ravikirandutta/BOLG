@@ -1,6 +1,6 @@
 
 (function() {
-  var app = angular.module('takeAwayDashboard', ['ngCookies', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput','ui.tinymce','ui.bootstrap']).run(function($http, $cookies) {
+  var app = angular.module('takeAwayDashboard', ['duScroll','ngCookies', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput','ui.tinymce','ui.bootstrap']).run(function($http, $cookies) {
 
     $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
     $http.defaults.headers.common['Content-Type'] = "application/json";
@@ -286,7 +286,7 @@ app.factory('CourseDataFactory',function(){
 
 });
 
-app.factory('SessionsDataFactory',function(TagsDataFactory, TagsFactory, $cookies){
+app.factory('SessionsDataFactory',function(TagsDataFactory, TagsFactory, $cookies, $location, $timeout,$anchorScroll,$document){
 
   var sessionsData = {};
 
@@ -317,7 +317,8 @@ app.factory('SessionsDataFactory',function(TagsDataFactory, TagsFactory, $cookie
                 takeaway.isOwner = true;
                 takeaway.courseInstance = {};
                 takeaway.courseInstance.id = session.courseInstance.id;
-                takeaway.session = session;
+                takeaway.session = {};
+                takeaway.session.id= session.id;
                 takeaway.session.courseInstance = session.courseInstance.id;
                 takeaway.user = {};
                 takeaway.user.id = $cookies.userid;
@@ -331,6 +332,16 @@ app.factory('SessionsDataFactory',function(TagsDataFactory, TagsFactory, $cookie
            function(){
 
            });
+
+    $timeout(function(){
+      var container = angular.element(document.getElementById('takeaway-container'));
+      var section2 = angular.element(document.getElementById(takeaway.id));
+      //container.scrollTo(section2, 0, 1000);
+      $document.scrollToElementAnimated(section2, 100);
+    }, 3000);
+
+
+
 
 
     },

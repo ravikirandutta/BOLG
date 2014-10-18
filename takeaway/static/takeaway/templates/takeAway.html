@@ -80,7 +80,7 @@
 
                                 <div collapse="isCollapsed">
                                   <hr>
-                                  <div class="well well-lg" ng-repeat="x in comments">{{ x.notes }}   - by {{ x.username}} {{x.updated_dt}}</div>
+                                  <div class="well well-lg" ng-repeat="x in comments">{{ x.notes }}   - by {{ x.username}} on {{x.updated_dt | date:"MM/dd/yyyy  h:mma"}}</div>
 
                                   <input type="textarea" ng-model="myComment" >
                                   <button class="btn btn-default" ng-click="saveComment(taset)">Add comment</button>
@@ -92,7 +92,7 @@
 
 
                             <div id="{{sessionsresult.id}}_{{taset.id}}_edit" style="display: none;height:310px;">
-                              <textarea rows="5" data-ui-tinymce data-ng-model="taset.notes" class="form-control" id="{{sessionsresult.id}}_{{taset.id}}_notes"></textarea>
+                              <textarea rows="5" data-ng-model="taset.notes" class="form-control" id="{{sessionsresult.id}}_{{taset.id}}_notes"></textarea>
                               <br/>
 
 
