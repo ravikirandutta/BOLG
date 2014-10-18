@@ -338,7 +338,7 @@ app.factory('SessionsDataFactory',function(TagsDataFactory, TagsFactory, $cookie
       var section2 = angular.element(document.getElementById(takeaway.id));
       //container.scrollTo(section2, 0, 1000);
       $document.scrollToElementAnimated(section2, 100);
-    }, 3000);
+    }, 500);
 
 
 
