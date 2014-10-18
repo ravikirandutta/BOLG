@@ -57,7 +57,7 @@
                                   </span>
                                   <span style="width:2px">&nbsp;</span>
                                 </span>
-                      <a  class="btn btn-default" id="btnfav" ng-controller="FavoriteController" ng-class="{btn-success:select}" ng-click="filterFavorites()">  My Favorites </a>
+                      <a  class="btn btn-default" id="btnfav" ng-controller="FavoriteController"  ng-click="filterFavorites()">  My Favorites </a>
 
         <br/>
       </div>
@@ -66,11 +66,11 @@
 
 
 
-      <div class="col-md-6" id="takeaway-container">
+      <div class="col-md-6" id="takeaway-container" du-scroll-container>
 
         <!-- session display -->
       <div ng-show="displaysessions">
-        <div ng-repeat="sessionsresult in sessions.results">
+        <div ng-repeat="sessionsresult in sessionsData">
            <session></session>
          </div>
       </div>
@@ -83,7 +83,7 @@
     <div id="create-takeaway-container" class="ngdialog-message">
       <h5>New Takeaway for {{sessionsresult.session_name}}</h5>
       <div class="row1">
-        <textarea rows="5" data-ui-tinymce data-ng-model="newTakeawayContent" class="form-control" id="notes"></textarea>
+        <textarea rows="5"  data-ng-model="newTakeawayContent" class="form-control" id="notes"></textarea>
       </div>
 
      <div ng-controller="TagController">
