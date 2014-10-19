@@ -288,10 +288,18 @@ class TakeAwayList(TakeAwayCreateModelMixin,generics.ListCreateAPIView):
     queryset = TakeAway.objects.all()
     serializer_class = TakeAwaySerializer
     filter_backends = (filters.DjangoFilterBackend,)
-    filter_fields = ('user', 'is_public')
+    filter_fields = ('user', 'is_public',)
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
     paginate_by = 100
 
+    def get_queryset(self):
+
+            queryset = TakeAway.objects.all()
+            school  = self.request.QUERY_PARAMS.get('school', None)
+            if school > 0:
+                queryset = queryset.filter(courseInstance = CourseInstance.objects.filter(course= Course.objects.filter(school=School.objects.get(id=school))))
+
+            return queryset
 
 
 	           	# def get_queryset(self):
@@ -320,6 +328,7 @@ class TakeAwayRegistrationView(RegistrationView):
         login(request,user)
         request.session['userid'] = user.id
         return ('/takeaways/index', (), {})
+
 
 
 class NotificationViewSet(viewsets.ModelViewSet):
@@ -444,7 +453,7 @@ class TakeAwayProfileViewSet(viewsets.ModelViewSet):
         queryset = TakeAwayProfile.objects.all()
         serializer_class = TakeAwayProfileSerializer
         filter_backends = (filters.DjangoFilterBackend,)
-        filter_fields = ('id','user',)
+        filter_fields = ('id','user','school')
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
         def post_save(self, obj, created=False):
