@@ -87,7 +87,7 @@
       </div>
 
      <div ng-controller="TagController">
-    <tags-input  placeholder="Add a Tag by typing it" ng-model="tags" display-property="name"  on-tag-added="tagAddedInEditTakeaway($tag)">
+    <tags-input  placeholder="Add a Tag by typing it" ng-model="tags" display-property="name"  on-tag-added="tagAdded($tag)">
        <auto-complete source="loadTags($query)"></auto-complete>
     </tags-input>
     </div>

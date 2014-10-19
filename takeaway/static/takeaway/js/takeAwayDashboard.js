@@ -302,13 +302,12 @@ app.factory('SessionsDataFactory',function(TagsDataFactory, TagsFactory, $cookie
 
     addTakeAwayToSessions: function(takeaway){
 
-          TagsDataFactory.getTags();
-          TagsFactory.query().$promise.then(function(data){
-            TagsDataFactory.setTags(data.results);
+
 
             var tags = [];
           angular.forEach(takeaway.tags, function(tag){
-              tags.push(TagsDataFactory.getTagForId(tag));
+              var tagForId = TagsDataFactory.getTagForId(tag);
+              tags.push(tagForId);
           });
           takeaway.tags = tags;
 
@@ -328,10 +327,6 @@ app.factory('SessionsDataFactory',function(TagsDataFactory, TagsFactory, $cookie
               }
           });
 
-          },
-           function(){
-
-           });
 
     $timeout(function(){
       var container = angular.element(document.getElementById('takeaway-container'));
@@ -382,6 +377,9 @@ app.factory('TagsDataFactory', function(TagsFactory){
         },
         setTags: function(tagsData){
             tagsData = tagsData;
+        },
+        addTag: function(tag){
+          tagsData.push(tag.toJSON());
         },
          getTags : function(){
             TagsFactory.query().$promise.then(function(data){
@@ -607,7 +605,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
   app.controller('takeawayDashboardCtrl',
     function($scope, $http, $cookies, $q, $resource, $sce, $rootScope,
      LeaderboardFactory, UserPermission, CoursesFactory, SessionsFactory, ngDialog,TakeAwayFactory,
-      RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter, CourseDataFactory,CriteriaService,SessionsDataFactory) {
+      RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter, CourseDataFactory,CriteriaService,SessionsDataFactory, TagsDataFactory) {
 
     console.log("loading takeawayDashboardCtrl");
     $scope.rate = 7;
@@ -807,6 +805,8 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
 
       SessionsDataFactory.setSessionData($scope.sessions);
       //alert("done"+$scope.sessions.results.length);
+      TagsDataFactory.getTags();
+
 
       $scope.sessionsData = SessionsDataFactory.getSessionData();
     }
@@ -892,7 +892,7 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
 
 
 
-app.controller('TagController', function ($scope,$q, TagsFactory,CriteriaService) {
+app.controller('TagController', function ($scope,$q, TagsFactory,CriteriaService, TagsDataFactory) {
 
    $scope.tags = [];
   $scope.availableTags = {};
@@ -906,26 +906,6 @@ app.controller('TagController', function ($scope,$q, TagsFactory,CriteriaService
       return deferred.promise;
   };
 
-  $scope.tagAdded = function(tag){
-
-      if(!tag.id){
-        TagsFactory.query({"name":tag.name}).$promise.then(function(data){
-            if(data.count ==1){
-              var length = $scope.tags.length;
-              $scope.tags.splice(length-1,1);
-              $scope.tags.push(data.results[0]);
-            }else{
-                TagsFactory.save({"name":tag.name}).$promise.then(function(data){
-                    var length = $scope.tags.length;
-                    $scope.tags.splice(length-1,1);
-                    $scope.tags.push(data);
-
-                });
-            }
-        });
-      }
-    $scope.taset.tags = $scope.tags;
-  };
 
 
 $scope.tagSearch = function(){
@@ -939,7 +919,7 @@ $scope.removeTagFromSearchCriteria = function(){
   CriteriaService.removeTagFromSearchCriteria($scope.tag);
 };
 
-$scope.tagAddedInEditTakeaway = function(tag){
+$scope.tagAdded = function(tag){
       if(!tag.id){
         TagsFactory.query({"name":tag.name}).$promise.then(function(data){
             if(data.count ==1){
@@ -948,6 +928,7 @@ $scope.tagAddedInEditTakeaway = function(tag){
               $scope.taset.tags.push(data.results[0]);
             }else{
                 TagsFactory.save({"name":tag.name}).$promise.then(function(data){
+                    TagsDataFactory.addTag(data);
                     var length = $scope.tags.length;
                     $scope.taset.tags.splice(length-1,1);
 

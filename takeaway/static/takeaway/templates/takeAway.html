@@ -114,7 +114,7 @@
                                 </span>
                 -->
                                 <tags-input  placeholder="Add a Tag by typing it" ng-model="taset.tags" display-property="name"
-                                on-tag-added="tagAddedInEditTakeaway($tag)">
+                                on-tag-added="tagAdded($tag)">
                                       <auto-complete source="loadTags($query)"></auto-complete>
                                 </tags-input>
 
