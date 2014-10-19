@@ -25,8 +25,10 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 
 ADMINS = (
-      ('RAVI', 'ravi.dutta@gmail.com'),
-      ('Sagar','f2003484@gmail.com')
+      ('Ravi', 'ravi.dutta@gmail.com'),
+      ('Sagar','f2003484@gmail.com'),
+      ('Suresh','suresh.atluri@gmail.com'),
+      ('Keerthi','keerthivarre@gmail.com'),
 )
 
 

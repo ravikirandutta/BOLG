@@ -7,7 +7,7 @@
             <div class="sidebar-inner">
 
                 <ul id="side-course-list" class="navi">
-                    <li class="has_submenu open current" ng-class="isCurrentCourseSelected()?'course-selected':'ourblue'" id="courses" ng-repeat="courseInstance in availableCourses.results" ng-class="selected" ng-controller="CourseController" ng-click="freshLoadOfSessions(courseresult.course.id)"><a   href="#" ><i class="fa fa-book"></i> <b>{{courseInstance.course.course_name}}</b><i class="fa fa-check-circle" style="margin-left:10px;" ng-show= "isCurrentCourseSelected()"></i></a>
+                    <li class="has_submenu open current" ng-class="isCurrentCourseSelected()?'course-selected':'ourblue'" id="courses" ng-repeat="courseInstance in availableCourses.results" ng-class="selected" ng-controller="CourseController" ng-click="freshLoadOfSessions()"><a   href="#" ><i class="fa fa-book"></i> <b>{{courseInstance.course.course_name}}</b><i class="fa fa-check-circle" style="margin-left:10px;" ng-show= "isCurrentCourseSelected()"></i></a>
                     <ul ng-show="isCurrentCourseSelected()">
                       <li>
                         <a href="#"  ng-click="showLeaderBoard()" ><span class="fa fa-list-ol"></span> Leader Board</a>
@@ -83,7 +83,8 @@
     <div id="create-takeaway-container" class="ngdialog-message">
       <h5>New Takeaway for {{sessionsresult.session_name}}</h5>
       <div class="row1">
-        <textarea rows="5"  data-ng-model="newTakeawayContent" class="form-control" id="notes"></textarea>
+        <!-- textarea text-angular rows="5"  data-ng-model="newTakeawayContent" class="form-control" id="notes"></textarea -->
+        <text-angular ta-toolbar="[['bold','italics','underline','ul','ol'],['undo','redo','clear','justifyLeft','justifyCenter','justifyRight','indent','outdent']]" ng-model="newTakeawayContent"></text-angular>
       </div>
 
      <div ng-controller="TagController">
