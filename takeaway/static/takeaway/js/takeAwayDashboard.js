@@ -252,10 +252,10 @@ app.factory('CourseDataFactory',function(){
 
   var defaultCourseSet = false;
   var data = [];
-  var currentCourse ;
+  var currentCourseInstance ;
  var service = {};
    service.setCurrentCourse = function(course){
-       currentCourse = course;
+       currentCourseInstance = course;
   };
 
    service.setUserCanPost= function(course, userCanPost){
@@ -278,7 +278,7 @@ app.factory('CourseDataFactory',function(){
 
 
   service.getCurrentCourse = function(){
-      return currentCourse;
+      return currentCourseInstance;
   };
       service.findIfUserCanPost= function(currentCourse){
         return !(data[currentCourse].userPermissionDetail.remaining_rating_count_till_create > 0);
@@ -477,7 +477,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
     }
 
     $scope.isCurrentCourseSelected = function(){
-      return $scope.courseInstance.course.id==CourseDataFactory.getCurrentCourse();
+      return $scope.courseInstance.id==CourseDataFactory.getCurrentCourse();
     };
 
 
