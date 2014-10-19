@@ -1,6 +1,6 @@
 
 (function() {
-  var app = angular.module('takeAwayDashboard', ['ngCookies', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput','ui.tinymce','ui.bootstrap']).run(function($http, $cookies) {
+  var app = angular.module('takeAwayDashboard', ['duScroll','ngCookies', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput','ui.tinymce','ui.bootstrap','textAngular']).run(function($http, $cookies) {
 
     $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
     $http.defaults.headers.common['Content-Type'] = "application/json";
@@ -185,7 +185,7 @@ app.directive('session', function() {
           method: 'POST'
         },
         remove: {
-          url: '/favorites/:id',
+          url: '/favorites/:id/',
           method: 'DELETE'
         }
       });
@@ -250,11 +250,12 @@ app.factory('CriteriaService',function(){
 
 app.factory('CourseDataFactory',function(){
 
+  var defaultCourseSet = false;
   var data = [];
-  var currentCourse ;
+  var currentCourseInstance ;
  var service = {};
    service.setCurrentCourse = function(course){
-       currentCourse = course;
+       currentCourseInstance = course;
   };
 
    service.setUserCanPost= function(course, userCanPost){
@@ -267,26 +268,140 @@ app.factory('CourseDataFactory',function(){
          if (!data[course]){
             data[course] = {};
          }
-         data[course].userPermisssionDetail = userPermissionDetail;
+         data[course].userPermissionDetail = {};
+         data[course].userPermissionDetail.remaining_rating_count_till_create = userPermissionDetail.remaining_rating_count_till_create;
       };
 
+   service.decrementRatingCountNeededToCreateTakeaway = function(){
+      data[currentCourseInstance].userPermissionDetail.remaining_rating_count_till_create =  data[currentCourseInstance].userPermissionDetail.remaining_rating_count_till_create -1;
+   };
 
 
   service.getCurrentCourse = function(){
-      return currentCourse;
+      return currentCourseInstance;
   };
       service.findIfUserCanPost= function(currentCourse){
-        return data[currentCourse].userCanPost;
+        return !(data[currentCourse].userPermissionDetail.remaining_rating_count_till_create > 0);
       };
       service.findUserPermissionDetail = function(currentCourse){
-        return data[currentCourse].userPermisssionDetail;
+        return data[currentCourse].userPermissionDetail;
       };
 
+      service.setDefaultCourse = function(){
+          defaultCourseSet = true;
+      }
+      service.getDefaultCourse = function(){
+          return defaultCourseSet
+      }
  return service;
 
 });
 
-app.controller('FavoriteController',function($scope,$cookies, FavoritesFactory, CriteriaService){
+app.factory('SessionsDataFactory',function(TagsDataFactory, TagsFactory, $cookies, $location, $timeout,$anchorScroll,$document){
+
+  var sessionsData = {};
+
+  return {
+
+    setSessionData: function(sessions){
+        sessionData = sessions.results;
+    },
+
+    getSessionData: function(){
+        return sessionData;
+    },
+
+    addTakeAwayToSessions: function(takeaway){
+
+
+
+            var tags = [];
+          angular.forEach(takeaway.tags, function(tag){
+              var tagForId = TagsDataFactory.getTagForId(tag);
+              tags.push(tagForId);
+          });
+          takeaway.tags = tags;
+
+          angular.forEach(sessionData, function(session){
+              if(session.id === takeaway.session){
+                takeaway.isOwner = true;
+                takeaway.courseInstance = {};
+                takeaway.courseInstance.id = session.courseInstance.id;
+                takeaway.session = {};
+                takeaway.session.id= session.id;
+                takeaway.session.courseInstance = session.courseInstance.id;
+                takeaway.user = {};
+                takeaway.user.id = $cookies.userid;
+                var localizedTime = $.localtime.toLocalTime(takeaway.created_dt,'MM/dd/yy HH:mm');
+                takeaway.created_dt = localizedTime;
+                session.takeaway_set.push(takeaway);
+              }
+          });
+
+
+    $timeout(function(){
+      var container = angular.element(document.getElementById('takeaway-container'));
+      var section2 = angular.element(document.getElementById(takeaway.id));
+      //container.scrollTo(section2, 0, 1000);
+      $document.scrollToElementAnimated(section2, 100);
+    }, 500);
+
+
+
+
+
+    },
+
+    removeTakeawayFromSessions: function(takeaway){
+          angular.forEach(sessionData, function(session){
+              if(session.id === takeaway.session.id){
+                  var index =0;
+                  angular.forEach(session.takeaway_set, function(takeawayObject){
+                      if(takeaway.id === takeawayObject.id){
+                          session.takeaway_set.splice(index, index+1);
+                      }
+                      index++;
+                  });
+              }
+          });
+    }
+
+  }
+
+});
+
+
+app.factory('TagsDataFactory', function(TagsFactory){
+      var tagsData = [];
+
+
+      return {
+
+        getTagForId : function(id){
+          var tagFound;
+          angular.forEach(tagsData, function(tag){
+              if(tag.id ===id){
+                  tagFound = tag;
+              }
+          });
+          return tagFound;
+        },
+        setTags: function(tagsData){
+            tagsData = tagsData;
+        },
+        addTag: function(tag){
+          tagsData.push(tag.toJSON());
+        },
+         getTags : function(){
+            TagsFactory.query().$promise.then(function(data){
+                tagsData = data.results;
+            },
+        function(){});
+         }
+      }
+});
+
+app.controller('FavoriteController',function($scope,$cookies, FavoritesFactory, CriteriaService ){
   $scope.makeFavourite = function(taset) {
 
       if(taset.isFavourite) {
@@ -350,7 +465,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
     $scope.freshLoadOfSessions = function(){
       //$scope.displaysessions = false;
-      var courseid = $scope.courseInstance.course.id;
+      var courseid = $scope.courseInstance.id;
       $scope.loadCourses(courseid);
       $scope.highLightSelectedCourse(courseid);
       $scope.getUserPermission(courseid);
@@ -360,6 +475,20 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
     $scope.getDisplayedCourse = function(){
       return CourseDataFactory.getCurrentCourse();
     }
+
+    $scope.isCurrentCourseSelected = function(){
+      return $scope.courseInstance.id==CourseDataFactory.getCurrentCourse();
+    };
+
+
+    angular.element(document).ready(function () {
+        if (!CourseDataFactory.getDefaultCourse()){
+          $scope.freshLoadOfSessions();
+          CourseDataFactory.setDefaultCourse();
+        }
+
+    });
+
 
 });
 
@@ -392,7 +521,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
     $scope.newTakeaway = function () {
 
-      $scope.taset = {is_public : true};
+      $scope.taset = {is_public : true, tags:[]};
       var currentCourse = CourseDataFactory.getCurrentCourse();
       var userCanPost = CourseDataFactory.findIfUserCanPost(currentCourse);
       $scope.userPermissionDetail = CourseDataFactory.findUserPermissionDetail(currentCourse);
@@ -421,7 +550,8 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
 
 
- app.controller('TakeAwayController', function ($scope,$sce,$cookies, TakeAwayFactory, RatingFactory,FavoritesFactory,TakeAwayConverter, ngDialog) {
+ app.controller('TakeAwayController', function ($scope,$sce,$cookies, TakeAwayFactory, RatingFactory,
+                                                FavoritesFactory,TakeAwayConverter, ngDialog, SessionsDataFactory, CourseDataFactory) {
 
   $scope.makeEditable = function(divId, notes) {
       document.getElementById(divId + "_view").style.display = "none";
@@ -435,8 +565,10 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
         TakeAwayFactory.remove({id:taset.id}).$promise.then(
             function(data, status, headers, config) {
+      SessionsDataFactory.removeTakeawayFromSessions(taset);
+
           console.log('Takeaway Successfully deleted, now refresh the page');
-          $scope.freshLoadOfSessions(taset.courseInstance.id);
+          //$scope.freshLoadOfSessions(taset.courseInstance.id);
         },
         function(data, status, headers, config) {
           $scope.status = status;
@@ -448,7 +580,10 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
    $scope.rated = function(id, rating, alreadyRated){
       if(!alreadyRated)
         {
-           RatingFactory.save({takeaway:id,rating_value:rating,user:$cookies.userid});
+           RatingFactory.save({takeaway:id,rating_value:rating,user:$cookies.userid}).$promise.then(function(){
+
+            CourseDataFactory.decrementRatingCountNeededToCreateTakeaway();
+           },function(){});
         }
   };
 
@@ -478,7 +613,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
           TakeAwayFactory.update({id:taset.id},modifiedTakeawayObj).$promise
           .then(function(data, status, headers, config) {
         //We need refresh only updated takeaway instead of loading all courses sessions
-        $scope.freshLoadOfSessions(taset.courseInstance.id);
+        //$scope.freshLoadOfSessions(taset.courseInstance.id);
         console.log("loading all courses sessions after successfull edit");
       },function(data, status, headers, config) {
         $scope.status = status;
@@ -498,7 +633,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
   app.controller('takeawayDashboardCtrl',
     function($scope, $http, $cookies, $q, $resource, $sce, $rootScope,
      LeaderboardFactory, UserPermission, CoursesFactory, SessionsFactory, ngDialog,TakeAwayFactory,
-      RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter, CourseDataFactory,CriteriaService) {
+      RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter, CourseDataFactory,CriteriaService,SessionsDataFactory, TagsDataFactory) {
 
     console.log("loading takeawayDashboardCtrl");
     $scope.rate = 7;
@@ -696,7 +831,12 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
       });
 
 
+      SessionsDataFactory.setSessionData($scope.sessions);
       //alert("done"+$scope.sessions.results.length);
+      TagsDataFactory.getTags();
+
+
+      $scope.sessionsData = SessionsDataFactory.getSessionData();
     }
 
 
@@ -734,7 +874,7 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
 
       TakeAwayFactory.save($scope.newTakeawayObj).$promise.then(
       function(data, status, headers, config) {
-        $scope.freshLoadOfSessions(data.courseInstance);
+        SessionsDataFactory.addTakeAwayToSessions(data);
         $scope.newTakeawayContent="";
         console.log("loading all courses sessions after successfull creation"+data.courseInstance);
       },
@@ -771,16 +911,12 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
       $scope.newTakeawayContent="";
     };
 
-    /*POST to favourite */
-
-
-
 
   });
 
 
 
-app.controller('TagController', function ($scope,$q, TagsFactory,CriteriaService) {
+app.controller('TagController', function ($scope,$q, TagsFactory,CriteriaService, TagsDataFactory) {
 
    $scope.tags = [];
   $scope.availableTags = {};
@@ -794,26 +930,6 @@ app.controller('TagController', function ($scope,$q, TagsFactory,CriteriaService
       return deferred.promise;
   };
 
-  $scope.tagAdded = function(tag){
-
-      if(!tag.id){
-        TagsFactory.query({"name":tag.name}).$promise.then(function(data){
-            if(data.count ==1){
-              var length = $scope.tags.length;
-              $scope.tags.splice(length-1,1);
-              $scope.tags.push(data.results[0]);
-            }else{
-                TagsFactory.save({"name":tag.name}).$promise.then(function(data){
-                    var length = $scope.tags.length;
-                    $scope.tags.splice(length-1,1);
-                    $scope.tags.push(data);
-
-                });
-            }
-        });
-      }
-    $scope.taset.tags = $scope.tags;
-  };
 
 
 $scope.tagSearch = function(){
@@ -827,7 +943,7 @@ $scope.removeTagFromSearchCriteria = function(){
   CriteriaService.removeTagFromSearchCriteria($scope.tag);
 };
 
-$scope.tagAddedInEditTakeaway = function(tag){
+$scope.tagAdded = function(tag){
       if(!tag.id){
         TagsFactory.query({"name":tag.name}).$promise.then(function(data){
             if(data.count ==1){
@@ -836,6 +952,7 @@ $scope.tagAddedInEditTakeaway = function(tag){
               $scope.taset.tags.push(data.results[0]);
             }else{
                 TagsFactory.save({"name":tag.name}).$promise.then(function(data){
+                    TagsDataFactory.addTag(data);
                     var length = $scope.tags.length;
                     $scope.taset.tags.splice(length-1,1);
 

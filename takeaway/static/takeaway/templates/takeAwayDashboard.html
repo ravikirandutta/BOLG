@@ -7,13 +7,17 @@
             <div class="sidebar-inner">
 
                 <ul id="side-course-list" class="navi">
-                    <li class="has_submenu open ourblue current" id="selcet-classes" ng-repeat="courseInstance in availableCourses.results" ng-class="selected" ng-controller="CourseController" ng-click="freshLoadOfSessions(courseresult.course.id)"><a  ng-class="selected" class="ourblue" href="#" ><i class="fa fa-book"></i> <b>{{courseInstance.course.course_name}}</b></a>
-                    <ul ng-show="courseInstance.course.id==getDisplayedCourse()">
+                    <li class="has_submenu open current" ng-class="isCurrentCourseSelected()?'course-selected':'ourblue'" id="courses" ng-repeat="courseInstance in availableCourses.results" ng-class="selected" ng-controller="CourseController" ng-click="freshLoadOfSessions()"><a   href="#" ><i class="fa fa-book"></i> <b>{{courseInstance.course.course_name}}</b><i class="fa fa-check-circle" style="margin-left:10px;" ng-show= "isCurrentCourseSelected()"></i></a>
+                    <div collapse="!isCurrentCourseSelected()">
+
+                    <ul >
+
                       <li>
                         <a href="#"  ng-click="showLeaderBoard()" ><span class="fa fa-list-ol"></span> Leader Board</a>
 
                       </li>
                     </ul>
+                   </div>
                     </li>
 
 
@@ -57,7 +61,7 @@
                                   </span>
                                   <span style="width:2px">&nbsp;</span>
                                 </span>
-                      <a  class="btn btn-default" id="btnfav" ng-controller="FavoriteController" ng-class="{btn-success:select}" ng-click="filterFavorites()">  My Favorites </a>
+                      <a  class="btn btn-default" id="btnfav" ng-controller="FavoriteController"  ng-click="filterFavorites()">  My Favorites </a>
 
         <br/>
       </div>
@@ -66,11 +70,11 @@
 
 
 
-      <div class="col-md-6" id="takeaway-container">
+      <div class="col-md-6" id="takeaway-container" du-scroll-container>
 
         <!-- session display -->
       <div ng-show="displaysessions">
-        <div ng-repeat="sessionsresult in sessions.results">
+        <div ng-repeat="sessionsresult in sessionsData">
            <session></session>
          </div>
       </div>
@@ -83,11 +87,12 @@
     <div id="create-takeaway-container" class="ngdialog-message">
       <h5>New Takeaway for {{sessionsresult.session_name}}</h5>
       <div class="row1">
-        <textarea rows="5" data-ui-tinymce data-ng-model="newTakeawayContent" class="form-control" id="notes"></textarea>
+        <!-- textarea text-angular rows="5"  data-ng-model="newTakeawayContent" class="form-control" id="notes"></textarea -->
+        <text-angular ta-toolbar="[['bold','italics','underline','ul','ol'],['undo','redo','clear','justifyLeft','justifyCenter','justifyRight','indent','outdent']]" ng-model="newTakeawayContent"></text-angular>
       </div>
 
      <div ng-controller="TagController">
-    <tags-input  placeholder="Add a Tag by typing it" ng-model="tags" display-property="name"  on-tag-added="tagAddedInEditTakeaway($tag)">
+    <tags-input  placeholder="Add a Tag by typing it" ng-model="tags" display-property="name"  on-tag-added="tagAdded($tag)">
        <auto-complete source="loadTags($query)"></auto-complete>
     </tags-input>
     </div>
@@ -111,7 +116,7 @@
 
     </div>
     <div class="ngdialog-buttons">
-      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="ngDialog.close();"
+      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()"
       ng-dialog-class="ngdialog-theme-default" >Close</button>
     </div>
 </script>
@@ -138,7 +143,7 @@
 
     </div>
     <div class="ngdialog-buttons">
-      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="ngDialog.close();"
+      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()"
       ng-dialog-class="ngdialog-theme-default" >Close</button>
     </div>
 </script>

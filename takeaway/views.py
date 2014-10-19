@@ -18,20 +18,34 @@ from django.db.models import Sum
 import pdb
 from settings import *
 import math
+from django.db.models import Sum,Count
+from datetime import datetime, timedelta
+from django.core.mail import send_mail
+from registration.backends.simple.views import RegistrationView
+from forms import TakeawayProfileRegistrationForm
+from notifications.models import Notification
 
-
-# test dynamic HTML
 def test(request):
-    l = ['ravi posted on c1','tluri posted on c1']
+    user_list = EmailSettings.objects.all() #filter(mail_when_takeaway=2)
+    for setting in user_list:
+        user= setting.user
+        timestamp_to = datetime.now().date() - timedelta(days=6)
+        notif_list =Notification.objects.filter(recipient=user).filter(verb='NEW_TAKEAWAY') #.filter(timestamp__gte = timestamp_to)
+        agg_list = notif_list.order_by().values('description').annotate(takeaway_count= Count('id'))
+        email_subject = " MBATakeaways Digest for " + str(datetime.now().date())
 
-    print '<table>'
-    for sublist in l:
-        print '  <tr><td>'
-        print '    </td><td>'  + sublist
-        print '  </td></tr>'
-    print '</table>'
-    return HttpResponse( "Successfully Loaded init data")
+        email_message = []
+        email_message .append("Hi " + user.first_name)
+        for summary in agg_list:
+            email_message .append( 'There are ' + str(summary['takeaway_count'])  + ' takeaways in the course ' + summary['description'] )
+        email_message.append(' If you want instant email when new takeaways are posted or donot wish an email at all please change your settings in your profile on www.mbatakeaways.com')
+        final_message = "\n".join(item for item in email_message)
+        print final_message
+        recipients = [user.email]
+        #send_mail(email_subject, final_message, 'support@mbatakeaways.com', recipients)
 
+
+    return HttpResponse( final_message )
 # Create your views here.
 
 from rest_framework.decorators import *
@@ -55,7 +69,7 @@ def can_user_post(request):
     takeaway_count = entire_takeaways.count()
     rating_count = Rating.objects.filter(takeaway = entire_takeaways).filter(user=user).count()
 
-    if takeaway_count > 3 or other_takeaway_count > 0 :
+    if  other_takeaway_count > 0 :
         if Decimal(rating_count)/Decimal(other_takeaway_count) < RATING_THRESHOLD_FOR_CREATE :
             can_post = False
     remaining_rating_count = math.ceil((other_takeaway_count*0.25)-rating_count)
@@ -81,6 +95,7 @@ def index(request):
 
     # course_instance_list = CourseInstance.objects.filter(students=user)
     userid = request.session.get('userid','0')
+    print 'userid  is :' + str(userid)
     response = render_to_response("index.html",{},RequestContext(request))
     if userid is not '0':
         response.set_cookie(key='userid',value=userid)
@@ -234,6 +249,7 @@ class TagViewSet(viewsets.ModelViewSet):
         filter_backends = (filters.DjangoFilterBackend,)
         filter_fields = ('name',)
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+        paginate_by = 100
         def get_queryset(self):
 
             queryset = Tag.objects.all()
@@ -272,10 +288,18 @@ class TakeAwayList(TakeAwayCreateModelMixin,generics.ListCreateAPIView):
     queryset = TakeAway.objects.all()
     serializer_class = TakeAwaySerializer
     filter_backends = (filters.DjangoFilterBackend,)
-    filter_fields = ('user', 'is_public')
+    filter_fields = ('user', 'is_public',)
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
     paginate_by = 100
 
+    def get_queryset(self):
+
+            queryset = TakeAway.objects.all()
+            school  = self.request.QUERY_PARAMS.get('school', None)
+            if school > 0:
+                queryset = queryset.filter(courseInstance = CourseInstance.objects.filter(course= Course.objects.filter(school=School.objects.get(id=school))))
+
+            return queryset
 
 
 	           	# def get_queryset(self):
@@ -296,12 +320,16 @@ class TakeAwayDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 
-from registration.backends.default.views import RegistrationView
-from forms import TakeawayProfileRegistrationForm
-from notifications.models import Notification
 
 class TakeAwayRegistrationView(RegistrationView):
     form_class = TakeawayProfileRegistrationForm
+    #success_url = '/takeaways/index'
+    def get_success_url(self, request, user):
+        login(request,user)
+        request.session['userid'] = user.id
+        return ('/takeaways/index', (), {})
+
+
 
 class NotificationViewSet(viewsets.ModelViewSet):
         """
@@ -425,7 +453,7 @@ class TakeAwayProfileViewSet(viewsets.ModelViewSet):
         queryset = TakeAwayProfile.objects.all()
         serializer_class = TakeAwayProfileSerializer
         filter_backends = (filters.DjangoFilterBackend,)
-        filter_fields = ('id','user',)
+        filter_fields = ('id','user','school')
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
         def post_save(self, obj, created=False):

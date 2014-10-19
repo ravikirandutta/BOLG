@@ -76,11 +76,11 @@
 
 
                               <div ng-controller="CollapseCommentsCtrl">
-                                <button class="btn btn-default" ng-click="displayComments(taset)">Comments</button>
+                                <button class="btn btn-default" ng-click="displayComments(taset)">Comments({{taset.comment_count}})</button>
 
                                 <div collapse="isCollapsed">
                                   <hr>
-                                  <div class="well well-lg" ng-repeat="x in comments">{{ x.notes }}   - by {{ x.username}} {{x.updated_dt}}</div>
+                                  <div class="well well-lg" ng-repeat="x in comments">{{ x.notes }}   - by {{ x.username}} on {{x.updated_dt | date:"MM/dd/yyyy  h:mma"}}</div>
 
                                   <input type="textarea" ng-model="myComment" >
                                   <button class="btn btn-default" ng-click="saveComment(taset)">Add comment</button>
@@ -91,8 +91,14 @@
                             </div>
 
 
-                            <div id="{{sessionsresult.id}}_{{taset.id}}_edit" style="display: none;height:310px;">
-                              <textarea rows="5" data-ui-tinymce data-ng-model="taset.notes" class="form-control" id="{{sessionsresult.id}}_{{taset.id}}_notes"></textarea>
+<!--
+                            <div id="{{sessionsresult.id}}_{{taset.id}}_edit" style="display: none;height:210px;">
+                              <textarea rows="5" data-ng-model="taset.notes" class="form-control" id="{{sessionsresult.id}}_{{taset.id}}_notes"></textarea>
+-->
+                            <div id="{{sessionsresult.id}}_{{taset.id}}_edit" style="display: none;height:450px;">
+                              <!-- <textarea rows="5" data-ng-model="taset.notes" class="form-control" id="{{sessionsresult.id}}_{{taset.id}}_notes"></textarea> -->
+                              <text-angular ta-toolbar="[['bold','italics','underline','ul','ol'],['undo','redo','clear','justifyLeft','justifyCenter','justifyRight','indent','outdent']]"  ng-model="taset.notes" id="{{sessionsresult.id}}_{{taset.id}}_notes" ></text-angular>
+
                               <br/>
 
 
@@ -114,7 +120,7 @@
                                 </span>
                 -->
                                 <tags-input  placeholder="Add a Tag by typing it" ng-model="taset.tags" display-property="name"
-                                on-tag-added="tagAddedInEditTakeaway($tag)">
+                                on-tag-added="tagAdded($tag)">
                                       <auto-complete source="loadTags($query)"></auto-complete>
                                 </tags-input>
 
