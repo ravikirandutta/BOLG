@@ -563,9 +563,9 @@ form{
 
 .sidebar .sidebar-inner{
   display: block;
-  width:100%;
+  width:17%;
   margin: 0 auto;
-  position: absolute;
+  position: fixed;
   z-index: 60;
   background: #111;
 }

@@ -250,6 +250,7 @@ app.factory('CriteriaService',function(){
 
 app.factory('CourseDataFactory',function(){
 
+  var defaultCourseSet = false;
   var data = [];
   var currentCourse ;
  var service = {};
@@ -267,21 +268,31 @@ app.factory('CourseDataFactory',function(){
          if (!data[course]){
             data[course] = {};
          }
-         data[course].userPermisssionDetail = userPermissionDetail;
+         data[course].userPermissionDetail = {};
+         data[course].userPermissionDetail.remaining_rating_count_till_create = userPermissionDetail.remaining_rating_count_till_create;
       };
 
+   service.decrementRatingCountNeededToCreateTakeaway = function(){
+      data[currentCourse].userPermissionDetail.remaining_rating_count_till_create =  data[currentCourse].userPermissionDetail.remaining_rating_count_till_create -1;
+   };
 
 
   service.getCurrentCourse = function(){
       return currentCourse;
   };
       service.findIfUserCanPost= function(currentCourse){
-        return data[currentCourse].userCanPost;
+        return data[currentCourse].userPermissionDetail.remaining_rating_count_till_create == 0;
       };
       service.findUserPermissionDetail = function(currentCourse){
-        return data[currentCourse].userPermisssionDetail;
+        return data[currentCourse].userPermissionDetail;
       };
 
+      service.setDefaultCourse = function(){
+          defaultCourseSet = true;
+      }
+      service.getDefaultCourse = function(){
+          return defaultCourseSet
+      }
  return service;
 
 });
@@ -454,7 +465,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
     $scope.freshLoadOfSessions = function(){
       //$scope.displaysessions = false;
-      var courseid = $scope.courseInstance.course.id;
+      var courseid = $scope.courseInstance.id;
       $scope.loadCourses(courseid);
       $scope.highLightSelectedCourse(courseid);
       $scope.getUserPermission(courseid);
@@ -465,8 +476,17 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
       return CourseDataFactory.getCurrentCourse();
     }
 
+    $scope.isCurrentCourseSelected = function(){
+      return $scope.courseInstance.course.id==CourseDataFactory.getCurrentCourse();
+    };
+
+
     angular.element(document).ready(function () {
-        $scope.freshLoadOfSessions();
+        if (!CourseDataFactory.getDefaultCourse()){
+          $scope.freshLoadOfSessions();
+          CourseDataFactory.setDefaultCourse();
+        }
+
     });
 
 
@@ -531,7 +551,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
 
  app.controller('TakeAwayController', function ($scope,$sce,$cookies, TakeAwayFactory, RatingFactory,
-                                                FavoritesFactory,TakeAwayConverter, ngDialog, SessionsDataFactory) {
+                                                FavoritesFactory,TakeAwayConverter, ngDialog, SessionsDataFactory, CourseDataFactory) {
 
   $scope.makeEditable = function(divId, notes) {
       document.getElementById(divId + "_view").style.display = "none";
@@ -560,7 +580,10 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
    $scope.rated = function(id, rating, alreadyRated){
       if(!alreadyRated)
         {
-           RatingFactory.save({takeaway:id,rating_value:rating,user:$cookies.userid});
+           RatingFactory.save({takeaway:id,rating_value:rating,user:$cookies.userid}).$promise.then(function(){
+
+            CourseDataFactory.decrementRatingCountNeededToCreateTakeaway();
+           },function(){});
         }
   };
 
