@@ -465,6 +465,10 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
       return CourseDataFactory.getCurrentCourse();
     }
 
+    $scope.isCurrentCourseSelected = function(){
+      return $scope.courseInstance.course.id==CourseDataFactory.getCurrentCourse();
+    };
+
     angular.element(document).ready(function () {
         $scope.freshLoadOfSessions();
     });

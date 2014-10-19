@@ -81,9 +81,16 @@ font-size:15px !important;
 
 }
 
-.course-selected{
+
+
+
+
+
+ .course-selected{
     text-decoration:underline;
     text-decoration-style:double;
+    background:#A03E50 !important;
+
 }
 
 .course-deselected{
@@ -190,6 +197,8 @@ font-size:15px !important;
   background:#3b5998;
 
 }
+
+
 #edit-session-link{
   color:#000;
   margin-left:6px;
