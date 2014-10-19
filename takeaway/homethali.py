@@ -26,7 +26,7 @@ from decimal import *
 
 
 @api_view(['POST'])
-#@permission_classes((IsAuthenticated, ))
+@permission_classes(())
 def send_email_thali(request):
 
 
