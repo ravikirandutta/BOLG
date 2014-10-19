@@ -8,12 +8,14 @@
 
                 <ul id="side-course-list" class="navi">
                     <li class="has_submenu open ourblue current" id="selcet-classes" ng-repeat="courseInstance in availableCourses.results" ng-class="selected" ng-controller="CourseController" ng-click="freshLoadOfSessions(courseresult.course.id)"><a  ng-class="selected" class="ourblue" href="#" ><i class="fa fa-book"></i> <b>{{courseInstance.course.course_name}}</b></a>
-                    <ul ng-show="courseInstance.course.id==getDisplayedCourse()">
+                      <div collapse="courseInstance.course.id!=getDisplayedCourse()">
+                    <ul >
                       <li>
                         <a href="#"  ng-click="showLeaderBoard()" ><span class="fa fa-list-ol"></span> Leader Board</a>
 
                       </li>
                     </ul>
+                   </div>
                     </li>
 
 
