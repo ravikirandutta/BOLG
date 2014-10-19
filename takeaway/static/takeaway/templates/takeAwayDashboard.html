@@ -8,12 +8,16 @@
 
                 <ul id="side-course-list" class="navi">
                     <li class="has_submenu open current" ng-class="isCurrentCourseSelected()?'course-selected':'ourblue'" id="courses" ng-repeat="courseInstance in availableCourses.results" ng-class="selected" ng-controller="CourseController" ng-click="freshLoadOfSessions()"><a   href="#" ><i class="fa fa-book"></i> <b>{{courseInstance.course.course_name}}</b><i class="fa fa-check-circle" style="margin-left:10px;" ng-show= "isCurrentCourseSelected()"></i></a>
-                    <ul ng-show="isCurrentCourseSelected()">
+                    <div collapse="!isCurrentCourseSelected()">
+
+                    <ul >
+
                       <li>
                         <a href="#"  ng-click="showLeaderBoard()" ><span class="fa fa-list-ol"></span> Leader Board</a>
 
                       </li>
                     </ul>
+                   </div>
                     </li>
 
 
@@ -112,7 +116,7 @@
 
     </div>
     <div class="ngdialog-buttons">
-      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="ngDialog.close();"
+      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()"
       ng-dialog-class="ngdialog-theme-default" >Close</button>
     </div>
 </script>
