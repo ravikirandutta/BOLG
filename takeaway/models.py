@@ -367,9 +367,9 @@ def user_registered_callback(sender, user, request, **kwargs):
     profile.save()
     logger.info("Takeaway profile successfully created for user: " + user.email)
     ENVIRONMENT = os.getenv("DJANGO_ENVIRONMENT")
-    subject =  ENVIRONMENT  + 'New User Registered'
-    message = 'Checkout the New user ' + user.first_name + ' ' +  user.last_name + ' with email : ' + profile.email + '  from school : ' + profile.school.school_name 
-    + ' joined .'
+    subject =  str(ENVIRONMENT)  + 'New User Registered'
+    message = 'Checkout the New user ' + user.first_name + ' ' +  user.last_name + ' with email : ' + profile.email + '  from school : ' + str(request.POST["school"].upper())  + ' joined .'
+    print message
     mail_admins(subject, message)
 
 from django.dispatch import receiver
