@@ -94,6 +94,7 @@ urlpatterns = patterns('',
     url(r'^test/','takeaway.views.test',),
     url(r'^get_leader_board/','takeaway.views.get_leader_board',),
     url(r'^chat/','takeaway.views.Chat',name='chat'),
+    url(r'^email_thali/','takeaway.homethali.send_email_thali',),
 
 
 )
