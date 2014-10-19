@@ -185,7 +185,7 @@ app.directive('session', function() {
           method: 'POST'
         },
         remove: {
-          url: '/favorites/:id',
+          url: '/favorites/:id/',
           method: 'DELETE'
         }
       });
@@ -464,6 +464,11 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
     $scope.getDisplayedCourse = function(){
       return CourseDataFactory.getCurrentCourse();
     }
+
+    angular.element(document).ready(function () {
+        $scope.freshLoadOfSessions();
+    });
+
 
 });
 
@@ -882,10 +887,6 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
       ngDialog.close();
       $scope.newTakeawayContent="";
     };
-
-    /*POST to favourite */
-
-
 
 
   });
