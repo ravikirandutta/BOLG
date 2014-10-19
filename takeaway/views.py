@@ -21,7 +21,7 @@ import math
 from django.db.models import Sum,Count
 from datetime import datetime, timedelta
 from django.core.mail import send_mail
-from registration.backends.default.views import RegistrationView
+from registration.backends.simple.views import RegistrationView
 from forms import TakeawayProfileRegistrationForm
 from notifications.models import Notification
 
@@ -95,6 +95,7 @@ def index(request):
 
     # course_instance_list = CourseInstance.objects.filter(students=user)
     userid = request.session.get('userid','0')
+    print 'userid  is :' + str(userid)
     response = render_to_response("index.html",{},RequestContext(request))
     if userid is not '0':
         response.set_cookie(key='userid',value=userid)
@@ -287,10 +288,18 @@ class TakeAwayList(TakeAwayCreateModelMixin,generics.ListCreateAPIView):
     queryset = TakeAway.objects.all()
     serializer_class = TakeAwaySerializer
     filter_backends = (filters.DjangoFilterBackend,)
-    filter_fields = ('user', 'is_public')
+    filter_fields = ('user', 'is_public',)
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
     paginate_by = 100
 
+    def get_queryset(self):
+
+            queryset = TakeAway.objects.all()
+            school  = self.request.QUERY_PARAMS.get('school', None)
+            if school > 0:
+                queryset = queryset.filter(courseInstance = CourseInstance.objects.filter(course= Course.objects.filter(school=School.objects.get(id=school))))
+
+            return queryset
 
 
 	           	# def get_queryset(self):
@@ -311,12 +320,16 @@ class TakeAwayDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 
-from registration.backends.default.views import RegistrationView
-from forms import TakeawayProfileRegistrationForm
-from notifications.models import Notification
 
 class TakeAwayRegistrationView(RegistrationView):
     form_class = TakeawayProfileRegistrationForm
+    #success_url = '/takeaways/index'
+    def get_success_url(self, request, user):
+        login(request,user)
+        request.session['userid'] = user.id
+        return ('/takeaways/index', (), {})
+
+
 
 class NotificationViewSet(viewsets.ModelViewSet):
         """
@@ -440,7 +453,7 @@ class TakeAwayProfileViewSet(viewsets.ModelViewSet):
         queryset = TakeAwayProfile.objects.all()
         serializer_class = TakeAwayProfileSerializer
         filter_backends = (filters.DjangoFilterBackend,)
-        filter_fields = ('id','user',)
+        filter_fields = ('id','user','school')
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
         def post_save(self, obj, created=False):
