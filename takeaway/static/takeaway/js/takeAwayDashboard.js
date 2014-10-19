@@ -281,7 +281,7 @@ app.factory('CourseDataFactory',function(){
       return currentCourse;
   };
       service.findIfUserCanPost= function(currentCourse){
-        return data[currentCourse].userPermissionDetail.remaining_rating_count_till_create == 0;
+        return !(data[currentCourse].userPermissionDetail.remaining_rating_count_till_create > 0);
       };
       service.findUserPermissionDetail = function(currentCourse){
         return data[currentCourse].userPermissionDetail;
