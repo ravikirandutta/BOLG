@@ -2,6 +2,8 @@ from django.db import models
 from django.utils.encoding import smart_unicode
 from django.contrib.auth.models import User
 from django import forms
+from django.core.mail import send_mail,mail_admins
+from notifications import notify
 # Create your models here.
 
 import logging
@@ -363,6 +365,10 @@ def user_registered_callback(sender, user, request, **kwargs):
     user.save()
     profile.save()
     logger.info("Takeaway profile successfully created for user: " + user.email)
+    ENVIRONMENT = os.getenv("DJANGO_ENVIRONMENT")
+    subject =  ENVIRONMENT  + 'New User Registered'
+    message = 'Checkout the New user ' + user.first_name + ' ' +  user.last_name + ' with email : ' + profile.email + '  from school : ' + profile.school + ' joined . Batch : ' + profile.batch
+    mail_admins(subject, message)
 
 from django.dispatch import receiver
 from django.db.models.signals import post_save,pre_save
@@ -429,8 +435,7 @@ def convert_tag_to_lowercase(sender, **kwargs):
         tag = kwargs.get("instance")
         tag.name = tag.name.lower()
 
-from django.core.mail import send_mail
-from notifications import notify
+
 @receiver(post_save,sender=TakeAway)
 def create_notifications_on_takeaway(sender, **kwargs):
 
@@ -463,7 +468,7 @@ def create_notifications_on_takeaway(sender, **kwargs):
                     if email_settings.mail_when_takeaway == 1 :
                         recipients = [recipient_user.email]
                         message = 'A new public takeaway is posted in course ' + takeaway.courseInstance.course.course_name + ' by one of your classmate.View this takeaway by logging into www.mbatakeaways.com and rate it.'
-                        #send_mail('New TakeAway posted', message, 'support@mbatakeaways.com', recipients)
+                        send_mail('New TakeAway posted', message, 'support@mbatakeaways.com', recipients)
                     #pdb.set_trace()
         else:
             logger.info("private takeaway created by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)
