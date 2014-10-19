@@ -273,7 +273,7 @@ app.factory('CourseDataFactory',function(){
       };
 
    service.decrementRatingCountNeededToCreateTakeaway = function(){
-      data[currentCourse].userPermissionDetail.remaining_rating_count_till_create =  data[currentCourse].userPermissionDetail.remaining_rating_count_till_create -1;
+      data[currentCourseInstance].userPermissionDetail.remaining_rating_count_till_create =  data[currentCourseInstance].userPermissionDetail.remaining_rating_count_till_create -1;
    };
 
 
