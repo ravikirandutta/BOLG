@@ -21,7 +21,7 @@ import math
 from django.db.models import Sum,Count
 from datetime import datetime, timedelta
 from django.core.mail import send_mail
-from registration.backends.default.views import RegistrationView
+from registration.backends.simple.views import RegistrationView
 from forms import TakeawayProfileRegistrationForm
 from notifications.models import Notification
 
@@ -95,6 +95,7 @@ def index(request):
 
     # course_instance_list = CourseInstance.objects.filter(students=user)
     userid = request.session.get('userid','0')
+    print 'userid  is :' + str(userid)
     response = render_to_response("index.html",{},RequestContext(request))
     if userid is not '0':
         response.set_cookie(key='userid',value=userid)
@@ -311,12 +312,15 @@ class TakeAwayDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 
-from registration.backends.default.views import RegistrationView
-from forms import TakeawayProfileRegistrationForm
-from notifications.models import Notification
 
 class TakeAwayRegistrationView(RegistrationView):
     form_class = TakeawayProfileRegistrationForm
+    #success_url = '/takeaways/index'
+    def get_success_url(self, request, user):
+        login(request,user)
+        request.session['userid'] = user.id
+        return ('/takeaways/index', (), {})
+
 
 class NotificationViewSet(viewsets.ModelViewSet):
         """
