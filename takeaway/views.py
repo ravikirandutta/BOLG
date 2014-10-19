@@ -33,7 +33,7 @@ def test(request):
         notif_list =Notification.objects.filter(recipient=user).filter(verb='NEW_TAKEAWAY') #.filter(timestamp__gte = timestamp_to)
         agg_list = notif_list.order_by().values('description').annotate(takeaway_count= Count('id'))
         email_subject = " MBATakeaways Digest for " + str(datetime.now().date())
-        
+
         email_message = []
         email_message .append("Hi " + user.first_name)
         for summary in agg_list:
@@ -248,6 +248,7 @@ class TagViewSet(viewsets.ModelViewSet):
         filter_backends = (filters.DjangoFilterBackend,)
         filter_fields = ('name',)
         permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+        paginate_by = 100
         def get_queryset(self):
 
             queryset = Tag.objects.all()
