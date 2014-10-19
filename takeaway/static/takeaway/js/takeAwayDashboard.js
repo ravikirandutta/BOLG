@@ -1,6 +1,6 @@
 
 (function() {
-  var app = angular.module('takeAwayDashboard', ['duScroll','ngCookies', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput','ui.tinymce','ui.bootstrap']).run(function($http, $cookies) {
+  var app = angular.module('takeAwayDashboard', ['duScroll','ngCookies', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput','ui.tinymce','ui.bootstrap','textAngular']).run(function($http, $cookies) {
 
     $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
     $http.defaults.headers.common['Content-Type'] = "application/json";

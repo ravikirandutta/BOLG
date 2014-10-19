@@ -83,7 +83,8 @@
     <div id="create-takeaway-container" class="ngdialog-message">
       <h5>New Takeaway for {{sessionsresult.session_name}}</h5>
       <div class="row1">
-        <textarea rows="5"  data-ng-model="newTakeawayContent" class="form-control" id="notes"></textarea>
+        <!-- textarea text-angular rows="5"  data-ng-model="newTakeawayContent" class="form-control" id="notes"></textarea -->
+        <text-angular ng-model="newTakeawayContent"></text-angular>
       </div>
 
      <div ng-controller="TagController">
