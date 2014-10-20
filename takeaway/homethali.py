@@ -25,7 +25,7 @@ from rest_framework.decorators import *
 from decimal import *
 
 
-@api_view(['POST'])
+@api_view(['POST','GET'])
 @permission_classes(())
 def send_email_thali(request):
 
