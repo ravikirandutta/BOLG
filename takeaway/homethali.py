@@ -30,18 +30,16 @@ from decimal import *
 def send_email_thali(request):
 
 
-    email = request.QUERY_PARAMS.get('email', None)
+    email = request.POST.get('email', None)
     result = 'SUCCESS'
-    recipients = ['ravi.dutta@gmail.com','suresh.atluri@gmail.com','nagarajarao.daivam@gmail.com','f2003484@gmail.com']
+    recipients = ['ravi.dutta@gmail.com','suresh.atluri@gmail.com','nagarajarao.daivam@gmail.com','f2003484@gmail.com','varrekeerthi@gmail.com']
 
-    if email :
-    	print 'HOMTHALI CUSTOMER' + str(email )
-    	print recipients
-    	send_mail('HOMTHALI CUSTOMER', email , 'support@mbatakeaways.com', recipients)
+    if email :    	
+    	
+    	send_mail('HOME THALI POTENTIAL CUSTOMER', email , 'support@mbatakeaways.com', recipients)
     else :
-    	print 'HOMTHALI WRONG WRONG' + str(email )
-    	print recipients
-    	send_mail('HOMTHALI BADNESS HAPPENNEDDD', 'Something Very very Bad Happened' , 'support@mbatakeaways.com', recipients)
+    	
+    	send_mail('HOMETHALI LOST A CUSTOMER BADNESS HAPPENNEDDD', 'Something Very very Bad Happened' , 'support@mbatakeaways.com', recipients)
     	result = 'FAIL'
 
     return Response({"result": result })
