@@ -200,6 +200,14 @@ ol#indicator li{
   margin-bottom:10px;
   font-size: 20px;
   font-family:serif;
+  border-radius: 6px
+    transition-property: background, border-radius;
+    transition-duration: 1s;
+    transition-timing-function: linear;
+}
+#show:hover{
+  background: #2F5F13;
+    border-radius: 50%;
 }
 
 #nav-heading{
@@ -211,6 +219,7 @@ ol#indicator li{
 #nav-heading:hover{
   font-size:15px;
   color:#B72610;
+  -webkit-transition: 2s cubic-bezier(.39,1.31,.28,1);
 
 }
 

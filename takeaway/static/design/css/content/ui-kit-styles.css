@@ -763,7 +763,6 @@ section * {
   color: white;
 }
 body {
-  padding-top: 66px;
   position: relative;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -1229,9 +1228,10 @@ body .colapsed-menu::-webkit-scrollbar {
   font-size: 24px;
   font-weight: normal;
   color: #34495e;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: serif;
   font-weight: 500;
   text-transform: none;
+  font-weight: bold;
 }
 .content-4 .features p {
   font-size: 16px;

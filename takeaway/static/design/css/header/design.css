@@ -972,7 +972,6 @@ section * {
   color: white;
 }
 body {
-  padding-top: 66px;
   position: relative;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -1313,7 +1312,6 @@ body .colapsed-menu::-webkit-scrollbar {
 .header-2 .navbar {
   position: absolute;
   z-index: 2;
-  top: 55px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .header-2 .navbar.navbar-fixed-top {
@@ -1362,7 +1360,6 @@ body .colapsed-menu::-webkit-scrollbar {
   left: 0;
   width: 100%;
   position: relative;
-  padding-top: 215px;
   padding-bottom: 115px;
   color: white;
   text-align: center;
@@ -3473,7 +3470,7 @@ body .colapsed-menu::-webkit-scrollbar {
   height: 90px;
 }
 .header-11 .header-background {
-  background: #fff;
+  background: #248018;
 }
 .header-11 .navbar {
   position: absolute;

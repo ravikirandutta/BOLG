@@ -762,7 +762,6 @@ section * {
   color: white;
 }
 body {
-  padding-top: 66px;
   position: relative;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -1132,7 +1131,7 @@ body .colapsed-menu::-webkit-scrollbar {
   font-size: 14px;
   padding-top: 65px;
   padding-bottom: 65px;
-  background: #2c3e50;
+  background: #248018;
   color: #bdc3c7;
 }
 .footer-3.v-center,
