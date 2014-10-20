@@ -40,9 +40,15 @@
   <b><h4 id="header">Choose Your School</h4></b>
   <div id="select-school">
     <button id="select-school-btn" data-ng-repeat="x in availableSchools" ng-click=selectSchool(x.id)>
-      {% verbatim %}
-      <img src="{{x.image_url}}">
-      {% endverbatim %}
+     {% verbatim %}
+      <span ng-if='x.image_url'>
+         <img src="{{x.image_url}}"></span>
+      <span ng-if="x.image_url !==' '">
+         <button> {{x.school_name}}
+         </button>
+         </span>
+     {% endverbatim %}
+
     </button>
   </div>
 </div>
