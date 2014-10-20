@@ -56,6 +56,14 @@ width: 100%;
         font-size: 26px;
 
       }
+      .input-padding{
+        padding:5px;
+      }
+      .signup{
+        background-color: #69a74e;
+        background-image: linear-gradient(#67ae55, #578843);
+        color: black;
+      }
     </style>
 
   </head>
@@ -106,13 +114,15 @@ width: 100%;
                   <div class="form-group" style="margin-left:150px;margin-top:150px">
                     <form action="{% url 'handlelogin'  %}" class="form-horizontal" method="post" name="login_form" id="login_form"> {% csrf_token %}
                    <label for="inputEmail"></label>
-                  <input type="text" name="Username" placeholder="username">
+                  <input type="text" class="input-padding" name="Username" placeholder="Username">
                 <label for="inputPassword"></label>
-                <input type="password" name="Password" placeholder="password">
+                <input class="input-padding"type="password" name="Password" placeholder="Password">
                 <input type="hidden" name="Mode" value="login">
-                <label><input type="checkbox"></label>
-                <button type="submit" class="btn btn-inverse">Sign in</button>
-                <a class="button" href="/accounts/register">Register</a>
+                
+                <button type="submit" class="btn btn-inverse ">Sign in</button>
+                 or 
+                <a class="btn signup" href="/accounts/register">Register</a>
+                <div><input type="checkbox"><label>Remember me</label></div>
               </form>
               {% if error_message %} <p class="wdiget-content" style="color:red">{{ error_message }}</p> {% endif %}
               </div>
