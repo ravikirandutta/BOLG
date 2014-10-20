@@ -344,7 +344,7 @@ class SharedTakeaway(models.Model):
     shared_by = models.ForeignKey(User,blank=True,)
     created_dt = models.DateTimeField(auto_now_add=True,auto_now=False)
     updated_dt = models.DateTimeField(auto_now_add=False,auto_now=True)
-    
+
 
     def __unicode__(self):
         return smart_unicode(str(self.takeaway.id) + '---> shared to ' + self.shared_type + '----> shared by  ' + str(self.shared_by) )
@@ -455,28 +455,28 @@ def create_notifications_on_takeaway(sender, **kwargs):
 
 
             #pdb.set_trace()
-            for recipient in recipients:
-                recipient_user = recipient.user
-                curr_user = takeaway.user
-                if recipient_user.id <> curr_user.id:
+            # for recipient in recipients:
+            #     recipient_user = recipient.user
+            #     curr_user = takeaway.user
+            #     if recipient_user.id <> curr_user.id:
 
 
-                    message =  str(takeaway.courseInstance )
-                    notify.send(takeaway.user,recipient=recipient_user, verb='NEW_TAKEAWAY',description= message)
-                    try:
-                        email_settings = EmailSettings.objects.get(user=takeaway.user)
-                    except EmailSettings.DoesNotExist :
-                        email_settings = EmailSettings.objects.create(user=takeaway.user)
-                    if email_settings.mail_when_takeaway == 1 :
-                        recipients = [recipient_user.email]
-                        user_message = 'Hi ' +  recipient_user.first_name + '\n'
-                        message = 'A new public takeaway is posted in course ' + takeaway.courseInstance.course.course_name + ' by one of your classmate.\nView this takeaway by logging into www.mbatakeaways.com and rate it.'
-                        footer = '\nThanks and stay tuned.\nTeam MBA Takeaways.'
-                        footer= footer + '\nIf you want instant email when new takeaways are posted or daily report or do not wish an email at all, please change your settings in your profile on www.mbatakeaways.com'
-            
-                        final_message = user_message + message + footer
-                        #print final_message
-                        send_mail('MBATAKEAWAYS [New TakeAway posted]', final_message, 'support@mbatakeaways.com', recipients)
+            #         message =  str(takeaway.courseInstance )
+            #         notify.send(takeaway.user,recipient=recipient_user, verb='NEW_TAKEAWAY',description= message)
+            #         try:
+            #             email_settings = EmailSettings.objects.get(user=takeaway.user)
+            #         except EmailSettings.DoesNotExist :
+            #             email_settings = EmailSettings.objects.create(user=takeaway.user)
+            #         if email_settings.mail_when_takeaway == 1 :
+            #             recipients = [recipient_user.email]
+            #             user_message = 'Hi ' +  recipient_user.first_name + '\n'
+            #             message = 'A new public takeaway is posted in course ' + takeaway.courseInstance.course.course_name + ' by one of your classmate.\nView this takeaway by logging into www.mbatakeaways.com and rate it.'
+            #             footer = '\nThanks and stay tuned.\nTeam MBA Takeaways.'
+            #             footer= footer + '\nIf you want instant email when new takeaways are posted or daily report or do not wish an email at all, please change your settings in your profile on www.mbatakeaways.com'
+
+            #             final_message = user_message + message + footer
+            #             #print final_message
+                        #send_mail('MBATAKEAWAYS [New TakeAway posted]', final_message, 'support@mbatakeaways.com', recipients)
                     #pdb.set_trace()
         else:
             logger.info("private takeaway created by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)
