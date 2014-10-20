@@ -1429,6 +1429,20 @@ section * {
   color:#000;
   font-size: 20px;
 }
+#food{
+  text-align:center;
+  font-size:40px;
+  color:#000;
+  font-family:proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+#thali{
+  font-size: 20px;
+color: #5D5C5C;
+line-height: 2.4;
+font-family: proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+margin-top: 80px;
+}
+
 /**
  * Header 3 stylesheet  
  * */

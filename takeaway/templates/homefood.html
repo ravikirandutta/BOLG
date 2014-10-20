@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Homefood</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="../static/design/css/header/design.css">
+    <link rel="stylesheet" href="../static/design/css/header/modo.css">
+    <link rel="stylesheet" href="../static/design/css/flat-ui/css/demo.css">
+    <link rel="stylesheet" href="../static/design/css/flat-ui/css/flat-ui.css">
+    <link rel="stylesheet" href="../static/design/css/index.css">
+    <link rel="stylesheet" href="../static/design/css/flat-ui/css/docs.css">
+    <link rel="stylesheet" href="../static/design/css/common-files/animations.css">
+    <link rel="stylesheet" href="../static/design/css/common-files/icon-font.css">
+    <link rel="stylesheet" href="../static/design/css/flat-ui/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/design/css/flat-ui/bootstrap/css/jquery.bxslider.css">
+    <link rel="stylesheet" href="../static/design/css/flat-ui/bootstrap/css/bootstrap-docs.css">
+    <link rel="stylesheet" href="../static/design/css/project/ui-kit-styles.css">
+    <link rel="stylesheet" href="../static/design/css/contacts/ui-kit-styles.css">
+    <link rel="stylesheet" href="../static/design/css/price/ui-kit-styles.css">
+    <link rel="stylesheet" href="../static/design/css/crew/ui-kit-styles.css">
+    <link rel="stylesheet" href="../static/design/css/footer/ui-kit-styles.css">
+    <link rel="stylesheet" href="../static/design/css/content/ui-kit-styles.css">
+
+
+    <link rel="shortcut icon" href="../../flat-ui/images/favicon.ico">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    
+    <!-- Using only with Flat-UI (free)-->
+  </head>
+  <body style="padding-top:0px">
+        <div class="page-wrapper">
+            <!-- header-11 -->
+            <header class="header-11">
+                <div class="container">
+                    <div class="row">
+                        <div class="navbar col-sm-12 navbar-fixed-top" role="navigation">
+                            <div class="navbar-header">
+                                <div class="brand" href="#">
+                                <b><span style="color:rgb(170, 35, 57);font-size:35px;font-family:serif">Home<span style="color:rgb(13, 83, 3)">Thali</span></span></b></div>
+                            </div>
+                            <div class="collapse navbar-collapse pull-right">
+                <ul id="nav-menu" class="nav pull-left">
+                  <li><a href="#what">WHAT ARE WE</a>
+                  </li>
+                  <li><a href="#ingredients">INGREDIENTS</a>
+                  </li>
+                  <li><a href="#">WANNA ORDER</a>
+                  </li>
+
+                </ul>
+              </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-background" style="background:#F8A310"></div>
+            </header>
+            <section class="header-2-sub bg-midnight-blue">
+        <div class="background" style="background:url('http://orsimages.unileversolutions.com/ORS_Images/Knorr_en-IN/Hyderabadi%20Chicken%20Biryani%20%20Recipe%20Knorr%20India_29_3.1.16_326X580.Jpeg');background-size:cover;opacity:initial;height:900px">&nbsp;</div>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+              <div class="hero-unit">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>   
+      <div id="what1">     
+      <section class="price-1">
+        <div class="container">
+          <div class="text-block col-sm-10 col-sm-offset-1" id="what">
+                <h1 id="food" style="visibility:hidden">We cook with passion</h1>
+                <h1 id="food">We cook with passion</h1>
+                <p id="thali">At HomeThali we emphasize on <b>ORGANIC</b> ingredients and healthy cooking.At this point we are offering organic chicken biryani to begin our campaign.We will make the whole cooking process as transparent as possible.We believe that one should know what exactly goes onto his/her plate. </p>
+            </div>
+          <div class="row plans">
+            <div class="col-sm-4" style="width:103.3333%;margin-top:50px"  id="ingredients" >
+              <h1 id="food" style="visibility:hidden">We cook with passion</h1>
+              <div class="plan">
+                <div class="title">Ingredients</div>
+                <div class="price"></div>
+                <div class="description">
+                  <img src="http://www.freeindianrecipes.com/wp-content/uploads/chicken-biryani-ingredients.jpg" style="width: 600px;">
+                  <br>
+                  <b>Organic chicken</b>
+                  <br>
+                  <b>Basmati rice</b> 
+                  <br>
+                  <b>spices</b> (As required)
+                </div>
+                <div class="ribbon">NEW</div>
+              </div>
+            </div>
+            
+                      <div class="text-block col-sm-10 col-sm-offset-1" id="what">
+                <h1 id="food" style="margin-top:150px">Order Organic Chicken Biryani</h1>
+             
+                <h4>We are located at ARDENWOOD,CALIFORNIA.(Near Fremont,Unioncity)</h4>
+                <h4>Enter your e-mail and we will get in touch with you for the order.</h4>
+            </div>
+        <!--/.container-->
+      
+      </section>
+      </div>
+      <section class="content-11">
+                <div class="container">
+          <div class="row">
+            <form method="post" action="http://takeawayhub.herokuapp.com/email_thali/">
+              <div class="col-sm-8">
+                <input name="email" type="text" placeholder="Enter your e-mail" spellcheck="false" style="font-size:36px">
+              </div>
+              <div class="col-sm-4">
+                <button class="btn btn-large btn-success" id="id_thali"type="submit" style="padding:25px 50px;font-size:20px">
+                 Order Me
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+            </section>
+      <footer class="footer-3" style="background:#F8A310">
+        <div class="container">
+          <div class="row v-center">
+            <div class="col-sm-2">
+              <b><span style="color:rgb(170, 35, 57);font-size:35px;font-family:serif">Homefood<span style="color:rgb(13, 83, 3)">Thali</span></span></b>
+            </div>
+            <div class="col-sm-7">
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      
+    <script src="../static/design/js/common-files/jquery-1.10.2.min.js">
+    </script>
+    <script src="../static/design/js/flat-ui/bootstrap.min.js"></script>
+    <script src="../static/design/js/common-files/modernizr.custom.js"></script>
+    <script src="../static/design/js/common-files/page-transitions.js"></script>
+    <script src="../static/design/js/common-files/jquery.scrollTo-1.4.3.1-min.js"></script>
+    <script src="../static/design/js/common-files/jquery.parallax.min.js"></script>
+    <script src="../static/design/js/common-files/easing.min.js"></script>
+    <script src="../static/design/js/common-files/jquery.svg.js"></script>
+    <script src="../static/design/js/common-files/jquery.svganim.js"></script>
+    <script src="../static/design/js/common-files/startup-kit.js"></script>
+     <script src="../static/design/css/sample/4/js/script.js"></script>
+
+  </body>
+  </html>

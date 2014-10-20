@@ -867,7 +867,7 @@ body .colapsed-menu::-webkit-scrollbar {
  * Price 1 stylesheet  
  * */
 .price-1 {
-  padding-top: 110px;
+  padding-top: 710px;
   padding-bottom: 110px;
 }
 .price-1 .plan {
@@ -890,7 +890,7 @@ body .colapsed-menu::-webkit-scrollbar {
   padding-right: 10px;
 }
 .price-1 .plan b {
-  color: #7f8c8d;
+  color: #000;
 }
 .price-1 .plan .title {
   color: #2c3e50;
@@ -907,6 +907,8 @@ body .colapsed-menu::-webkit-scrollbar {
 }
 .price-1 .plan .description b {
   font-weight: 500;
+  font-size: 20px;
+  line-height: 1.2;
 }
 .price-1 .plan .btn {
   min-width: 170px;
