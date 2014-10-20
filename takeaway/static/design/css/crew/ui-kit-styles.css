@@ -836,7 +836,7 @@ body .colapsed-menu::-webkit-scrollbar {
   display: none;
 }
 /**
- * Crew 1 stylesheet  
+ * Crew 1 stylesheet
  * */
 .crew-1 {
   padding-top: 110px;
@@ -973,7 +973,7 @@ body .colapsed-menu::-webkit-scrollbar {
   }
 }
 /**
- * Crew 2 stylesheet  
+ * Crew 2 stylesheet
  * */
 .crew-2 {
   padding-top: 110px;
@@ -1135,7 +1135,7 @@ body .colapsed-menu::-webkit-scrollbar {
   }
 }
 /**
- * Crew 3 stylesheet  
+ * Crew 3 stylesheet
  * */
 .crew-3 {
   padding-top: 110px;
@@ -1349,7 +1349,7 @@ body .colapsed-menu::-webkit-scrollbar {
   }
 }
 /**
- * Crew 4 stylesheet  
+ * Crew 4 stylesheet
  * */
 .crew-4 {
   padding-top: 110px;
@@ -1486,7 +1486,7 @@ body .colapsed-menu::-webkit-scrollbar {
 .crew-4 .members .member:hover .photo {
   opacity: 40;
   filter: alpha(opacity=4000);
-  opacity: 0.4;
+
   filter: alpha(opacity=40);
 }
 .crew-4 .members .member:hover .overlay {
