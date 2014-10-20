@@ -21,12 +21,43 @@
     <link rel="stylesheet" href="../static/design/css/crew/ui-kit-styles.css">
     <link rel="stylesheet" href="../static/design/css/footer/ui-kit-styles.css">
     <link rel="stylesheet" href="../static/design/css/content/ui-kit-styles.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.css"/>
+
+
 
 
     <link rel="shortcut icon" href="../../flat-ui/images/favicon.ico">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-    
+
     <!-- Using only with Flat-UI (free)-->
+
+
+    <style>
+
+      .trending-takeaways {
+          background-color: #f0f0f0;
+          padding-top: 50px;
+          padding-bottom: 50px;
+      }
+
+      .carousel-inner {
+        position: relative;
+overflow: hidden;
+width: 100%;
+      }
+
+      .item {
+      position: relative;
+      width:70%;
+      margin-left: 300px;
+      margin-right:100px;
+      }
+      h3 {
+        font-size: 26px;
+
+      }
+    </style>
+
   </head>
   <body style="padding-top:0px">
       <!-- header-2 -->
@@ -85,7 +116,7 @@
               </form>
               {% if error_message %} <p class="wdiget-content" style="color:red">{{ error_message }}</p> {% endif %}
               </div>
-                
+
 
       </section>
 
@@ -130,49 +161,39 @@
         </div>
       </section>
 
-    <section class="projects-4">
-        <div class="container">
-          <h3 id="trending">TRENDING TAKEAWAYS</h3>
-          <div class="flip-container col-sm-4">
-  <div class="flipper">
-    <div class="front" style="background-color:#e74c3c;color:#fff">
-      <span class="course">STRATEGIC DESIGN ANALYSIS</span>
-    </div>
-    <div class="back">
-      <p>Companies hedge non-core items ( global firms hedging currency) and take risks in core operations. Individual are risk averse, insurance companies are risk-neutral</p>
-    </div>
-  </div>
-</div>
-             <div class="flip-container col-sm-4">
-  <div class="flipper">
-    <div class="front" style="background-color:#f1c40f;color:#fff">
-      <span class="course">INVESTMENT BANKING</span>
-    </div>
-    <div class="back" style="background-color:green">
-      <p>Growth is not always good. For growth to be beneficial it has to be at least be equal to Weighted Average Cost of Capital (WACC).</p>
-    </div>
-  </div>
-</div>
-             <div class="flip-container col-sm-4">
-  <div class="flipper">
-    <div class="front" style="background-color:#3498db;color:#fff">
-      <span class="course">APPLIED ENTERPRENEURSHIP</span>
-    </div>
-    <div class="back" style="background-color:#3b5998">
-      <p>76% of consumers do not believe advertising to be truthful. 99% of the ads seen by a consumer are forgotten within the first hour. Given these odds, marketing messaging needs to stand out !</p>
-    </div>
-  </div>
-</div>
-    </div>
-    <!--/.container-->
-</section>
-
 <section class="content-11">
                 <div class="container">
                     <span>You have the Problem, We have the solution</span>
                     <a class="btn btn-large btn-danger" href="/play/">TRY IT NOW</a>
                 </div>
             </section>
+
+    <section  style="margin-top:100px">
+        <div >
+          <h3 id="trending">TRENDING TAKEAWAYS</h3>
+
+           <div class="trending-takeaways">
+    <div class="carousel-inner">
+
+      <div class="item"><h3>"76% of consumers do not believe advertising to be truthful. 99% of the ads seen by a consumer are forgotten within the first hour. Given these odds, marketing messaging needs to stand out !"</h3>  <div>APPLIED ENTERPRENEURSHIP</div></div>
+
+       <div class="item"><h3>"Growth is not always good. For growth to be beneficial it has to be at least be equal to Weighted Average Cost of Capital (WACC) !"</h3>  <div>INVESTMENT BANKING</div></div>
+
+       <div class="item"><h3>"Companies hedge non-core items ( global firms hedging currency) and take risks in core operations. Individual are risk averse, insurance companies are risk-neutral"</h3>  <div>STRATEGIC DESIGN ANALYSIS</div></div>
+
+    </div>
+
+
+  </div>
+
+    <!--/.container-->
+</section>
+
+
+
+
+
+
  <section class="crew-4">
         <div class="container">
           <h3 id="heading">TESTIMONIALS</h3>
@@ -225,6 +246,9 @@
 
     <script src="../static/design/js/common-files/jquery-1.10.2.min.js">
     </script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.min.js"></script>
+
     <script src="../static/design/js/flat-ui/bootstrap.min.js"></script>
     <script src="../static/design/js/common-files/modernizr.custom.js"></script>
     <script src="../static/design/js/common-files/page-transitions.js"></script>
@@ -234,6 +258,23 @@
     <script src="../static/design/js/common-files/jquery.svg.js"></script>
     <script src="../static/design/js/common-files/jquery.svganim.js"></script>
     <script src="../static/design/js/common-files/startup-kit.js"></script>
+
     <script src="../static/design/css/sample/4/js/script.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.carousel-inner').slick({
+              infinite: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 10000,
+            });
+        });
+    </script>
+
   </body>
   </html>

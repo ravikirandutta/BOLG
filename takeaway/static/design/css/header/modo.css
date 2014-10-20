@@ -832,7 +832,7 @@ section * {
   }
 }
 /**
- * Header 1 stylesheet  
+ * Header 1 stylesheet
  * */
 .header-1 {
   left: 0;
@@ -1082,7 +1082,7 @@ section * {
   left: 45px;
 }
 /**
- * Header 2 stylesheet  
+ * Header 2 stylesheet
  * */
 .header-2 {
   z-index: 100;
@@ -1270,6 +1270,7 @@ section * {
   font-family: serif;
   font-size: 35px;
   font-weight: bold;
+  text-align:center;
   -webkit-transition: all 0.3s ease-in-out;
   background: -webkit-linear-gradient(#000, #08E9F1);
   -webkit-background-clip: text;
@@ -1308,7 +1309,7 @@ section * {
   border: 1px solid #ccc;
 }
 
-  .flip-container:hover .flipper,  
+  .flip-container:hover .flipper,
   .flip-container.hover .flipper {
     -webkit-transform: rotateY(180deg);
     -moz-transform: rotateY(180deg);
@@ -1334,7 +1335,7 @@ section * {
 
   -moz-transition: 0.6s;
   -moz-transform-style: preserve-3d;
-  
+
   -o-transition: 0.6s;
   -o-transform-style: preserve-3d;
 
@@ -1430,7 +1431,7 @@ section * {
   font-size: 20px;
 }
 /**
- * Header 3 stylesheet  
+ * Header 3 stylesheet
  * */
 .header-3-startup-antiflicker {
   border-bottom: 1px #bdc3c7 solid;
@@ -1550,7 +1551,7 @@ section * {
   }
 }
 /**
- * Header 4 stylesheet  
+ * Header 4 stylesheet
  * */
 .header-4 {
   padding-top: 358px;
@@ -1669,7 +1670,7 @@ section * {
   }
 }
 /**
- * Header 5 stylesheet  
+ * Header 5 stylesheet
  * */
 .header-5 {
   padding-top: 0;
@@ -2066,7 +2067,7 @@ section * {
   color: #ffffff;
 }
 /**
- * Header 6 stylesheet  
+ * Header 6 stylesheet
  * */
 .header-6 {
   z-index: 100;
@@ -2406,7 +2407,7 @@ section * {
   filter: alpha(opacity=0);
 }
 /**
- * Header 7 stylesheet  
+ * Header 7 stylesheet
  * */
 .header-7-sub {
   position: relative;
@@ -2832,7 +2833,7 @@ section * {
   display: block;
 }
 /**
- * Header 8 stylesheet  
+ * Header 8 stylesheet
  * */
 .header-8-startup-antiflicker {
   border-bottom: 1px #bdc3c7 solid;
@@ -2954,7 +2955,7 @@ section * {
   margin-top: 60px;
 }
 /**
- * Header 9 stylesheet  
+ * Header 9 stylesheet
  * */
 .header-9 {
   z-index: 100;
@@ -3199,7 +3200,7 @@ section * {
   }
 }
 /**
- * Header 10 stylesheet  
+ * Header 10 stylesheet
  * */
 .header-10 {
   z-index: 100;
@@ -3443,7 +3444,7 @@ section * {
   }
 }
 /**
- * Header 11 stylesheet  
+ * Header 11 stylesheet
  * */
 .header-11-startup-antiflicker {
   border-bottom: 1px #bdc3c7 solid;
@@ -3729,7 +3730,7 @@ section * {
   }
 }
 /**
- * Header 12 stylesheet  
+ * Header 12 stylesheet
  * */
 .header-12 {
   padding-top: 0;
@@ -3997,7 +3998,7 @@ section * {
   }
 }
 /**
- * Header 13 stylesheet  
+ * Header 13 stylesheet
  * */
 .header-13 {
   position: absolute;
@@ -4196,7 +4197,7 @@ section * {
   }
 }
 /**
- * Header 14 stylesheet  
+ * Header 14 stylesheet
  * */
 .header-14-sub {
   color: #bdc3c7;
@@ -4369,7 +4370,7 @@ section * {
   }
 }
 /**
- * Header 15 stylesheet  
+ * Header 15 stylesheet
  * */
 .header-15-startup-antiflicker {
   background: #171717 !important;
@@ -4584,7 +4585,7 @@ section * {
   }
 }
 /**
- * Header 16 stylesheet  
+ * Header 16 stylesheet
  * */
 .header-16 {
   padding-top: 0;
@@ -5058,7 +5059,7 @@ section * {
   }
 }
 /**
- * Header 17 stylesheet  
+ * Header 17 stylesheet
  * */
 .header-17-startup-antiflicker {
   background: white !important;
@@ -5441,7 +5442,7 @@ section * {
   }
 }
 /**
- * Header 18 stylesheet  
+ * Header 18 stylesheet
  * */
 .header-18 {
   height: 100%;
@@ -5818,7 +5819,7 @@ section * {
   color: #ffffff;
 }
 /**
- * Header 19 stylesheet  
+ * Header 19 stylesheet
  * */
 .header-19 {
   padding-top: 0;
@@ -6037,7 +6038,7 @@ section * {
   }
 }
 /**
- * Header 20 stylesheet  
+ * Header 20 stylesheet
  * */
 .header-20-startup-antiflicker {
   border-bottom: 2px solid #ECF0F1;
@@ -6328,7 +6329,7 @@ section * {
   }
 }
 /**
- * Header 21 stylesheet  
+ * Header 21 stylesheet
  * */
 .header-21 {
   position: relative;
@@ -6557,7 +6558,7 @@ section * {
   color: #bdc3c7;
 }
 /**
- * Header 22 stylesheet  
+ * Header 22 stylesheet
  * */
 .header-22 {
   position: relative;
@@ -6741,7 +6742,7 @@ section * {
   }
 }
 /**
- * Header 23 stylesheet  
+ * Header 23 stylesheet
  * */
 .header-23 {
   z-index: 100;
