@@ -1,6 +1,6 @@
 
 (function() {
-  var app = angular.module('takeAwayDashboard', ['duScroll','ngCookies', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput','ui.tinymce','ui.bootstrap','textAngular']).run(function($http, $cookies) {
+  var app = angular.module('takeAwayDashboard', ['duScroll','ngCookies', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput','ui.tinymce','ui.bootstrap','textAngular','mgcrea.ngStrap','ngAnimate']).run(function($http, $cookies) {
 
     $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
     $http.defaults.headers.common['Content-Type'] = "application/json";
@@ -215,6 +215,12 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
           query: {method:'GET',isArray:false},
         })
 }]);
+app.factory('GroupsFactory',['$resource',function($resource){
+        return $resource('/closedGroups/',{},{
+          query: {method:'GET',isArray:false},
+        })
+}]);
+
 
 app.factory('CriteriaService',function(){
           var criteria = {};
@@ -983,13 +989,19 @@ app.controller('RatingDemoCtrl', function ($scope) {
 
 
 app.controller('publicPrivateButtonCtrl',
-    function($scope, $http, $cookies, $resource, $rootScope,TakeAwayFactory, TakeAwayConverter) {
+    function($scope, $http, $cookies, $resource, $rootScope,TakeAwayFactory, CourseDataFactory, TakeAwayConverter, GroupsFactory) {
 
+      $scope.groups={};
+      $scope.courseInstanceId=CourseDataFactory.getCurrentCourse();
+      GroupsFactory.query({'course_instance':$scope.courseInstanceId,'members':$cookies.userid}).$promise.then(function(data){
+
+        $scope.groups=data.results; 
+      });
 
       if($scope.taset.is_public){
-        $scope.visibility = "Make Private";
+        $scope.visibility = "everyone";
       }else{
-        $scope.visibility = "Make Public";
+        $scope.visibility = "me";
       }
 
     /*Public private buttons method */
@@ -1001,9 +1013,9 @@ app.controller('publicPrivateButtonCtrl',
       }
 
       if($scope.taset.is_public){
-        $scope.visibility = "Make Private";
+        $scope.visibility = "everyone";
       }else{
-        $scope.visibility = "Make Public";
+        $scope.visibility = "me";
       }
 
       taset = $scope.taset
@@ -1069,5 +1081,4 @@ app.controller('publicPrivateButtonCtrl',
 
 
 })();
-
 
