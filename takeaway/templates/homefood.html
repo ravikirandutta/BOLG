@@ -8,6 +8,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <link rel="stylesheet" href="../static/design/css/header/design.css">
     <link rel="stylesheet" href="../static/design/css/header/modo.css">
+        <link rel="stylesheet" href="../static/design/css/grocery/thali.css">
+
     <link rel="stylesheet" href="../static/design/css/flat-ui/css/demo.css">
     <link rel="stylesheet" href="../static/design/css/flat-ui/css/flat-ui.css">
     <link rel="stylesheet" href="../static/design/css/index.css">
@@ -33,11 +35,14 @@
   <body style="padding-top:0px">
         <div class="page-wrapper">
             <!-- header-11 -->
-            <header class="header-11">
+            <header class="header-11" id="thaliheader">
                 <div class="container">
                     <div class="row">
                         <div class="navbar col-sm-12 navbar-fixed-top" role="navigation">
-                            <div class="navbar-header">
+                              <div class="navbar-header">
+                                <button type="button" class="navbar-toggle">
+                                  <span class="glyphicon glyphicon-circle-arrow-left" style="color:#fff"></span>
+                                </button>
                                 <div class="brand" href="#">
                                 <b><span style="color:rgb(170, 35, 57);font-size:35px;font-family:serif">Home<span style="color:rgb(13, 83, 3)">Thali</span></span></b></div>
                             </div>
@@ -57,8 +62,8 @@
                 </div>
                 <div class="header-background" style="background:#F8A310"></div>
             </header>
-            <section class="header-2-sub bg-midnight-blue">
-        <div class="background" style="background:url('http://orsimages.unileversolutions.com/ORS_Images/Knorr_en-IN/Hyderabadi%20Chicken%20Biryani%20%20Recipe%20Knorr%20India_29_3.1.16_326X580.Jpeg');background-size:cover;opacity:initial;height:900px">&nbsp;</div>
+            <section class="header-2-sub bg-midnight-blue" style="background:#fff">
+        <div class="background" id="thalibackground" style="background:url('../static/takeaway/img/homefood.Jpeg'); background-size:cover;">&nbsp;</div>
         <div class="container">
           <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
@@ -77,7 +82,7 @@
                 <p id="thali">At HomeThali we emphasize on <b>ORGANIC</b> ingredients and healthy cooking.At this point we are offering organic chicken biryani to begin our campaign.We will make the whole cooking process as transparent as possible.We believe that one should know what exactly goes onto his/her plate. </p>
             </div>
           <div class="row plans">
-            <div class="col-sm-4" style="width:103.3333%;margin-top:50px"  id="ingredients" >
+            <div class="col-sm-4" id="ingredients" >
               <h1 id="food" style="visibility:hidden">We cook with passion</h1>
               <div class="plan">
                 <div class="title">Ingredients</div>
@@ -98,8 +103,8 @@
                       <div class="text-block col-sm-10 col-sm-offset-1" id="what">
                 <h1 id="food" style="margin-top:150px">Order Organic Chicken Biryani</h1>
              
-                <h4>We are located at ARDENWOOD,CALIFORNIA.(Near Fremont,Unioncity)</h4>
-                <h4>Enter your e-mail and we will get in touch with you for the order.</h4>
+                <h4 id="location">We are located at ARDENWOOD,CALIFORNIA.(Near Fremont,Unioncity)</h4>
+                <h4 id="location">Enter your e-mail and we will get in touch with you for the order.</h4>
             </div>
         <!--/.container-->
       
@@ -110,12 +115,13 @@
           <div class="row">
             <form method="post" action="http://takeawayhub.herokuapp.com/email_thali/">
               <div class="col-sm-8">
-                <input name="email" type="text" placeholder="Enter your e-mail" spellcheck="false" style="font-size:36px">
+                <input name="email" type="text" placeholder="Enter your e-mail" spellcheck="false" style="font-size:36px;">
               </div>
               <div class="col-sm-4">
-                <button class="btn btn-large btn-success" id="id_thali"type="submit" style="padding:25px 50px;font-size:20px">
-                 Order Me
+              <div class="order">
+                <button type="submit" title="yummyyyy!!!"><b>Order Now!</b>
                 </button>
+              </div>
               </div>
             </form>
           </div>

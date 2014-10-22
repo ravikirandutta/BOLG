@@ -1,0 +1,101 @@
+  #email-input{
+  padding:30px 140px;
+  font-size: 20px;
+}
+#food{
+  text-align:center;
+  font-size:40px;
+  color:#000;
+  font-family:proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+#thali{
+  font-size: 20px;
+color: #5D5C5C;
+line-height: 2.4;
+font-family: proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+margin-top: 80px;
+}
+#thalibackground{
+  opacity:initial;
+  height:900px;
+}
+#ingredients{
+  width:103.3333%;
+  margin-top:50px;
+}
+.order button{
+  display: inline-table;
+font-size: 19px;
+width: inherit;
+height: 38px;
+padding: 6px;
+background: #F8A310;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+-moz-background-clip: padding;
+-webkit-background-clip: padding-box;
+background-clip: padding-box;
+text-shadow: rgba(0,0,0,0.3) 0 1px 2px;
+text-decoration: none;
+color: rgb(170, 35, 57);
+}
+
+.order button:before{
+  position: absolute;
+left: 35px;
+top: -57px;
+background: url('/static/design/images/biryani.gif') no-repeat;
+width: 79px;
+height: 182px;
+text-indent: -9000px; 
+content: ".";
+}
+
+.order button:hover{
+  background: green;
+  text-decoration: none;
+  color:#F8A310;
+}
+
+@media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px){
+
+  #food{
+  font-size:20px;
+  color:#000;
+  font-family:proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  width:30%;
+}
+#thali{
+  font-size: 10px;
+color: black;
+font-family: proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+margin-top: 80px;
+width:30%;
+}
+
+#ingredients{
+  width:33%;
+}
+
+#thalibackground{
+  opacity:initial;
+  height:900px;
+  margin:10px;
+}
+
+#location{
+  font-size: 10px;
+color: black;
+font-family: proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+width:30%;
+}
+
+#id_thali{
+  padding:15px 10px;
+  font-size:20px;
+  margin-right: 10px;
+}
+}

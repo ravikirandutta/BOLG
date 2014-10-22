@@ -596,11 +596,10 @@ button:active {
 .navbar .navbar-toggle {
   margin: 26px 0 10px;
   color: white;
-  background: none;
+  background:#2c3e50;
   padding: 0;
   width: 30px;
   height: 30px;
-  background: url("../../../common-files/icons/menu-icon@2x.png") 50% no-repeat;
   -webkit-background-size: 17px 12px;
   -moz-background-size: 17px 12px;
   -o-background-size: 17px 12px;
@@ -1430,20 +1429,7 @@ section * {
   color:#000;
   font-size: 20px;
 }
-#food{
-  text-align:center;
-  font-size:40px;
-  color:#000;
-  font-family:proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-#thali{
-  font-size: 20px;
-color: #5D5C5C;
-line-height: 2.4;
-font-family: proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-margin-top: 80px;
-}
-
 /**
  * Header 3 stylesheet
  * */
@@ -3534,7 +3520,7 @@ margin-top: 80px;
   color: #16a085;
 }
 .header-11 .navbar .navbar-toggle {
-  background-image: url("../static/design/images/icons/menu-icon-header-8@2x.png");
+  background:red;
   -webkit-background-size: 17px 12px;
   -moz-background-size: 17px 12px;
   -o-background-size: 17px 12px;
