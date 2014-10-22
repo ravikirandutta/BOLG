@@ -563,7 +563,7 @@ form{
 
 .sidebar .sidebar-inner{
   display: block;
-  width:17%;
+  width:230px;
   margin: 0 auto;
   position: fixed;
   z-index: 60;
@@ -591,7 +591,11 @@ form{
 
 .sidebar .navi > li > a:hover, .sidebar .navi > li.open > a {
   border-bottom: 1px solid #222;
+<<<<<<< Updated upstream
   background-color: #199ab0;
+=======
+  background-color: #199AB0;
+>>>>>>> Stashed changes
   color: #fff;
 }
 
@@ -1553,7 +1557,7 @@ border:1px solid #eee;
 	.sidebar .sidebar-inner{
 		display: none;
 		/*max-width:300px;*/
-		padding:0px 20px;
+		padding:0px 0px;
 	}
 	.sidebar .sidebar-widget{
 	}
