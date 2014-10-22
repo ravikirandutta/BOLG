@@ -1004,21 +1004,21 @@ app.controller('publicPrivateButtonCtrl',
         $scope.visibility = "me";
       }
 
+      $scope.hello=function(){
+        console.log("FF");
+      }
+
     /*Public private buttons method */
-    $scope.toggleButtons = function(tasett, clickedButton, postImmediately,courseId, sessionId) {
-      if (clickedButton == $scope.taset.is_public) {
-        $scope.taset.is_public = (clickedButton == true) ? false : true;
-      } else {
-        $scope.taset.is_public = clickedButton;
+    $scope.toggleButtons = function(postImmediately) {
+      if ($scope.visibility == "me") {
+        $scope.taset.is_public = false;
+      } else if($scope.visibility=="everyone"){
+        $scope.taset.is_public = true;
+      } else{
+        $scope.taset.is_public = false;
       }
 
-      if($scope.taset.is_public){
-        $scope.visibility = "everyone";
-      }else{
-        $scope.visibility = "me";
-      }
-
-      taset = $scope.taset
+      taset = $scope.taset;
       //From Edit takeaway or New Takeaway, onchange of public-private option do not make service call to update.
       if(postImmediately == true || postImmediately == 'true') {
           var tagIdArr = new Array();
