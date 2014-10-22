@@ -23,7 +23,7 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
         <script src="/static/takeaway/js/lib/jquery.cookie.js" type="text/javascript"></script>
         <script src="/static/takeaway/js/app.js?{% now "U" %}" type="text/javascript"></script>
-        
+
          <script src="/static/takeaway/js/jquery.gritter.min.js" type="text/javascript"></script>
 
 
@@ -127,7 +127,7 @@ $.ajaxSetup({
 
 
                                <input  id="id_firstname" ng-model="user.firstname" name="firstname" type="text"  required />
-                               <span style="color:red" ng-show="regForm.firstname.$dirty && regForm.firstname.$invalid">* Firstname required</span>  
+                               <span style="color:red" ng-show="regForm.firstname.$dirty && regForm.firstname.$invalid">* Firstname required</span>
 
 
                             </div>
@@ -138,7 +138,7 @@ $.ajaxSetup({
 
 
                               <input  id="id_lastname" ng-model="user.lastname" name="lastname" type="text" required />
-                              <span style="color:red" ng-show="regForm.lastname.$dirty && regForm.lastname.$invalid">* Lastname required</span>  
+                              <span style="color:red" ng-show="regForm.lastname.$dirty && regForm.lastname.$invalid">* Lastname required</span>
 
 
                             </div>
@@ -157,8 +157,8 @@ $.ajaxSetup({
                             {{form.email.errors}}
                             <label class="control-label col-lg-3" for="email">Email</label>
                              <div class="col-lg-9">
-                                      <input  id="id_email" name="email" type="text" ng-model="email" ng-blur="validateEmail()" required/>
-
+                                      <input  id="id_email" name="email" type="text" ng-model="email"  required/>
+                                        <!-- ng-blur="validateEmail()" -->
                             </div>
 
                           </div>
@@ -168,8 +168,8 @@ $.ajaxSetup({
                             <label class="control-label col-lg-3" for="username">Username</label>
                             <div class="col-lg-9">
                               <input  id="username" ng-model="user.username" name="username"  type="text"  required />
-                        
-                              <span style="color:red" ng-show="regForm.username.$dirty && regForm.username.$invalid">* Username required</span> 
+
+                              <span style="color:red" ng-show="regForm.username.$dirty && regForm.username.$invalid">* Username required</span>
 
                             </div>
                           </div>
@@ -179,10 +179,10 @@ $.ajaxSetup({
                             <label class="control-label col-lg-3" for="id_password1">Password</label>
                             <div class="col-lg-9">
                                 <input  id="id_password1" ng-model="user.password1" name="password1" type="password"  required />
-                                <span style="color:red" ng-show="regForm.password1.$dirty && regForm.password1.$invalid">* Password required</span>  
-                              
+                                <span style="color:red" ng-show="regForm.password1.$dirty && regForm.password1.$invalid">* Password required</span>
 
-                              
+
+
                             </div>
                           </div>
 
@@ -192,10 +192,10 @@ $.ajaxSetup({
                            <div class="form-group">
                             <label class="control-label col-lg-3" for="id_password2"> Confirm Password </label>
                             <div class="col-lg-9">
-                                      <input  id="id_password2" ng-model="user.password2" name="password2" type="password" data-match="user.password1" required /> 
+                                      <input  id="id_password2" ng-model="user.password2" name="password2" type="password" data-match="user.password1" required />
                                       <span  style="color:red" ng-show="regForm.password2.$error.match">Passwords do not match! </span>
 
-                              
+
 
                             </div>
                           </div>
@@ -224,7 +224,7 @@ $.ajaxSetup({
                             <div class="col-lg-9">
                                       <select  id="id_program" name="program" ng-model="selectedProgram"
                                       ng-options=" program.name for program in programs track by program.id" required></select>
-                                      
+
                             </div>
                           </div>
                           <!-- Select box -->
@@ -233,12 +233,13 @@ $.ajaxSetup({
                           <!-- Accept box and button s-->
                           <div class="form-group">
                             <div class="col-lg-9 col-lg-offset-3">
-                              <div class="checkbox">
+                              <!-- <div class="checkbox">
                               <label id="tos">
                                 <input  type="checkbox"> Accept Terms &amp; Conditions
                               </label>
                               </div>
-                              <button type="submit" ng-disabled="!regForm.$valid"  id="register-btn" class="btn btn-danger" >Register</button>
+                               -->
+                               <button type="submit" ng-disabled="!regForm.$valid"  id="register-btn" class="btn btn-danger" >Register</button>
                               <button type="reset" id="reset-btn" class="btn btn-success">Reset</button>
                             </div>
                           </div>
@@ -264,7 +265,7 @@ $.ajaxSetup({
         <!-- Bootstrap JS -->
   <!--    <script src="{% static "takeaway/js/lib/bootstrap.min.js"%}"></script> -->
 
-  
+
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.2/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.2/angular-cookies.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.2/angular-resource.min.js"></script>
