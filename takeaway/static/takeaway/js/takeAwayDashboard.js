@@ -990,7 +990,8 @@ app.controller('RatingDemoCtrl', function ($scope) {
 
 app.controller('publicPrivateButtonCtrl',
     function($scope, $http, $cookies, $resource, $rootScope,TakeAwayFactory, CourseDataFactory, TakeAwayConverter, GroupsFactory) {
-
+      $scope.share={};
+      $scope.share.visibility = "me";
       $scope.groups={};
       $scope.courseInstanceId=CourseDataFactory.getCurrentCourse();
       GroupsFactory.query({'course_instance':$scope.courseInstanceId,'members':$cookies.userid}).$promise.then(function(data){
@@ -999,20 +1000,16 @@ app.controller('publicPrivateButtonCtrl',
       });
 
       if($scope.taset.is_public){
-        $scope.visibility = "everyone";
+        $scope.share.visibility = "everyone";
       }else{
-        $scope.visibility = "me";
-      }
-
-      $scope.hello=function(){
-        console.log("FF");
+        $scope.share.visibility = "me";
       }
 
     /*Public private buttons method */
     $scope.toggleButtons = function(postImmediately) {
-      if ($scope.visibility == "me") {
+      if ($scope.share.visibility == "me") {
         $scope.taset.is_public = false;
-      } else if($scope.visibility=="everyone"){
+      } else if($scope.share.visibility=="everyone"){
         $scope.taset.is_public = true;
       } else{
         $scope.taset.is_public = false;
