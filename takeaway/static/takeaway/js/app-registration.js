@@ -1,5 +1,5 @@
 (function(){
-    var app=angular.module('registration',['ngCookies','ngResource']).run(function($http, $cookies) {
+    var app=angular.module('registration',['ngCookies','ngResource','countTo','ui.bootstrap']).run(function($http, $cookies) {
     $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
     $http.defaults.headers.put['X-CSRFToken'] = $cookies.csrftoken;
 });
@@ -21,14 +21,35 @@ app.config(['$resourceProvider', function ($resourceProvider) {
     }]);
 
 
-  app.controller('SchoolController',function($scope,$http,$cookies,$resource,Schools,ProgramsFactory){
+app.factory('CourseInstanceFactory', ['$resource',function($resource){
+         return $resource('/courseInstances/', {}, {
+                query: {method:'GET', isArray:false},
+               });
+    }]);
+
+app.factory('TakeAwayFactory', ['$resource',function($resource){
+         return $resource('/takeaways/', {}, {
+                query: {method:'GET', isArray:false},
+               });
+    }]);
+
+app.factory('TakeAwayProfileFactory', ['$resource',function($resource){
+         return $resource('/takeawayprofiles/', {}, {
+                query: {method:'GET', isArray:false},
+               });
+    }]);
+
+
+
+  app.controller('SchoolController',function($scope,$http,$cookies,$resource,Schools,ProgramsFactory,
+                                               TakeAwayFactory, TakeAwayProfileFactory, CourseInstanceFactory){
     $scope.availableSchools={};
     $scope.currentSchool={};
     $scope.school = "emory";
     $scope.programs = {};
     $scope.schoolSelected=false;
     $scope.noSchool=false;
-    
+
 
 
         $scope.selectSchool = function(school_id){
@@ -37,16 +58,31 @@ app.config(['$resourceProvider', function ($resourceProvider) {
               $scope.currentSchool = value;
               $scope.schoolSelected=true;
               $scope.noSchool=false;
-
-
             }
           });
+
+
+
           $scope.setValidEmailFormat();
           ProgramsFactory.query({"school":$scope.currentSchool.id}).$promise.then(function(data){
               $scope.programs = data.results;
           });
 
-        }
+          TakeAwayFactory.query({"school":$scope.currentSchool.id}).$promise.then(function(data){
+              $scope.takeaway_count = data.count;
+          });
+
+          TakeAwayProfileFactory.query({"school":$scope.currentSchool.id}).$promise.then(function(data){
+              $scope.school_mates = data.count;
+          });
+
+
+          CourseInstanceFactory.query({"school_id":$scope.currentSchool.id}).$promise.then(function(data){
+              $scope.course_count = data.count;
+          });
+
+
+        };
 
         $scope.test = function(){}
 
@@ -106,5 +142,5 @@ app.directive('match', function () {
 
 })();
 
-    
+
 

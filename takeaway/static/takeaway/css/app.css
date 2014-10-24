@@ -227,6 +227,7 @@ background-color:#F9E1B8;
 
 #registration-page{
   background-color: #e9eaed;
+  padding-top:0px;
 }
 #reset-btn{
   background: #2fa5ce !important;
@@ -407,4 +408,8 @@ tags-input .tags .input{
 
 #close{
   color:#000;
+}
+
+.school-stats{
+  margin-top: 50px;
 }

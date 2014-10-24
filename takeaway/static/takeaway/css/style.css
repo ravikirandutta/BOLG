@@ -1467,7 +1467,7 @@ border:1px solid #eee;
 
 .admin-form{
 	max-width: 500px;
-	margin: 50px auto;
+	margin:  auto;
 }
 
 .admin-form form{ padding-top: 10px; }
@@ -1555,7 +1555,7 @@ border:1px solid #eee;
 		display: block;
 	}
 	.sidebar .sidebar-inner{
-		display: none;
+		display: block;
 		/*max-width:300px;*/
 		padding:0px 0px;
 	}
