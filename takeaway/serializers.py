@@ -7,7 +7,7 @@ from notifications.models import Notification
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ( 'username', 'email', 'groups')
+        fields = ( 'username', 'email','first_name','last_name')
         #fields = ('username')
 
 
@@ -153,10 +153,10 @@ class ContactUsSerializer(serializers.ModelSerializer):
 
 class EmailSettingsSerializer(serializers.ModelSerializer):
     daily_digest = serializers.SerializerMethodField('have_daily_digest')
-    
+
     class Meta:
         model = EmailSettings
-     
+
 
     def have_daily_digest(self, obj):
         if obj.mail_when_newuser == 2 or obj.mail_when_takeaway == 2 or obj.mail_when_rated == 2 :
@@ -165,14 +165,14 @@ class EmailSettingsSerializer(serializers.ModelSerializer):
 
 
 class ClosedGroupSerializer(serializers.ModelSerializer):
-    
+
     class Meta:
         model = ClosedGroup
 
 class SharedTakeawaySerializer(serializers.ModelSerializer):
-    
+
     class Meta:
         model = SharedTakeaway
-     
+
 
 
