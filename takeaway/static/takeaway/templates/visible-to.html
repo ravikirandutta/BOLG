@@ -8,7 +8,7 @@
 			<input type="radio" ng-show="groups.length" name="share" ng-model="share.visibility" value="groups"><span ng-show="groups.length">Select Group</span><br>
 			<div style="padding-left:10px;" ng-show='share.visibility=="groups"'>
 				
-					<p ng-repeat="group in groups"><input  type="checkbox" >{{group.group_name}}</p>
+					<p ng-repeat="group in groups"><input  type="checkbox" checklist-model="taShare.groups" checklist-value="group.id">{{group.group_name}}</p>
 			</div>
 			<div class="form-actions"><button type="button" class="btn btn-primary" ng-click="toggleButtons(performPost);$hide()">Save and Close</button></div></form>
 	</div>
