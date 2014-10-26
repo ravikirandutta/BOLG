@@ -342,7 +342,7 @@ class SharedTakeaway(models.Model):
     takeaway = models.ForeignKey(TakeAway,blank=False,related_name ='shared_info')
     shared_type = models.CharField(choices=Share_Types,max_length=1000,)
     group = models.ForeignKey(ClosedGroup,blank=True)
-    shared_by = models.ForeignKey(User,blank=True,)
+    shared_by = models.ForeignKey(TakeAwayProfile,blank=True,)
     created_dt = models.DateTimeField(auto_now_add=True,auto_now=False)
     updated_dt = models.DateTimeField(auto_now_add=False,auto_now=True)
 
