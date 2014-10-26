@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django import forms
 from django.core.mail import send_mail,mail_admins
 from notifications import notify
+from takeaway.tasks import *
 import os
 # Create your models here.
 
@@ -449,9 +450,11 @@ def create_notifications_on_takeaway(sender, **kwargs):
         event = PointEvent.objects.get_or_create(event='NEW_TAKEAWAY', points=5)
         UserEventLog(user=takeaway.user,course_instance=takeaway.courseInstance,session=takeaway.session,event=event[0],points=event[0].points).save()
 
+
         if takeaway.is_public == True :
-            logger.info("public takeaway created by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)
-            recipients = takeaway.courseInstance.students.all()
+            mail_new_takeaway.delay(takeaway)
+        #     logger.info("public takeaway created by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)
+        #     recipients = takeaway.courseInstance.students.all()
 
 
             #pdb.set_trace()
