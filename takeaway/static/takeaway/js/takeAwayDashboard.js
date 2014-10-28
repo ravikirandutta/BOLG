@@ -1,6 +1,6 @@
 
 (function() {
-  var app = angular.module('takeAwayDashboard', ['duScroll','ngCookies', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput','ui.tinymce','ui.bootstrap','textAngular','mgcrea.ngStrap','ngAnimate']).run(function($http, $cookies) {
+  var app = angular.module('takeAwayDashboard', ['duScroll','ngCookies','checklist-model', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput','ui.tinymce','ui.bootstrap','textAngular','mgcrea.ngStrap','ngAnimate']).run(function($http, $cookies) {
 
     $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
     $http.defaults.headers.common['Content-Type'] = "application/json";
@@ -225,10 +225,10 @@ app.factory('GroupsFactory',['$resource',function($resource){
 
 app.factory('ShareWithGroupsFactory',['$resource',function($resource){
 
-    return $resource('/sharedTakeaway',{},{
+    return $resource('/sharedTakeaway/',{},{
       query: {method:'GET',isArray:false},
-      updateShare:{method:'PUT'},
-      removeGroupFromShare:{method:'DELETE'}
+      updateShare:{method:'POST'},
+      removeGroupFromShare:{url:'/sharedTakeaway/:id/',method:'DELETE'}
     })
 }]);
 
@@ -912,6 +912,9 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
       function(data, status, headers, config) {
         SessionsDataFactory.addTakeAwayToSessions(data);
         $scope.newTakeawayContent="";
+        $scope.taset.createAndAddToGroups.forEach(function(item){
+          ShareWithGroupsFactory.updateShare({group:item,shared_type:"GROUP",shared_by:3,takeaway:data.id});
+        });
         console.log("loading all courses sessions after successfull creation"+data.courseInstance);
       },
       function(data, status, headers, config) {
@@ -920,6 +923,7 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
       });
 
       ngDialog.close();
+
     };
 
 
@@ -1019,11 +1023,13 @@ app.controller('RatingDemoCtrl', function ($scope) {
 
 
 app.controller('publicPrivateButtonCtrl',
-    function($scope, $http, $cookies, $resource, $rootScope,TakeAwayFactory, CourseDataFactory, GroupsDataFactory, TakeAwayConverter, GroupsFactory) {
+    function($scope, $http, $cookies, $resource, $rootScope,TakeAwayFactory, ShareWithGroupsFactory, CourseDataFactory, GroupsDataFactory, TakeAwayConverter, GroupsFactory) {
       $scope.share={};
+      $scope.taShare={};
       $scope.share.visibility = "me";
       $scope.groups=GroupsDataFactory.getCurrentCourseGroups();
       $scope.courseInstanceId=CourseDataFactory.getCurrentCourse();
+      $scope.initialShareList=[];
       
 
       if($scope.taset.is_public){
@@ -1031,14 +1037,33 @@ app.controller('publicPrivateButtonCtrl',
       }else{
         $scope.share.visibility = "me";
       }
+      if($scope.taset.id){
+      ShareWithGroupsFactory.get({takeaway:$scope.taset.id}).$promise.then(function(data){
+        var groupsArray=[];
+        data.results.forEach(function(item){
+          groupsArray.push(item.group);
+        });
+        $scope.taShare.groups=groupsArray;
+        $scope.initialShareList=groupsArray.slice();
+        if(groupsArray.length>0){
+          $scope.share.visibility = "groups"
+        }
+      });
+    }
+
+
 
     /*Public private buttons method */
     $scope.toggleButtons = function(postImmediately) {
       if ($scope.share.visibility == "me") {
         $scope.taset.is_public = false;
+        $scope.taShare.groups=[];
       } else if($scope.share.visibility=="everyone"){
         $scope.taset.is_public = true;
       } else{
+        if($scope.taShare.groups.length == 0){
+          $scope.share.visibility = "me";
+        }
         $scope.taset.is_public = false;
       }
 
@@ -1060,7 +1085,31 @@ app.controller('publicPrivateButtonCtrl',
             $scope.status = status;
         });
 
+
+        $scope.taShare.groups.forEach(function(item){
+
+          if($scope.initialShareList.indexOf(item)==-1){
+          ShareWithGroupsFactory.updateShare({group:item,shared_type:"GROUP",shared_by:3,takeaway:$scope.taset.id});
         }
+        });
+        $scope.initialShareList.forEach(function(item){
+          if($scope.taShare.groups.indexOf(item)==-1){
+            ShareWithGroupsFactory.get({group:item,takeaway:$scope.taset.id}).$promise.then(function(data){
+             ShareWithGroupsFactory.removeGroupFromShare({id:data.results[0].id}); 
+            });
+          
+        }
+
+        });
+        
+
+        $scope.initialShareList=$scope.taShare.groups.slice();
+        }
+        else{
+          $scope.taset.createAndAddToGroups = $scope.taShare.groups;
+        }
+        
+
     };
 
     });

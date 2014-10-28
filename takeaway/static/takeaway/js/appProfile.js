@@ -14,6 +14,15 @@ app.config(['$resourceProvider', function ($resourceProvider) {
 
         }
     });
+
+    app.directive('editProfile',function(){
+        return {
+            restrict: 'E',
+            templateUrl:'/static/takeaway/templates/edit-profile.html'
+
+        }
+    });
+
     app.factory('CourseSelection', ['$resource',function($resource){
          return $resource('/courseInstances/', {}, {
                 query: {method:'GET', isArray:false},
@@ -63,7 +72,62 @@ app.config(['$resourceProvider', function ($resourceProvider) {
                });
     }]);
 
+    app.factory('User', ['$resource',function($resource){
+        return $resource('/users/:id', {}, {
+            query: {method:'GET'},
+            update : {method: 'PUT'}
+        });
+    }]);
 
+    app.controller('EditProfileController',function($scope,$http,$cookies,$resource,User){
+
+        console.log("Controller cvalled");
+        $scope.editProfileSuccess = false;
+        $scope.saveUserLabel = 'Save Changes';
+        $scope.disablesubmit = false;
+
+        User.query({id:$cookies.userid}).$promise.then(function(data){
+                $scope.firstName = data.first_name ;
+                $scope.lastName = data.last_name;
+                $scope.userName =data.username;
+                $scope.emailId = data.email;
+        },
+        function(reason){
+                console.log(reason);
+        });
+
+        $scope.updateUser = function(editProfileForm){
+            if(editProfileForm.$valid){
+                $scope.saveUserLabel = 'Updating ...';
+                $scope.disablesubmit = true;
+            }
+
+            //create the JSON object and make the service call to put this object;
+            var userJsonData = {};
+            userJsonData.first_name = $scope.firstName;
+            userJsonData.last_name = $scope.lastName;
+            userJsonData.username = $scope.userName;
+            userJsonData.email = $scope.emailId;
+
+            console.log(userJsonData);
+            $scope.updateUser = User.update({id:$cookies.userid},userJsonData);
+            $scope.updateUser.$promise.then(function(data){
+                $scope.editProfileSuccess = true;
+                $scope.saveUserLabel = 'Save Changes';
+                $scope.disablesubmit = false;
+            },function(reason){
+                console.log(reason);
+                $scope.saveUserLabel = 'Save Changes';
+                $scope.disablesubmit = false;
+            });
+
+        }
+
+        $scope.cancel = function(){
+            window.location.reload();
+        };
+
+    });
 	app.controller('CourseController',function($scope,$http,$cookies,$resource,CourseInstanceCreate,Sections,Status,Terms,CourseSelection,UserProfile,UserProfileUpdate,Courses,Programs){
 		$scope.addingCourse=false;
 		$scope.newCourse={};
