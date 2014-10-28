@@ -271,7 +271,7 @@ $.ajaxSetup({
                     <li class="ourblue current" id="selcet-classes"><a  class="ourblue" href="#" onclick="displayCourses()"><i class="fa fa-desktop"></i> Courses</a>
                     </li>
 
-                    <li class="ourblue current" id="edit-profile"><a  class="ourblue" href="#/edit/" onclick="editProfile()"><i class="fa fa-pencil"></i> Edit Profile</a>
+                    <li class="ourblue current" id="edit-profile"><a  class="ourblue" href="#/edit" onclick="editProfile()"><i class="fa fa-pencil"></i> Edit Profile</a>
                     </li>
 
                     <li class=" " id="change-password"><a class="ourblue" href="/passwordchange/password_change/"><i class="glyphicon glyphicon-cog"></i> Change Password</a>
@@ -338,7 +338,7 @@ $.ajaxSetup({
                 <course-management></course-management>
             </div>
 
-            <div id="editProfileDiv">
+            <div id="editProfileDiv" style="display:none" >
                 <edit-profile></edit-profile>
             </div>
 
@@ -400,14 +400,14 @@ $.ajaxSetup({
     }
 
     function displayCourses(){
+        $("#editProfileDiv").hide();
         $("#coursesDiv").show();
         $("#settingsDiv").hide();
-        $("#editProfileDiv").hide();
     }
 
     function editProfile(){
-        $("#editProfileDiv").show();
         $("#coursesDiv").hide();
+        $("#editProfileDiv").show();
         $("#settingsDiv").hide();
     }
 
