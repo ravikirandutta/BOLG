@@ -83,6 +83,7 @@ app.config(['$resourceProvider', function ($resourceProvider) {
 
         console.log("Controller cvalled");
         $scope.editProfileSuccess = false;
+        $scope.editProfileError = false;
         $scope.saveUserLabel = 'Save Changes';
         $scope.disablesubmit = false;
 
@@ -117,6 +118,7 @@ app.config(['$resourceProvider', function ($resourceProvider) {
                 $scope.disablesubmit = false;
             },function(reason){
                 console.log(reason);
+                $scope.editProfileError = true;
                 $scope.saveUserLabel = 'Save Changes';
                 $scope.disablesubmit = false;
             });

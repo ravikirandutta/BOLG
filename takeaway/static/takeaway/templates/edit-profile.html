@@ -13,7 +13,9 @@
 
             <div class="col-xs-12">
 
-                <div id="edit-profile-success" class="alert alert-success" ng-show="editProfileSuccess"><span class="glyphicon glyphicon-ok"></span>  Your profile is successfully updated.</div>
+               <div id="edit-profile-success" class="alert alert-success" ng-show="editProfileSuccess"><span class="glyphicon glyphicon-ok"></span>  Your profile is successfully updated.</div>
+
+                <div id="edit-profile-error" class="alert alert-danger" ng-show="editProfileError"><span class="glyphicon glyphicon-remove"></span>  Oops! Something went wrong. Please try again later. </div>
 
                 <form name="editProfileForm" novalidate ng-submit="updateUser(editProfileForm)" class="form-horizontal" role="form">
 
@@ -21,7 +23,7 @@
 
                         <label class="col-lg-3 control-label">First name:</label>
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <input class="form-control" name="firstName" type="text" required  ng-model="firstName" >
                             <p ng-show="editProfileForm.firstName.$invalid && !editProfileForm.firstName.$pristine" class="help-block">Enter a first name.</p>
                         </div>
@@ -33,7 +35,7 @@
 
                         <label class="col-lg-3 control-label">Last name:</label>
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <input class="form-control" name="lastName" type="text" required  ng-model="lastName" >
                             <p ng-show="editProfileForm.lastName.$invalid && !editProfileForm.lastName.$pristine" class="help-block">Enter a last name.</p>
                         </div>
@@ -44,7 +46,7 @@
 
                         <label class="col-lg-3 control-label">Username:</label>
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <input class="form-control" name="userName" type="text" required  ng-model="userName" >
                             <p ng-show="editProfileForm.userName.$invalid && !editProfileForm.userName.$pristine" class="help-block">Enter a username.</p>
                         </div>
@@ -55,7 +57,7 @@
 
                         <label class="col-lg-3 control-label">Email:</label>
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <input class="form-control" name="emailId" type="email" required  ng-model="emailId" >
                             <p ng-show="editProfileForm.emailId.$invalid && !editProfileForm.emailId.$pristine" class="help-block">Enter a valid email.</p>
                         </div>
@@ -66,7 +68,7 @@
                         <label class="col-md-3 control-label"></label>
                         <div class="col-md-8">
 
-                            <input type="submit" ng-disabled="disablesubmit" class="btn btn-primary" value="{{saveUserLabel}}"/>
+                            <input type="submit" ng-disabled=!editProfileForm.$valid class="btn btn-primary" value="{{saveUserLabel}}"/>
 
                             <span></span>
                             <input type="reset" class="btn btn-default" ng-click="cancel();" value="Cancel">
