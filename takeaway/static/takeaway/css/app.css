@@ -413,3 +413,8 @@ tags-input .tags .input{
 .school-stats{
   margin-top: 50px;
 }
+
+.classMatesContainer{
+   overflow-y: scroll;
+   max-height: 40px;
+}
