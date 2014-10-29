@@ -6,13 +6,14 @@ logger = logging.getLogger(__name__)
 
 from django.core.mail import send_mail,mail_admins
 from notifications import notify
-from takeaway.models import *
+from takeaway.models import Course, EmailSettings
 
 
 @shared_task
 def mail_new_takeaway(takeaway):
 
     recipients = takeaway.courseInstance.students.all()
+    logger.info('recipient size ::'+ str(len(recipients)))
     for recipient in recipients:
 
         recipient_user = recipient.user
@@ -25,6 +26,7 @@ def mail_new_takeaway(takeaway):
             except EmailSettings.DoesNotExist :
                 email_settings = EmailSettings.objects.create(user=takeaway.user)
             if email_settings.mail_when_takeaway == 1 :
+                logger.info('sending mail to:'+str(recipient_user.id))
                 recipients = [recipient_user.email]
                 user_message = 'Hi ' +  recipient_user.first_name + '\n'
                 message = 'A new public takeaway is posted in course ' + takeaway.courseInstance.course.course_name + ' by one of your classmate.\nView this takeaway by logging into www.mbatakeaways.com and rate it.'
