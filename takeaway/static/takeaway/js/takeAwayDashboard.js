@@ -1096,7 +1096,7 @@ app.controller('publicPrivateButtonCtrl',
       } else if($scope.share.visibility=="everyone"){
         $scope.taset.is_public = true;
       } else{
-        if($scope.taShare.groups.length == 0){
+        if($scope.taShare.groups && $scope.taShare.groups.length == 0){
           $scope.share.visibility = "me";
         }
         $scope.taset.is_public = false;
@@ -1138,10 +1138,15 @@ app.controller('publicPrivateButtonCtrl',
         });
         if($scope.newGroup.name && $scope.newGroup.members.length>0){
           GroupsFactory.save({group_name:$scope.newGroup.name,course_instance:$scope.courseInstanceId,created_by:$cookies.userid,group_updated_by:$cookies.userid,members:$scope.newGroup.members},function(data){
-             ShareWithGroupsFactory.updateShare({group:data.id,shared_type:"GROUP",shared_by:$scope.userProfile.id,takeaway:$scope.taset.id});
+             $scope.groups.push(data);
+             GroupsDataFactory.setCurrentCourseGroups($scope.groups);
+             ShareWithGroupsFactory.updateShare({group:data.id,shared_type:"GROUP",shared_by:$scope.userProfile.id,takeaway:$scope.taset.id},function(res){
+              $scope.taShare.groups.push(data.id);
+              $scope.initialShareList=$scope.taShare.groups.slice();
+             });
           })
         }
-        $scope.initialShareList=$scope.taShare.groups.slice();
+        
         }
         else{
           $scope.taset.createAndAddToGroups = $scope.taShare.groups;
