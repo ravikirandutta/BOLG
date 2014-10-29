@@ -161,4 +161,6 @@ BROKER_URL = os.environ.get('CLOUDAMQP_URL')
 if BROKER_URL is None:
     BROKER_URL = 'amqp://test:test@localhost:5672/test'
 
+CELERY_IMPORTS = ('takeaway.tasks',)
+
 
