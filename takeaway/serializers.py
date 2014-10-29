@@ -110,9 +110,16 @@ class CourseInstanceCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourseInstance
 
+class TakeAwayProfileSerializer(serializers.ModelSerializer):
+    username = serializers.Field(source='user.username')
+    class Meta:
+        model=TakeAwayProfile
+
+
 class CourseInstanceSerializer(serializers.ModelSerializer):
     school_id = serializers.RelatedField(source='course.school.id')
     students = serializers.RelatedField(many=True)
+    students = TakeAwayProfileSerializer(source='students')
 
     class Meta:
         model = CourseInstance
@@ -138,9 +145,7 @@ class TermSerializer(serializers.ModelSerializer):
     class Meta:
         model = Term
 
-class TakeAwayProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=TakeAwayProfile
+
 
 class CommentSerializer(serializers.ModelSerializer):
     username = serializers.Field(source='user.username')
