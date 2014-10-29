@@ -11,10 +11,10 @@
 					<p ng-repeat="group in groups"><input  type="checkbox" checklist-model="taShare.groups" checklist-value="group.id">{{group.group_name}}</p>
 					<a ng-if="createGroup.addGroup==false" ng-click="createGroup.addGroup=true"><i class="fa fa-plus-circle"></i>Create New Group</a>
 				<div ng-if="createGroup.addGroup">
-					<strong>Name:</strong><input ng-bind="newGroup.name"type="text">
+					<strong>Name:</strong><input ng-model="newGroup.name"type="text">
 					<strong>Selct Members:</strong>
 					<div  class="classMatesContainer">
-					<p ng-repeat="classmate in classmates"><input  type="checkbox" checklist-model="newGroup.members" checklist-value="classmate">{{classmate}}</p>
+					<p ng-repeat="classmate in classmates"><input  type="checkbox" checklist-model="newGroup.members" checklist-value="classmate.id">{{classmate.username}}</p>
 					</div>
 				</div>
 

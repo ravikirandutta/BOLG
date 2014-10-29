@@ -220,6 +220,7 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
 app.factory('GroupsFactory',['$resource',function($resource){
         return $resource('/closedGroups/',{},{
           query: {method:'GET',isArray:false},
+          save:{method:'POST'}
         })
 }]);
 
@@ -755,10 +756,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
       $scope.availableCourses = data;
 
       $scope.courseInstance = data[0];
-      UserProfile.query({"user":$cookies.userid}).$promise.then(function(data){
-            $scope.userProfile=data.results[0];
-           
-        });
+
       //Displaying the STAYs for first CRS
       // if($scope.availableCourses.results != null && $scope.availableCourses.results.length > 0) {
       //   var defaultCourseId = $scope.availableCourses.results[0].course.id;
@@ -1052,7 +1050,7 @@ app.controller('RatingDemoCtrl', function ($scope) {
 
 
 app.controller('publicPrivateButtonCtrl',
-    function($scope, $http, $cookies, $resource, $rootScope,TakeAwayFactory, ClassmatesDataFactory, ShareWithGroupsFactory, CourseDataFactory, GroupsDataFactory, TakeAwayConverter, GroupsFactory) {
+    function($scope, $http, $cookies, $resource, $rootScope, UserProfile, TakeAwayFactory, ClassmatesDataFactory, ShareWithGroupsFactory, CourseDataFactory, GroupsDataFactory, TakeAwayConverter, GroupsFactory) {
       $scope.share={};
       $scope.taShare={};
       $scope.share.visibility = "me";
@@ -1063,7 +1061,11 @@ app.controller('publicPrivateButtonCtrl',
       $scope.createGroup.addGroup=false;
       $scope.classmates = ClassmatesDataFactory.getCurrentCourseClassmates();
       $scope.newGroup = {};
-
+      $scope.userProfile = {};
+            UserProfile.query({"user":$cookies.userid}).$promise.then(function(data){
+            $scope.userProfile=data.results[0];
+           
+          });
       if($scope.taset.is_public){
         $scope.share.visibility = "everyone";
       }else{
@@ -1087,7 +1089,7 @@ app.controller('publicPrivateButtonCtrl',
 
     /*Public private buttons method */
     $scope.toggleButtons = function(postImmediately) {
-      $scope.createGroup.addGroup=false;
+      
       if ($scope.share.visibility == "me") {
         $scope.taset.is_public = false;
         $scope.taShare.groups=[];
@@ -1134,15 +1136,18 @@ app.controller('publicPrivateButtonCtrl',
         }
 
         });
-        
-
+        if($scope.newGroup.name && $scope.newGroup.members.length>0){
+          GroupsFactory.save({group_name:$scope.newGroup.name,course_instance:$scope.courseInstanceId,created_by:$cookies.userid,group_updated_by:$cookies.userid,members:$scope.newGroup.members},function(data){
+             ShareWithGroupsFactory.updateShare({group:data.id,shared_type:"GROUP",shared_by:$scope.userProfile.id,takeaway:$scope.taset.id});
+          })
+        }
         $scope.initialShareList=$scope.taShare.groups.slice();
         }
         else{
           $scope.taset.createAndAddToGroups = $scope.taShare.groups;
         }
         
-
+        $scope.createGroup.addGroup=false;
     };
 
     });
