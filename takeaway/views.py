@@ -24,6 +24,57 @@ from django.core.mail import send_mail
 from registration.backends.simple.views import RegistrationView
 from forms import TakeawayProfileRegistrationForm
 from notifications.models import Notification
+from django.dispatch import receiver
+from django.db.models.signals import post_save,pre_save
+from takeaway.tasks import *
+
+@receiver(post_save,sender=TakeAway)
+def create_notifications_on_takeaway(sender, **kwargs):
+
+
+    takeaway = kwargs.get("instance")
+    #pdb.set_trace()
+    if kwargs.get('created',False):
+
+        event = PointEvent.objects.get_or_create(event='NEW_TAKEAWAY', points=5)
+        UserEventLog(user=takeaway.user,course_instance=takeaway.courseInstance,session=takeaway.session,event=event[0],points=event[0].points).save()
+
+
+        if takeaway.is_public == True :
+            mail_new_takeaway.delay(takeaway)
+        #     logger.info("public takeaway created by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)
+        #     recipients = takeaway.courseInstance.students.all()
+
+
+            #pdb.set_trace()
+            # for recipient in recipients:
+            #     recipient_user = recipient.user
+            #     curr_user = takeaway.user
+            #     if recipient_user.id <> curr_user.id:
+
+
+            #         message =  str(takeaway.courseInstance )
+            #         notify.send(takeaway.user,recipient=recipient_user, verb='NEW_TAKEAWAY',description= message)
+            #         try:
+            #             email_settings = EmailSettings.objects.get(user=takeaway.user)
+            #         except EmailSettings.DoesNotExist :
+            #             email_settings = EmailSettings.objects.create(user=takeaway.user)
+            #         if email_settings.mail_when_takeaway == 1 :
+            #             recipients = [recipient_user.email]
+            #             user_message = 'Hi ' +  recipient_user.first_name + '\n'
+            #             message = 'A new public takeaway is posted in course ' + takeaway.courseInstance.course.course_name + ' by one of your classmate.\nView this takeaway by logging into www.mbatakeaways.com and rate it.'
+            #             footer = '\nThanks and stay tuned.\nTeam MBA Takeaways.'
+            #             footer= footer + '\nIf you want instant email when new takeaways are posted or daily report or do not wish an email at all, please change your settings in your profile on www.mbatakeaways.com'
+
+            #             final_message = user_message + message + footer
+            #             #print final_message
+                        #send_mail('MBATAKEAWAYS [New TakeAway posted]', final_message, 'support@mbatakeaways.com', recipients)
+                    #pdb.set_trace()
+        else:
+            logger.info("private takeaway created by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)
+    else:
+        logger.info("takeaway "+str(takeaway.id)+" updated by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)
+
 
 def test(request):
     user_list = EmailSettings.objects.all() #filter(mail_when_takeaway=2)
