@@ -40,6 +40,11 @@ LOGGING = {
     }
 }
 
-
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "mbatakeaway@gmail.com"
+EMAIL_HOST_PASSWORD = "getabillion101"
+DEFAULT_FROM_EMAIL = 'mbatakeaway@gmail.com'
+DEFAULT_TO_EMAIL = 'suresh.atluri@gmail.com'
 
 
