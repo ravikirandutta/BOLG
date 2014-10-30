@@ -26,7 +26,7 @@ def mail_new_takeaway(takeaway):
                 email_settings = EmailSettings.objects.get(user=takeaway.user)
             except EmailSettings.DoesNotExist :
                 email_settings = EmailSettings.objects.create(user=takeaway.user)
-            logger.info('email settings of '+recipient_user.id+' found to be '+str(email_settings.mail_when_takeaway))
+            logger.info('email settings of '+str(recipient_user.id)+' found to be '+str(email_settings.mail_when_takeaway))
             if email_settings.mail_when_takeaway == 1 :
                 logger.info('sending mail to:'+str(recipient_user.id))
                 recipients = [recipient_user.email]
