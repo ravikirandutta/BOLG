@@ -21,10 +21,12 @@ def mail_new_takeaway(takeaway):
         if recipient_user.id <> curr_user.id:
             message =  str(takeaway.courseInstance )
             notify.send(takeaway.user,recipient=recipient_user, verb='NEW_TAKEAWAY',description= message)
+
             try:
                 email_settings = EmailSettings.objects.get(user=takeaway.user)
             except EmailSettings.DoesNotExist :
                 email_settings = EmailSettings.objects.create(user=takeaway.user)
+            logger.info('email settings of '+recipient_user.id+' found to be '+str(email_settings.mail_when_takeaway))
             if email_settings.mail_when_takeaway == 1 :
                 logger.info('sending mail to:'+str(recipient_user.id))
                 recipients = [recipient_user.email]
