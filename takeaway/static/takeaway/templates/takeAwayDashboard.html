@@ -172,16 +172,15 @@
         </div>
       </h5>
     </div>
-    <div ng-show="displaysessions">
+    <div ng-hide="latestTakeawaysExists">
+        No new takeaways posted since your last login.
+    </div>
+    <div ng-show="latestTakeawaysExists">
         <div ng-repeat="sessionsresult in sessionsData">
            <div ng-controller="SessionController" class="widget wlightblue">
               <div class="widget-head" id="bluewidget">
                 <div class="pull-left">
                  <b> {{sessionsresult.session_name}}</b>
-                </div>
-                <div class="widget-icons pull-right">
-                   <a href="#" class="wminimize"><i class="fa fa-chevron-up" id="up"></i></a>
-                   <a href="#" class="wclose"><i class="fa fa-times" id="close"></i></a>
                 </div>
                 <div class="clearfix"></div>
               </div>
@@ -225,7 +224,7 @@
                                 </div>
                                 <div ng-controller="CollapseCommentsCtrl" ng-if="!taset.isOwner">
                                   <button class="btn btn-default" ng-click="displayComments(taset)">
-                                    Comments({{taset.comment_count}}
+                                    Comments({{taset.comment_count}})
                                   </button>
                                   <div collapse="isCollapsed">
                                     <hr>

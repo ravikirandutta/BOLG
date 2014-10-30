@@ -828,9 +828,20 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
        ngDialog.open({
         template: 'latestTakeawaySinceLastLogin',
         className: 'ngdialog-theme-plain',
+        controller: ['$scope', function($scope) {
+          
+          $scope.latestTakeawaysExists = true;  //It should derived from REST service Data
+          if($scope.latestTakeawaysExists) {
+            //Call the REST service to get sessions-takeaways data since last login and assign to variable sessionsData_LastLogin
+            $scope.sessionsData_LastLogin = "";
+          } else {
+            setTimeout(function(){ngDialog.close();}, 10000);  //10 seconds to auto close
+          }
+        }],
         closeByDocument: false,
         closeByEscape: false,
-        scope: $scope
+        scope: $scope,
+        //preCloseCallback: function() {return true; }
       });
 
     };
