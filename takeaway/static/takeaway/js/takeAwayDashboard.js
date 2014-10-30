@@ -823,6 +823,16 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
           $scope.postzpulateOtherFields(courseid);
         });
       //}
+
+      /*Dialog window with all lastest takeaways since last login*/
+       ngDialog.open({
+        template: 'latestTakeawaySinceLastLogin',
+        className: 'ngdialog-theme-plain',
+        closeByDocument: false,
+        closeByEscape: false,
+        scope: $scope
+      });
+
     };
 
     $scope.postzpulateOtherFields = function(courseid) {

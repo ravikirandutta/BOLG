@@ -163,3 +163,87 @@
     </div>
   </div>
 </script>
+
+<script type="text/ng-template" id="latestTakeawaySinceLastLogin">
+    <div class="ngdialog-message">
+      <h5 style="color: red;">Latest since last login - Dev In Progress(SVK)
+        <div style="float: right;">
+          <a href="#" class="wclose" ng-click="closeDialog()"><i class="fa fa-times" id="close"></i></a>
+        </div>
+      </h5>
+    </div>
+    <div ng-show="displaysessions">
+        <div ng-repeat="sessionsresult in sessionsData">
+           <div ng-controller="SessionController" class="widget wlightblue">
+              <div class="widget-head" id="bluewidget">
+                <div class="pull-left">
+                 <b> {{sessionsresult.session_name}}</b>
+                </div>
+                <div class="widget-icons pull-right">
+                   <a href="#" class="wminimize"><i class="fa fa-chevron-up" id="up"></i></a>
+                   <a href="#" class="wclose"><i class="fa fa-times" id="close"></i></a>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="widget-content">
+                  <div class="padd">
+                    <ul id="takeaway-list" class="recent">
+                      <div>
+                        <div id="{{taset.id}}" ng-repeat="taset in sessionsresult.takeaway_set" >
+                          <div ng-if="!taset.isOwner"> 
+                            <li ng-controller = "TakeAwayController" ng-if='taset.is_public' >
+                              <div id="{{sessionsresult.id}}_{{taset.id}}_view" class="recent-content">
+                                <div class="recent-meta">Posted on {{taset.created_dt}} by {{taset.username}}</div>
+                                 <div id="editable-notes">
+                                   <pre id="takeaway" class="takeaway-pre" ng-bind-html="getSafe(taset.notes)"></pre>
+                                 </div>
+                                </div>
+                                <div class="btn-group-left">
+                                  <span ng-repeat="tag in taset.tags" ng-controller="TagController">
+                                    <span class="label label-warning pointer">
+                                      <i class="fa fa-tags"></i>{{tag.name}}
+                                    </span>
+                                    <span style="width:2px">&nbsp;</span>
+                                  </span>
+                                  <span  ng-click="rated(taset.id,taset.average_rating,taset.alreadyRated)">
+                                    <rating ng-model="taset.average_rating"   readonly="taset.alreadyRated" max="5" >
+                                    </rating>
+                                  </span>
+                                  <span class="total-raters">(<i class="fa fa-user"></i>{{taset.total_raters}})</span>
+                                </div>
+                                <div id="favourite" ng-controller="FavoriteController">
+                                  <span ng-if="taset.isFavourite">
+                                    <a>
+                                      <span id="myfav" class="btn-lg glyphicon glyphicon-heart" ng-click="makeFavourite(taset)"></span>
+                                    </a>
+                                  </span>
+                                  <span ng-if="!taset.isFavourite">
+                                    <a>
+                                      <span id="myfav" class="btn-lg glyphicon glyphicon-heart-empty" ng-click="makeFavourite(taset)"></span>
+                                    </a>
+                                  </span>
+                                </div>
+                                <div ng-controller="CollapseCommentsCtrl" ng-if="!taset.isOwner">
+                                  <button class="btn btn-default" ng-click="displayComments(taset)">
+                                    Comments({{taset.comment_count}}
+                                  </button>
+                                  <div collapse="isCollapsed">
+                                    <hr>
+                                    <div class="well well-lg" ng-repeat="x in comments">{{ x.notes }}   - by {{ x.username}} on {{x.updated_dt | date:"MM/dd/yyyy  h:mma"}}</div>
+                                    <input type="textarea" ng-model="myComment" >
+                                    <button class="btn btn-default" ng-click="saveComment(taset)">Add comment</button>
+                                  </div>
+                                </div>
+                                <div class="clearfix"></div>
+                              </div>
+                            </li>
+                          </div>
+                        </div>
+                      </div>
+                    </ul>
+                  </div>
+              </div>
+          </div>
+         </div>
+      </div>
+</script>
