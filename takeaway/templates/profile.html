@@ -251,7 +251,7 @@ $.ajaxSetup({
 
 
     <!-- Main content starts -->
-    <div class="content">
+    <div class="content" ng-app = "selectCourses">
         <!-- Sidebar -->
         <div class="sidebar mainsidebar">
             <div class="sidebar-dropdown"><a href="#">Navigation</a>
@@ -265,20 +265,20 @@ $.ajaxSetup({
                 </div> -->
                 <!--- Sidebar navigation -->
                 <!-- If the main navigation has sub navigation, then add the class "has_submenu" to "li" of main navigation. -->
-                <ul class="navi">
+                <ul class="navi" ng-init="currentTab=1">
                     <!-- Use the class nred, ngreen, nblue, nlightblue, nviolet or norange to add background color. You need to use this in <li> tag. -->
 
-                    <li class="ourblue current" id="selcet-classes"><a  class="ourblue" href="#" onclick="displayCourses()"><i class="fa fa-desktop"></i> Courses</a>
+                    <li class="ourblue current" id="selcet-classes"><a  class="ourblue" href="#" ng-click="currentTab=1"><i class="fa fa-desktop"></i> Courses</a>
                     </li>
 
-                    <li class="ourblue current" id="edit-profile"><a  class="ourblue" href="#" onclick="editProfile()"><i class="fa fa-pencil"></i> Edit Profile</a>
+                    <li class="ourblue current" id="edit-profile"><a  class="ourblue" href="#" ng-click="currentTab=2"><i class="fa fa-pencil"></i> Edit Profile</a>
                     </li>
 
                     <li class=" " id="change-password"><a class="ourblue" href="/passwordchange/password_change/"><i class="glyphicon glyphicon-cog"></i> Change Password</a>
                         </li>
 
 <!-- commed the Settings until the back end supports sending email alerts -->
-                     <li class=" " id="change-settings"><a class="ourblue" href="#" onclick="displaySettings()"><i class="glyphicon glyphicon-cog"></i>Settings</a>
+                     <li class=" " id="change-settings"><a class="ourblue" href="#" ng-click="currentTab=3"><i class="glyphicon glyphicon-cog"></i>Settings</a>
                         </li>
 
                 </ul>
@@ -290,7 +290,7 @@ $.ajaxSetup({
         </div>
         <div class="clear"></div>
 
-        <div  style="display:none" id="settingsDiv">
+        <div  ng-show="currentTab==3" id="settingsDiv">
             <div class="mainbar" style="margin-left:230px">
                 <div class="matter">
                     <div class="container">
@@ -332,13 +332,13 @@ $.ajaxSetup({
         </div>
 
 
-        <div ng-app = "selectCourses">
+        <div>
 
-            <div id="coursesDiv">
+            <div ng-show="currentTab==1" id="coursesDiv">
                 <course-management></course-management>
             </div>
 
-            <div id="editProfileDiv" style="display:none" >
+            <div id="editProfileDiv" ng-if="currentTab==2" >
                 <edit-profile></edit-profile>
             </div>
 
@@ -387,31 +387,10 @@ $.ajaxSetup({
     </div>
 
 </div>
+</div>
 
     {% include "copyright.html"%}
 
-<script type="text/javascript">
-
-    function displaySettings(){
-        loadSettings();
-        $("#coursesDiv").hide();
-        $("#settingsDiv").show();
-        $("#editProfileDiv").hide();
-    }
-
-    function displayCourses(){
-        $("#editProfileDiv").hide();
-        $("#coursesDiv").show();
-        $("#settingsDiv").hide();
-    }
-
-    function editProfile(){
-        $("#coursesDiv").hide();
-        $("#editProfileDiv").show();
-        $("#settingsDiv").hide();
-    }
-
-</script>
 
 
 </body>
