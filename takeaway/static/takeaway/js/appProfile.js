@@ -81,7 +81,6 @@ app.config(['$resourceProvider', function ($resourceProvider) {
 
     app.controller('EditProfileController',function($scope,$http,$cookies,$resource,User){
 
-        console.log("Controller cvalled");
         $scope.editProfileSuccess = false;
         $scope.editProfileError = false;
         $scope.saveUserLabel = 'Save Changes';
@@ -97,7 +96,7 @@ app.config(['$resourceProvider', function ($resourceProvider) {
                 console.log(reason);
         });
 
-        $scope.updateUser = function(editProfileForm){
+        $scope.update = function(editProfileForm){
             if(editProfileForm.$valid){
                 $scope.saveUserLabel = 'Updating ...';
                 $scope.disablesubmit = true;
@@ -110,7 +109,6 @@ app.config(['$resourceProvider', function ($resourceProvider) {
             userJsonData.username = $scope.userName;
             userJsonData.email = $scope.emailId;
 
-            console.log(userJsonData);
             $scope.updateUser = User.update({id:$cookies.userid},userJsonData);
             $scope.updateUser.$promise.then(function(data){
                 $scope.editProfileSuccess = true;
