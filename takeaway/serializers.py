@@ -54,13 +54,46 @@ class TakeAwayFullSerializer(serializers.ModelSerializer):
         fields = ('id','notes', 'user','courseInstance','session','is_public','username', 'tags','created_dt','average_rating','total_raters','comment_count')
         depth = 1
 
+
+# class SessionWithTakeAwaysSinceLastLoginSerializer(serializers.ModelSerializer):
+#     takeaway_set = TakeAwayFullSerializer(source='takeaway_set')
+
+#     takeaway_set_since_last_login = serializers.SerializerMethodField('takeaways_since_lastLogin')
+
+#     def takeaways_since_lastLogin(self, obj):
+
+#         takeaways = obj.takeaway_set.filter(created_dt__gte=self.context['request'].user.last_login)
+#         return takeaways
+#     class Meta:
+#         model = Session
+#         fields = ('id','session_name', 'session_dt','takeaway_set','courseInstance','takeaway_set_since_last_login')
+#         depth = 1
+
+import pdb
 class SessionSerializer(serializers.ModelSerializer):
     takeaway_set = TakeAwayFullSerializer(source='takeaway_set')
 
     class Meta:
         model = Session
         fields = ('id','session_name', 'session_dt','takeaway_set','courseInstance')
-        depth = 1
+        depth = 2
+
+
+class SessionWithTakeAwaySinceLastLoginSerializer(serializers.ModelSerializer):
+    takeaway_set_since_last_login = serializers.SerializerMethodField('takeaways_since_lastLogin')
+
+
+    def takeaways_since_lastLogin(self, obj):
+        takeaways = obj.takeaway_set.filter(created_dt__gte=self.context['request'].user.last_login)
+        #takeaways = obj.takeaway_set.all()
+        return TakeAwayFullSerializer(takeaways).data
+
+    class Meta:
+        model = Session
+        fields = ('id','session_name', 'session_dt','courseInstance','takeaway_set_since_last_login')
+        depth = 2
+
+
 
 class SessionDetailSerializer(serializers.ModelSerializer):
 

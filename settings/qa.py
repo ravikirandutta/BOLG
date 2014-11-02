@@ -50,3 +50,4 @@ EMAIL_HOST_PASSWORD = "getabillion101"
 DEFAULT_FROM_EMAIL = 'mbatakeaway@gmail.com'
 DEFAULT_TO_EMAIL = 'suresh.atluri@gmail.com'
 
+INSTANT_TAKEAWAY_NOTIFICATION_TURNED_ON = True

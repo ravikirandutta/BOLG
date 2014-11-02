@@ -40,8 +40,11 @@ def create_notifications_on_takeaway(sender, **kwargs):
         UserEventLog(user=takeaway.user,course_instance=takeaway.courseInstance,session=takeaway.session,event=event[0],points=event[0].points).save()
 
 
-        if takeaway.is_public == True :
-            mail_new_takeaway.delay(takeaway)
+        if takeaway.is_public == True:
+            if INSTANT_TAKEAWAY_NOTIFICATION_TURNED_ON:
+                mail_new_takeaway.delay(takeaway)
+            else:
+                logger.info("instant takeaway notification turned off")
         #     logger.info("public takeaway created by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)
         #     recipients = takeaway.courseInstance.students.all()
 
@@ -282,6 +285,25 @@ class SessionList(generics.ListCreateAPIView):
     ordering_fields = ('session_dt','created_dt')
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
     paginate_by = 100
+
+
+class TakeAwayListSinceLastLogin(generics.ListAPIView):
+    queryset = Session.objects.all()
+    serializer_class = SessionWithTakeAwaySinceLastLoginSerializer
+    filter_backends = (filters.DjangoFilterBackend,filters.OrderingFilter)
+    filter_fields = ('session_name','courseInstance',)
+    ordering_fields = ('session_dt','created_dt')
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+    paginate_by = 100
+
+
+    def get_queryset(self):
+
+        courseInstances = TakeAwayProfile.objects.get(user=self.request.user).courseInstances.all()
+        queryset = Session.objects.filter(courseInstance__in = courseInstances)
+        return queryset
+
+
 
 class SessionDetail(generics.RetrieveUpdateDestroyAPIView):
         queryset = Session.objects.all()
@@ -713,6 +735,14 @@ def ContactUsLogin(request):
 
     return render_to_response('contact_us_login.html', {'form': form}, context)
 
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def takeaways_since_last_login(request):
+    return Response(SessionWithTakeAwaySinceLastLoginSerializer(Session.objects.filter(courseInstance=CourseInstance.objects.all()[3])).data)
+
+
+
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
 def get_leader_board(request):
@@ -912,4 +942,6 @@ def Chat(request):
     school = takeAwayProfile.school.school_name
     batch = takeAwayProfile.batch
     return render_to_response('chat.html',RequestContext(request),{school:school, batch:batch})
+
+
 
