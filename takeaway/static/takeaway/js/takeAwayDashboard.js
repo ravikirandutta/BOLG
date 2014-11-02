@@ -645,23 +645,22 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
   };
 
-   $scope.updateTakeaway = function(divId, taset) {
+   $scope.updateTakeaway = function(divId) {
       document.getElementById(divId + "_view").style.display = "block";
       document.getElementById(divId + "_edit").style.display = "none";
       var tagIds = [];
-      angular.forEach(taset.tags, function(tag){
+      angular.forEach($scope.taset.tags, function(tag){
           if(tag.id){
              tagIds.push(tag.id);
           }
       });
 
 
-      var modifiedTakeawayObj = TakeAwayConverter.convert(taset);
-       modifiedTakeawayObj.notes = document.getElementById(divId + "_notes").value;
+      var modifiedTakeawayObj = TakeAwayConverter.convert($scope.taset);
 
       console.log(JSON.stringify(modifiedTakeawayObj));
 
-          TakeAwayFactory.update({id:taset.id},modifiedTakeawayObj).$promise
+          TakeAwayFactory.update({id:$scope.taset.id},modifiedTakeawayObj).$promise
           .then(function(data, status, headers, config) {
         //We need refresh only updated takeaway instead of loading all courses sessions
         //$scope.freshLoadOfSessions(taset.courseInstance.id);
