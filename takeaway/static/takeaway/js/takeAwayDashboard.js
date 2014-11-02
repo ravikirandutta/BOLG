@@ -1081,6 +1081,7 @@ app.controller('publicPrivateButtonCtrl',
     function($scope, $http, $cookies, $resource, $rootScope, UserProfile, TakeAwayFactory, ClassmatesDataFactory, ShareWithGroupsFactory, CourseDataFactory, GroupsDataFactory, TakeAwayConverter, GroupsFactory) {
       $scope.share={};
       $scope.taShare={};
+      $scope.taShare.groups = [];
       $scope.share.visibility = "me";
       $scope.groups=GroupsDataFactory.getCurrentCourseGroups();
       $scope.courseInstanceId=CourseDataFactory.getCurrentCourse();
@@ -1123,6 +1124,7 @@ app.controller('publicPrivateButtonCtrl',
         $scope.taShare.groups=[];
       } else if($scope.share.visibility=="everyone"){
         $scope.taset.is_public = true;
+        $scope.taShare.groups=[];
       } else{
         if($scope.taShare.groups && $scope.taShare.groups.length == 0){
           $scope.share.visibility = "me";
@@ -1177,7 +1179,19 @@ app.controller('publicPrivateButtonCtrl',
         
         }
         else{
-          $scope.taset.createAndAddToGroups = $scope.taShare.groups;
+          if($scope.newGroup.name && $scope.newGroup.members.length>0){
+          GroupsFactory.save({group_name:$scope.newGroup.name,course_instance:$scope.courseInstanceId,created_by:$cookies.userid,group_updated_by:$cookies.userid,members:$scope.newGroup.members},function(data){
+             $scope.groups.push(data);
+             GroupsDataFactory.setCurrentCourseGroups($scope.groups);
+              $scope.taShare.groups.push(data.id);
+              $scope.taset.createAndAddToGroups = $scope.taShare.groups;
+              $scope.newGroup.name=undefined;
+              $scope.newGroup.members=[];
+              $scope.share.visibility = 'groups'
+             
+          });
+        }
+          
         }
         
         $scope.createGroup.addGroup=false;

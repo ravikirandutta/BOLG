@@ -1,4 +1,4 @@
-
+  
 
                           <li ng-controller = "TakeAwayController" ng-if='taset.isOwner || taset.is_public' >
                             <div id="{{sessionsresult.id}}_{{taset.id}}_view" class="recent-content">
@@ -103,10 +103,11 @@
 
 
                                <div style="float:right">
-                              <span public-private taset="taset"
+                                <!-- commenting this for now as it requirems more effort to make this happen, will revisit this in case this feature is a must -->
+                              <!-- <span public-private taset="taset"
                                    course-id={{sessionsresult.courseInstance.id}}
                                    session-id={{sessionsresult.id}}
-                                   perform-post=false></span>
+                                   perform-post=false></span> -->
 
                               <button class="btn btn-success" ng-click="updateTakeaway(sessionsresult.id+'_'+taset.id, taset)">Update</button>
                               <button class="btn btn-danger" ng-click="cancelEdit(sessionsresult.id+'_'+taset.id, taset.notes)">Cancel</button>
