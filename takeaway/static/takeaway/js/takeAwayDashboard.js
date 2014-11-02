@@ -697,7 +697,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
     $scope.userCanPost = false;
     $scope.leaderBoard = {};
     $scope.userProfile = {};
-
+    $scope.showLatestTakeawayDialog = true;
 
   $scope.ratingStates = [
 
@@ -783,7 +783,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
 
     $scope.showLeaderBoard = function () {
-
+      $scope.showLatestTakeawayDialog = false;
       ngDialog.open({
         template: 'courseLeaderBoardTemplateId',
         controller: 'CourseController',
@@ -825,24 +825,26 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
       //}
 
       /*Dialog window with all lastest takeaways since last login*/
-       ngDialog.open({
-        template: 'latestTakeawaySinceLastLogin',
-        className: 'ngdialog-theme-plain',
-        controller: ['$scope', function($scope) {
-          
-          $scope.latestTakeawaysExists = true;  //It should derived from REST service Data
-          if($scope.latestTakeawaysExists) {
-            //Call the REST service to get sessions-takeaways data since last login and assign to variable sessionsData_LastLogin
-            $scope.sessionsData_LastLogin = "";
-          } else {
-            setTimeout(function(){ngDialog.close();}, 10000);  //10 seconds to auto close
-          }
-        }],
-        closeByDocument: false,
-        closeByEscape: false,
-        scope: $scope,
-        //preCloseCallback: function() {return true; }
-      });
+      if($scope.showLatestTakeawayDialog == true) {
+         ngDialog.open({
+          template: 'latestTakeawaySinceLastLogin',
+          className: 'ngdialog-theme-plain',
+          controller: ['$scope', function($scope) {
+            
+            $scope.latestTakeawaysExists = true;  //It should derived from REST service Data
+            if($scope.latestTakeawaysExists) {
+              //Call the REST service to get sessions-takeaways data since last login and assign to variable sessionsData_LastLogin
+              $scope.sessionsData_LastLogin = "";
+            } else {
+              setTimeout(function(){ngDialog.close();}, 10000);  //10 seconds to auto close
+            }
+          }],
+          closeByDocument: false,
+          closeByEscape: false,
+          scope: $scope,
+          //preCloseCallback: function() {return true; }
+        });
+     }
 
     };
 
@@ -999,6 +1001,11 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
       $scope.newTakeawayContent="";
     };
 
+    $scope.closeLeaderBoardDialog = function() {
+      ngDialog.close();
+      $scope.newTakeawayContent="";
+      $scope.showLatestTakeawayDialog = true;
+    };
 
   });
 
@@ -1074,6 +1081,7 @@ app.controller('publicPrivateButtonCtrl',
     function($scope, $http, $cookies, $resource, $rootScope, UserProfile, TakeAwayFactory, ClassmatesDataFactory, ShareWithGroupsFactory, CourseDataFactory, GroupsDataFactory, TakeAwayConverter, GroupsFactory) {
       $scope.share={};
       $scope.taShare={};
+      $scope.taShare.groups = [];
       $scope.share.visibility = "me";
       $scope.groups=GroupsDataFactory.getCurrentCourseGroups();
       $scope.courseInstanceId=CourseDataFactory.getCurrentCourse();
@@ -1116,6 +1124,7 @@ app.controller('publicPrivateButtonCtrl',
         $scope.taShare.groups=[];
       } else if($scope.share.visibility=="everyone"){
         $scope.taset.is_public = true;
+        $scope.taShare.groups=[];
       } else{
         if($scope.taShare.groups && $scope.taShare.groups.length == 0){
           $scope.share.visibility = "me";
@@ -1170,7 +1179,19 @@ app.controller('publicPrivateButtonCtrl',
         
         }
         else{
-          $scope.taset.createAndAddToGroups = $scope.taShare.groups;
+          if($scope.newGroup.name && $scope.newGroup.members.length>0){
+          GroupsFactory.save({group_name:$scope.newGroup.name,course_instance:$scope.courseInstanceId,created_by:$cookies.userid,group_updated_by:$cookies.userid,members:$scope.newGroup.members},function(data){
+             $scope.groups.push(data);
+             GroupsDataFactory.setCurrentCourseGroups($scope.groups);
+              $scope.taShare.groups.push(data.id);
+              $scope.taset.createAndAddToGroups = $scope.taShare.groups;
+              $scope.newGroup.name=undefined;
+              $scope.newGroup.members=[];
+              $scope.share.visibility = 'groups'
+             
+          });
+        }
+          
         }
         
         $scope.createGroup.addGroup=false;
