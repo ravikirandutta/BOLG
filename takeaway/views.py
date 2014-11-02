@@ -251,7 +251,8 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
 
 class SchoolViewSet(viewsets.ModelViewSet):
-        queryset = School.objects.all()
+        #we dont want to show the ADMIN and Demo schools in the registration page
+        queryset = School.objects.exclude(school_name__in = ['ADMIN','Demo'])
         serializer_class = SchoolSerializer
         filter_backends = (filters.DjangoFilterBackend,)
         filter_fields = ('school_name',)
