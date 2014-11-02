@@ -697,7 +697,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
     $scope.userCanPost = false;
     $scope.leaderBoard = {};
     $scope.userProfile = {};
-
+    $scope.showLatestTakeawayDialog = true;
 
   $scope.ratingStates = [
 
@@ -783,7 +783,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
 
     $scope.showLeaderBoard = function () {
-
+      $scope.showLatestTakeawayDialog = false;
       ngDialog.open({
         template: 'courseLeaderBoardTemplateId',
         controller: 'CourseController',
@@ -825,24 +825,26 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
       //}
 
       /*Dialog window with all lastest takeaways since last login*/
-       ngDialog.open({
-        template: 'latestTakeawaySinceLastLogin',
-        className: 'ngdialog-theme-plain',
-        controller: ['$scope', function($scope) {
-          
-          $scope.latestTakeawaysExists = true;  //It should derived from REST service Data
-          if($scope.latestTakeawaysExists) {
-            //Call the REST service to get sessions-takeaways data since last login and assign to variable sessionsData_LastLogin
-            $scope.sessionsData_LastLogin = "";
-          } else {
-            setTimeout(function(){ngDialog.close();}, 10000);  //10 seconds to auto close
-          }
-        }],
-        closeByDocument: false,
-        closeByEscape: false,
-        scope: $scope,
-        //preCloseCallback: function() {return true; }
-      });
+      if($scope.showLatestTakeawayDialog == true) {
+         ngDialog.open({
+          template: 'latestTakeawaySinceLastLogin',
+          className: 'ngdialog-theme-plain',
+          controller: ['$scope', function($scope) {
+            
+            $scope.latestTakeawaysExists = true;  //It should derived from REST service Data
+            if($scope.latestTakeawaysExists) {
+              //Call the REST service to get sessions-takeaways data since last login and assign to variable sessionsData_LastLogin
+              $scope.sessionsData_LastLogin = "";
+            } else {
+              setTimeout(function(){ngDialog.close();}, 10000);  //10 seconds to auto close
+            }
+          }],
+          closeByDocument: false,
+          closeByEscape: false,
+          scope: $scope,
+          //preCloseCallback: function() {return true; }
+        });
+     }
 
     };
 
@@ -999,6 +1001,11 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
       $scope.newTakeawayContent="";
     };
 
+    $scope.closeLeaderBoardDialog = function() {
+      ngDialog.close();
+      $scope.newTakeawayContent="";
+      $scope.showLatestTakeawayDialog = true;
+    };
 
   });
 
