@@ -35,6 +35,10 @@ class SchoolSerializer(serializers.ModelSerializer):
         fields = ('id', 'school_name','emailformat_set','image_url')
 
 
+class SharedTakeawaySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SharedTakeaway
 
 class TakeAwaySerializer(serializers.ModelSerializer):
     username = serializers.Field(source='user.username')
@@ -49,9 +53,10 @@ class TakeAwayFullSerializer(serializers.ModelSerializer):
     username = serializers.Field(source='user.username')
     created_dt = serializers.DateTimeField(format='%Y-%m-%d %H:%MZ')
     comment_count = serializers.Field(source='comment_set.count')
+    shared_takeaways = SharedTakeawaySerializer(source='shared_info')
     class Meta:
         model = TakeAway
-        fields = ('id','notes', 'user','courseInstance','session','is_public','username', 'tags','created_dt','average_rating','total_raters','comment_count')
+        fields = ('id','notes', 'user','courseInstance','session','is_public','username', 'tags','created_dt','average_rating','total_raters','comment_count', 'shared_takeaways')
         depth = 1
 
 
@@ -207,10 +212,6 @@ class ClosedGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClosedGroup
 
-class SharedTakeawaySerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = SharedTakeaway
 
 
 
