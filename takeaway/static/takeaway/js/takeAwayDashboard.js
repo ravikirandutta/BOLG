@@ -19,7 +19,12 @@
       templateUrl: '/static/takeaway/templates/takeAwayDashboard.html'
     }
   });
-
+  app.directive('coursemates', function() {
+    return {
+      restrict: 'E',
+      templateUrl: '/static/takeaway/templates/coursemates.html'
+    }
+  });
   app.directive('takeAway', function() {
     return {
       restrict: 'E',
@@ -450,6 +455,15 @@ app.factory('TagsDataFactory', function(TagsFactory){
         function(){});
          }
       }
+});
+
+app.controller('CoursematesController',function($scope,ClassmatesDataFactory){
+
+  $scope.coursemates=[];
+  $scope.loadCoursemates= function(){
+    $scope.coursemates=ClassmatesDataFactory.getCurrentCourseClassmates();
+  }
+
 });
 
 app.controller('FavoriteController',function($scope,$cookies, FavoritesFactory, CriteriaService ){
