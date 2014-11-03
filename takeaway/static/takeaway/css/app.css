@@ -416,7 +416,8 @@ tags-input .tags .input{
 
 .classMatesContainer{
    overflow-y: scroll;
-   max-height: 40px;
+
+   max-height: 150px;
 }
 
 #school-options, #add-school{

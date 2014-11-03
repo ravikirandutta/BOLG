@@ -3,6 +3,7 @@
 	<h3 class="popover-title" ng-bind-html="title" ng-show="title"></h3>
 	<div class="popover-content" style="padding:0px">
 		<form name="popoverForm"><p ng-bind-html="content" style="margin:0px;min-width:300px"></p>
+			<div collapse="createGroup.addGroup">
 			<input type="radio" name="share" ng-model="share.visibility" value="me">Only me<br>
 			<input type="radio" name="share" ng-model="share.visibility" value="everyone">Everyone<br>
 			<input type="radio" name="share" ng-model="share.visibility" value="groups"><span >Select Group</span><br>
@@ -10,15 +11,18 @@
 				
 					<p ng-repeat="group in groups"><input  type="checkbox" checklist-model="taShare.groups" checklist-value="group.id">{{group.group_name}}</p>
 					<a ng-if="createGroup.addGroup==false" ng-click="createGroup.addGroup=true"><i class="fa fa-plus-circle"></i>Create New Group</a>
-				<div ng-if="createGroup.addGroup">
-					<strong>Name:</strong><input ng-model="newGroup.name"type="text">
-					<strong>Selct Members:</strong>
+				
+
+			</div>
+		</div>
+			<div ng-if="createGroup.addGroup">
+				
+					<strong>Name: </strong><input ng-model="newGroup.name"type="text" autofocus><br/>
+					<strong>Select Members: </strong>
 					<div  class="classMatesContainer">
 					<p ng-repeat="classmate in classmates"><input  type="checkbox" checklist-model="newGroup.members" checklist-value="classmate.id">{{classmate.username}}</p>
 					</div>
 				</div>
-
-			</div>
 			<div class="form-actions"><button type="button" class="btn btn-primary" ng-click="toggleButtons(performPost);$hide()">Save and Close</button></div></form>
 	</div>
 </div>

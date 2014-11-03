@@ -1,6 +1,6 @@
   
 
-                          <li ng-controller = "TakeAwayController" ng-if='taset.isOwner || taset.is_public' >
+                          <li class="padd" ng-controller = "TakeAwayController" ng-if='taset.isOwner || taset.is_public' >
                             <div id="{{sessionsresult.id}}_{{taset.id}}_view" class="recent-content">
                               <div class="recent-meta">Posted on {{taset.created_dt}} by {{taset.username}}</div>
                               <div ng-if="taset.isOwner">
@@ -109,7 +109,7 @@
                                    session-id={{sessionsresult.id}}
                                    perform-post=false></span> -->
 
-                              <button class="btn btn-success" ng-click="updateTakeaway(sessionsresult.id+'_'+taset.id, taset)">Update</button>
+                              <button class="btn btn-success" ng-click="updateTakeaway(sessionsresult.id+'_'+taset.id)">Update</button>
                               <button class="btn btn-danger" ng-click="cancelEdit(sessionsresult.id+'_'+taset.id, taset.notes)">Cancel</button>
                             </div>
                               <div class="btn-group-left" ng-controller="TagController">
