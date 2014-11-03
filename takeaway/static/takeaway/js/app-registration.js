@@ -39,16 +39,26 @@ app.factory('TakeAwayProfileFactory', ['$resource',function($resource){
                });
     }]);
 
+app.factory('ContactUsFactory', ['$resource',function($resource){
+         return $resource('/contactus/', {}, {
+                save: {method:'POST'},
+
+               });
+    }]);
 
 
-  app.controller('SchoolController',function($scope,$http,$cookies,$resource,Schools,ProgramsFactory,
-                                               TakeAwayFactory, TakeAwayProfileFactory, CourseInstanceFactory){
+  app.controller('SchoolController',function($scope,$http,$cookies,$resource,$location, $anchorScroll, Schools,ProgramsFactory,
+                                               TakeAwayFactory, TakeAwayProfileFactory, CourseInstanceFactory,ContactUsFactory){
     $scope.availableSchools={};
     $scope.currentSchool={};
     $scope.school = "emory";
     $scope.programs = {};
     $scope.schoolSelected=false;
     $scope.noSchool=false;
+    $scope.helpUsAdd = {};
+    $scope.helpUsAdd.subject="";
+    $scope.helpUsAdd.sender="";
+    $scope.helpUsAdd.message="";
 
 
 
@@ -64,6 +74,10 @@ app.factory('TakeAwayProfileFactory', ['$resource',function($resource){
 
 
           $scope.setValidEmailFormat();
+
+          $location.hash('school-stats');
+          $anchorScroll();
+
           ProgramsFactory.query({"school":$scope.currentSchool.id}).$promise.then(function(data){
               $scope.programs = data.results;
           });
@@ -83,6 +97,20 @@ app.factory('TakeAwayProfileFactory', ['$resource',function($resource){
 
 
         };
+
+
+        $scope.addSchoolRequest = function()
+    {
+     var data = {"subject":$scope.helpUsAdd.subject,"message":$scope.helpUsAdd.message,"sender":$scope.helpUsAdd.sender};
+     ContactUsFactory.save(data).$promise.then(function(){
+      $scope.add_school_success = true;
+        $.gritter.add({
+                      title: 'Contact us',
+                      sticky: false,
+                      time: '0.0001'
+                  });
+     });
+  };
 
         $scope.test = function(){}
 

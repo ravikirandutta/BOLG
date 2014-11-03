@@ -418,3 +418,7 @@ tags-input .tags .input{
    overflow-y: scroll;
    max-height: 40px;
 }
+
+#school-options, #add-school{
+    cursor: pointer;
+}

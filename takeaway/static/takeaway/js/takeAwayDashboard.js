@@ -648,12 +648,6 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
    $scope.updateTakeaway = function(divId) {
       document.getElementById(divId + "_view").style.display = "block";
       document.getElementById(divId + "_edit").style.display = "none";
-      var tagIds = [];
-      angular.forEach($scope.taset.tags, function(tag){
-          if(tag.id){
-             tagIds.push(tag.id);
-          }
-      });
 
 
       var modifiedTakeawayObj = TakeAwayConverter.convert($scope.taset);
@@ -696,7 +690,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
     $scope.userCanPost = false;
     $scope.leaderBoard = {};
     $scope.userProfile = {};
-    $scope.showLatestTakeawayDialog = true;
+    $scope.showLatestTakeawayDialog = false;
 
   $scope.ratingStates = [
 
@@ -799,7 +793,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
       CourseDataFactory.setCurrentCourse(courseid);
       GroupsFactory.query({'course_instance':courseid,'members':$scope.userProfile.id}).$promise.then(function(data){
 
-        GroupsDataFactory.setCurrentCourseGroups(data.results); 
+        GroupsDataFactory.setCurrentCourseGroups(data.results);
       });
       for(var i=0;i<$scope.availableCourses.results.length;i++){
         if($scope.availableCourses.results[i].id==courseid){
@@ -807,7 +801,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
           console.log($scope.availableCourses.results[i].students);
         }
       }
-      
+
 
      // if($scope.displaysessions != true) {
         SessionsFactory.query({
@@ -829,7 +823,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
           template: 'latestTakeawaySinceLastLogin',
           className: 'ngdialog-theme-plain',
           controller: ['$scope', function($scope) {
-            
+
             $scope.latestTakeawaysExists = true;  //It should derived from REST service Data
             if($scope.latestTakeawaysExists) {
               //Call the REST service to get sessions-takeaways data since last login and assign to variable sessionsData_LastLogin
@@ -1003,7 +997,7 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
     $scope.closeLeaderBoardDialog = function() {
       ngDialog.close();
       $scope.newTakeawayContent="";
-      $scope.showLatestTakeawayDialog = true;
+      //$scope.showLatestTakeawayDialog = true;
     };
 
   });
@@ -1092,7 +1086,7 @@ app.controller('publicPrivateButtonCtrl',
       $scope.userProfile = {};
             UserProfile.query({"user":$cookies.userid}).$promise.then(function(data){
             $scope.userProfile=data.results[0];
-           
+
           });
       if($scope.taset.is_public){
         $scope.share.visibility = "everyone";
@@ -1117,7 +1111,7 @@ app.controller('publicPrivateButtonCtrl',
 
     /*Public private buttons method */
     $scope.toggleButtons = function(postImmediately) {
-      
+
       if ($scope.share.visibility == "me") {
         $scope.taset.is_public = false;
         $scope.taShare.groups=[];
@@ -1159,9 +1153,9 @@ app.controller('publicPrivateButtonCtrl',
         $scope.initialShareList.forEach(function(item){
           if($scope.taShare.groups.indexOf(item)==-1){
             ShareWithGroupsFactory.get({group:item,takeaway:$scope.taset.id}).$promise.then(function(data){
-             ShareWithGroupsFactory.removeGroupFromShare({id:data.results[0].id}); 
+             ShareWithGroupsFactory.removeGroupFromShare({id:data.results[0].id});
             });
-          
+
         }
 
         });
@@ -1175,7 +1169,7 @@ app.controller('publicPrivateButtonCtrl',
              });
           })
         }
-        
+
         }
         else{
           if($scope.newGroup.name && $scope.newGroup.members.length>0){
@@ -1187,12 +1181,12 @@ app.controller('publicPrivateButtonCtrl',
               $scope.newGroup.name=undefined;
               $scope.newGroup.members=[];
               $scope.share.visibility = 'groups'
-             
+
           });
         }
-          
+
         }
-        
+
         $scope.createGroup.addGroup=false;
     };
 

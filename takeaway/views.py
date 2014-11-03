@@ -15,7 +15,6 @@ from takeaway.forms import *
 from rest_framework.mixins import *
 from rest_framework.permissions import IsAuthenticated
 from django.db.models import Sum
-import pdb
 from settings import *
 import math
 from django.db.models import Sum,Count
@@ -612,7 +611,7 @@ class ContactUsViewSet(viewsets.ModelViewSet):
     """
     queryset = ContactUs.objects.all()
     serializer_class = ContactUsSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+    permission_classes = (permissions.AllowAny,)
 
     def post_save(self, obj, created=False):
         """
@@ -636,6 +635,8 @@ class ContactUsViewSet(viewsets.ModelViewSet):
 
 
 from django.core.mail import send_mail
+
+
 def ContactUs(request):
     # Get the context from the request.
     context = RequestContext(request)
@@ -686,10 +687,13 @@ def ContactUs(request):
 
 
 
+
+
+
 def ContactUsLogin(request):
     # Get the context from the request.
     context = RequestContext(request)
-
+    #pdb.set_trace()
     # A HTTP POST?
     if request.method == 'POST':
         form = ContactForm(request.POST)

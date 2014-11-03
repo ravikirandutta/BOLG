@@ -49,7 +49,7 @@
         <div class="page-header">
           <div class="row">
             <div class="col-lg-12">
-              <h1 id="buttons">Choose Your School</h1>
+              <h1 id="school-options">Choose Your School</h1>
             </div>
           </div>
         </div>
@@ -70,9 +70,9 @@
 </div>
 
 
-
-<div class="school-stats" ng-show="schoolSelected">
-
+<div class="clearfix visible-md-block visible-sm-block visible-lg-block"></div>
+<div id="school-stats" class="school-stats" ng-show="schoolSelected">
+  <div><h1>You have selected <b>{{currentSchool.school_name}}</b></h1> </div>
   <div><h1><span count-to="{{school_mates}}" value="0" duration="2"></span> of your school mates have</h1> </div>
   <div><h1>created <span count-to="{{takeaway_count}}" value="0" duration="2"></span> takeaways in</h1> </div>
   <div><h1><span count-to="{{course_count}}" value="0" duration="2"></span> different courses</h1></div>
@@ -225,7 +225,7 @@
 
   <accordion-group >
   <accordion-heading>
-    <h1 id="type">Your School Not Listed???</h1>
+    <h1 id="add-school">Your School Not Listed???</h1>
   </accordion-heading>
 <div class="row">
 
@@ -235,29 +235,33 @@
   </div>
 
 <div>
-    <form ng-show="noSchool" ng-model="noSchool">
+    <form ng-show="noSchool" >
       <div  class="widget wred">
-           <div id="registration" class="widget-head">
+        <!--   <div id="registration" class="widget-head">
                            Contact Us
             </div>
-
+-->
                 <div class="form-group" >
-                                        <p><label class="control-label col-lg-3" for="id_email">E-mail:</label><input id="id_sender" name="sender" type="email"></p>
+                                        <p><label class="control-label col-lg-3" for="id_email">E-mail:</label><input ng-model="helpUsAdd.sender" id="id_sender" name="sender" type="email"></p>
                    </div>
 
                   <div class="form-group" >
                                 <p><label class="control-label col-lg-3" for="id_subject" >School Name:</label>
-                                <input id="id_subject" name="subject" type="text"></p>
+                                <input id="id_subject" ng-model="helpUsAdd.subject" name="subject" type="text"></p>
                     </div>
 
                   <div class="form-group">
                                     <p><label class="control-label col-lg-3" for="id_message">Message:</label>
-                                        <textarea name="message" id="contact" rows="8" cols="40"></textarea></p>
+                                        <textarea name="message" id="contact" ng-model="helpUsAdd.message" rows="8" cols="40"></textarea></p>
                    </div>
 
-                  <div class="modal-footer">
+                  <div class="modal-footer row">
+                    <div class="col-sm-8">
+                     <h4 style="text-align:left" ng-show="add_school_success"> Thanks for your interest. We will reach out to you for more details. </h4></div>
+                      <div class="col-sm-4">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      <button type="button" id="contactUs"  class="btn btn-primary">Send       </button>
+                      <button type="button" id="contactUs"  class="btn btn-primary" ng-click="addSchoolRequest()">Send       </button>
+                      </div>
                   </div>
       </div>
   </form>
