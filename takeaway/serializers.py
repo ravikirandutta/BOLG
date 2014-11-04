@@ -2,6 +2,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from takeaway.models import *
 from notifications.models import Notification
+from django.db.models import Q
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -89,7 +90,7 @@ class SessionWithTakeAwaySinceLastLoginSerializer(serializers.ModelSerializer):
 
 
     def takeaways_since_lastLogin(self, obj):
-        takeaways = obj.takeaway_set.filter(created_dt__gte=self.context['request'].user.last_login)
+        takeaways = obj.takeaway_set.filter(created_dt__gte=self.context['request'].user.last_login).exclude(user = self.context['request'].user)
         #takeaways = obj.takeaway_set.all()
         return TakeAwayFullSerializer(takeaways).data
 
