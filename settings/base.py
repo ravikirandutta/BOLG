@@ -160,7 +160,7 @@ RATING_THRESHOLD_FOR_CREATE = .25
 BROKER_URL = os.environ.get('CLOUDAMQP_URL')
 if BROKER_URL is None:
     BROKER_URL = 'amqp://test:test@localhost:5672/test'
-
+BROKER_POOL_LIMIT = 0
 CELERY_IMPORTS = ('takeaway.tasks',)
 
 
