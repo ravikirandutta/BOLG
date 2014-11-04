@@ -172,11 +172,10 @@
         </div>
       </h5>
     </div>
-    <div ng-hide="latestTakeawaysExists">
-        No new takeaways posted since your last login.
-    </div>
-    <div ng-show="latestTakeawaysExists">
-        <div ng-repeat="sessionsresult in sessionsData">
+    <div>
+      <tabset>
+      <tab ng-repeat="tsl in tslObj" heading="{{tsl.name}}({{tsl.count}})" active="tsl.active">
+        <div ng-repeat="sessionsresult in tsl.sessions">
            <div ng-controller="SessionController" class="widget wlightblue">
               <div class="widget-head" id="bluewidget">
                 <div class="pull-left">
@@ -188,7 +187,7 @@
                   <div class="padd">
                     <ul id="takeaway-list" class="recent">
                       <div>
-                        <div id="{{taset.id}}" ng-repeat="taset in sessionsresult.takeaway_set" >
+                        <div id="{{taset.id}}" ng-repeat="taset in sessionsresult.takeaway_set_since_last_login" >
                           <div ng-if="!taset.isOwner"> 
                             <li ng-controller = "TakeAwayController" ng-if='taset.is_public' >
                               <div id="{{sessionsresult.id}}_{{taset.id}}_view" class="recent-content">
@@ -244,5 +243,7 @@
               </div>
           </div>
          </div>
+         <tab>
+         </tabset>
       </div>
 </script>

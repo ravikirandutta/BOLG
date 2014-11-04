@@ -704,7 +704,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
     $scope.userCanPost = false;
     $scope.leaderBoard = {};
     $scope.userProfile = {};
-    $scope.showLatestTakeawayDialog = false;
+    $scope.showLatestTakeawayDialog = true;
 
   $scope.ratingStates = [
 
@@ -761,14 +761,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
     }).$promise.then(function(data) {
       console.log("First load of the page load the all available CRS");
       $scope.availableCourses = data;
-
       $scope.courseInstance = data[0];
-
-      //Displaying the STAYs for first CRS
-      // if($scope.availableCourses.results != null && $scope.availableCourses.results.length > 0) {
-      //   var defaultCourseId = $scope.availableCourses.results[0].course.id;
-      //   $scope.freshLoadOfSessions(defaultCourseId);
-      // }
     });
 
     $scope.getLeaderBoard = function(courseId){
@@ -817,42 +810,17 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
       }
 
 
-     // if($scope.displaysessions != true) {
-        SessionsFactory.query({
-          "courseInstance": courseid,
-          "ordering": "session_dt"
-        }).$promise.then(function(data) {
-          console.log("Load all SNs and TAYs associated with the CRS");
-          //alert("Load all SNs and TAYs associated with the CRS");
-          $scope.sessions = data;
-          $scope.displaysessions = true;
-          //alert(JSON.stringify($scope.sessions.results));
-          $scope.postzpulateOtherFields(courseid);
-        });
-      //}
+      SessionsFactory.query({
+        "courseInstance": courseid,
+        "ordering": "session_dt"
+      }).$promise.then(function(data) {
+        console.log("Load all SNs and TAYs associated with the CRS");
+        $scope.sessions = data;
+        $scope.displaysessions = true;
+        $scope.postzpulateOtherFields(courseid);
 
-      /*Dialog window with all lastest takeaways since last login*/
-      if($scope.showLatestTakeawayDialog == true) {
-         ngDialog.open({
-          template: 'latestTakeawaySinceLastLogin',
-          className: 'ngdialog-theme-plain',
-          controller: ['$scope', function($scope) {
-
-            $scope.latestTakeawaysExists = true;  //It should derived from REST service Data
-            if($scope.latestTakeawaysExists) {
-              //Call the REST service to get sessions-takeaways data since last login and assign to variable sessionsData_LastLogin
-              $scope.sessionsData_LastLogin = "";
-            } else {
-              setTimeout(function(){ngDialog.close();}, 10000);  //10 seconds to auto close
-            }
-          }],
-          closeByDocument: false,
-          closeByEscape: false,
-          scope: $scope,
-          //preCloseCallback: function() {return true; }
-        });
-     }
-
+        $scope.showLatestTakeawayDialogFunc();
+      });
     };
 
     $scope.postzpulateOtherFields = function(courseid) {
@@ -868,8 +836,6 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
           _.each(sessionsresult.takeaway_set,function(taset){
             taset["isFavourite"]=false;
             _.each($scope.favList,function(fav){
-              //console.log(JSON.stringify(fav));
-              //console.log(fav.takeaway);
               if(fav.takeaway == taset.id) {
                 taset["isFavourite"]=true;
                 taset["favoriteId"] = fav.id;
@@ -877,14 +843,12 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
             });
           });
         });
-        console.log("Getting Favorites values for all takeaways"+JSON.stringify($scope.favList));
       },
       function(data, status, headers, config) {
         $scope.status = status;
       });
-
-
-RatingFactory.get({user:$cookies.userid}).$promise.then(
+  
+    RatingFactory.get({user:$cookies.userid}).$promise.then(
     function(data, status, headers, config) {
         $scope.ratings = data.results;
 
@@ -925,25 +889,70 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
 
 
       SessionsDataFactory.setSessionData($scope.sessions);
-      //alert("done"+$scope.sessions.results.length);
       TagsDataFactory.getTags();
-
-
       $scope.sessionsData = SessionsDataFactory.getSessionData();
     }
 
 
+      $scope.showLatestTakeawayDialogFunc = function() {
+        if($scope.showLatestTakeawayDialog == true){
+          $http.get('/takeaways_since_last_login').
+            success(function(data, status, headers, config) {
+              $scope.tslObj = data;
+              $scope.tslObjTemp = [];
+              angular.forEach($scope.tslObj.results, function(r){
+                if(r.takeaway_set_since_last_login.length != 0) {
+                  $scope.tslObjTemp.push(r);
+                }
+              });
+              
+              var arr = [];
+              $scope.tslObj = [];
+              angular.forEach($scope.tslObjTemp, function(r){
+                if($.inArray(r.courseInstance.course.id, arr) == -1) {
+                  arr.push(r.courseInstance.course.id);
+                  $scope.tslObj.push({'id': r.courseInstance.course.id, 'name': r.courseInstance.course.course_name,'sessions':[]}); 
+                }
+              });
+         
+              angular.forEach($scope.tslObjTemp, function(r){
+                angular.forEach($scope.tslObj, function(cn){
+                  if(cn.id == r.courseInstance.course.id){
+                    cn.sessions.push(r);
+                  }
+                });
+              });
 
-    /* Update/Edit the takeaway and reload the page / refresh the takeaway part */
-    /* PUT: /takeaways/:takeawayID/ */
+              angular.forEach($scope.tslObj, function(cn){
+                var count = 0;
+                angular.forEach(cn.sessions, function(session){
+                  count += session.takeaway_set_since_last_login.length;
+                });
+                cn["count"] = count;
+              });
+              console.log("tslObj"+JSON.stringify($scope.tslObj));
 
-    /*Deleting selected TAY by passing the ID */
-    /*TODO: confirmation dialog before delete */
-    /*DELETE: /takeaways/:id/ */
-
-
-    /* Displaying Dialog window to create New Take Away */
-
+            $scope.showLatestTakeawayDialog = ($scope.tslObj.length > 0);
+              if($scope.showLatestTakeawayDialog == true) {
+                 ngDialog.open({
+                  template: 'latestTakeawaySinceLastLogin',
+                  className: 'ngdialog-theme-plain',
+                  controller: ['$scope', function($scope) {}],
+                  closeByDocument: false,
+                  closeByEscape: false,
+                  scope: $scope,
+                  preCloseCallback: function() {
+                    $scope.showLatestTakeawayDialog = false;
+                    return true; 
+                  }
+                });
+             } 
+          }).
+          error(function(data, status, headers, config) {
+              console.log("error");
+          });
+        }
+      };
 
     /* Event from "Save" button from New Take Away dialog window */
     $scope.saveTakeaway = function() {
@@ -1011,7 +1020,7 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
     $scope.closeLeaderBoardDialog = function() {
       ngDialog.close();
       $scope.newTakeawayContent="";
-      //$scope.showLatestTakeawayDialog = true;
+      $scope.showLatestTakeawayDialog = false;
     };
 
   });
