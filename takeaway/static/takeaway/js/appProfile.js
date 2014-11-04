@@ -23,6 +23,14 @@ app.config(['$resourceProvider', function ($resourceProvider) {
         }
     });
 
+    app.directive('emailSettings',function(){
+        return {
+            restrict: 'E',
+            templateUrl:'/static/takeaway/templates/email-settings.html'
+
+        }
+    });
+
     app.factory('CourseSelection', ['$resource',function($resource){
          return $resource('/courseInstances/', {}, {
                 query: {method:'GET', isArray:false},
@@ -78,6 +86,33 @@ app.config(['$resourceProvider', function ($resourceProvider) {
             update : {method: 'PUT'}
         });
     }]);
+
+ app.factory('EmailSettingsFactory', ['$resource',function($resource){
+        return $resource('/emailSettings/', {}, {
+            query: {method:'GET'},
+            update : {url:'/emailSettings/:id/', method: 'PUT'}
+        });
+    }]);
+
+
+    app.controller('EmailSettingsController', function($scope,$http,$cookies,$resource,EmailSettingsFactory){
+            $scope.instantEmailSetting = 0;
+            $scope.emailSettings ={};
+            EmailSettingsFactory.query({user:$cookies.userid}).$promise.then(function(data){
+                $scope.emailSettings = data.results[0];
+                $scope.instantEmailSetting = $scope.emailSettings.mail_when_takeaway;
+            });
+
+            $scope.modifyInstantEmail = function(value){
+                $scope.emailSettings.mail_when_takeaway = value;
+                EmailSettingsFactory.update({id:$scope.emailSettings.id},$scope.emailSettings).$promise.then(function(data){
+
+                }, function(){
+
+                });
+            };
+    });
+
 
     app.controller('EditProfileController',function($scope,$http,$cookies,$resource,User){
 

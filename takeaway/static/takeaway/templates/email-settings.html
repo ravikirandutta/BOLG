@@ -1,0 +1,40 @@
+        <div  ng-controller="EmailSettingsController">
+            <div class="mainbar" style="margin-left:230px">
+                <div class="matter">
+                    <div class="container">
+                        <div class="widget-content referrer">
+
+                            <!-- Widget content -->
+                            <table class="table  table-bordered ">
+                                <tbody><tr>
+                                    <th><center>Email Alerts</center></th>
+                                    <th><center>No Email<center></th>
+                                    <th><center>Instant<center></th>
+                                    <th><center>Daily<center></th>
+                                </tr>
+                                <tr>
+                                    <td>When new takeaways is posted</td>
+                                    <td><input type="radio" name="newTakeaway" ng-checked="emailSettings.mail_when_takeaway==0"  ng-click="modifyInstantEmail(0)"></td>
+                                    <td><input type="radio" name="newTakeaway" ng-checked="emailSettings.mail_when_takeaway==1"  ng-click="modifyInstantEmail(1)"></td>
+                                    <td><input type="radio" name="newTakeaway" ng-checked="emailSettings.mail_when_takeaway==2"  ng-click="modifyInstantEmail(2)"></td>
+                                </tr>
+                                <!-- <tr>
+                                    <td>When new user is registered</td>
+                                    <td><input type="radio" name="newUser" value="0" onclick="changeNewUserSettings(this)"></td>
+                                    <td><input type="radio" name="newUser" value="1" onclick="changeNewUserSettings(this)"></td>
+                                    <td><input type="radio" name="newUser" value="2" onclick="changeNewUserSettings(this)"></td>
+                                </tr>
+                                <tr>
+                                    <td>When my takeaway is rated</td>
+                                    <td><input type="radio" name="ratedTakeaway" value="0" onclick="changeRatedSettings(this)"></td>
+                                    <td><input type="radio" name="ratedTakeaway" value="1" onclick="changeRatedSettings(this)"></td>
+                                    <td><input type="radio" name="ratedTakeaway" value="2" onclick="changeRatedSettings(this)"></td>
+                                </tr> -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
