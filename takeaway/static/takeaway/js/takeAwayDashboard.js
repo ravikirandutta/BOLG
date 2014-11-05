@@ -646,7 +646,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
       if(!alreadyRated)
         {
            RatingFactory.save({takeaway:id,rating_value:rating,user:$cookies.userid}).$promise.then(function(){
-
+            $scope.taset.alreadyRated = true;
             CourseDataFactory.decrementRatingCountNeededToCreateTakeaway();
            },function(){});
         }
@@ -847,7 +847,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
       function(data, status, headers, config) {
         $scope.status = status;
       });
-  
+
     RatingFactory.get({user:$cookies.userid}).$promise.then(
     function(data, status, headers, config) {
         $scope.ratings = data.results;
@@ -905,16 +905,16 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
                   $scope.tslObjTemp.push(r);
                 }
               });
-              
+
               var arr = [];
               $scope.tslObj = [];
               angular.forEach($scope.tslObjTemp, function(r){
                 if($.inArray(r.courseInstance.course.id, arr) == -1) {
                   arr.push(r.courseInstance.course.id);
-                  $scope.tslObj.push({'id': r.courseInstance.course.id, 'name': r.courseInstance.course.course_name,'sessions':[]}); 
+                  $scope.tslObj.push({'id': r.courseInstance.course.id, 'name': r.courseInstance.course.course_name,'sessions':[]});
                 }
               });
-         
+
               angular.forEach($scope.tslObjTemp, function(r){
                 angular.forEach($scope.tslObj, function(cn){
                   if(cn.id == r.courseInstance.course.id){
@@ -943,10 +943,10 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
                   scope: $scope,
                   preCloseCallback: function() {
                     $scope.showLatestTakeawayDialog = false;
-                    return true; 
+                    return true;
                   }
                 });
-             } 
+             }
           }).
           error(function(data, status, headers, config) {
               console.log("error");
