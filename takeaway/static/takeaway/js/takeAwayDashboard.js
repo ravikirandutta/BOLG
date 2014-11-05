@@ -1117,9 +1117,8 @@ app.controller('publicPrivateButtonCtrl',
         $scope.share.visibility = "me";
       }
       if($scope.taset.id){
-      ShareWithGroupsFactory.get({takeaway:$scope.taset.id}).$promise.then(function(data){
         var groupsArray=[];
-        data.results.forEach(function(item){
+        $scope.taset.shared_takeaways.forEach(function(item){
           groupsArray.push(item.group);
         });
         $scope.taShare.groups=groupsArray;
@@ -1127,7 +1126,6 @@ app.controller('publicPrivateButtonCtrl',
         if(groupsArray.length>0){
           $scope.share.visibility = "groups"
         }
-      });
     }
 
 
