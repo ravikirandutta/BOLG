@@ -1212,6 +1212,7 @@ app.controller('publicPrivateButtonCtrl',
              ShareWithGroupsFactory.updateShare({group:data.id,shared_type:"GROUP",shared_by:$scope.userProfile.id,takeaway:$scope.taset.id},function(res){
               $scope.taShare.groups.push(data.id);
               $scope.initialShareList=$scope.taShare.groups.slice();
+              $scope.share.visibility = 'groups'
              });
           })
         }
