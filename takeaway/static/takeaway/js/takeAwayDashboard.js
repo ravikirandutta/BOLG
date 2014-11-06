@@ -302,7 +302,20 @@ app.factory('ClassmatesDataFactory',function(){
     return currentCourseClassmates;
   }
   return service;
-})
+});
+
+
+app.factory('UserProfileDataFactory',function(){
+  var userProfile = {};
+  var service = {};
+  service.getUserProfile = function(){
+    return userProfile;
+  }
+  service.setUserProfile = function(usrProf){
+    userProfile = usrProf;
+  }
+  return service;
+});
 
 app.factory('CourseDataFactory',function(){
 
@@ -691,7 +704,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
   app.controller('takeawayDashboardCtrl',
     function($scope, $http, $cookies, $q, $resource, $sce, $rootScope,
      LeaderboardFactory, UserPermission, ClassmatesDataFactory, CoursesFactory, SessionsFactory, ngDialog,TakeAwayFactory,
-      RatingFactory, FavoritesFactory, UserProfile, ShareWithGroupsFactory, GroupsFactory, GroupsDataFactory, TagsFactory, TakeAwayConverter, CourseDataFactory,CriteriaService,SessionsDataFactory, TagsDataFactory) {
+      RatingFactory, FavoritesFactory, UserProfile, UserProfileDataFactory, ShareWithGroupsFactory, GroupsFactory, GroupsDataFactory, TagsFactory, TakeAwayConverter, CourseDataFactory,CriteriaService,SessionsDataFactory, TagsDataFactory) {
 
     console.log("loading takeawayDashboardCtrl");
     $scope.rate = 7;
@@ -718,6 +731,13 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
   $scope.criteria = {};
   $scope.criteria.searchText ;
   $scope.selectedTags = [];
+
+   UserProfile.query({"user":$cookies.userid}).$promise.then(function(data){
+            UserProfileDataFactory.setUserProfile(data.results[0]);
+            $scope.userProfile = UserProfileDataFactory.getUserProfile();
+         });
+
+
   $scope.clearCriteria = function(){
     CriteriaService.setCriteria({});
   };
@@ -1101,7 +1121,7 @@ app.controller('RatingDemoCtrl', function ($scope) {
 
 
 app.controller('publicPrivateButtonCtrl',
-    function($scope, $http, $cookies, $resource, $rootScope, UserProfile, TakeAwayFactory, ClassmatesDataFactory, ShareWithGroupsFactory, CourseDataFactory, GroupsDataFactory, TakeAwayConverter, GroupsFactory) {
+    function($scope, $http, $cookies, $resource, UserProfileDataFactory, $rootScope, UserProfile, TakeAwayFactory, ClassmatesDataFactory, ShareWithGroupsFactory, CourseDataFactory, GroupsDataFactory, TakeAwayConverter, GroupsFactory) {
       $scope.share={};
       $scope.taShare={};
       $scope.taShare.groups = [];
@@ -1113,11 +1133,7 @@ app.controller('publicPrivateButtonCtrl',
       $scope.createGroup.addGroup=false;
       $scope.classmates = ClassmatesDataFactory.getCurrentCourseClassmates();
       $scope.newGroup = {};
-      $scope.userProfile = {};
-            UserProfile.query({"user":$cookies.userid}).$promise.then(function(data){
-            $scope.userProfile=data.results[0];
-
-          });
+      $scope.userProfile = UserProfileDataFactory.getUserProfile();
       if($scope.taset.is_public){
         $scope.share.visibility = "everyone";
       }else{
@@ -1189,6 +1205,8 @@ app.controller('publicPrivateButtonCtrl',
         });
         if($scope.newGroup.name && $scope.newGroup.members.length>0){
           GroupsFactory.save({group_name:$scope.newGroup.name,course_instance:$scope.courseInstanceId,created_by:$cookies.userid,group_updated_by:$cookies.userid,members:$scope.newGroup.members},function(data){
+             $scope.newGroup.name = null;
+             $scope.newGroup.members = [];
              $scope.groups.push(data);
              GroupsDataFactory.setCurrentCourseGroups($scope.groups);
              ShareWithGroupsFactory.updateShare({group:data.id,shared_type:"GROUP",shared_by:$scope.userProfile.id,takeaway:$scope.taset.id},function(res){
