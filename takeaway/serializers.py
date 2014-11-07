@@ -2,12 +2,13 @@ from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from takeaway.models import *
 from notifications.models import Notification
+from django.db.models import Q
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ( 'username', 'email', 'groups')
+        fields = ( 'username', 'email','first_name','last_name')
         #fields = ('username')
 
 
@@ -35,6 +36,10 @@ class SchoolSerializer(serializers.ModelSerializer):
         fields = ('id', 'school_name','emailformat_set','image_url')
 
 
+class SharedTakeawaySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SharedTakeaway
 
 class TakeAwaySerializer(serializers.ModelSerializer):
     username = serializers.Field(source='user.username')
@@ -49,18 +54,52 @@ class TakeAwayFullSerializer(serializers.ModelSerializer):
     username = serializers.Field(source='user.username')
     created_dt = serializers.DateTimeField(format='%Y-%m-%d %H:%MZ')
     comment_count = serializers.Field(source='comment_set.count')
+    shared_takeaways = SharedTakeawaySerializer(source='shared_info')
     class Meta:
         model = TakeAway
-        fields = ('id','notes', 'user','courseInstance','session','is_public','username', 'tags','created_dt','average_rating','total_raters','comment_count')
+        fields = ('id','notes', 'user','courseInstance','session','is_public','username', 'tags','created_dt','average_rating','total_raters','comment_count', 'shared_takeaways')
         depth = 1
 
+
+# class SessionWithTakeAwaysSinceLastLoginSerializer(serializers.ModelSerializer):
+#     takeaway_set = TakeAwayFullSerializer(source='takeaway_set')
+
+#     takeaway_set_since_last_login = serializers.SerializerMethodField('takeaways_since_lastLogin')
+
+#     def takeaways_since_lastLogin(self, obj):
+
+#         takeaways = obj.takeaway_set.filter(created_dt__gte=self.context['request'].user.last_login)
+#         return takeaways
+#     class Meta:
+#         model = Session
+#         fields = ('id','session_name', 'session_dt','takeaway_set','courseInstance','takeaway_set_since_last_login')
+#         depth = 1
+
+import pdb
 class SessionSerializer(serializers.ModelSerializer):
     takeaway_set = TakeAwayFullSerializer(source='takeaway_set')
 
     class Meta:
         model = Session
         fields = ('id','session_name', 'session_dt','takeaway_set','courseInstance')
-        depth = 1
+        depth = 2
+
+
+class SessionWithTakeAwaySinceLastLoginSerializer(serializers.ModelSerializer):
+    takeaway_set_since_last_login = serializers.SerializerMethodField('takeaways_since_lastLogin')
+
+
+    def takeaways_since_lastLogin(self, obj):
+        takeaways = obj.takeaway_set.filter(created_dt__gte=self.context['request'].user.last_login).exclude(user = self.context['request'].user)
+        #takeaways = obj.takeaway_set.all()
+        return TakeAwayFullSerializer(takeaways).data
+
+    class Meta:
+        model = Session
+        fields = ('id','session_name', 'session_dt','courseInstance','takeaway_set_since_last_login')
+        depth = 2
+
+
 
 class SessionDetailSerializer(serializers.ModelSerializer):
 
@@ -110,9 +149,16 @@ class CourseInstanceCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourseInstance
 
+class TakeAwayProfileSerializer(serializers.ModelSerializer):
+    username = serializers.Field(source='user.username')
+    class Meta:
+        model=TakeAwayProfile
+
+
 class CourseInstanceSerializer(serializers.ModelSerializer):
     school_id = serializers.RelatedField(source='course.school.id')
     students = serializers.RelatedField(many=True)
+    students = TakeAwayProfileSerializer(source='students')
 
     class Meta:
         model = CourseInstance
@@ -138,9 +184,7 @@ class TermSerializer(serializers.ModelSerializer):
     class Meta:
         model = Term
 
-class TakeAwayProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=TakeAwayProfile
+
 
 class CommentSerializer(serializers.ModelSerializer):
     username = serializers.Field(source='user.username')
@@ -153,10 +197,10 @@ class ContactUsSerializer(serializers.ModelSerializer):
 
 class EmailSettingsSerializer(serializers.ModelSerializer):
     daily_digest = serializers.SerializerMethodField('have_daily_digest')
-    
+
     class Meta:
         model = EmailSettings
-     
+
 
     def have_daily_digest(self, obj):
         if obj.mail_when_newuser == 2 or obj.mail_when_takeaway == 2 or obj.mail_when_rated == 2 :
@@ -165,14 +209,10 @@ class EmailSettingsSerializer(serializers.ModelSerializer):
 
 
 class ClosedGroupSerializer(serializers.ModelSerializer):
-    
+
     class Meta:
         model = ClosedGroup
 
-class SharedTakeawaySerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = SharedTakeaway
-     
+
 
 

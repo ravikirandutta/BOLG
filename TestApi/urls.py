@@ -17,6 +17,7 @@ router.register(r'groups', views.GroupViewSet)
 router.register(r'schools', views.SchoolViewSet)
 router.register(r'courses', views.CourseViewSet)
 #router.register(r'sessions', views.SessionViewSet)
+
 router.register(r'tags', views.TagViewSet)
 router.register(r'ratings', views.RatingViewSet)
 router.register(r'notifications', views.NotificationViewSet)
@@ -33,6 +34,8 @@ router.register(r'contactus', views.ContactUsViewSet)
 router.register(r'emailSettings', views.EmailSettingsViewSet)
 router.register(r'closedGroups', views.ClosedGroupViewSet)
 router.register(r'sharedTakeaway', views.SharedTakeawayViewSet)
+#router.register(r'takeaways_since_last_login', views.TakeAwayListSinceLastLoginList)
+
 
 
 
@@ -70,7 +73,7 @@ urlpatterns = patterns('',
        url(r'^takeaways/index', 'takeaway.views.index', name='index'),
     url(r'^takeaway/initload', 'takeaway.views.initload', name='initload'),
     url(r'accounts/register/$', TakeAwayRegistrationView.as_view(),name = 'registration_register'),
-    
+
     url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^passwordchange/', include('django.contrib.auth.urls')),
     url(r'^load_courses/',  'takeaway.custom_school_data_load.load_isb_data', name='load_courses'),
@@ -97,8 +100,7 @@ urlpatterns = patterns('',
     url(r'^test/','takeaway.views.test',),
     url(r'^get_leader_board/','takeaway.views.get_leader_board',),
     url(r'^chat/','takeaway.views.Chat',name='chat'),
-    url(r'^email_thali/','takeaway.homethali.send_email_thali',),
-
+    url(r'^takeaways_since_last_login/',TakeAwayListSinceLastLogin.as_view(),name='takeaways_since_last_login'),
 
 )
 

@@ -1,7 +1,12 @@
 Django==1.6.5
 South==1.0
+amqp==1.4.6
+anyjson==0.3.3
+billiard==3.3.0.18
+celery==3.1.16
 dj-database-url==0.3.0
 dj-static==0.0.5
+django-debug-toolbar==1.2.1
 django-filter==0.7
 django-model-utils==2.0.3
 django-notifications-hq==0.6.2
@@ -9,9 +14,13 @@ django-registration==1.0
 django-session-idle-timeout==1.4.2
 django-toolbelt==0.0.1
 djangorestframework==2.3.14
+drf-extensions==0.2.6
 gunicorn==19.0.0
+kombu==3.0.23
 psycopg2==2.5.3
 pystache==0.5.4
+pytz==2014.7
+sqlparse==0.1.12
 static==1.0.2
 wsgiref==0.1.2
 newrelic

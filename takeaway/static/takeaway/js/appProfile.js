@@ -14,6 +14,23 @@ app.config(['$resourceProvider', function ($resourceProvider) {
 
         }
     });
+
+    app.directive('editProfile',function(){
+        return {
+            restrict: 'E',
+            templateUrl:'/static/takeaway/templates/edit-profile.html'
+
+        }
+    });
+
+    app.directive('emailSettings',function(){
+        return {
+            restrict: 'E',
+            templateUrl:'/static/takeaway/templates/email-settings.html'
+
+        }
+    });
+
     app.factory('CourseSelection', ['$resource',function($resource){
          return $resource('/courseInstances/', {}, {
                 query: {method:'GET', isArray:false},
@@ -63,7 +80,89 @@ app.config(['$resourceProvider', function ($resourceProvider) {
                });
     }]);
 
+    app.factory('User', ['$resource',function($resource){
+        return $resource('/users/:id', {}, {
+            query: {method:'GET'},
+            update : {method: 'PUT'}
+        });
+    }]);
 
+ app.factory('EmailSettingsFactory', ['$resource',function($resource){
+        return $resource('/emailSettings/', {}, {
+            query: {method:'GET'},
+            update : {url:'/emailSettings/:id/', method: 'PUT'}
+        });
+    }]);
+
+
+    app.controller('EmailSettingsController', function($scope,$http,$cookies,$resource,EmailSettingsFactory){
+            $scope.instantEmailSetting = 0;
+            $scope.emailSettings ={};
+            EmailSettingsFactory.query({user:$cookies.userid}).$promise.then(function(data){
+                $scope.emailSettings = data.results[0];
+                $scope.instantEmailSetting = $scope.emailSettings.mail_when_takeaway;
+            });
+
+            $scope.modifyInstantEmail = function(value){
+                $scope.emailSettings.mail_when_takeaway = value;
+                EmailSettingsFactory.update({id:$scope.emailSettings.id},$scope.emailSettings).$promise.then(function(data){
+
+                }, function(){
+
+                });
+            };
+    });
+
+
+    app.controller('EditProfileController',function($scope,$http,$cookies,$resource,User){
+
+        $scope.editProfileSuccess = false;
+        $scope.editProfileError = false;
+        $scope.saveUserLabel = 'Save Changes';
+        $scope.disablesubmit = false;
+
+        User.query({id:$cookies.userid}).$promise.then(function(data){
+                $scope.firstName = data.first_name ;
+                $scope.lastName = data.last_name;
+                $scope.userName =data.username;
+                $scope.emailId = data.email;
+        },
+        function(reason){
+                console.log(reason);
+        });
+
+        $scope.update = function(editProfileForm){
+            if(editProfileForm.$valid){
+                $scope.saveUserLabel = 'Updating ...';
+                $scope.disablesubmit = true;
+            }
+
+            //create the JSON object and make the service call to put this object;
+            var userJsonData = {};
+            userJsonData.first_name = $scope.firstName;
+            userJsonData.last_name = $scope.lastName;
+            userJsonData.username = $scope.userName;
+            userJsonData.email = $scope.emailId;
+
+            $scope.updateUser = User.update({id:$cookies.userid},userJsonData);
+            $scope.updateUser.$promise.then(function(data){
+                $scope.editProfileSuccess = true;
+                $scope.saveUserLabel = 'Save Changes';
+                $scope.disablesubmit = false;
+            },function(reason){
+                console.log(reason);
+                $scope.editProfileError = true;
+                $scope.saveUserLabel = 'Save Changes';
+                $scope.disablesubmit = false;
+            });
+
+        }
+
+        $scope.cancel = function(){
+            window.location.reload();
+        };
+
+    });
 	app.controller('CourseController',function($scope,$http,$cookies,$resource,CourseInstanceCreate,Sections,Status,Terms,CourseSelection,UserProfile,UserProfileUpdate,Courses,Programs){
 		$scope.addingCourse=false;
 		$scope.newCourse={};

@@ -227,6 +227,7 @@ background-color:#F9E1B8;
 
 #registration-page{
   background-color: #e9eaed;
+  padding-top:0px;
 }
 #reset-btn{
   background: #2fa5ce !important;
@@ -393,7 +394,7 @@ tags-input .tags .input{
 }
 
 .ngdialog.ngdialog-theme-plain .ngdialog-content{
-  width: 520px !important;
+  width: 70% !important;
 }
 
 #bluewidget{
@@ -407,4 +408,18 @@ tags-input .tags .input{
 
 #close{
   color:#000;
+}
+
+.school-stats{
+  margin-top: 50px;
+}
+
+.classMatesContainer{
+   overflow-y: scroll;
+
+   max-height: 150px;
+}
+
+#school-options, #add-school{
+    cursor: pointer;
 }

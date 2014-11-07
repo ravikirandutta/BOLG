@@ -15,7 +15,6 @@ from takeaway.forms import *
 from rest_framework.mixins import *
 from rest_framework.permissions import IsAuthenticated
 from django.db.models import Sum
-import pdb
 from settings import *
 import math
 from django.db.models import Sum,Count
@@ -24,6 +23,60 @@ from django.core.mail import send_mail
 from registration.backends.simple.views import RegistrationView
 from forms import TakeawayProfileRegistrationForm
 from notifications.models import Notification
+from django.dispatch import receiver
+from django.db.models.signals import post_save,pre_save
+from takeaway.tasks import *
+
+@receiver(post_save,sender=TakeAway)
+def create_notifications_on_takeaway(sender, **kwargs):
+
+
+    takeaway = kwargs.get("instance")
+    #pdb.set_trace()
+    if kwargs.get('created',False):
+
+        event = PointEvent.objects.get_or_create(event='NEW_TAKEAWAY', points=5)
+        UserEventLog(user=takeaway.user,course_instance=takeaway.courseInstance,session=takeaway.session,event=event[0],points=event[0].points).save()
+
+
+        if takeaway.is_public == True:
+            if INSTANT_TAKEAWAY_NOTIFICATION_TURNED_ON:
+                mail_new_takeaway.delay(takeaway)
+            else:
+                logger.info("instant takeaway notification turned off")
+        #     logger.info("public takeaway created by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)
+        #     recipients = takeaway.courseInstance.students.all()
+
+
+            #pdb.set_trace()
+            # for recipient in recipients:
+            #     recipient_user = recipient.user
+            #     curr_user = takeaway.user
+            #     if recipient_user.id <> curr_user.id:
+
+
+            #         message =  str(takeaway.courseInstance )
+            #         notify.send(takeaway.user,recipient=recipient_user, verb='NEW_TAKEAWAY',description= message)
+            #         try:
+            #             email_settings = EmailSettings.objects.get(user=takeaway.user)
+            #         except EmailSettings.DoesNotExist :
+            #             email_settings = EmailSettings.objects.create(user=takeaway.user)
+            #         if email_settings.mail_when_takeaway == 1 :
+            #             recipients = [recipient_user.email]
+            #             user_message = 'Hi ' +  recipient_user.first_name + '\n'
+            #             message = 'A new public takeaway is posted in course ' + takeaway.courseInstance.course.course_name + ' by one of your classmate.\nView this takeaway by logging into www.mbatakeaways.com and rate it.'
+            #             footer = '\nThanks and stay tuned.\nTeam MBA Takeaways.'
+            #             footer= footer + '\nIf you want instant email when new takeaways are posted or daily report or do not wish an email at all, please change your settings in your profile on www.mbatakeaways.com'
+
+            #             final_message = user_message + message + footer
+            #             #print final_message
+                        #send_mail('MBATAKEAWAYS [New TakeAway posted]', final_message, 'support@mbatakeaways.com', recipients)
+                    #pdb.set_trace()
+        else:
+            logger.info("private takeaway created by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)
+    else:
+        logger.info("takeaway "+str(takeaway.id)+" updated by "+takeaway.user.username+" in courseInstance "+takeaway.courseInstance.course.course_name)
+
 
 def test(request):
     user_list = EmailSettings.objects.all() #filter(mail_when_takeaway=2)
@@ -187,6 +240,7 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
 
 class GroupViewSet(viewsets.ModelViewSet):
     """
@@ -196,7 +250,8 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
 
 class SchoolViewSet(viewsets.ModelViewSet):
-        queryset = School.objects.all()
+        #we dont want to show the ADMIN and Demo schools in the registration page
+        queryset = School.objects.exclude(school_name__in = ['ADMIN','Demo'])
         serializer_class = SchoolSerializer
         filter_backends = (filters.DjangoFilterBackend,)
         filter_fields = ('school_name',)
@@ -230,6 +285,25 @@ class SessionList(generics.ListCreateAPIView):
     ordering_fields = ('session_dt','created_dt')
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
     paginate_by = 100
+
+
+class TakeAwayListSinceLastLogin(generics.ListAPIView):
+    queryset = Session.objects.all()
+    serializer_class = SessionWithTakeAwaySinceLastLoginSerializer
+    filter_backends = (filters.DjangoFilterBackend,filters.OrderingFilter)
+    filter_fields = ('session_name','courseInstance',)
+    ordering_fields = ('session_dt','created_dt')
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+    paginate_by = 100
+
+
+    def get_queryset(self):
+
+        courseInstances = TakeAwayProfile.objects.get(user=self.request.user).courseInstances.all()
+        queryset = Session.objects.filter(courseInstance__in = courseInstances)
+        return queryset
+
+
 
 class SessionDetail(generics.RetrieveUpdateDestroyAPIView):
         queryset = Session.objects.all()
@@ -537,7 +611,7 @@ class ContactUsViewSet(viewsets.ModelViewSet):
     """
     queryset = ContactUs.objects.all()
     serializer_class = ContactUsSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly,)
+    permission_classes = (permissions.AllowAny,)
 
     def post_save(self, obj, created=False):
         """
@@ -561,6 +635,8 @@ class ContactUsViewSet(viewsets.ModelViewSet):
 
 
 from django.core.mail import send_mail
+
+
 def ContactUs(request):
     # Get the context from the request.
     context = RequestContext(request)
@@ -611,10 +687,13 @@ def ContactUs(request):
 
 
 
+
+
+
 def ContactUsLogin(request):
     # Get the context from the request.
     context = RequestContext(request)
-
+    #pdb.set_trace()
     # A HTTP POST?
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -660,6 +739,14 @@ def ContactUsLogin(request):
     # Render the form with error messages (if any).
 
     return render_to_response('contact_us_login.html', {'form': form}, context)
+
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def takeaways_since_last_login(request):
+    return Response(SessionWithTakeAwaySinceLastLoginSerializer(Session.objects.filter(courseInstance=CourseInstance.objects.all()[3])).data)
+
+
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
@@ -860,4 +947,6 @@ def Chat(request):
     school = takeAwayProfile.school.school_name
     batch = takeAwayProfile.batch
     return render_to_response('chat.html',RequestContext(request),{school:school, batch:batch})
+
+
 

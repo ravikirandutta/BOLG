@@ -103,21 +103,21 @@ USE_TZ = True
 ACCOUNT_ACTIVATION_DAYS=7
 
 #Email Settings
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = "mbatakeaway@gmail.com"
-# EMAIL_HOST_PASSWORD = "getabillion101"
-# DEFAULT_FROM_EMAIL = 'mbatakeaway@gmail.com'
-# DEFAULT_TO_EMAIL = 'suresh.atluri@gmail.com'
-
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.office365.com'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "support@mbatakeaways.com"
-EMAIL_HOST_PASSWORD = "Pakodi123!"
-DEFAULT_FROM_EMAIL = 'support@mbatakeaways.com'
+EMAIL_HOST_USER = "mbatakeaway@gmail.com"
+EMAIL_HOST_PASSWORD = "getabillion101"
+DEFAULT_FROM_EMAIL = 'mbatakeaway@gmail.com'
 DEFAULT_TO_EMAIL = 'suresh.atluri@gmail.com'
+
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.office365.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = "support@mbatakeaways.com"
+# EMAIL_HOST_PASSWORD = "Pakodi123!"
+# DEFAULT_FROM_EMAIL = 'support@mbatakeaways.com'
+# DEFAULT_TO_EMAIL = 'suresh.atluri@gmail.com'
 
 
 
@@ -156,4 +156,11 @@ if DEBUG:
     STATICFILE_DIRS = os.path.join(os.path.dirname(os.path.dirname(__file__)),"static","static")
 
 RATING_THRESHOLD_FOR_CREATE = .25
+
+BROKER_URL = os.environ.get('CLOUDAMQP_URL')
+if BROKER_URL is None:
+    BROKER_URL = 'amqp://test:test@localhost:5672/test'
+BROKER_POOL_LIMIT = 0
+CELERY_IMPORTS = ('takeaway.tasks',)
+
 

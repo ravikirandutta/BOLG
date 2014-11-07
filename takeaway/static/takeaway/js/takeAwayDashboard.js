@@ -1,6 +1,6 @@
 
 (function() {
-  var app = angular.module('takeAwayDashboard', ['duScroll','ngCookies', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput','ui.tinymce','ui.bootstrap','textAngular']).run(function($http, $cookies) {
+  var app = angular.module('takeAwayDashboard', ['duScroll','ngCookies','checklist-model', 'ngResource', 'ngRoute', 'ngDialog','ngTagsInput','ui.tinymce','ui.bootstrap','textAngular','mgcrea.ngStrap','ngAnimate']).run(function($http, $cookies) {
 
     $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
     $http.defaults.headers.common['Content-Type'] = "application/json";
@@ -19,7 +19,12 @@
       templateUrl: '/static/takeaway/templates/takeAwayDashboard.html'
     }
   });
-
+  app.directive('coursemates', function() {
+    return {
+      restrict: 'E',
+      templateUrl: '/static/takeaway/templates/coursemates.html'
+    }
+  });
   app.directive('takeAway', function() {
     return {
       restrict: 'E',
@@ -120,6 +125,8 @@ app.directive('session', function() {
     }
   ]);
 
+
+
   app.factory('SessionsFactory', ['$resource',
     function($resource) {
       return $resource('/sessions/', {}, {
@@ -215,6 +222,27 @@ app.factory('LeaderboardFactory',['$resource',function($resource){
           query: {method:'GET',isArray:false},
         })
 }]);
+app.factory('GroupsFactory',['$resource',function($resource){
+        return $resource('/closedGroups/',{},{
+          query: {method:'GET',isArray:false},
+          save:{method:'POST'}
+        })
+}]);
+
+app.factory('ShareWithGroupsFactory',['$resource',function($resource){
+
+    return $resource('/sharedTakeaway/',{},{
+      query: {method:'GET',isArray:false},
+      updateShare:{method:'POST'},
+      removeGroupFromShare:{url:'/sharedTakeaway/:id/',method:'DELETE'}
+    })
+}]);
+
+app.factory('UserProfile', ['$resource',function($resource){
+    return $resource('/takeawayprofiles/', {}, {
+      query: {method:'GET', isArray:false}
+    });
+}]);
 
 app.factory('CriteriaService',function(){
           var criteria = {};
@@ -247,6 +275,57 @@ app.factory('CriteriaService',function(){
           }
         }
         });
+
+app.factory('GroupsDataFactory',function (){
+    var currentCourseGroups = [];
+    var currentCourseGroupsIdArray = [];
+    var service={};
+    service.setCurrentCourseGroups = function(courseGroups){
+      currentCourseGroups=courseGroups;
+      angular.forEach(currentCourseGroups,function(grp){
+        currentCourseGroupsIdArray.push(grp.id);
+      });
+
+    };
+
+    service.getCurrentCourseGroups = function(){
+      return  currentCourseGroups;
+
+    };
+
+    
+
+    service.getCurrentCourseGroupsIdArray = function(){
+      return currentCourseGroupsIdArray;
+    }
+    return service;
+});
+
+app.factory('ClassmatesDataFactory',function(){
+  var currentCourseClassmates=[];
+  var service = {};
+  service.setCurrentCourseClassmates = function(classMates){
+    currentCourseClassmates = classMates;
+  }
+
+  service.getCurrentCourseClassmates = function(){
+    return currentCourseClassmates;
+  }
+  return service;
+});
+
+
+app.factory('UserProfileDataFactory',function(){
+  var userProfile = {};
+  var service = {};
+  service.getUserProfile = function(){
+    return userProfile;
+  }
+  service.setUserProfile = function(usrProf){
+    userProfile = usrProf;
+  }
+  return service;
+});
 
 app.factory('CourseDataFactory',function(){
 
@@ -401,6 +480,15 @@ app.factory('TagsDataFactory', function(TagsFactory){
       }
 });
 
+app.controller('CoursematesController',function($scope,ClassmatesDataFactory){
+
+  $scope.coursemates=[];
+  $scope.loadCoursemates= function(){
+    $scope.coursemates=ClassmatesDataFactory.getCurrentCourseClassmates();
+  }
+
+});
+
 app.controller('FavoriteController',function($scope,$cookies, FavoritesFactory, CriteriaService ){
   $scope.makeFavourite = function(taset) {
 
@@ -551,7 +639,25 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
 
  app.controller('TakeAwayController', function ($scope,$sce,$cookies, TakeAwayFactory, RatingFactory,
-                                                FavoritesFactory,TakeAwayConverter, ngDialog, SessionsDataFactory, CourseDataFactory) {
+                                                FavoritesFactory, GroupsDataFactory,TakeAwayConverter, ngDialog, SessionsDataFactory, CourseDataFactory) {
+  $scope.groups= GroupsDataFactory.getCurrentCourseGroupsIdArray();
+
+
+  $scope.isPartOfUsersGroup =  function(){
+    if($scope.taset.shared_takeaways){
+      angular.forEach($scope.taset.shared_takeaways,function(grp){
+      console.log($scope.groups);
+     console.log(grp.group);
+     if($scope.groups && $scope.groups.indexOf(grp.group)>-1){
+         return true;
+       }
+      
+     });
+     }
+    return false;
+
+    };
+  
 
   $scope.makeEditable = function(divId, notes) {
       document.getElementById(divId + "_view").style.display = "none";
@@ -581,7 +687,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
       if(!alreadyRated)
         {
            RatingFactory.save({takeaway:id,rating_value:rating,user:$cookies.userid}).$promise.then(function(){
-
+            $scope.taset.alreadyRated = true;
             CourseDataFactory.decrementRatingCountNeededToCreateTakeaway();
            },function(){});
         }
@@ -594,23 +700,16 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
   };
 
-   $scope.updateTakeaway = function(divId, taset) {
+   $scope.updateTakeaway = function(divId) {
       document.getElementById(divId + "_view").style.display = "block";
       document.getElementById(divId + "_edit").style.display = "none";
-      var tagIds = [];
-      angular.forEach(taset.tags, function(tag){
-          if(tag.id){
-             tagIds.push(tag.id);
-          }
-      });
 
 
-      var modifiedTakeawayObj = TakeAwayConverter.convert(taset);
-       modifiedTakeawayObj.notes = document.getElementById(divId + "_notes").value;
+      var modifiedTakeawayObj = TakeAwayConverter.convert($scope.taset);
 
       console.log(JSON.stringify(modifiedTakeawayObj));
 
-          TakeAwayFactory.update({id:taset.id},modifiedTakeawayObj).$promise
+          TakeAwayFactory.update({id:$scope.taset.id},modifiedTakeawayObj).$promise
           .then(function(data, status, headers, config) {
         //We need refresh only updated takeaway instead of loading all courses sessions
         //$scope.freshLoadOfSessions(taset.courseInstance.id);
@@ -632,8 +731,8 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
   app.controller('takeawayDashboardCtrl',
     function($scope, $http, $cookies, $q, $resource, $sce, $rootScope,
-     LeaderboardFactory, UserPermission, CoursesFactory, SessionsFactory, ngDialog,TakeAwayFactory,
-      RatingFactory, FavoritesFactory, TagsFactory, TakeAwayConverter, CourseDataFactory,CriteriaService,SessionsDataFactory, TagsDataFactory) {
+     LeaderboardFactory, UserPermission, ClassmatesDataFactory, CoursesFactory, SessionsFactory, ngDialog,TakeAwayFactory,
+      RatingFactory, FavoritesFactory, UserProfile, UserProfileDataFactory, ShareWithGroupsFactory, GroupsFactory, GroupsDataFactory, TagsFactory, TakeAwayConverter, CourseDataFactory,CriteriaService,SessionsDataFactory, TagsDataFactory) {
 
     console.log("loading takeawayDashboardCtrl");
     $scope.rate = 7;
@@ -645,8 +744,8 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
     $scope.userPermisssionDetail={};
     $scope.userCanPost = false;
     $scope.leaderBoard = {};
-
-
+    $scope.userProfile = {};
+    $scope.showLatestTakeawayDialog = true;
 
   $scope.ratingStates = [
 
@@ -660,6 +759,13 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
   $scope.criteria = {};
   $scope.criteria.searchText ;
   $scope.selectedTags = [];
+
+   UserProfile.query({"user":$cookies.userid}).$promise.then(function(data){
+            UserProfileDataFactory.setUserProfile(data.results[0]);
+            $scope.userProfile = UserProfileDataFactory.getUserProfile();
+         });
+
+
   $scope.clearCriteria = function(){
     CriteriaService.setCriteria({});
   };
@@ -703,14 +809,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
     }).$promise.then(function(data) {
       console.log("First load of the page load the all available CRS");
       $scope.availableCourses = data;
-
       $scope.courseInstance = data[0];
-
-      //Displaying the STAYs for first CRS
-      // if($scope.availableCourses.results != null && $scope.availableCourses.results.length > 0) {
-      //   var defaultCourseId = $scope.availableCourses.results[0].course.id;
-      //   $scope.freshLoadOfSessions(defaultCourseId);
-      // }
     });
 
     $scope.getLeaderBoard = function(courseId){
@@ -732,7 +831,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
 
     $scope.showLeaderBoard = function () {
-
+      $scope.showLatestTakeawayDialog = false;
       ngDialog.open({
         template: 'courseLeaderBoardTemplateId',
         controller: 'CourseController',
@@ -747,22 +846,32 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
     // On Click of CRS, load all SNs and TAYs associated with the CRS.
     $scope.loadCourses = function(courseid) {
       CourseDataFactory.setCurrentCourse(courseid);
-     // if($scope.displaysessions != true) {
-        SessionsFactory.query({
-          "courseInstance": courseid,
-          "ordering": "session_dt"
-        }).$promise.then(function(data) {
-          console.log("Load all SNs and TAYs associated with the CRS");
-          //alert("Load all SNs and TAYs associated with the CRS");
-          $scope.sessions = data;
-          $scope.displaysessions = true;
-          //alert(JSON.stringify($scope.sessions.results));
-          $scope.postzpulateOtherFields(courseid);
-        });
-      //}
+      GroupsFactory.query({'course_instance':courseid,'members':$scope.userProfile.id}).$promise.then(function(data){
+
+        GroupsDataFactory.setCurrentCourseGroups(data.results);
+      });
+      for(var i=0;i<$scope.availableCourses.results.length;i++){
+        if($scope.availableCourses.results[i].id==courseid){
+          ClassmatesDataFactory.setCurrentCourseClassmates($scope.availableCourses.results[i].students);
+          console.log($scope.availableCourses.results[i].students);
+        }
+      }
+
+
+      SessionsFactory.query({
+        "courseInstance": courseid,
+        "ordering": "session_dt"
+      }).$promise.then(function(data) {
+        console.log("Load all SNs and TAYs associated with the CRS");
+        $scope.sessions = data;
+        $scope.displaysessions = true;
+        $scope.sessionsData = $scope.postzpulateOtherFields(courseid, $scope.sessions);
+
+        $scope.showLatestTakeawayDialogFunc();
+      });
     };
 
-    $scope.postzpulateOtherFields = function(courseid) {
+    $scope.postzpulateOtherFields = function(courseid, sessionsObj) {
       var ratingsMap= {};
 
       $scope.ratings = {};
@@ -771,12 +880,10 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
       FavoritesFactory.get({user:$cookies.userid, courseInstance:courseid}).$promise.then(
           function(data, status, headers, config) {
         $scope.favList = data.results;
-        _.each($scope.sessions.results,function(sessionsresult){
+        _.each(sessionsObj.results,function(sessionsresult){
           _.each(sessionsresult.takeaway_set,function(taset){
             taset["isFavourite"]=false;
             _.each($scope.favList,function(fav){
-              //console.log(JSON.stringify(fav));
-              //console.log(fav.takeaway);
               if(fav.takeaway == taset.id) {
                 taset["isFavourite"]=true;
                 taset["favoriteId"] = fav.id;
@@ -784,14 +891,12 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
             });
           });
         });
-        console.log("Getting Favorites values for all takeaways"+JSON.stringify($scope.favList));
       },
       function(data, status, headers, config) {
         $scope.status = status;
       });
-
-
-RatingFactory.get({user:$cookies.userid}).$promise.then(
+  
+    RatingFactory.get({user:$cookies.userid}).$promise.then(
     function(data, status, headers, config) {
         $scope.ratings = data.results;
 
@@ -799,7 +904,7 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
           ratingsMap[rating.takeaway]=rating.rating_value;
         });
 
-        _.each($scope.sessions.results,function(sessionsresult){
+        _.each(sessionsObj.results,function(sessionsresult){
         _.each(sessionsresult.takeaway_set,function(taset){
             taset["alreadyRated"]=false;
             if(ratingsMap[taset.id]>-1){
@@ -817,7 +922,7 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
       }
   );
 
-      _.each($scope.sessions.results,function(sessionsresult){
+      _.each(sessionsObj.results,function(sessionsresult){
         _.each(sessionsresult.takeaway_set,function(taset){
 
           var localizedTime = $.localtime.toLocalTime(taset.created_dt,'MM/dd/yy HH:mm');
@@ -831,26 +936,78 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
       });
 
 
-      SessionsDataFactory.setSessionData($scope.sessions);
-      //alert("done"+$scope.sessions.results.length);
+      SessionsDataFactory.setSessionData(sessionsObj);
       TagsDataFactory.getTags();
-
-
-      $scope.sessionsData = SessionsDataFactory.getSessionData();
+      return SessionsDataFactory.getSessionData();
     }
 
 
+      $scope.showLatestTakeawayDialogFunc = function() {
+        if($scope.showLatestTakeawayDialog == true){
+          $http.get('/takeaways_since_last_login').
+            success(function(data, status, headers, config) {
+              $scope.tslObj = data;
+              $scope.tslObjTemp = [];
+              angular.forEach($scope.tslObj.results, function(r){
+                if(r.takeaway_set.length != 0) {
+                  $scope.tslObjTemp.push(r);
+                }
+              });
+              
+              var arr = [];
+              $scope.tslObj = [];
+              angular.forEach($scope.tslObjTemp, function(r){
+                if($.inArray(r.courseInstance.course.id, arr) == -1) {
+                  arr.push(r.courseInstance.course.id);
+                  $scope.tslObj.push({'id': r.courseInstance.course.id, 'name': r.courseInstance.course.course_name,'results':[]}); 
+                }
+              });
+         
+              angular.forEach($scope.tslObjTemp, function(r){
+                angular.forEach($scope.tslObj, function(cn){
+                  if(cn.id == r.courseInstance.course.id){
+                    cn.results.push(r);
+                  }
+                });
+              });
 
-    /* Update/Edit the takeaway and reload the page / refresh the takeaway part */
-    /* PUT: /takeaways/:takeawayID/ */
+              angular.forEach($scope.tslObj, function(cn){
+                var count = 0;
+                angular.forEach(cn.results, function(session){
+                  count += session.takeaway_set.length;
+                  session["hideNewButton"] = true;
+                });
+                cn["count"] = count;
+              });
 
-    /*Deleting selected TAY by passing the ID */
-    /*TODO: confirmation dialog before delete */
-    /*DELETE: /takeaways/:id/ */
+            $scope.showLatestTakeawayDialog = ($scope.tslObj.length > 0);
+              if($scope.showLatestTakeawayDialog == true) {
 
+                angular.forEach($scope.tslObj, function(tslObjTemp){
+                  tslObjTemp = $scope.postzpulateOtherFields(tslObjTemp.id, tslObjTemp);
+                });
 
-    /* Displaying Dialog window to create New Take Away */
+                console.log("tslObj  :"+JSON.stringify($scope.tslObj));
 
+                 ngDialog.open({
+                  template: 'latestTakeawaySinceLastLogin',
+                  className: 'ngdialog-theme-plain',
+                  controller: ['$scope', function($scope) {}],
+                  closeByDocument: false,
+                  closeByEscape: false,
+                  scope: $scope,
+                  preCloseCallback: function() {
+                    $scope.showLatestTakeawayDialog = false;
+                    return true; 
+                  }
+                });
+             } 
+          }).
+          error(function(data, status, headers, config) {
+              console.log("error");
+          });
+        }
+      };
 
     /* Event from "Save" button from New Take Away dialog window */
     $scope.saveTakeaway = function() {
@@ -876,6 +1033,9 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
       function(data, status, headers, config) {
         SessionsDataFactory.addTakeAwayToSessions(data);
         $scope.newTakeawayContent="";
+        $scope.taset.createAndAddToGroups.forEach(function(item){
+          ShareWithGroupsFactory.updateShare({group:item,shared_type:"GROUP",shared_by:3,takeaway:data.id});
+        });
         console.log("loading all courses sessions after successfull creation"+data.courseInstance);
       },
       function(data, status, headers, config) {
@@ -884,6 +1044,7 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
       });
 
       ngDialog.close();
+
     };
 
 
@@ -911,6 +1072,11 @@ RatingFactory.get({user:$cookies.userid}).$promise.then(
       $scope.newTakeawayContent="";
     };
 
+    $scope.closeLeaderBoardDialog = function() {
+      ngDialog.close();
+      $scope.newTakeawayContent="";
+      $scope.showLatestTakeawayDialog = false;
+    };
 
   });
 
@@ -983,30 +1149,55 @@ app.controller('RatingDemoCtrl', function ($scope) {
 
 
 app.controller('publicPrivateButtonCtrl',
-    function($scope, $http, $cookies, $resource, $rootScope,TakeAwayFactory, TakeAwayConverter) {
-
-
+    function($scope, $http, $cookies, $resource, UserProfileDataFactory, $rootScope, UserProfile, TakeAwayFactory, ClassmatesDataFactory, ShareWithGroupsFactory, CourseDataFactory, GroupsDataFactory, TakeAwayConverter, GroupsFactory) {
+      $scope.share={};
+      $scope.taShare={};
+      $scope.taShare.groups = [];
+      $scope.share.visibility = "me";
+      $scope.groups=GroupsDataFactory.getCurrentCourseGroups();
+      $scope.courseInstanceId=CourseDataFactory.getCurrentCourse();
+      $scope.initialShareList=[];
+      $scope.createGroup={};
+      $scope.createGroup.addGroup=false;
+      $scope.classmates = ClassmatesDataFactory.getCurrentCourseClassmates();
+      $scope.newGroup = {};
+      $scope.userProfile = UserProfileDataFactory.getUserProfile();
       if($scope.taset.is_public){
-        $scope.visibility = "Make Private";
+        $scope.share.visibility = "everyone";
       }else{
-        $scope.visibility = "Make Public";
+        $scope.share.visibility = "me";
       }
+      if($scope.taset.id){
+        var groupsArray=[];
+        $scope.taset.shared_takeaways.forEach(function(item){
+          groupsArray.push(item.group);
+        });
+        $scope.taShare.groups=groupsArray;
+        $scope.initialShareList=groupsArray.slice();
+        if(groupsArray.length>0){
+          $scope.share.visibility = "groups"
+        }
+    }
+
+
 
     /*Public private buttons method */
-    $scope.toggleButtons = function(tasett, clickedButton, postImmediately,courseId, sessionId) {
-      if (clickedButton == $scope.taset.is_public) {
-        $scope.taset.is_public = (clickedButton == true) ? false : true;
-      } else {
-        $scope.taset.is_public = clickedButton;
+    $scope.toggleButtons = function(postImmediately) {
+
+      if ($scope.share.visibility == "me") {
+        $scope.taset.is_public = false;
+        $scope.taShare.groups=[];
+      } else if($scope.share.visibility=="everyone"){
+        $scope.taset.is_public = true;
+        $scope.taShare.groups=[];
+      } else{
+        if($scope.taShare.groups && $scope.taShare.groups.length == 0){
+          $scope.share.visibility = "me";
+        }
+        $scope.taset.is_public = false;
       }
 
-      if($scope.taset.is_public){
-        $scope.visibility = "Make Private";
-      }else{
-        $scope.visibility = "Make Public";
-      }
-
-      taset = $scope.taset
+      taset = $scope.taset;
       //From Edit takeaway or New Takeaway, onchange of public-private option do not make service call to update.
       if(postImmediately == true || postImmediately == 'true') {
           var tagIdArr = new Array();
@@ -1024,7 +1215,54 @@ app.controller('publicPrivateButtonCtrl',
             $scope.status = status;
         });
 
+
+        $scope.taShare.groups.forEach(function(item){
+
+          if($scope.initialShareList.indexOf(item)==-1){
+          ShareWithGroupsFactory.updateShare({group:item,shared_type:"GROUP",shared_by:$scope.userProfile.id,takeaway:$scope.taset.id});
         }
+        });
+        $scope.initialShareList.forEach(function(item){
+          if($scope.taShare.groups.indexOf(item)==-1){
+            ShareWithGroupsFactory.get({group:item,takeaway:$scope.taset.id}).$promise.then(function(data){
+             ShareWithGroupsFactory.removeGroupFromShare({id:data.results[0].id});
+            });
+
+        }
+
+        });
+        if($scope.newGroup.name && $scope.newGroup.members.length>0){
+          GroupsFactory.save({group_name:$scope.newGroup.name,course_instance:$scope.courseInstanceId,created_by:$cookies.userid,group_updated_by:$cookies.userid,members:$scope.newGroup.members},function(data){
+             $scope.newGroup.name = null;
+             $scope.newGroup.members = [];
+             $scope.groups.push(data);
+             GroupsDataFactory.setCurrentCourseGroups($scope.groups);
+             ShareWithGroupsFactory.updateShare({group:data.id,shared_type:"GROUP",shared_by:$scope.userProfile.id,takeaway:$scope.taset.id},function(res){
+              $scope.taShare.groups.push(data.id);
+              $scope.initialShareList=$scope.taShare.groups.slice();
+              $scope.share.visibility = 'groups'
+             });
+          })
+        }
+
+        }
+        else{
+          if($scope.newGroup.name && $scope.newGroup.members.length>0){
+          GroupsFactory.save({group_name:$scope.newGroup.name,course_instance:$scope.courseInstanceId,created_by:$cookies.userid,group_updated_by:$cookies.userid,members:$scope.newGroup.members},function(data){
+             $scope.groups.push(data);
+             GroupsDataFactory.setCurrentCourseGroups($scope.groups);
+              $scope.taShare.groups.push(data.id);
+              $scope.taset.createAndAddToGroups = $scope.taShare.groups;
+              $scope.newGroup.name=undefined;
+              $scope.newGroup.members=[];
+              $scope.share.visibility = 'groups'
+
+          });
+        }
+
+        }
+
+        $scope.createGroup.addGroup=false;
     };
 
     });
@@ -1069,5 +1307,4 @@ app.controller('publicPrivateButtonCtrl',
 
 
 })();
-
 

@@ -1,5 +1,5 @@
 (function(){
-    var app=angular.module('registration',['ngCookies','ngResource']).run(function($http, $cookies) {
+    var app=angular.module('registration',['ngCookies','ngResource','countTo','ui.bootstrap']).run(function($http, $cookies) {
     $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
     $http.defaults.headers.put['X-CSRFToken'] = $cookies.csrftoken;
 });
@@ -21,14 +21,45 @@ app.config(['$resourceProvider', function ($resourceProvider) {
     }]);
 
 
-  app.controller('SchoolController',function($scope,$http,$cookies,$resource,Schools,ProgramsFactory){
+app.factory('CourseInstanceFactory', ['$resource',function($resource){
+         return $resource('/courseInstances/', {}, {
+                query: {method:'GET', isArray:false},
+               });
+    }]);
+
+app.factory('TakeAwayFactory', ['$resource',function($resource){
+         return $resource('/takeaways/', {}, {
+                query: {method:'GET', isArray:false},
+               });
+    }]);
+
+app.factory('TakeAwayProfileFactory', ['$resource',function($resource){
+         return $resource('/takeawayprofiles/', {}, {
+                query: {method:'GET', isArray:false},
+               });
+    }]);
+
+app.factory('ContactUsFactory', ['$resource',function($resource){
+         return $resource('/contactus/', {}, {
+                save: {method:'POST'},
+
+               });
+    }]);
+
+
+  app.controller('SchoolController',function($scope,$http,$cookies,$resource,$location, $anchorScroll, Schools,ProgramsFactory,
+                                               TakeAwayFactory, TakeAwayProfileFactory, CourseInstanceFactory,ContactUsFactory){
     $scope.availableSchools={};
     $scope.currentSchool={};
     $scope.school = "emory";
     $scope.programs = {};
     $scope.schoolSelected=false;
     $scope.noSchool=false;
-    
+    $scope.helpUsAdd = {};
+    $scope.helpUsAdd.subject="";
+    $scope.helpUsAdd.sender="";
+    $scope.helpUsAdd.message="";
+
 
 
         $scope.selectSchool = function(school_id){
@@ -37,16 +68,49 @@ app.config(['$resourceProvider', function ($resourceProvider) {
               $scope.currentSchool = value;
               $scope.schoolSelected=true;
               $scope.noSchool=false;
-
-
             }
           });
+
+
+
           $scope.setValidEmailFormat();
+
+          $location.hash('school-stats');
+          $anchorScroll();
+
           ProgramsFactory.query({"school":$scope.currentSchool.id}).$promise.then(function(data){
               $scope.programs = data.results;
           });
 
-        }
+          TakeAwayFactory.query({"school":$scope.currentSchool.id}).$promise.then(function(data){
+              $scope.takeaway_count = data.count;
+          });
+
+          TakeAwayProfileFactory.query({"school":$scope.currentSchool.id}).$promise.then(function(data){
+              $scope.school_mates = data.count;
+          });
+
+
+          CourseInstanceFactory.query({"school_id":$scope.currentSchool.id}).$promise.then(function(data){
+              $scope.course_count = data.count;
+          });
+
+
+        };
+
+
+        $scope.addSchoolRequest = function()
+    {
+     var data = {"subject":$scope.helpUsAdd.subject,"message":$scope.helpUsAdd.message,"sender":$scope.helpUsAdd.sender};
+     ContactUsFactory.save(data).$promise.then(function(){
+      $scope.add_school_success = true;
+        $.gritter.add({
+                      title: 'Contact us',
+                      sticky: false,
+                      time: '0.0001'
+                  });
+     });
+  };
 
         $scope.test = function(){}
 
@@ -106,5 +170,5 @@ app.directive('match', function () {
 
 })();
 
-    
+
 

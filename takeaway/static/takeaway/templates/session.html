@@ -3,9 +3,9 @@
                 <div class="pull-left">
                  <b> {{sessionsresult.session_name}}</b>
                   <a id="edit-session-link" href="#" class="glyphicon glyphicon-edit" title="Edit Session"
-                      ng-click="editSessionName()"></a>
+                      ng-click="editSessionName()" ng-hide="sessionsresult.hideNewButton"></a>
                 </div>
-                <div class="widget-icons pull-right">
+                <div class="widget-icons pull-right" ng-hide="sessionsresult.hideNewButton">
                    <a href="#" class="btn btn-primary" style="background:#e1e3e4 !important;color:#000"
 
                       ng-click="newTakeaway()" >
@@ -17,17 +17,17 @@
                 <div class="clearfix"></div>
               </div>
               <div class="widget-content">
-                  <div class="padd">
+                  
 
                     <ul id="takeaway-list" class="recent">
 
                       <!-- takeaway set display -->
-                      <div>
+                      <div >
                         <div id="{{taset.id}}" ng-repeat="taset in sessionsresult.takeaway_set | filter: criteriaMatch(criteria)">
                           <take-away></take-away>
                         </div>
                       </div>
                     </ul>
-                  </div>
+                  
               </div>
           </div>

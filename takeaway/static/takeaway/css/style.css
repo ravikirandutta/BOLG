@@ -1466,8 +1466,8 @@ border:1px solid #eee;
 /* Login and Register form */
 
 .admin-form{
-	max-width: 500px;
-	margin: 50px auto;
+	max-width: 700px;
+	margin:  auto;
 }
 
 .admin-form form{ padding-top: 10px; }
@@ -1555,7 +1555,7 @@ border:1px solid #eee;
 		display: block;
 	}
 	.sidebar .sidebar-inner{
-		display: none;
+		display: block;
 		/*max-width:300px;*/
 		padding:0px 0px;
 	}
@@ -1654,7 +1654,7 @@ border:1px solid #eee;
 
 .password-change-form form { padding-top: 10px; }
 
-#select-course-info, #select-course-warning{ font-size: 18px;}
+#select-course-info, #edit-profile-success, #select-course-warning{ font-size: 18px;}
 
 #select-course-complete {margin-top: 80px;}
 
@@ -1805,5 +1805,5 @@ only screen and (max-width: 760px),
     right:5px;
     line-height:1
 }
-}
+
 

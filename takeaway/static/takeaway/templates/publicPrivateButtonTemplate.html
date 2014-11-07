@@ -1,10 +1,6 @@
 <div class="btn-group" ng-controller="publicPrivateButtonCtrl">
-  <label title="change the visibility of this takeaway" uncheckable
-        class="btn btn-primary"
-        ng-click="toggleButtons(taset,true,performPost,courseId, sessionId)" id="publicId"
-        style="width: 120px; height: 32px;font-size:13px!important">{{visibility}}</label>
- <!-- <label ng-model="taset.is_public" btn-radio="false" uncheckable
-        ng:class="{true:'btn btn-primary', false:'btn btn-default'}[taset.is_public==false]"
-        ng-click="toggleButtons(taset,false,performPost,courseId, sessionId)" id="privateId"
-        style="width: 60px; height: 32px; font-size:13px!important">Private</label> -->
+  <label title="This Takeaway is visible to:" uncheckable
+        class="btn btn-primary"id="publicId"
+        style="width: 120px; height: 32px;font-size:13px!important" data-template='/static/takeaway/templates/visible-to.html' data-animation="am-flip-x" bs-popover>Change visibility</label>
+
 </div>
