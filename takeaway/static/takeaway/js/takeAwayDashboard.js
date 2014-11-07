@@ -293,7 +293,7 @@ app.factory('GroupsDataFactory',function (){
 
     };
 
-    
+
 
     service.getCurrentCourseGroupsIdArray = function(){
       return currentCourseGroupsIdArray;
@@ -644,20 +644,21 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
 
   $scope.isPartOfUsersGroup =  function(){
+    var isVisibile = false;
     if($scope.taset.shared_takeaways){
       angular.forEach($scope.taset.shared_takeaways,function(grp){
-      console.log($scope.groups);
+
      console.log(grp.group);
      if($scope.groups && $scope.groups.indexOf(grp.group)>-1){
-         return true;
+         isVisibile =  true;
        }
-      
+
      });
      }
-    return false;
+    return isVisibile;
 
     };
-  
+
 
   $scope.makeEditable = function(divId, notes) {
       document.getElementById(divId + "_view").style.display = "none";
@@ -895,7 +896,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
       function(data, status, headers, config) {
         $scope.status = status;
       });
-  
+
     RatingFactory.get({user:$cookies.userid}).$promise.then(
     function(data, status, headers, config) {
         $scope.ratings = data.results;
@@ -949,20 +950,20 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
               $scope.tslObj = data;
               $scope.tslObjTemp = [];
               angular.forEach($scope.tslObj.results, function(r){
-                if(r.takeaway_set.length != 0) {
+                if(!angular.isUndefined(r.takeaway_set) && r.takeaway_set.length != 0) {
                   $scope.tslObjTemp.push(r);
                 }
               });
-              
+
               var arr = [];
               $scope.tslObj = [];
               angular.forEach($scope.tslObjTemp, function(r){
                 if($.inArray(r.courseInstance.course.id, arr) == -1) {
                   arr.push(r.courseInstance.course.id);
-                  $scope.tslObj.push({'id': r.courseInstance.course.id, 'name': r.courseInstance.course.course_name,'results':[]}); 
+                  $scope.tslObj.push({'id': r.courseInstance.course.id, 'name': r.courseInstance.course.course_name,'results':[]});
                 }
               });
-         
+
               angular.forEach($scope.tslObjTemp, function(r){
                 angular.forEach($scope.tslObj, function(cn){
                   if(cn.id == r.courseInstance.course.id){
@@ -998,10 +999,10 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
                   scope: $scope,
                   preCloseCallback: function() {
                     $scope.showLatestTakeawayDialog = false;
-                    return true; 
+                    return true;
                   }
                 });
-             } 
+             }
           }).
           error(function(data, status, headers, config) {
               console.log("error");
