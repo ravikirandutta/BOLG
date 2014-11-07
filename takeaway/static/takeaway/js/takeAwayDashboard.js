@@ -278,9 +278,13 @@ app.factory('CriteriaService',function(){
 
 app.factory('GroupsDataFactory',function (){
     var currentCourseGroups = [];
+    var currentCourseGroupsIdArray = [];
     var service={};
     service.setCurrentCourseGroups = function(courseGroups){
       currentCourseGroups=courseGroups;
+      angular.forEach(currentCourseGroups,function(grp){
+        currentCourseGroupsIdArray.push(grp.id);
+      });
 
     };
 
@@ -288,6 +292,12 @@ app.factory('GroupsDataFactory',function (){
       return  currentCourseGroups;
 
     };
+
+    
+
+    service.getCurrentCourseGroupsIdArray = function(){
+      return currentCourseGroupsIdArray;
+    }
     return service;
 });
 
@@ -629,7 +639,25 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
 
  app.controller('TakeAwayController', function ($scope,$sce,$cookies, TakeAwayFactory, RatingFactory,
-                                                FavoritesFactory,TakeAwayConverter, ngDialog, SessionsDataFactory, CourseDataFactory) {
+                                                FavoritesFactory, GroupsDataFactory,TakeAwayConverter, ngDialog, SessionsDataFactory, CourseDataFactory) {
+  $scope.groups= GroupsDataFactory.getCurrentCourseGroupsIdArray();
+
+
+  $scope.isPartOfUsersGroup =  function(){
+    if($scope.taset.shared_takeaways){
+      angular.forEach($scope.taset.shared_takeaways,function(grp){
+      console.log($scope.groups);
+     console.log(grp.group);
+     if($scope.groups && $scope.groups.indexOf(grp.group)>-1){
+         return true;
+       }
+      
+     });
+     }
+    return false;
+
+    };
+  
 
   $scope.makeEditable = function(divId, notes) {
       document.getElementById(divId + "_view").style.display = "none";
