@@ -1232,7 +1232,7 @@ section * {
   font-size: 70px;
   font-family: serif;
   font-weight: bolder;
-  background: -webkit-linear-gradient(#3498db, #f1c40f);
+  background: -webkit-linear-gradient(#fff, #fff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -webkit-transition: all 1.0s ease-in-out;
@@ -1244,6 +1244,7 @@ section * {
 #caption{
   font-family: serif;
   color:#fff;
+  font-weight: 700;
 }
 #feature{
   font-family:serif;
@@ -1260,7 +1261,7 @@ section * {
   font-family: serif;
   font-size: 35px;
   font-weight: bold;
-  background: -webkit-linear-gradient(#000, #f1c40f);
+  background: -webkit-linear-gradient(#000, #08E9F1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -webkit-transition: all 1.0s ease-in-out;
@@ -1278,7 +1279,7 @@ section * {
 }
 #nav-menu li a{
     color:#fff;
-    font-size: 16px;
+    font-size: 14px;
     display: block;
     font-family: "kulturista-web";
     -webkit-transition: all 0.3s ease-in-out;
@@ -1286,6 +1287,7 @@ section * {
     -webkit-transform: scale(1, 1);
   -webkit-transition-duration: 500ms;
   -webkit-transition-timing-function: ease-out;
+  text-transform: uppercase;
 }
 
 #nav-menu li:hover{
@@ -1429,7 +1431,25 @@ section * {
   color:#000;
   font-size: 20px;
 }
+#mybck{
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background: url('/static/takeaway/img/mbabackground.jpg');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  opacity: 20;
+  filter: alpha(opacity=2000);
+  opacity: 0.1;
+  filter: alpha(opacity=20);
 }
+}
+
 /**
  * Header 3 stylesheet
  * */
