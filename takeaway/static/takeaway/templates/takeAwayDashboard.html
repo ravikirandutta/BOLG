@@ -1,34 +1,51 @@
 <div ng-controller="takeawayDashboardCtrl">
 
   <div class="content">
+
+
+  <tabset>
+    <tab ng-repeat="courseInstance in availableCourses.results"  ng-controller="CourseController" ng-click="freshLoadOfSessions()"  active="isCurrentCourseSelected()"  select="freshLoadOfSessions()">
+      <tab-heading class="course">
+
+      <i class="fa fa-book"></i>  {{courseInstance.course.course_name}}
+
+      </tab-heading>
+      <span style="margin-top:10px;margin-left:20px">
+
+      </span>
+    </tab>
+  </tabset>
+
+
+<!--
     <div class="sidebar mainsidebar">
-            <div class="sidebar-dropdown"><a href="#">Navigation</a>
+      <div class="sidebar-dropdown"><a href="#">Navigation</a>
+      </div>
+      <div class="sidebar-inner">
+
+        <ul id="side-course-list" class="navi">
+          <li class="has_submenu open current" ng-class="isCurrentCourseSelected()?'course-selected':'ourblue'" id="courses" ng-repeat="courseInstance in availableCourses.results" ng-class="selected" ng-controller="CourseController" ng-click="freshLoadOfSessions()"><a   href="#" ><i class="fa fa-book"></i> <b>{{courseInstance.course.course_name}}</b><i class="fa fa-check-circle" style="margin-left:10px;" ng-show= "isCurrentCourseSelected()"></i></a>
+            <div collapse="!isCurrentCourseSelected()">
+
+              <ul >
+
+                <li>
+                  <a href="#"  ng-click="showLeaderBoard()" ><span class="fa fa-list-ol"></span> Leader Board</a>
+
+                </li>
+              </ul>
             </div>
-            <div class="sidebar-inner">
-
-                <ul id="side-course-list" class="navi">
-                    <li class="has_submenu open current" ng-class="isCurrentCourseSelected()?'course-selected':'ourblue'" id="courses" ng-repeat="courseInstance in availableCourses.results" ng-class="selected" ng-controller="CourseController" ng-click="freshLoadOfSessions()"><a   href="#" ><i class="fa fa-book"></i> <b>{{courseInstance.course.course_name}}</b><i class="fa fa-check-circle" style="margin-left:10px;" ng-show= "isCurrentCourseSelected()"></i></a>
-                    <div collapse="!isCurrentCourseSelected()">
-
-                    <ul >
-
-                      <li>
-                        <a href="#"  ng-click="showLeaderBoard()" ><span class="fa fa-list-ol"></span> Leader Board</a>
-
-                      </li>
-                    </ul>
-                   </div>
-                    </li>
+          </li>
 
 
-                </ul>
-                <!--/ Sidebar navigation -->
+        </ul>
 
 
-            </div>
-            <div class="clear"></div>
-        </div>
-        <div class="clear"></div>
+
+      </div>
+      <div class="clear"></div>
+    </div> -->
+    <div class="clear"></div>
     <div class="mainbar">
 
       <!-- <div id="course-list" class="page-head">
@@ -48,24 +65,28 @@
         </ui>
         <div class="clearfix"></div>
       </div> -->
-
-      <div style="margin-top:10px;margin-left:400px;">
+      <div class="row">
+       <div class="col-md-8 col-sm-4">
+        <a class="btn btn-success" href="#"  ng-click="showLeaderBoard()" ><span class="fa fa-list-ol"></span> Leader Board</a>
+       </div>
+      <div class="col-md-4 col-sm-8 col-xs-12">
         <br/>
         <i class="fa fa-search fa-lg" ></i>
         <input type="text" placeholder="search by text" ng-model="criteria.searchText"/>
-                                <label> Tags selected: </label>
-                                <span ng-repeat="tag in selectedTags" ng-controller="TagController">
+        <label> Tags selected: </label>
+        <span ng-repeat="tag in selectedTags" ng-controller="TagController">
 
-                                  <span class="label label-warning pointer" ng-click="removeTagFromSearchCriteria()">
-                                    <i class="fa fa-tags"></i>{{tag}}
-                                  </span>
-                                  <span style="width:2px">&nbsp;</span>
-                                </span>
-                      <a  class="btn btn-default" id="btnfav" ng-controller="FavoriteController"  ng-click="filterFavorites()">  My Favorites </a>
+          <span class="label label-warning pointer" ng-click="removeTagFromSearchCriteria()">
+            <i class="fa fa-tags"></i>{{tag}}
+          </span>
+          <span style="width:2px">&nbsp;</span>
+        </span>
+        <a  class="btn btn-default" id="btnfav" ng-controller="FavoriteController"  ng-click="filterFavorites()">  My Favorites </a>
 
         <br/>
       </div>
-        <!-- <span ng-click="clearCriteria()">Clear Criteria</span> -->
+      </div>
+      <!-- <span ng-click="clearCriteria()">Clear Criteria</span> -->
 
 
 
@@ -73,112 +94,112 @@
       <div class="col-md-6" id="takeaway-container" du-scroll-container>
 
         <!-- session display -->
-      <div ng-show="displaysessions">
-        <div ng-repeat="sessionsresult in sessionsData">
+        <div ng-show="displaysessions">
+          <div ng-repeat="sessionsresult in sessionsData">
            <session></session>
          </div>
-      </div>
-      </div>
-    </div>
-  </div>
+       </div>
+     </div>
+   </div>
+ </div>
 </div>
 
 <script type="text/ng-template" id="newTakeawayTemplateId">
-    <div id="create-takeaway-container" class="ngdialog-message">
-      <h5>New Takeaway for {{sessionsresult.session_name}}</h5>
-      <div class="row1">
-        <!-- textarea text-angular rows="5"  data-ng-model="newTakeawayContent" class="form-control" id="notes"></textarea -->
-        <text-angular ta-toolbar="[['bold','italics','underline','ul','ol'],['undo','redo','clear','justifyLeft','justifyCenter','justifyRight','indent','outdent']]" ng-model="newTakeawayContent"></text-angular>
-      </div>
+<div id="create-takeaway-container" class="ngdialog-message">
+<h5>New Takeaway for {{sessionsresult.session_name}}</h5>
+<div class="row1">
+<!-- textarea text-angular rows="5"  data-ng-model="newTakeawayContent" class="form-control" id="notes"></textarea -->
+<text-angular ta-toolbar="[['bold','italics','underline','ul','ol'],['undo','redo','clear','justifyLeft','justifyCenter','justifyRight','indent','outdent']]" ng-model="newTakeawayContent"></text-angular>
+</div>
 
-     <div ng-controller="TagController">
-    <tags-input  placeholder="Add a Tag by typing it" ng-model="tags" display-property="name"  on-tag-added="tagAdded($tag)">
-       <auto-complete source="loadTags($query)"></auto-complete>
-    </tags-input>
-    </div>
+<div ng-controller="TagController">
+<tags-input  placeholder="Add a Tag by typing it" ng-model="tags" display-property="name"  on-tag-added="tagAdded($tag)">
+<auto-complete source="loadTags($query)"></auto-complete>
+</tags-input>
+</div>
 
-      <span public-private taset="taset"
-           course-id={{sessionsresult.courseInstance.id}}
-           session-id={{sessionsresult.id}}
-           perform-post=false></span>
+<span public-private taset="taset"
+course-id={{sessionsresult.courseInstance.id}}
+session-id={{sessionsresult.id}}
+perform-post=false></span>
 
-    </div>
-    <div class="ngdialog-buttons">
-      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()"
-      ng-dialog-class="ngdialog-theme-default" >Close</button>
-      <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="saveTakeaway()">Save</button>
-    </div>
+</div>
+<div class="ngdialog-buttons">
+<button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()"
+ng-dialog-class="ngdialog-theme-default" >Close</button>
+<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="saveTakeaway()">Save</button>
+</div>
 </script>
 
 <script type="text/ng-template" id="cantCreateTakeawayTemplateId">
-    <div class="ngdialog-message">
-      <h5>You need to rate atleast {{userPermissionDetail.remaining_rating_count_till_create}} more Takeaways to be able to create New Takeaway</h5>
+<div class="ngdialog-message">
+<h5>You need to rate atleast {{userPermissionDetail.remaining_rating_count_till_create}} more Takeaways to be able to create New Takeaway</h5>
 
-    </div>
-    <div class="ngdialog-buttons">
-      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()"
-      ng-dialog-class="ngdialog-theme-default" >Close</button>
-    </div>
+</div>
+<div class="ngdialog-buttons">
+<button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()"
+ng-dialog-class="ngdialog-theme-default" >Close</button>
+</div>
 </script>
 
 <script type="text/ng-template" id="courseLeaderBoardTemplateId">
-    <div class="ngdialog-message">
-      <h5 class="courseLeaderBoardHeading">Champions in this course:</h5>
+<div class="ngdialog-message">
+<h5 class="courseLeaderBoardHeading">Champions in this course:</h5>
 
-      <table class="table table-bordered">
-      <thead>
-      <tr>
-      <th>User</th>
-      <th>Points</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr ng-repeat="leader in leaderBoard">
-        <td>{{leader.user_name}}</td>
-        <td>{{leader.score}}</td>
-      </tr>
-      </tbody>
-      </table>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>User</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr ng-repeat="leader in leaderBoard">
+<td>{{leader.user_name}}</td>
+<td>{{leader.score}}</td>
+</tr>
+</tbody>
+</table>
 
 
-    </div>
-    <div class="ngdialog-buttons">
-      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeLeaderBoardDialog()"
-      ng-dialog-class="ngdialog-theme-default" >Close</button>
-    </div>
+</div>
+<div class="ngdialog-buttons">
+<button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeLeaderBoardDialog()"
+ng-dialog-class="ngdialog-theme-default" >Close</button>
+</div>
 </script>
 
 
 
 <script type="text/ng-template" id="editSessionNameTemplateId">
-    <div class="ngdialog-message">
-      <h5>Editing Session "{{session_name_current}}"</h5>
-      <textarea class="form-control" id="editedSessionName" ng-model="modifiedSession.session_name"></textarea>
-    </div>
-    <div class="ngdialog-buttons">
-      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()"
-        ng-dialog-class="ngdialog-theme-default" >Close</button>
-      <button type="button" class="ngdialog-button ngdialog-button-primary"
-        ng-click="updateSessionName(modifiedSession, sessionsresult)">Update</button>
-    </div>
-  </div>
+<div class="ngdialog-message">
+<h5>Editing Session "{{session_name_current}}"</h5>
+<textarea class="form-control" id="editedSessionName" ng-model="modifiedSession.session_name"></textarea>
+</div>
+<div class="ngdialog-buttons">
+<button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()"
+ng-dialog-class="ngdialog-theme-default" >Close</button>
+<button type="button" class="ngdialog-button ngdialog-button-primary"
+ng-click="updateSessionName(modifiedSession, sessionsresult)">Update</button>
+</div>
+</div>
 </script>
 
 <script type="text/ng-template" id="latestTakeawaySinceLastLogin">
-    <div class="ngdialog-message">
-      <h5 style="color: red;">Latest since last login - Dev In Progress(SVK)
-        <div style="float: right;">
-          <a href="#" class="wclose" ng-click="closeDialog()"><i class="fa fa-times" id="close"></i></a>
-        </div>
-      </h5>
-    </div>
-    <div>
-      <tabset>
-      <tab ng-repeat="tsl in tslObj" heading="{{tsl.name}}({{tsl.count}})" active="tsl.active">
-        <div ng-repeat="sessionsresult in tsl.results">
-           <session></session>
-         </div>
-         <tab>
-         </tabset>
-      </div>
+<div class="ngdialog-message">
+<h5 style="color: red;">Latest since last login - Dev In Progress(SVK)
+<div style="float: right;">
+<a href="#" class="wclose" ng-click="closeDialog()"><i class="fa fa-times" id="close"></i></a>
+</div>
+</h5>
+</div>
+<div>
+<tabset>
+<tab ng-repeat="tsl in tslObj" heading="{{tsl.name}}({{tsl.count}})" active="tsl.active">
+<div ng-repeat="sessionsresult in tsl.results">
+<session></session>
+</div>
+<tab>
+</tabset>
+</div>
 </script>
