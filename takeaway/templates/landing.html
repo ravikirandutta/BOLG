@@ -8,6 +8,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <link rel="stylesheet" href="../static/design/css/header/design.css">
     <link rel="stylesheet" href="../static/design/css/header/modo.css">
+    <link rel="stylesheet" href="../static/design/css/header/tablet.css" media="screen and (max-width:900px)">
+    <link rel="stylesheet" href="../static/design/css/header/mobile.css" media="screen and (max-width:480px)">
     <link rel="stylesheet" href="../static/design/css/flat-ui/css/demo.css">
     <link rel="stylesheet" href="../static/design/css/flat-ui/css/flat-ui.css">
     <link rel="stylesheet" href="../static/design/css/flat-ui/css/docs.css">
@@ -38,6 +40,7 @@
           background-color: #f0f0f0;
           padding-top: 100px;
           padding-bottom: 70px;
+          margin:100px;
       }
 
       .carousel-inner {
@@ -53,9 +56,10 @@ width: 100%;
 
       .item {
       position: relative;
-      width:70%;
-      margin-left: 300px;
+      width:583px;
+      margin-left: 210px;
       margin-right:100px;
+      text-align: center;
       }
       h3 {
         font-size: 22px;
@@ -75,7 +79,7 @@ width: 100%;
   </head>
   <body style="padding-top:0px">
       <!-- header-2 -->
-      <header class="header-2">
+     <header class="header-8">
         <div class="container">
           <div class="row">
             <div class="navbar col-sm-12 navbar-fixed-top" role="navigation">
@@ -83,9 +87,9 @@ width: 100%;
                 <button type="button" class="navbar-toggle">
                   <span class="glyphicon glyphicon-circle-arrow-left" style="color:#fff"></span>
                 </button>
-                <div class="brand">
-                <span class="glyphicon glyphicon-pencil" style="color:#f88529;font-size:x-large"></span>
-                  <b><span style="color:#0de6f2;font-size:25px">MBA TAKEAWAYS</span></b>
+                <div class="brandd">
+                <span class="glyphicon glyphicon-pencil" style="color:#000;font-size:x-large"></span>
+                  <b><span style="color:#910808;font-size:25px">MbaTakeaways</span></b>
                 </div>
               </div>
               <div class="collapse navbar-collapse pull-right">
@@ -103,6 +107,7 @@ width: 100%;
             </div>
           </div>
         </div>
+        <div class="header-background" style="background:#fff;box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);"></div>
       </header>
       <section class="header-2-sub bg-midnight-blue">
         <div class="background" id="mybck">&nbsp;</div>
@@ -162,7 +167,7 @@ width: 100%;
         </div>
       </section>
 
-      <section class="content-8" style="background:#e9eaed">
+      <!--<section class="content-8" style="background:#e9eaed">
         <div>
           <div class="container">
             <div class="img">
@@ -177,9 +182,10 @@ width: 100%;
             </div>
           </div>
         </div>
-      </section>
+      </section>-->
 
-<section class="content-11">
+<section class="content-11" style="background: #e9eaed;
+">
                 <div class="container">
                     <span>You have the Problem, We have the solution</span>
                     <a class="btn btn-large btn-danger" href="/play/">TRY IT NOW</a>
@@ -189,7 +195,7 @@ width: 100%;
     <section  style="margin-top:100px">
         <div >
           <h3 id="trending">TRENDING TAKEAWAYS</h3>
-
+            <hr>
            <div class="trending-takeaways">
     <div class="carousel-inner">
 
