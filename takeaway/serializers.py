@@ -86,7 +86,8 @@ class SessionSerializer(serializers.ModelSerializer):
 
 
 class SessionWithTakeAwaySinceLastLoginSerializer(serializers.ModelSerializer):
-    takeaway_set_since_last_login = serializers.SerializerMethodField('takeaways_since_lastLogin')
+    #takeaway_set_since_last_login = serializers.SerializerMethodField('takeaways_since_lastLogin')
+    takeaway_set = serializers.SerializerMethodField('takeaways_since_lastLogin')
 
 
     def takeaways_since_lastLogin(self, obj):
@@ -96,7 +97,7 @@ class SessionWithTakeAwaySinceLastLoginSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Session
-        fields = ('id','session_name', 'session_dt','courseInstance','takeaway_set_since_last_login')
+        fields = ('id','session_name', 'session_dt','courseInstance','takeaway_set')
         depth = 2
 
 
