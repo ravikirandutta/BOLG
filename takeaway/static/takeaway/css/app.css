@@ -20,6 +20,7 @@ background-color: #52b9e9;
     font-size:20px;
     margin-left:30px;
     margin-right:30px;
+    font-weight: 800;
 }
 
 .points{
@@ -422,4 +423,18 @@ tags-input .tags .input{
 
 #school-options, #add-school{
     cursor: pointer;
+}
+
+ .btn-orange{
+  background-color: #D35C3F;
+  color:#000;
+}
+
+.btn-orange:hover { background-color: #D35C3F; color:#000;}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+    margin-top:20px;
 }
