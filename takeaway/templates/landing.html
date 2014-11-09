@@ -89,7 +89,7 @@ width: 100%;
                 </button>
                 <div class="brandd">
                 <span class="glyphicon glyphicon-pencil" style="color:#000;font-size:x-large"></span>
-                  <b><span style="color:#910808;font-size:25px">MbaTakeaways</span></b>
+                  <b><span style="color:#910808;font-size:28px">MBA Takeaways</span></b>
                 </div>
               </div>
               <div class="collapse navbar-collapse pull-right">
@@ -115,8 +115,8 @@ width: 100%;
           <div class="row">
             <div class="col-sm-8 col-sm-offset-2" id="wide">
               <div class="hero-unit">
-                <span class="theme">THINK WITH YOUR CLASS</span>
-                <h4 id="caption">SHARE YOUR TAKEAWAY</h4>
+                <span class="theme">Collaborate with your class to create takeaways for each course.</span>
+                <h4 id="caption">Access your takeaways from the cloud 24x7 irrespective of location.</h4>
               </div>
               <div class="btns">
                 <a class="btn btn-danger" id="feature" href="/demo/">Feature Sneak Peek</a>
@@ -124,7 +124,7 @@ width: 100%;
             </div>
           </div>
         </div>
-                  <div class="form-group" style="margin-left:150px;margin-top:150px">
+                  <div class="form-group" style="margin-left:10px;margin-top:100px">
                     <form action="{% url 'handlelogin'  %}" class="form-horizontal" method="post" name="login_form" id="login_form"> {% csrf_token %}
                    <label for="inputEmail"></label>
                   <input type="text" class="input-padding" name="Username" placeholder="Username" autofocus>
@@ -135,7 +135,8 @@ width: 100%;
                 <button type="submit" class="btn btn-inverse ">Sign in</button>
                  or 
                 <a class="btn signup" href="/accounts/register">Register</a>
-                <div><input type="checkbox"><label>Remember me</label></div>
+                <div><input type="checkbox"><label>Remember me</label>
+                  <a href="" style="color:#3DC8F3;margin-left:30px"><label>Forgot Password? </label></a></div>
               </form>
               {% if error_message %} <p class="wdiget-content" style="color:red">{{ error_message }}</p> {% endif %}
               </div>
@@ -154,7 +155,7 @@ width: 100%;
               <p>You can easily combine any components in a variety of design projects. It’s easy!</p>
             </div>
             <div class="col-sm-4">
-              <img src="../static/design/images/icons/Clipboard@2x.png" alt="" width="104" height="104">
+              <img src="../static/takeaway/img/interview.png" alt="" width="116" height="116">
               <h6>Interviews</h6>
               <p>There are a lot of different blocks that will help you to make a perfect project.</p>
             </div>
@@ -221,6 +222,7 @@ width: 100%;
  <section class="crew-4">
         <div class="container">
           <h3 id="heading">TESTIMONIALS</h3>
+          <hr>
           <div class="members">
             <div class="member-wrapper">
               <div class="member">

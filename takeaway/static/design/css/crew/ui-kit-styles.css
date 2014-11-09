@@ -1389,7 +1389,6 @@ body .colapsed-menu::-webkit-scrollbar {
   -moz-border-radius: 6px;
   border-radius: 6px;
   overflow: hidden;
-  background-color: #ecf0f1;
   -webkit-transition: background-color 0.4s;
   -moz-transition: background-color 0.4s;
   -o-transition: background-color 0.4s;
@@ -1406,9 +1405,8 @@ body .colapsed-menu::-webkit-scrollbar {
   border-radius: 6px;
   overflow: hidden;
   background: 50% 50% no-repeat;
-  opacity: 30;
   filter: alpha(opacity=3000);
-  opacity: 0.3;
+  opacity: 1;
   filter: alpha(opacity=30);
   -webkit-transition: opacity 0.4s;
   -moz-transition: opacity 0.4s;
@@ -1481,7 +1479,7 @@ body .colapsed-menu::-webkit-scrollbar {
   color: #95a5a6;
 }
 .crew-4 .members .member:hover .photo-wrapper {
-  background-color: #1abc9c;
+  
 }
 .crew-4 .members .member:hover .photo {
   opacity: 40;

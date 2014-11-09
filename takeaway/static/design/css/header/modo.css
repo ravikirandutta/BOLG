@@ -1145,7 +1145,7 @@ section * {
   left: 0;
   width: 100%;
   position: relative;
-  padding-top: 215px;
+  padding-top: 145px;
   color: white;
   text-align: center;
 }
@@ -1229,13 +1229,15 @@ section * {
   background-color: #a33025;
 }
 .theme{
-  font-size: 70px;
+  font-size: 35px;
   font-family: serif;
-  font-weight: bolder;
-  background: -webkit-linear-gradient(#fff, #fff);
+  font-weight: 100;
+  word-spacing: 4px;
+  letter-spacing: 0.4px;
+  /*background: -webkit-linear-gradient(#fff, #fff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  -webkit-transition: all 1.0s ease-in-out;
+  -webkit-transition: all 1.0s ease-in-out;*/
 }
 #wide{
   width:106.6666%;
@@ -1243,8 +1245,12 @@ section * {
 }
 #caption{
   font-family: serif;
-  color:#fff;
-  font-weight: 700;
+color: #81F5F4;
+font-weight: 100;
+font-size: 25px;
+margin-top: 30px;
+word-spacing: 2.4px;
+letter-spacing: 0.5px;
 }
 #feature{
   font-family:serif;
