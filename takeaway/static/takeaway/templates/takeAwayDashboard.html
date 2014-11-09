@@ -3,7 +3,7 @@
   <div class="content">
 
 
-  <tabset>
+  <tabset type="pills">
     <tab ng-repeat="courseInstance in availableCourses.results"  ng-controller="CourseController" ng-click="freshLoadOfSessions()"  active="isCurrentCourseSelected()"  select="freshLoadOfSessions()">
       <tab-heading class="course">
 
@@ -65,11 +65,14 @@
         </ui>
         <div class="clearfix"></div>
       </div> -->
-      <div class="row">
-       <div class="col-md-8 col-sm-4">
-        <a class="btn btn-success" href="#"  ng-click="showLeaderBoard()" ><span class="fa fa-list-ol"></span> Leader Board</a>
+     <div class="row">
+   <!--     <div class="col-md-6 col-sm-2 ">
+
+       </div> -->
+       <div class="col-md-8 col-sm-4 col-xs-10 ">
+        <a class="btn btn-orange pull-right vcenter"   href="#"  ng-click="showLeaderBoard()" ><span class="fa fa-list-ol"></span> Leader Board</a>
        </div>
-      <div class="col-md-4 col-sm-8 col-xs-12">
+      <div class="col-md-4 col-sm-8 col-xs-12 ">
         <br/>
         <i class="fa fa-search fa-lg" ></i>
         <input type="text" placeholder="search by text" ng-model="criteria.searchText"/>
