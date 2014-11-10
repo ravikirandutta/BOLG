@@ -74,6 +74,18 @@ width: 100%;
         background-image: linear-gradient(#67ae55, #578843);
         color: black;
       }
+
+
+.slick-prev:before, .slick-next:before {
+    color:black !important;
+}
+.slick-prev {
+    margin-left: 40px;
+  }
+
+  .slick-next {
+    margin-right: 40px;
+  }
     </style>
 
   </head>
@@ -131,12 +143,12 @@ width: 100%;
                 <label for="inputPassword"></label>
                 <input class="input-padding"type="password" name="Password" placeholder="Password">
                 <input type="hidden" name="Mode" value="login">
-                
+
                 <button type="submit" class="btn btn-inverse ">Sign in</button>
-                 or 
+                 or
                 <a class="btn signup" href="/accounts/register">Register</a>
-                <div><input type="checkbox"><label>Remember me</label>
-                  <a href="" style="color:#3DC8F3;margin-left:30px"><label>Forgot Password? </label></a></div>
+                <div><!--<input type="checkbox"><label>Remember me</label> -->
+                  <a href="/user/password/reset/" style="color:#3DC8F3;margin-left:30px;"><label style="cursor:pointer">Forgot Password? </label></a></div>
               </form>
               {% if error_message %} <p class="wdiget-content" style="color:red">{{ error_message }}</p> {% endif %}
               </div>
@@ -188,7 +200,7 @@ width: 100%;
 <section class="content-11" style="background: #e9eaed;
 ">
                 <div class="container">
-                    <span>You have the Problem, We have the solution</span>
+                    <span>Enough talk, lets see it in action</span>
                     <a class="btn btn-large btn-danger" href="/play/">TRY IT NOW</a>
                 </div>
             </section>
@@ -297,6 +309,8 @@ width: 100%;
                 slidesToScroll: 1,
                 autoplay: true,
                 autoplaySpeed: 10000,
+                arrows: true,
+                dots:true
             });
         });
     </script>
