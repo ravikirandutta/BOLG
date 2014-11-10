@@ -131,12 +131,12 @@ width: 100%;
                 <label for="inputPassword"></label>
                 <input class="input-padding"type="password" name="Password" placeholder="Password">
                 <input type="hidden" name="Mode" value="login">
-                
+
                 <button type="submit" class="btn btn-inverse ">Sign in</button>
-                 or 
+                 or
                 <a class="btn signup" href="/accounts/register">Register</a>
                 <div><input type="checkbox"><label>Remember me</label>
-                  <a href="" style="color:#3DC8F3;margin-left:30px"><label>Forgot Password? </label></a></div>
+                  <a href="/user/password/reset/" style="color:#3DC8F3;margin-left:30px"><label>Forgot Password? </label></a></div>
               </form>
               {% if error_message %} <p class="wdiget-content" style="color:red">{{ error_message }}</p> {% endif %}
               </div>
