@@ -1283,6 +1283,13 @@ letter-spacing: 0.5px;
   -webkit-text-fill-color: transparent;
   -webkit-transition: all 1.0s ease-in-out;
 }
+#coursename{
+  font-weight: bold;
+font-size: 20px;
+margin-top: 20px;
+letter-spacing: 1px;
+word-spacing: 3px;
+}
 #nav-menu li a{
     color:#0A456F;
     font-size: 14px;
