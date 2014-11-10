@@ -103,6 +103,7 @@ def test(request):
 
 from rest_framework.decorators import *
 from decimal import *
+import pdb
 @api_view(['GET'])
 @permission_classes((IsAuthenticated, ))
 def can_user_post(request):
@@ -120,7 +121,8 @@ def can_user_post(request):
     exclude_takeaways_from_user = entire_takeaways.exclude(user=user)
     other_takeaway_count = exclude_takeaways_from_user.count()
     takeaway_count = entire_takeaways.count()
-    rating_count = Rating.objects.filter(takeaway = entire_takeaways).filter(user=user).count()
+
+    rating_count = Rating.objects.filter(takeaway__in = entire_takeaways).filter(user=user).count()
 
     if  other_takeaway_count > 0 :
         if Decimal(rating_count)/Decimal(other_takeaway_count) < RATING_THRESHOLD_FOR_CREATE :
