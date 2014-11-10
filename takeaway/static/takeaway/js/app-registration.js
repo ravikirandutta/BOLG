@@ -59,8 +59,16 @@ app.factory('ContactUsFactory', ['$resource',function($resource){
     $scope.helpUsAdd.subject="";
     $scope.helpUsAdd.sender="";
     $scope.helpUsAdd.message="";
+    $scope.error_in_registration=false;
 
 
+
+    $scope.showRegistration  = function(){
+    if(angular.element(".errorlist").size()>0){
+      $scope.error_in_registration=true;
+    }
+      return $scope.schoolSelected || $scope.error_in_registration;
+    };
 
         $scope.selectSchool = function(school_id){
           angular.forEach($scope.availableSchools,function(value){
