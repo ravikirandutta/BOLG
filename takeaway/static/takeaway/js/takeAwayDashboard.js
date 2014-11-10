@@ -842,6 +842,77 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
     };
 
+    $scope.showLatestTakeawayDialogFunc = function() {
+        if($scope.showLatestTakeawayDialog == true){
+          $http.get('/takeaways_since_last_login').
+            success(function(data, status, headers, config) {
+              $scope.tslObj = data;
+              //console.log("tslObj  :"+JSON.stringify($scope.tslObj));
+              $scope.tslObjTemp = [];
+              angular.forEach($scope.tslObj.results, function(r){
+                if(!angular.isUndefined(r.takeaway_set) && r.takeaway_set.length != 0) {
+                  $scope.tslObjTemp.push(r);
+                }
+              });
+
+              var arr = [];
+              $scope.tslObj = [];
+              angular.forEach($scope.tslObjTemp, function(r){
+                if($.inArray(r.courseInstance.course.id, arr) == -1) {
+                  arr.push(r.courseInstance.course.id);
+                  $scope.tslObj.push({'id': r.courseInstance.course.id, 'name': r.courseInstance.course.course_name,'results':[]});
+                }
+              });
+
+              angular.forEach($scope.tslObjTemp, function(r){
+                angular.forEach($scope.tslObj, function(cn){
+                  if(cn.id == r.courseInstance.course.id){
+                    cn.results.push(r);
+                  }
+                });
+              });
+
+              angular.forEach($scope.tslObj, function(cn){
+                var count = 0;
+                angular.forEach(cn.results, function(session){
+                  count += session.takeaway_set.length;
+                  session["hideNewButton"] = true;
+                });
+                cn["count"] = count;
+              });
+
+            $scope.showLatestTakeawayDialog = ($scope.tslObj.length > 0);
+              if($scope.showLatestTakeawayDialog == true) {
+
+                angular.forEach($scope.tslObj, function(tslObjTemp){
+                  tslObjTemp = $scope.postzpulateOtherFields(tslObjTemp.id, tslObjTemp);
+                });
+
+                //console.log("tslObj  :"+JSON.stringify($scope.tslObj));
+
+                 ngDialog.open({
+                  template: 'latestTakeawaySinceLastLogin',
+                  className: 'ngdialog-theme-plain',
+                  controller: ['$scope', function($scope) {}],
+                  closeByDocument: false,
+                  closeByEscape: false,
+                  scope: $scope,
+                  preCloseCallback: function() {
+                    $scope.showLatestTakeawayDialog = false;
+                    return true;
+                  }
+                });
+             }
+          }).
+          error(function(data, status, headers, config) {
+              console.log("error");
+          });
+        }
+      };
+
+
+    //This should call before the actual takeaways to be loaded and rendered.
+    $scope.showLatestTakeawayDialogFunc();
 
 
     // On Click of CRS, load all SNs and TAYs associated with the CRS.
@@ -867,8 +938,6 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
         $scope.sessions = data;
         $scope.displaysessions = true;
         $scope.sessionsData = $scope.postzpulateOtherFields(courseid, $scope.sessions);
-
-        $scope.showLatestTakeawayDialogFunc();
       });
     };
 
@@ -943,72 +1012,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
     }
 
 
-      $scope.showLatestTakeawayDialogFunc = function() {
-        if($scope.showLatestTakeawayDialog == true){
-          $http.get('/takeaways_since_last_login').
-            success(function(data, status, headers, config) {
-              $scope.tslObj = data;
-              $scope.tslObjTemp = [];
-              angular.forEach($scope.tslObj.results, function(r){
-                if(!angular.isUndefined(r.takeaway_set) && r.takeaway_set.length != 0) {
-                  $scope.tslObjTemp.push(r);
-                }
-              });
-
-              var arr = [];
-              $scope.tslObj = [];
-              angular.forEach($scope.tslObjTemp, function(r){
-                if($.inArray(r.courseInstance.course.id, arr) == -1) {
-                  arr.push(r.courseInstance.course.id);
-                  $scope.tslObj.push({'id': r.courseInstance.course.id, 'name': r.courseInstance.course.course_name,'results':[]});
-                }
-              });
-
-              angular.forEach($scope.tslObjTemp, function(r){
-                angular.forEach($scope.tslObj, function(cn){
-                  if(cn.id == r.courseInstance.course.id){
-                    cn.results.push(r);
-                  }
-                });
-              });
-
-              angular.forEach($scope.tslObj, function(cn){
-                var count = 0;
-                angular.forEach(cn.results, function(session){
-                  count += session.takeaway_set.length;
-                  session["hideNewButton"] = true;
-                });
-                cn["count"] = count;
-              });
-
-            $scope.showLatestTakeawayDialog = ($scope.tslObj.length > 0);
-              if($scope.showLatestTakeawayDialog == true) {
-
-                angular.forEach($scope.tslObj, function(tslObjTemp){
-                  tslObjTemp = $scope.postzpulateOtherFields(tslObjTemp.id, tslObjTemp);
-                });
-
-                console.log("tslObj  :"+JSON.stringify($scope.tslObj));
-
-                 ngDialog.open({
-                  template: 'latestTakeawaySinceLastLogin',
-                  className: 'ngdialog-theme-plain',
-                  controller: ['$scope', function($scope) {}],
-                  closeByDocument: false,
-                  closeByEscape: false,
-                  scope: $scope,
-                  preCloseCallback: function() {
-                    $scope.showLatestTakeawayDialog = false;
-                    return true;
-                  }
-                });
-             }
-          }).
-          error(function(data, status, headers, config) {
-              console.log("error");
-          });
-        }
-      };
+    
 
     /* Event from "Save" button from New Take Away dialog window */
     $scope.saveTakeaway = function() {
