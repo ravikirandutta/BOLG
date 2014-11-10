@@ -189,20 +189,16 @@ ng-click="updateSessionName(modifiedSession, sessionsresult)">Update</button>
 </script>
 
 <script type="text/ng-template" id="latestTakeawaySinceLastLogin">
-<div class="ngdialog-message">
-<h5 style="color: red;">Latest since last login - Dev In Progress(SVK)
-<div style="float: right;">
-<a href="#" class="wclose" ng-click="closeDialog()"><i class="fa fa-times" id="close"></i></a>
-</div>
-</h5>
-</div>
-<div>
-<tabset>
-<tab ng-repeat="tsl in tslObj" heading="{{tsl.name}}({{tsl.count}})" active="tsl.active">
-<div ng-repeat="sessionsresult in tsl.results">
-<session></session>
-</div>
-<tab>
-</tabset>
-</div>
+  <div class="ngdialog-message">
+   <h4 style="color: black;">Latest takeawyas since last login</h4>
+  </div>
+  <div>
+    <tabset>
+        <tab ng-repeat="tsl in tslObj" heading="{{tsl.name}}({{tsl.count}})" active="tsl.active">
+        <div ng-repeat="sessionsresult in tsl.results">
+          <session></session>
+        </div>
+      <tab>
+    </tabset>
+  </div>
 </script>
