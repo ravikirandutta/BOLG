@@ -32,8 +32,10 @@ background-color: #52b9e9;
 }
 
 .courseLeaderBoardHeading{
-  background-color: #1fa67a;
-  margin: 10px;
+  color: #000;
+  font-weight: 800;
+  text-align: center;
+  margin: 30px;
 }
 
 .course-item{
