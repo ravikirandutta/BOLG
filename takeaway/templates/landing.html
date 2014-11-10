@@ -74,6 +74,18 @@ width: 100%;
         background-image: linear-gradient(#67ae55, #578843);
         color: black;
       }
+
+
+.slick-prev:before, .slick-next:before {
+    color:black !important;
+}
+.slick-prev {
+    margin-left: 40px;
+  }
+
+  .slick-next {
+    margin-right: 40px;
+  }
     </style>
 
   </head>
@@ -297,6 +309,8 @@ width: 100%;
                 slidesToScroll: 1,
                 autoplay: true,
                 autoplaySpeed: 10000,
+                arrows: true,
+                dots:true
             });
         });
     </script>
