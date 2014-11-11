@@ -1286,7 +1286,6 @@ letter-spacing: 0.5px;
 #benefits{
   font-family: serif;
   font-size: 35px;
-  font-weight: bold;
   text-align: center;
   background: -webkit-linear-gradient(#000, #08E9F1);
   -webkit-background-clip: text;
