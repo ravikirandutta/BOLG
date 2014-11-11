@@ -1004,7 +1004,7 @@ body .colapsed-menu::-webkit-scrollbar {
  * Content 2 stylesheet  
  * */
 .content-2 {
-  padding-top: 130px;
+  padding-top: 80px;
   padding-bottom: 130px;
   position: relative;
 }
@@ -1205,7 +1205,7 @@ body .colapsed-menu::-webkit-scrollbar {
  * Content 4 stylesheet  
  * */
 .content-4 {
-  padding-top: 130px;
+  padding-top: 80px;
   padding-bottom: 120px;
   position: relative;
 }
