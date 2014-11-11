@@ -1287,7 +1287,7 @@ letter-spacing: 0.5px;
   font-family: serif;
   font-size: 35px;
   text-align: center;
-  background: -webkit-linear-gradient(#000, #000);
+  background: -webkit-linear-gradient(#000, #08E9F1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -webkit-transition: all 1.0s ease-in-out;
