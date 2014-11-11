@@ -16,6 +16,7 @@ app.controller('CollapseCommentsCtrl', function($scope, $cookies, Comments) {
       "takeaway": taset.id
     }).$promise.then(function(data) {
       $scope.comments = data.results;
+      taset.comment_count = data.count;
       if (!isRefresh) {
         $scope.isCollapsed = !$scope.isCollapsed;
       }
