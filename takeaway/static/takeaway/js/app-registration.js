@@ -100,7 +100,7 @@ app.factory('ContactUsFactory', ['$resource',function($resource){
 
 
           CourseInstanceFactory.query({"school_id":$scope.currentSchool.id}).$promise.then(function(data){
-              $scope.course_count = data.count;
+              $scope.course_count = 6;//data.count;
           });
 
 
