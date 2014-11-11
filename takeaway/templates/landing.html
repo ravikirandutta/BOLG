@@ -110,7 +110,7 @@ width: 100%;
                   </li>
                   <li><a href="#heading">Testimonials</a>
                   </li>
-                  <li><a href="#trending">Trending Takeaways</a>
+                  <li><a href="#trending">Sample Takeaways</a>
                   </li>
                   <li><a href="#contactform">Contact</a>
                   </li>
@@ -139,7 +139,7 @@ width: 100%;
                   <div class="form-group" style="margin-left:10px;margin-top:100px">
                     <form action="{% url 'handlelogin'  %}" class="form-horizontal" method="post" name="login_form" id="login_form"> {% csrf_token %}
                    <label for="inputEmail"></label>
-                  <input type="text" class="input-padding" name="Username" placeholder="Username" autofocus>
+                  <input type="text" class="input-padding" name="Username" placeholder="Username" >
                 <label for="inputPassword"></label>
                 <input class="input-padding"type="password" name="Password" placeholder="Password">
                 <input type="hidden" name="Mode" value="login">
@@ -160,12 +160,12 @@ width: 100%;
         <div class="container">
           <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 text-center">
-              <h3><u>Our Story</u></h3>
+              <h3>Our Story</h3>
 
             </div>
 
-            <div style="border:"  class="col-sm-12 col-sm-offset-3">
-              <embed  style="border: 10px solid" src="//www.youtube.com/embed/HjCTI_IdgVE" width="560" height="315"frameborder="0" allowfullscreen="" width="200" height="240" controller="true">
+            <div style="border:"  class="col-md-4 col-sm-6 col-sm-offset-2">
+              <embed  style="border: 10px solid" src="//www.youtube.com/embed/HjCTI_IdgVE" width="600" height="315"frameborder="0" allowfullscreen="" width="200" height="240" controller="true">
             </div>
           </div>
         </div>
@@ -179,26 +179,26 @@ width: 100%;
                 <i class="fa fa-star fa-5x"></i>
                 <br>
                 <h4>Rate other takeaways</h4>
+                <p>Rating before posting saves everyones' TIME</p>
               </div>
 
               <div class="col-lg-4 wow animated zoomIn animated" style="visibility: visible; -webkit-animation: zoomIn;">
                 <i class="fa fa-edit fa-5x"></i>
                 <br>
                 <h4>Post your takeaways</h4>
+                <p>Post 2-3 key takeaways for each session.</p>
               </div>
 
               <div class="col-lg-4 wow animated zoomIn animated" style="visibility: visible; -webkit-animation: zoomIn;">
                 <i class="fa fa-desktop fa-5x"></i>
                 <br>
                 <h4>Use for preparation</h4>
+                <p>Browse the takeaways for the gist of the course.</p>
               </div>
             </div>
 
             <br><br>
 
-      <div class= "row text-center">
-           <i class="fa fa-asterisk"></i> Rating before posting saves everyones TIME
-          </div>
           <br>
           <br>
           </div>
@@ -207,21 +207,22 @@ width: 100%;
 
     <section class="content-4">
         <div class="container">
-          <h3 id="benefits">BENEFITS</h3>
+          <h3  style="font-size:4em" id="benefits">BENEFITS</h3>
 
           <hr>
-          <div class="row features">
-            <div class="col-sm-4">
+
+          <div class="row featuress text-center">
+            <div class="col-sm-4 col-lg-4 col-md-4">
               <img src="../static/takeaway/img/test.png" alt="" width="117" height="104">
               <h6>Do well in Tests</h6>
               <p>Refer to takeaways for a refresher before your tests</p>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 col-lg-4 col-md-4">
               <img src="../static/takeaway/img/interview.png" alt="" width="116" height="116" style="border: 10px solid #A6BFE8;border-radius: 10px;">
               <h6>Interviews</h6>
               <p>The use cases and perspectives provided in the takeaways can help you make your point in interviews</p>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 col-lg-4 col-md-4">
               <img src="../static/takeaway/img/pocketbook.png" alt="" width="101" height="101">
               <h6>Pocket Book</h6>
               <p>You dont risk forgetting the takeaways or losing your precious notes</p>
@@ -256,9 +257,11 @@ width: 100%;
             </section>
 
     <section  style="margin-top:100px">
-        <div >
+        <div class="container">
           <h3 id="trending">SAMPLE TAKEAWAYS</h3>
             <hr>
+         </div>
+         <div>
            <div class="trending-takeaways">
     <div class="carousel-inner">
 
