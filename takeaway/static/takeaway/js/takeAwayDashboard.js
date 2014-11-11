@@ -276,6 +276,21 @@ app.factory('CriteriaService',function(){
         }
         });
 
+app.factory('TakeawaysSinceLastLoginFactory', function(){
+
+  var isVisible = true;
+
+  return {
+    isVisible : function(){
+      return isVisible;
+    },
+    setIsVisible : function(showTakeAwaysSLLDialog){
+      isVisible = showTakeAwaysSLLDialog;
+    }
+  }
+
+});
+
 app.factory('GroupsDataFactory',function (){
     var currentCourseGroups = [];
     var currentCourseGroupsIdArray = [];
@@ -733,7 +748,9 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
   app.controller('takeawayDashboardCtrl',
     function($scope, $http, $cookies, $q, $resource, $sce, $rootScope,
      LeaderboardFactory, UserPermission, ClassmatesDataFactory, CoursesFactory, SessionsFactory, ngDialog,TakeAwayFactory,
-      RatingFactory, FavoritesFactory, UserProfile, UserProfileDataFactory, ShareWithGroupsFactory, GroupsFactory, GroupsDataFactory, TagsFactory, TakeAwayConverter, CourseDataFactory,CriteriaService,SessionsDataFactory, TagsDataFactory) {
+      RatingFactory, FavoritesFactory, UserProfile, UserProfileDataFactory, ShareWithGroupsFactory, GroupsFactory,
+      GroupsDataFactory, TagsFactory, TakeAwayConverter, CourseDataFactory,CriteriaService,SessionsDataFactory, TagsDataFactory,
+      TakeawaysSinceLastLoginFactory) {
 
     console.log("loading takeawayDashboardCtrl");
     $scope.rate = 7;
@@ -746,7 +763,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
     $scope.userCanPost = false;
     $scope.leaderBoard = {};
     $scope.userProfile = {};
-    $scope.showLatestTakeawayDialog = true;
+
 
   $scope.ratingStates = [
 
@@ -832,7 +849,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
 
 
     $scope.showLeaderBoard = function () {
-      $scope.showLatestTakeawayDialog = false;
+
       ngDialog.open({
         template: 'courseLeaderBoardTemplateId',
         controller: 'CourseController',
@@ -843,7 +860,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
     };
 
     $scope.showLatestTakeawayDialogFunc = function() {
-        if($scope.showLatestTakeawayDialog == true){
+        if(TakeawaysSinceLastLoginFactory.isVisible() == true){
           $http.get('/takeaways_since_last_login').
             success(function(data, status, headers, config) {
               $scope.tslObj = data;
@@ -881,8 +898,8 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
                 cn["count"] = count;
               });
 
-            $scope.showLatestTakeawayDialog = ($scope.tslObj.length > 0);
-              if($scope.showLatestTakeawayDialog == true) {
+            TakeawaysSinceLastLoginFactory.setIsVisible($scope.tslObj.length > 0) ;
+              if(TakeawaysSinceLastLoginFactory.isVisible() == true) {
 
                 angular.forEach($scope.tslObj, function(tslObjTemp){
                   tslObjTemp = $scope.postzpulateOtherFields(tslObjTemp.id, tslObjTemp);
@@ -898,10 +915,11 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
                   closeByEscape: false,
                   scope: $scope,
                   preCloseCallback: function() {
-                    $scope.showLatestTakeawayDialog = false;
+
                     return true;
                   }
                 });
+              TakeawaysSinceLastLoginFactory.setIsVisible(false) ;
              }
           }).
           error(function(data, status, headers, config) {
@@ -1012,7 +1030,7 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
     }
 
 
-    
+
 
     /* Event from "Save" button from New Take Away dialog window */
     $scope.saveTakeaway = function() {
@@ -1038,9 +1056,12 @@ app.controller('CourseController', function ($scope,ngDialog, UserPermission,Cou
       function(data, status, headers, config) {
         SessionsDataFactory.addTakeAwayToSessions(data);
         $scope.newTakeawayContent="";
-        $scope.taset.createAndAddToGroups.forEach(function(item){
+       /*
+       commenting this untill user groups work
+       $scope.taset.createAndAddToGroups.forEach(function(item){
           ShareWithGroupsFactory.updateShare({group:item,shared_type:"GROUP",shared_by:3,takeaway:data.id});
         });
+*/
         console.log("loading all courses sessions after successfull creation"+data.courseInstance);
       },
       function(data, status, headers, config) {
@@ -1174,9 +1195,12 @@ app.controller('publicPrivateButtonCtrl',
       }
       if($scope.taset.id){
         var groupsArray=[];
+    /*
         $scope.taset.shared_takeaways.forEach(function(item){
           groupsArray.push(item.group);
         });
+
+*/
         $scope.taShare.groups=groupsArray;
         $scope.initialShareList=groupsArray.slice();
         if(groupsArray.length>0){

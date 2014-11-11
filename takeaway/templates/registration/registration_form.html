@@ -71,7 +71,7 @@
 
 
 <div class="clearfix visible-md-block visible-sm-block visible-lg-block"></div>
-<div id="school-stats" class="school-stats" ng-show="schoolSelected">
+<div id="school-stats" class="school-stats" ng-show="schoolSelected ">
   <div><h1>You have selected <b>{{currentSchool.school_name}}</b></h1> </div>
   <div><h1><span count-to="{{school_mates}}" value="0" duration="2"></span> of your school mates have</h1> </div>
   <div><h1>created <span count-to="{{takeaway_count}}" value="0" duration="2"></span> takeaways in</h1> </div>
@@ -79,7 +79,7 @@
 </div>
 {% endverbatim %}
 
-  <div  class="widget wred" ng-show="schoolSelected" style="width:60%;margin:100px">
+  <div  class="widget wred" ng-show="showRegistration()" style="width:60%;margin:100px">
                 <div id="registration" class="widget-head">
                     <i class="fa fa-lock"></i> Register
                 </div>
