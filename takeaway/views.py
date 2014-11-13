@@ -936,7 +936,7 @@ def play(request):
     courseInstance1 = CourseInstance.objects.filter(course=course1)[0]
     tp = TakeAwayProfile.objects.get(user=user)
     tp.courseInstances.add(courseInstance1)
-    response = render_to_response("play.html",{},RequestContext(request))
+    response = render_to_response("play1.html",{},RequestContext(request))
     response.set_cookie(key='userid',value=user.id)
     request.session['userid'] = user.id
     request.session['play'] = True
