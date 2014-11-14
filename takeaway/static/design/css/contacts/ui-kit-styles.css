@@ -1284,13 +1284,13 @@ body .colapsed-menu::-webkit-scrollbar {
 }
 .contacts-4 .links a {
   padding-bottom: 3px;
-  color: #14ddb3;
+  color: #fff;
   border-bottom: 2px solid;
 }
 .contacts-4 .links a:hover,
 .contacts-4 .links a:focus,
 .contacts-4 .links a.active {
-  color: #10b18f;
+  color: #fff;
 }
 @media (max-width: 480px) {
   .contacts-4 .links a {

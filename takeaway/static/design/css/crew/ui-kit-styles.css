@@ -1447,17 +1447,17 @@ body .colapsed-menu::-webkit-scrollbar {
 }
 .crew-4 .members .info {
   font-size: 15px;
-  color: #95a5a6;
+  color: #000;
   margin-top: 36px;
   line-height: 1.4;
   text-align: left;
   width:400px;
 }
 .crew-4 .members .info b {
-  color: #7f8c8d;
+  color: #000;
 }
 .crew-4 .members .name {
-  color: #1abc9c;
+  color: #910808;
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 14px;
