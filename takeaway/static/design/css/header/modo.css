@@ -1097,7 +1097,7 @@ section * {
 .header-2 .navbar {
   position: absolute;
   z-index: 2;
-  font-family: serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .header-2 .navbar.navbar-fixed-top {
   position: fixed;
@@ -1229,8 +1229,8 @@ section * {
   background-color: #a33025;
 }
 .theme{
-  font-size: 35px;
-  font-family: serif;
+  font-size: 33px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 100;
   word-spacing: 4px;
   letter-spacing: 0.4px;
@@ -1244,7 +1244,7 @@ section * {
   margin-left: .66%;
 }
 #caption{
-  font-family: serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 color: #81F5F4;
 font-weight: 100;
 font-size: 25px;
@@ -1253,7 +1253,7 @@ word-spacing: 2.4px;
 letter-spacing: 0.5px;
 }
 #feature{
-  font-family:serif;
+  font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
   margin-top:50px;
   font-size:25px;
   padding:16px;
@@ -1264,28 +1264,28 @@ letter-spacing: 0.5px;
   -webkit-transition: 1.7s ease-in-out;
 }
 #heading{
-  font-family: serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 4em;
   text-align: center;
   color:#000;
   text-decoration: underline;
 }
 #how{
-  font-family: serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 4em;
   text-align: center;
   color:#000;
   text-decoration: underline;
 }
 #trending{
-  font-family: serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 4em;
   text-align: center;
   color:#000;
   text-decoration: underline;
 }
 #benefits{
-  font-family: serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 4em;
   text-align: center;
   color:#000;
@@ -1303,7 +1303,7 @@ color:#fff;
     color:#0A456F;
     font-size: 14px;
     display: block;
-    font-family: "kulturista-web";
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif"";
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
     -webkit-transform: scale(1, 1);
@@ -1315,13 +1315,20 @@ color:#fff;
 #nav-menu li:hover{
     color: #000 !important;
     padding-left: 10px;
-    font-family: "kulturista-web";
+    font-family: ""Helvetica Neue", Helvetica, Arial, sans-serif";
     -webkit-transform: scale(1.2, 1.2);
   -webkit-transition-duration: 500ms;
   -webkit-transition-timing-function: ease-out;
   }
   #takeaways{
     width:100%;
+  }
+  .iconmelon{
+    position: relative;
+width: 60px;
+height: 60px;
+margin: auto;
+fill: #e88801;
   }
   .flip-container {
   -webkit-perspective: 1000;
