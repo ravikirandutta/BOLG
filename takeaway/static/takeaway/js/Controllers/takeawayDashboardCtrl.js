@@ -48,19 +48,22 @@ app.controller('takeawayDashboardCtrl',
 
 
     $scope.clearCriteria = function() {
-      CriteriaService.setCriteria({});
+      $scope.selectedTags = [];
+      $scope.criteria = {};
+      CriteriaService.setCriteria();
     };
     $scope.criteriaMatch = function() {
       $scope.criteria = CriteriaService.getCriteria();
       var criteria = $scope.criteria;
 
-
       return function(takeaway) {
-        var favorite = true,
-          tags = true,
-          textSearch = true;
+        var favorite = true, tags = true, owner=true; textSearch = true;
         if (criteria.filterFavorites) {
-          var favorite = takeaway.isFavourite;
+          favorite = takeaway.isFavourite;
+        }
+
+        if(criteria.ownTakeaways){
+          owner = takeaway.isOwner;
         }
 
         var count = 0;
@@ -80,8 +83,7 @@ app.controller('takeawayDashboardCtrl',
         if (criteria.searchText) {
           textSearch = takeaway.notes.indexOf(criteria.searchText) > -1;
         }
-
-        return favorite && tags && textSearch;
+        return favorite && tags && textSearch && owner;
       }
 
     };
@@ -373,5 +375,12 @@ app.controller('takeawayDashboardCtrl',
       $scope.newTakeawayContent = "";
       $scope.showLatestTakeawayDialog = false;
     };
+
+
+    $scope.filterOwnTakeaways = function() {
+      CriteriaService.toggleOwnTakeawaysCriteria();
+    };
+
+
 
   });

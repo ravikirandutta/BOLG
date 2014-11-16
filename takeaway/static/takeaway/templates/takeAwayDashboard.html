@@ -84,14 +84,20 @@
           </span>
           <span style="width:2px">&nbsp;</span>
         </span>
-        <a  class="btn btn-default" id="btnfav" ng-controller="FavoriteController"  ng-click="filterFavorites()">  My Favorites </a>
-
+        <a class="btn btn-default" id="btnfav" ng-controller="FavoriteController"  ng-click="filterFavorites()">
+          <span ng-show="criteria.filterFavorites" class="fa fa-check-square-o fa-lg"></span> 
+          My Favorites
+        </a>
+        <a class="btn btn-default" id="btnfav" ng-controller="FavoriteController"  ng-click="filterOwnTakeaways()">
+          <span ng-show="criteria.ownTakeaways" class="fa fa-check-square-o fa-lg"></span>   
+          My Own 
+        </a>
+        <a class="btn btn-default" id="btnfav" ng-controller="FavoriteController"  ng-click="clearCriteria()">
+          Clear All 
+        </a>
         <br/>
       </div>
       </div>
-      <!-- <span ng-click="clearCriteria()">Clear Criteria</span> -->
-
-
 
 
       <div class="col-md-6" id="takeaway-container" du-scroll-container>
