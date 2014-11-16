@@ -79,7 +79,12 @@
 
 
                               <div ng-controller="CollapseCommentsCtrl">
-                                <button class="btn btn-default" ng-click="displayComments(taset)">Comments({{taset.comment_count}})</button>
+                                
+                                <a href="#" class="btn btn-default" ng-click="displayComments(taset)" title="Click here to expand/collapse comments">
+                                  <b>Comments({{taset.comment_count}})</b>
+                                  <span class="fa fa-chevron-down" ng-show="isCollapsed" title="Click here to expand comments" ></span>
+                                  <span class="fa fa-chevron-up" ng-hide="isCollapsed" title="Click here to collapse comments" ></span>
+                                </a>
 
                                 <div collapse="isCollapsed">
                                   <hr>
