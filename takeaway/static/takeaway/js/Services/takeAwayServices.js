@@ -192,6 +192,7 @@ app.factory('CriteriaService', function() {
       criteria = {};
     },
     getCriteria: function() {
+      criteria.createdDateFilter = "ALL";
       return criteria;
     },
     setTagSearchCriteria: function(criteriaObject) {
@@ -211,8 +212,34 @@ app.factory('CriteriaService', function() {
     },
     toggleOwnTakeawaysCriteria: function(){
       criteria.ownTakeaways = !criteria.ownTakeaways;
+    },
+    getTakeawayDateFilterOptions: function(){
+      var takeawayDateFilterOptions = [
+        {
+            "id": "ALL",
+            "name": "the begining of time"
+        },
+        {
+            "id": "HOUR",
+            "name": "the past hour"
+        },
+        {
+            "id": "DAY",
+            "name": "the past day"
+        },
+        {
+            "id": "WEEK",
+            "name": "the past week"
+        },
+        {
+            "id": "4WEEKS",
+            "name": "the past 4 weeks"
+        }
+      ];
+    return takeawayDateFilterOptions;
     }
   }
+
 });
 app.factory('TakeawaysSinceLastLoginFactory', function() {
   var isVisible = true;

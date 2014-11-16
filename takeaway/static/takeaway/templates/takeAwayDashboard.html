@@ -92,6 +92,13 @@
           <span ng-show="criteria.ownTakeaways" class="fa fa-check-square-o fa-lg"></span>   
           My Own 
         </a>
+       <!--  <label>Takeaways created from: </label>
+        <select 
+          id="dateFilter"  name="dateFilter" 
+          ng-model="criteria.createdDateFilter" 
+          ng-options="dateOption.id as dateOption.name for dateOption in takeawayDateFilterOptions" 
+          ng-change="filterTakeawaysByDate(dateOption.id)" > 
+        </select> -->
         <a class="btn btn-default" id="btnfav" ng-controller="FavoriteController"  ng-click="clearCriteria()">
           Clear All 
         </a>

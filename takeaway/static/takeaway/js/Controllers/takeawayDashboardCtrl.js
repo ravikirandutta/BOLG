@@ -38,6 +38,7 @@ app.controller('takeawayDashboardCtrl',
     $scope.criteria = {};
     $scope.criteria.searchText;
     $scope.selectedTags = [];
+    $scope.takeawayDateFilterOptions = CriteriaService.getTakeawayDateFilterOptions();
 
     UserProfile.query({
       "user": $cookies.userid
@@ -381,6 +382,8 @@ app.controller('takeawayDashboardCtrl',
       CriteriaService.toggleOwnTakeawaysCriteria();
     };
 
-
+    $scope.filterTakeawaysByDate = function(selectedDateOption){
+      $scope.criteria.createdDateFilter = selectedDateOption;
+    };
 
   });
