@@ -7,12 +7,13 @@
                 </div>
                 <div class="widget-icons pull-right" ng-hide="sessionsresult.hideNewButton">
                    <a href="#" class="btn btn-primary" style="background:#e1e3e4 !important;color:#000"
-
-                      ng-click="newTakeaway()" >
+                      ng-click="newTakeaway(); sessionsresult.showTakeaway = true;" >
                       <span class="glyphicon glyphicon-pencil"></span> New Takeaway
                     </a>
-                   <a href="#" class="wminimize"><i class="fa fa-chevron-up" id="up"></i></a>
-                   <a href="#" class="wclose"><i class="fa fa-times" id="close"></i></a>
+                      <li class="fa fa-chevron-up" id="up" ng-show="sessionsresult.showTakeaway"  title="Click here to collapse takeaways" ng-click="sessionsresult.showTakeaway = !sessionsresult.showTakeaway"></li>
+                      <li class="fa fa-chevron-down" id="down" ng-hide="sessionsresult.showTakeaway"  title="Click here to expand takeaways" ng-click="sessionsresult.showTakeaway = !sessionsresult.showTakeaway"></li>
+                    
+                   <!-- <a href="#" class="wclose"><i class="fa fa-times" id="close"></i></a> -->
                 </div>
                 <div class="clearfix"></div>
               </div>
@@ -22,8 +23,8 @@
                     <ul id="takeaway-list" class="recent">
 
                       <!-- takeaway set display -->
-                      <div >
-                        <div id="{{taset.id}}" ng-repeat="taset in sessionsresult.takeaway_set | filter: criteriaMatch(criteria)">
+                      <div>
+                        <div id="{{taset.id}}" ng-repeat="taset in sessionsresult.takeaway_set | filter: criteriaMatch(criteria)" ng-show="sessionsresult.showTakeaway">
                           <take-away></take-away>
                         </div>
                       </div>

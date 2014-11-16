@@ -85,7 +85,7 @@
                                   <hr>
                                   <div class="well well-lg" ng-repeat="x in comments">{{ x.notes }}   - by {{ x.username}} on {{x.updated_dt | date:"MM/dd/yyyy  h:mma"}}</div>
 
-                                  <input type="textarea" ng-model="myComment" >
+                                  <textarea ng-model="myComment" rows="2" cols="95"/>
                                   <button class="btn btn-default" ng-click="saveComment(taset)">Add comment</button>
                                 </div>
                               </div>

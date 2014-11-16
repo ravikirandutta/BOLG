@@ -243,6 +243,7 @@ app.controller('takeawayDashboardCtrl',
         function(data, status, headers, config) {
           $scope.favList = data.results;
           _.each(sessionsObj.results, function(sessionsresult) {
+            sessionsresult["showTakeaway"] = true;  //For Expand/Collapse option
             _.each(sessionsresult.takeaway_set, function(taset) {
               taset["isFavourite"] = false;
               _.each($scope.favList, function(fav) {
@@ -385,5 +386,5 @@ app.controller('takeawayDashboardCtrl',
     $scope.filterTakeawaysByDate = function(selectedDateOption){
       $scope.criteria.createdDateFilter = selectedDateOption;
     };
-
+    
   });
