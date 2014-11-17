@@ -188,7 +188,11 @@ app.factory('UserProfile', ['$resource', function($resource) {
 app.factory('CriteriaService', function() {
   var criteria = {};
   return {
+    setCriteria: function() {
+      criteria = {};
+    },
     getCriteria: function() {
+      criteria.createdDateFilter = "ALL";
       return criteria;
     },
     setTagSearchCriteria: function(criteriaObject) {
@@ -198,9 +202,6 @@ app.factory('CriteriaService', function() {
       criteria.tagSearch.push(criteriaObject.value);
     },
     toggleFavoriteCriteria: function() {
-      /*if(criteriaObject.searchTerm === "textSearch")
-        criteria.searchTerm = criteriaObject.value;
-      */
       criteria.filterFavorites = !criteria.filterFavorites;
     },
     removeTagFromSearchCriteria: function(tagToBeRemoved) {
@@ -208,8 +209,37 @@ app.factory('CriteriaService', function() {
         var index = criteria.tagSearch.indexOf(tagToBeRemoved);
         criteria.tagSearch.splice(index, index + 1);
       }
+    },
+    toggleOwnTakeawaysCriteria: function(){
+      criteria.ownTakeaways = !criteria.ownTakeaways;
+    },
+    getTakeawayDateFilterOptions: function(){
+      var takeawayDateFilterOptions = [
+        {
+            "id": "ALL",
+            "name": "the begining of time"
+        },
+        {
+            "id": "HOUR",
+            "name": "the past hour"
+        },
+        {
+            "id": "DAY",
+            "name": "the past day"
+        },
+        {
+            "id": "WEEK",
+            "name": "the past week"
+        },
+        {
+            "id": "4WEEKS",
+            "name": "the past 4 weeks"
+        }
+      ];
+    return takeawayDateFilterOptions;
     }
   }
+
 });
 app.factory('TakeawaysSinceLastLoginFactory', function() {
   var isVisible = true;

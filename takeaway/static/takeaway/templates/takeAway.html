@@ -79,13 +79,18 @@
 
 
                               <div ng-controller="CollapseCommentsCtrl">
-                                <button class="btn btn-default" ng-click="displayComments(taset)">Comments({{taset.comment_count}})</button>
+                                
+                                <a href="#" class="btn btn-default" ng-click="displayComments(taset)" title="Click here to expand/collapse comments">
+                                  <b>Comments({{taset.comment_count}})</b>
+                                  <span class="fa fa-chevron-down" ng-show="isCollapsed" title="Click here to expand comments" ></span>
+                                  <span class="fa fa-chevron-up" ng-hide="isCollapsed" title="Click here to collapse comments" ></span>
+                                </a>
 
                                 <div collapse="isCollapsed">
                                   <hr>
                                   <div class="well well-lg" ng-repeat="x in comments">{{ x.notes }}   - by {{ x.username}} on {{x.updated_dt | date:"MM/dd/yyyy  h:mma"}}</div>
 
-                                  <input type="textarea" ng-model="myComment" >
+                                  <textarea ng-model="myComment" rows="2" cols="95"/>
                                   <button class="btn btn-default" ng-click="saveComment(taset)">Add comment</button>
                                 </div>
                               </div>
