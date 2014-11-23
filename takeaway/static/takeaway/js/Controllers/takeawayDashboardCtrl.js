@@ -60,7 +60,7 @@ app.controller('takeawayDashboardCtrl',
       var criteria = $scope.criteria;
 
       return function(takeaway) {
-        var favorite = true, tags = true, owner=true; textSearch = true, dateFilter = true;
+        var favorite = true, tags = true, owner=true; textSearch = true, dateFilter = true, usernameSearch=true;
         if (criteria.filterFavorites) {
           favorite = takeaway.isFavourite;
         }
@@ -107,7 +107,12 @@ app.controller('takeawayDashboardCtrl',
         if (criteria.searchText) {
           textSearch = takeaway.notes.indexOf(criteria.searchText) > -1;
         }
-        return favorite && tags && textSearch && owner && dateFilter;
+
+        if (criteria.username != null && criteria.username.length > 0) {
+          usernameSearch = takeaway.username == criteria.username;
+        }
+
+        return favorite && tags && textSearch && owner && dateFilter && usernameSearch;
       }
 
     };
@@ -242,6 +247,7 @@ app.controller('takeawayDashboardCtrl',
         }
       }
 
+      $scope.coursemates = ClassmatesDataFactory.getCurrentCourseClassmates();
 
       SessionsFactory.query({
         "courseInstance": courseid,
@@ -266,8 +272,8 @@ app.controller('takeawayDashboardCtrl',
         function(data, status, headers, config) {
           $scope.favList = data.results;
           _.each(sessionsObj.results, function(sessionsresult) {
-            sessionsresult["showTakeaway"] = true;  //For Expand/Collapse option
             _.each(sessionsresult.takeaway_set, function(taset) {
+              sessionsresult["showTakeaway"] = true;  //For Expand/Collapse option
               taset["isFavourite"] = false;
               _.each($scope.favList, function(fav) {
                 if (fav.takeaway == taset.id) {

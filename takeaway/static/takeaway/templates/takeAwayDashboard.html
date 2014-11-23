@@ -98,6 +98,13 @@
           ng-model="criteria.createdDateFilter" 
           ng-options="dateOption.id as dateOption.name for dateOption in takeawayDateFilterOptions"> 
         </select> 
+        <label>Filter by user: </label>
+        <select 
+          id="usernameFilter"  name="usernameFilter" 
+          ng-model="criteria.username" 
+          ng-options="mate.username as mate.username for mate in coursemates"> 
+          <option value="">All Users</option>
+        </select>
         <a class="btn btn-default" id="btnfav" ng-controller="FavoriteController"  ng-click="clearCriteria()">
           Clear All 
         </a>
