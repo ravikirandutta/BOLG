@@ -187,12 +187,12 @@ app.factory('UserProfile', ['$resource', function($resource) {
 }]);
 app.factory('CriteriaService', function() {
   var criteria = {};
+  criteria.createdDateFilter="ALL";
   return {
     setCriteria: function() {
       criteria = {};
     },
     getCriteria: function() {
-      criteria.createdDateFilter = "ALL";
       return criteria;
     },
     setTagSearchCriteria: function(criteriaObject) {

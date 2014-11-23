@@ -39,7 +39,7 @@ app.controller('takeawayDashboardCtrl',
     $scope.criteria.searchText;
     $scope.selectedTags = [];
     $scope.takeawayDateFilterOptions = CriteriaService.getTakeawayDateFilterOptions();
-
+    
     UserProfile.query({
       "user": $cookies.userid
     }).$promise.then(function(data) {
@@ -52,19 +52,42 @@ app.controller('takeawayDashboardCtrl',
       $scope.selectedTags = [];
       $scope.criteria = {};
       CriteriaService.setCriteria();
+      $scope.criteria = CriteriaService.getCriteria();
+      $scope.criteria.createdDateFilter="ALL";
     };
     $scope.criteriaMatch = function() {
       $scope.criteria = CriteriaService.getCriteria();
       var criteria = $scope.criteria;
 
       return function(takeaway) {
-        var favorite = true, tags = true, owner=true; textSearch = true;
+        var favorite = true, tags = true, owner=true; textSearch = true, dateFilter = true;
         if (criteria.filterFavorites) {
           favorite = takeaway.isFavourite;
         }
 
         if(criteria.ownTakeaways){
           owner = takeaway.isOwner;
+        }
+
+        if(criteria.createdDateFilter != 'ALL'){
+
+          var hoursToReduce = 0;
+          if(criteria.createdDateFilter == "HOUR") {
+             hoursToReduce = 1;
+          } else if(criteria.createdDateFilter == "DAY") {
+            hoursToReduce = 24;
+          } else if(criteria.createdDateFilter == "WEEK") { 
+            hoursToReduce = 168;
+          } else if(criteria.createdDateFilter == "4WEEKS") {
+            hoursToReduce = 672;
+          } 
+
+          var dateToCompare = new Date();
+          dateToCompare.setHours(dateToCompare.getHours() - hoursToReduce);
+
+          var takeawayDateObj = new Date(takeaway.created_dt);
+          dateFilter = (takeawayDateObj > dateToCompare);
+         
         }
 
         var count = 0;
@@ -84,7 +107,7 @@ app.controller('takeawayDashboardCtrl',
         if (criteria.searchText) {
           textSearch = takeaway.notes.indexOf(criteria.searchText) > -1;
         }
-        return favorite && tags && textSearch && owner;
+        return favorite && tags && textSearch && owner && dateFilter;
       }
 
     };
@@ -381,10 +404,6 @@ app.controller('takeawayDashboardCtrl',
 
     $scope.filterOwnTakeaways = function() {
       CriteriaService.toggleOwnTakeawaysCriteria();
-    };
-
-    $scope.filterTakeawaysByDate = function(selectedDateOption){
-      $scope.criteria.createdDateFilter = selectedDateOption;
     };
     
   });
