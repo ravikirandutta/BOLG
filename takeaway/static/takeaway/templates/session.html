@@ -2,12 +2,12 @@
               <div class="widget-head" id="bluewidget">
                 <div class="pull-left">
                  <b> {{sessionsresult.session_name}}</b>
-                  <a id="edit-session-link" href="#" class="glyphicon glyphicon-edit" title="Edit Session"
+                  <a id="edit-session-link_1" href="#" class="glyphicon glyphicon-edit" title="Edit Session"
                       ng-click="editSessionName()" ng-hide="sessionsresult.hideNewButton"></a>
                 </div>
                 <div class="widget-icons pull-right" ng-hide="sessionsresult.hideNewButton">
                    <a href="#" class="btn btn-primary" style="background:#e1e3e4 !important;color:#000"
-                      ng-click="newTakeaway(); sessionsresult.showTakeaway = true;" >
+                     id="newTakeaway" ng-click="newTakeaway(); sessionsresult.showTakeaway = true;" >
                       <span class="glyphicon glyphicon-pencil"></span> New Takeaway
                     </a>
                       <li class="fa fa-chevron-up" id="up" ng-show="sessionsresult.showTakeaway"  title="Click here to collapse takeaways" ng-click="sessionsresult.showTakeaway = !sessionsresult.showTakeaway"></li>
@@ -20,7 +20,7 @@
               <div class="widget-content">
                   
 
-                    <ul id="takeaway-list" class="recent">
+                    <ul id="takeaway-list1" class="recent">
 
                       <!-- takeaway set display -->
                       <div>

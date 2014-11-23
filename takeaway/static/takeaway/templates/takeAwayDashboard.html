@@ -70,7 +70,7 @@
 
        </div> -->
        <div class="col-md-8 col-sm-4 col-xs-10 ">
-        <a class="btn btn-orange pull-right vcenter"   href="#"  ng-click="showLeaderBoard()" ><span class="fa fa-list-ol"></span> Leader Board</a>
+        <a class="btn btn-orange pull-right vcenter" id="leaderBoardButton" href="#"  ng-click="showLeaderBoard()" ><span class="fa fa-list-ol"></span> Leader Board</a>
        </div>
       <div class="col-md-4 col-sm-8 col-xs-12 ">
         <br/>
@@ -196,7 +196,7 @@ ng-dialog-class="ngdialog-theme-default" >Close</button>
 <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()"
 ng-dialog-class="ngdialog-theme-default" >Close</button>
 <button type="button" class="ngdialog-button ngdialog-button-primary"
-ng-click="updateSessionName(modifiedSession, sessionsresult)">Update</button>
+ng-click="updateSessionName(modifiedSession, sessionsresult)" id="updateSession">Update</button>
 </div>
 </div>
 </script>
